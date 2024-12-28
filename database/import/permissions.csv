@@ -1,0 +1,10 @@
+category,name
+admin,admin-read
+admin,admin-write
+admin,admin-delete
+permission,permission-read
+permission,permission-write
+permission,permission-delete
+role,role-read
+role,role-write
+role,role-delete
