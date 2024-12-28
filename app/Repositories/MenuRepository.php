@@ -50,6 +50,7 @@ class MenuRepository
             ->map(function (Menu $menu) {
                 return collect([
                     'name' => $menu->name,
+                    'type' => $menu->type,
                     'icon' => $menu->icon,
                     'url' => url($menu->url),
                     'visibility' => json_decode($menu->visibility),
@@ -60,6 +61,7 @@ class MenuRepository
                         ->map(function (Menu $subMenu) {
                             return collect([
                                 'name' => $subMenu->name,
+                                'type' => $subMenu->type,
                                 'icon' => $subMenu->icon,
                                 'url' => url($subMenu->url),
                                 'visibility' => json_decode($subMenu->visibility),
