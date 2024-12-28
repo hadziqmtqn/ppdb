@@ -25,5 +25,7 @@ class AdminSeeder extends Seeder
         $superAdmin->password = Hash::make('superadmin');
         $superAdmin->account_verified = true;
         $superAdmin->save();
+
+        $superAdmin->assignRole($role);
     }
 }
