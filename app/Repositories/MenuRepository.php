@@ -48,26 +48,37 @@ class MenuRepository
             ->orderBy('serial_number')
             ->get()
             ->map(function (Menu $menu) {
+                $visibility = json_decode($menu->visibility, true);
+                if (!auth()->user()->hasAnyPermission($visibility)) {
+                    return null; // Skip this menu if user doesn't have permission
+                }
+
+                $subMenus = $this->menu->filterByType('sub_menu')
+                    ->mainMenu($menu->id)
+                    ->orderBy('serial_number')
+                    ->get()
+                    ->map(function (Menu $subMenu) {
+                        $subVisibility = json_decode($subMenu->visibility, true);
+                        if (!auth()->user()->hasAnyPermission($subVisibility)) {
+                            return null; // Skip this sub menu if user doesn't have permission
+                        }
+                        return collect([
+                            'name' => $subMenu->name,
+                            'type' => $subMenu->type,
+                            'icon' => $subMenu->icon,
+                            'url' => url($subMenu->url),
+                            'visibility' => $subVisibility,
+                        ]);
+                    })->filter();
+
                 return collect([
                     'name' => $menu->name,
                     'type' => $menu->type,
                     'icon' => $menu->icon,
                     'url' => url($menu->url),
-                    'visibility' => json_decode($menu->visibility),
-                    'subMenus' => $this->menu->filterByType('sub_menu')
-                        ->mainMenu($menu->id)
-                        ->orderBy('serial_number')
-                        ->get()
-                        ->map(function (Menu $subMenu) {
-                            return collect([
-                                'name' => $subMenu->name,
-                                'type' => $subMenu->type,
-                                'icon' => $subMenu->icon,
-                                'url' => url($subMenu->url),
-                                'visibility' => json_decode($subMenu->visibility),
-                            ]);
-                    })
+                    'visibility' => $visibility,
+                    'subMenus' => $subMenus,
                 ]);
-            });
+            })->filter();
     }
 }

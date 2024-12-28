@@ -1,4 +1,5 @@
 category,name
+dashboard,dashboard
 admin,admin-read
 admin,admin-write
 admin,admin-delete
