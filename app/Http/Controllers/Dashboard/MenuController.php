@@ -58,10 +58,16 @@ class MenuController extends Controller implements HasMiddleware
                             $query->whereAny(['name'], 'LIKE', '%' . $search . '%');
                         });
                     })
+                    ->addColumn('name', function ($row) {
+                        return '<span class="text-truncate d-flex align-items-center"><i class="mdi mdi-' . $row->icon . ' mdi-20px text-warning me-2"></i>'. $row->name .'</span>';
+                    })
                     ->addColumn('action', function ($row) {
                         return '<button href="javascript:void(0)" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
                     })
-                    ->rawColumns(['action'])
+                    ->addColumn('url', function ($row) {
+                        return '<a href="' . url($row->url) . '">'. $row->url . '</a>';
+                    })
+                    ->rawColumns(['name', 'action', 'url'])
                     ->make();
             }
         }catch (Exception $exception) {

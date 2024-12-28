@@ -1,3 +1,3 @@
 name,type,main_menu,visibility,url,icon
 Dashboard,main_menu,,"[""dashboard""]",/admin-dashboard,home-outline
-Role & Hak Akses,main_menu,,"[""role-read"",""permission-read""]",/role,shield
+Role & Hak Akses,main_menu,,"[""role-read"",""permission-read""]",/role,shield-outline

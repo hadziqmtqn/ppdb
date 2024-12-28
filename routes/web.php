@@ -37,5 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/datatable', [MenuController::class, 'datatable']);
     });
 
+    // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);
+    Route::get('select-main-menu', [MenuController::class, 'select']);
 });
