@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Application;
+use Illuminate\Support\Collection;
 
 class ApplicationRepository
 {
@@ -13,9 +14,15 @@ class ApplicationRepository
         $this->application = $application;
     }
 
-    public function getApplication(): Application
+    public function getApplication(): Collection
     {
-        return $this->application
+        $application = $this->application
             ->firstOrFail();
+
+        return collect([
+            'name' => $application->name,
+            'website' => $application->website,
+            'mainWebsite' => $application->main_website,
+        ]);
     }
 }

@@ -1,0 +1,1 @@
+<div id="toastr-data" data-session-success="{{ session('success') }}" data-session-error="{{ session('error') }}" data-session-info="{{ session('info') }}" data-session-warning="{{ session('warning') }}"></div>
