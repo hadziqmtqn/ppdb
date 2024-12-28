@@ -62,7 +62,10 @@ class MenuController extends Controller implements HasMiddleware
                         return '<span class="text-truncate d-flex align-items-center"><i class="mdi mdi-' . $row->icon . ' mdi-20px text-warning me-2"></i>'. $row->name .'</span>';
                     })
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                        $btn = '<a href="' . route('menu.edit', $row->slug) . '" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
+                        $btn .= '<button href="javascript:void(0)" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+
+                        return $btn;
                     })
                     ->addColumn('url', function ($row) {
                         return '<a href="' . url($row->url) . '">'. $row->url . '</a>';
@@ -96,16 +99,29 @@ class MenuController extends Controller implements HasMiddleware
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
-    public function edit(Menu $menu)
+    public function edit(Menu $menu): View
     {
-        return $menu;
+        $title = 'Edit Menu';
+
+        return view('dashboard.menu.edit', compact('title', 'menu'));
     }
 
     public function update(MenuRequest $request, Menu $menu)
     {
-        $menu->update($request->validated());
+        try {
+            $menu->name = $request->input('name');
+            $menu->type = $request->input('type');
+            $menu->main_menu = $request->input('type') == 'sub_menu' ? $request->input('main_menu') : null;
+            $menu->visibility = json_encode($request->input('visibility'));
+            $menu->url = $request->input('url');
+            $menu->icon = $request->input('icon');
+            $menu->save();
+        }catch (Exception $exception){
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Data gagal disimpan');
+        }
 
-        return $menu;
+        return to_route('menu.index')->with('success', 'Data berhasil disimpan');
     }
 
     public function destroy(Menu $menu)

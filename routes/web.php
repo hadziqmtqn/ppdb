@@ -32,9 +32,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('menu')->group(function () {
-        Route::get('/', [MenuController::class, 'index'])->name('menu');
+        Route::get('/', [MenuController::class, 'index'])->name('menu.index');
         Route::post('/store', [MenuController::class, 'store'])->name('menu.store');
         Route::post('/datatable', [MenuController::class, 'datatable']);
+        Route::get('/{menu:slug}', [MenuController::class, 'edit'])->name('menu.edit');
+        Route::put('/{menu:slug}/update', [MenuController::class, 'update'])->name('menu.update');
     });
 
     // TODO Select Routes
