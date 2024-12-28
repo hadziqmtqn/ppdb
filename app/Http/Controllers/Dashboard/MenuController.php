@@ -83,7 +83,7 @@ class MenuController extends Controller implements HasMiddleware
             $menu = new Menu();
             $menu->name = $request->input('name');
             $menu->type = $request->input('type');
-            $menu->main_menu = $request->input('main_menu');
+            $menu->main_menu = $request->input('type') == 'sub_menu' ? $request->input('main_menu') : null;
             $menu->visibility = json_encode($request->input('visibility'));
             $menu->url = $request->input('url');
             $menu->icon = $request->input('icon');

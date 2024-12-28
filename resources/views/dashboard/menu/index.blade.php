@@ -40,9 +40,11 @@
                             </select>
                             <label for="type">Tipe</label>
                         </div>
-                        <div class="form-floating form-floating-outline mb-3">
-                            <select name="main_menu" id="select-main-menu" class="form-select select2"></select>
-                            <label for="select-main-menu">Menu Utama</label>
+                        <div id="mainMenuVisibility" class="d-none">
+                            <div class="form-floating form-floating-outline mb-3">
+                                <select name="main_menu" id="select-main-menu" class="form-select select2"></select>
+                                <label for="select-main-menu">Menu Utama</label>
+                            </div>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
                             <select name="visibility[]" id="select-permission" class="form-select select2" multiple></select>
@@ -71,4 +73,5 @@
     <script src="{{ asset('js/menu/datatable.js') }}"></script>
     <script src="{{ asset('js/permission/select-permissions.js') }}"></script>
     <script src="{{ asset('js/menu/select-main-menu.js') }}"></script>
+    <script src="{{ asset('js/menu/validation.js') }}"></script>
 @endsection
