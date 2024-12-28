@@ -55,19 +55,7 @@
             </div>
 
             <div class="d-flex justify-content-center gap-2">
-                <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-facebook">
-                    <i class="tf-icons mdi mdi-24px mdi-facebook"></i>
-                </a>
-
-                <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-twitter">
-                    <i class="tf-icons mdi mdi-24px mdi-twitter"></i>
-                </a>
-
-                <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-github">
-                    <i class="tf-icons mdi mdi-24px mdi-github"></i>
-                </a>
-
-                <a href="#" class="btn btn-icon btn-lg rounded-pill btn-text-google-plus">
+                <a href="{{ route('oauth.redirect-to-provider', 'google') }}" class="btn btn-icon btn-lg rounded-pill btn-text-google-plus">
                     <i class="tf-icons mdi mdi-24px mdi-google"></i>
                 </a>
             </div>

@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('website')->nullable();
             $table->string('main_website')->nullable();
+            $table->boolean('register_verification')->default(false);
             $table->timestamps();
         });
     }

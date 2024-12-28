@@ -23,6 +23,7 @@ class AdminSeeder extends Seeder
         $superAdmin->name = 'Super Admin';
         $superAdmin->email = 'superadmin@bkn.my.id';
         $superAdmin->password = Hash::make('superadmin');
+        $superAdmin->account_verified = true;
         $superAdmin->save();
     }
 }

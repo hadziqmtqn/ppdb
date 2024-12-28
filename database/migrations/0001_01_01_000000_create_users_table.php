@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->boolean('is_active')->default(true);
+            $table->string('oauth_id')->nullable();
+            $table->string('oauth_type')->nullable();
+            $table->boolean('account_verified')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
