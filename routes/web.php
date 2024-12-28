@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\MenuController;
 use App\Http\Controllers\Dashboard\PermissionController;
+use App\Http\Controllers\Dashboard\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,6 +38,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/datatable', [MenuController::class, 'datatable']);
         Route::get('/{menu:slug}', [MenuController::class, 'edit'])->name('menu.edit');
         Route::put('/{menu:slug}/update', [MenuController::class, 'update'])->name('menu.update');
+        Route::delete('/{menu:slug}/delete', [MenuController::class, 'destroy']);
+    });
+
+    Route::prefix('role')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('role.index');
+        Route::get('/{role:slug}', [RoleController::class, 'edit'])->name('role.edit');
+        Route::put('/{role:slug}/update', [RoleController::class, 'update'])->name('role.update');
     });
 
     // TODO Select Routes

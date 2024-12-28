@@ -7,8 +7,12 @@
                     $isActive = $listMenu['url'] == url()->current() || collect($listMenu['subMenus'])->contains(function ($subMenu) {
                         return $subMenu['url'] == url()->current();
                     });
+
+                    $isActiveTitle = $listMenu['name'] == $title || collect($listMenu['subMenus'])->contains(function ($subMenu) use ($title) {
+                        return $subMenu['name'] == $title;
+                    });
                 @endphp
-                <li class="menu-item {{ $isActive ? 'active' : '' }}">
+                <li class="menu-item {{ $isActive || $isActiveTitle ? 'active' : '' }}">
                     <a href="{{ $listMenu['url'] }}" class="menu-link {{ $listMenu['type'] == 'main_menu' && count($listMenu['subMenus']) > 0 ? 'menu-toggle' : '' }}">
                         <i class="menu-icon tf-icons mdi mdi-{{ $listMenu['icon'] }}"></i>
                         <div data-i18n="{{ $listMenu['name'] }}">{{ $listMenu['name'] }}</div>
@@ -17,7 +21,7 @@
                         <ul class="menu-sub">
                             @foreach($listMenu['subMenus'] as $subMenu)
                                 @if($subMenu) <!-- Pastikan submenu tidak null -->
-                                <li class="menu-item {{ $subMenu['url'] == url()->current() ? 'active' : '' }}">
+                                <li class="menu-item {{ ($subMenu['url'] == url()->current()) || ($subMenu['name'] == $title) ? 'active' : '' }}">
                                     <a href="{{ $subMenu['url'] }}" class="menu-link">
                                         <i class="menu-icon tf-icons mdi mdi-{{ $subMenu['icon'] }}"></i>
                                         <div data-i18n="{{ $subMenu['name'] }}">{{ $subMenu['name'] }}</div>

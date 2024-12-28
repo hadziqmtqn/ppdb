@@ -6,6 +6,7 @@ use App\Repositories\ApplicationRepository;
 use App\Repositories\MenuRepository;
 use App\Repositories\MyAccountRepository;
 use App\Repositories\PermissionRepository;
+use App\Repositories\RoleRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MyAccountRepository::class, MyAccountRepository::class);
         $this->app->bind(PermissionRepository::class, PermissionRepository::class);
         $this->app->bind(MenuRepository::class, MenuRepository::class);
+        $this->app->bind(RoleRepository::class, RoleRepository::class);
     }
 
     /**

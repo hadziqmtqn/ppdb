@@ -6,18 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Menu\MenuRequest;
 use App\Models\Menu;
 use App\Repositories\MenuRepository;
+use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class MenuController extends Controller implements HasMiddleware
 {
+    use ApiResponse;
+
     protected MenuRepository $menuRepository;
 
     public function __construct(MenuRepository $menuRepository)
@@ -48,8 +53,8 @@ class MenuController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = Menu::query()
-                    ->orderBy('id')
-                    ->orderBy('main_menu');
+                    ->orderBy('main_menu')
+                    ->orderBy('serial_number');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -62,6 +67,9 @@ class MenuController extends Controller implements HasMiddleware
                     })
                     ->addColumn('name', function ($row) {
                         return '<span class="text-truncate d-flex align-items-center"><i class="mdi mdi-' . $row->icon . ' mdi-20px text-warning me-2"></i>'. $row->name .'</span>';
+                    })
+                    ->addColumn('type', function ($row) {
+                        return '<span class="badge rounded-pill ' . ($row->type == 'main_menu' ? 'bg-label-primary' : 'bg-label-secondary') . '">'. ucfirst(str_replace('_', ' ', $row->type)) .'</span>';
                     })
                     ->addColumn('main_menu', function ($row) {
                         $menu = Menu::find($row->main_menu);
@@ -78,7 +86,7 @@ class MenuController extends Controller implements HasMiddleware
 
                         // Buat badge untuk setiap visibility
                         $badges = array_map(function ($visibility) {
-                            return '<span class="badge bg-primary me-1">' . htmlspecialchars($visibility) . '</span>';
+                            return '<span class="badge bg-secondary me-1">' . htmlspecialchars($visibility) . '</span>';
                         }, $visibilities);
 
                         // Gabungkan badge menjadi string HTML
@@ -93,7 +101,7 @@ class MenuController extends Controller implements HasMiddleware
 
                         return $btn;
                     })
-                    ->rawColumns(['name', 'action', 'url', 'visibility'])
+                    ->rawColumns(['name', 'type', 'action', 'url', 'visibility'])
                     ->make();
             }
         }catch (Exception $exception) {
@@ -150,11 +158,24 @@ class MenuController extends Controller implements HasMiddleware
         return to_route('menu.index')->with('success', 'Data berhasil disimpan');
     }
 
-    public function destroy(Menu $menu)
+    public function destroy(Menu $menu): \Symfony\Component\HttpFoundation\JsonResponse
     {
-        $menu->delete();
+        try {
+            DB::beginTransaction();
+            Menu::query()
+                ->filterByType('sub_menu')
+                ->mainMenu($menu->id)
+                ->delete();
 
-        return response()->json();
+            $menu->delete();
+            DB::commit();
+        }catch (Exception $exception){
+            DB::rollBack();
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dihapus!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
     }
 
     public function select(Request $request)

@@ -8,7 +8,6 @@ permission,permission-write
 permission,permission-delete
 role,role-read
 role,role-write
-role,role-delete
 application,application-read
 application,application-write
 menu,menu-read
