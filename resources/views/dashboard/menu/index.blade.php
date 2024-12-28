@@ -35,7 +35,7 @@
                         <div class="form-floating form-floating-outline mb-3">
                             <select name="type" id="type" class="form-select select2">
                                 <option value=""></option>
-                                <option value="main_menu" {{ old('type') == 'main_menu' ? 'selected' : '' }}>Menu Utama</option>
+                                <option value="main_menu" {{ old('type') == 'main_menu' ? 'selected' : '' }}>Main Menu</option>
                                 <option value="sub_menu" {{ old('type') == 'sub_menu' ? 'selected' : '' }}>Sub Utama</option>
                             </select>
                             <label for="type">Tipe</label>

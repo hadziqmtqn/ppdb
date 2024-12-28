@@ -102,8 +102,9 @@ class MenuController extends Controller implements HasMiddleware
     public function edit(Menu $menu): View
     {
         $title = 'Edit Menu';
+        $allPermissions = json_decode($menu->visibility);
 
-        return view('dashboard.menu.edit', compact('title', 'menu'));
+        return view('dashboard.menu.edit', compact('title', 'menu', 'allPermissions'));
     }
 
     public function update(MenuRequest $request, Menu $menu)
