@@ -47,7 +47,9 @@ class MenuController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = Menu::query();
+                $data = Menu::query()
+                    ->orderBy('name')
+                    ->orderBy('main_menu');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -61,16 +63,32 @@ class MenuController extends Controller implements HasMiddleware
                     ->addColumn('name', function ($row) {
                         return '<span class="text-truncate d-flex align-items-center"><i class="mdi mdi-' . $row->icon . ' mdi-20px text-warning me-2"></i>'. $row->name .'</span>';
                     })
+                    ->addColumn('visibility', function ($row) {
+                        $visibilities = json_decode($row->visibility, true);
+
+                        // Jika visibility tidak ada atau null, kembalikan teks default
+                        if (empty($visibilities)) {
+                            return '<span class="badge bg-secondary">No Permissions</span>';
+                        }
+
+                        // Buat badge untuk setiap visibility
+                        $badges = array_map(function ($visibility) {
+                            return '<span class="badge bg-primary me-1">' . htmlspecialchars($visibility) . '</span>';
+                        }, $visibilities);
+
+                        // Gabungkan badge menjadi string HTML
+                        return implode(' ', $badges);
+                    })
+                    ->addColumn('url', function ($row) {
+                        return '<a href="' . url($row->url) . '">'. $row->url . '</a>';
+                    })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="' . route('menu.edit', $row->slug) . '" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
                         $btn .= '<button href="javascript:void(0)" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
 
                         return $btn;
                     })
-                    ->addColumn('url', function ($row) {
-                        return '<a href="' . url($row->url) . '">'. $row->url . '</a>';
-                    })
-                    ->rawColumns(['name', 'action', 'url'])
+                    ->rawColumns(['name', 'action', 'url', 'visibility'])
                     ->make();
             }
         }catch (Exception $exception) {
