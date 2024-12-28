@@ -13,6 +13,7 @@ class Menu extends Model
 
     protected $fillable = [
         'slug',
+        'serial_number',
         'name',
         'type',
         'main_menu',

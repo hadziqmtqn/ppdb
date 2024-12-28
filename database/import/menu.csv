@@ -1,3 +1,5 @@
-name,type,main_menu,visibility,url,icon
-Dashboard,main_menu,,"[""dashboard""]",/admin-dashboard,home-outline
-Role & Hak Akses,main_menu,,"[""role-read"",""permission-read""]",/role,shield-outline
+no,serial_number,name,type,main_menu,visibility,url,icon
+1,1,Dashboard,main_menu,,"[""dashboard""]",/admin-dashboard,home-outline
+2,2,Pengaturan,main_menu,,"[""permission-read"",""role-read""]",#,cog-outline
+3,1,Role & Hak Akses,sub_menu,2,"[""role-read"",""permission-read""]",/role,shield-outline
+4,2,Admin,main_menu,2,"[""admin-read"",""admin-write""]",/admin,account-multiple

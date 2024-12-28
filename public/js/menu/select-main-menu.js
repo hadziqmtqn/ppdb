@@ -18,7 +18,7 @@ $(document).ready(function () {
                     results: $.map(data.data, function(item) {
                         return {
                             text: item.name,
-                            id: item.slug
+                            id: item.id
                         }
                     })
                 };

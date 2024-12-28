@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
         if (formValidation) {
             const fv = FormValidation.formValidation(formValidation, {
                 fields: {
+                    serial_number: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Kolom ini wajib diisi'
+                            },
+                        }
+                    },
                     name: {
                         validators: {
                             notEmpty: {

@@ -21,12 +21,13 @@ class MenuSeeder extends Seeder
 
         foreach ($rows as $row) {
             $menu = new Menu();
+            $menu->serial_number = $row['serial_number'];
             $menu->name = $row['name'];
             $menu->type = $row['type'];
-            $menu->main_menu = $row['main_menu'] ?? null;
+            $menu->main_menu = !empty($row['main_menu']) ? $row['main_menu'] : null;
             $menu->visibility = $row['visibility'];
             $menu->url = $row['url'];
-            $menu->icon = $row['icon'] ?? null;
+            $menu->icon = !empty($row['icon']) ? $row['icon'] : null;
             $menu->save();
         }
     }

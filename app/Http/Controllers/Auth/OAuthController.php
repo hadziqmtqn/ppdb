@@ -40,6 +40,10 @@ class OAuthController extends Controller
             DB::beginTransaction();
 
             if ($finduser) {
+                if (!$finduser->is_active) {
+                    return to_route('login')->with('error', 'Akun Anda tidak aktif');
+                }
+
                 Auth::login($finduser);
             } else {
                 $newUser = new User();

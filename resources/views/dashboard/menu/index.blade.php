@@ -29,6 +29,10 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-floating form-floating-outline mb-3">
+                            <input type="number" class="form-control" name="serial_number" id="serial_number" placeholder="No. Urut" value="{{ old('serial_number') }}">
+                            <label for="serial_number">No. Urut</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control" name="name" id="name" placeholder="Nama" value="{{ old('name') }}">
                             <label for="name">Nama</label>
                         </div>

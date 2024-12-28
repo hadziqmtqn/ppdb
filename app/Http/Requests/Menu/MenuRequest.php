@@ -9,6 +9,7 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'serial_number' => ['required', 'string'],
             'name' => ['required'],
             'type' => ['required', 'in:"main_menu","sub_menu"'],
             'main_menu' => ['required_if:type,"sub_menu"', 'nullable'],
@@ -27,6 +28,7 @@ class MenuRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'serial_number' => 'no. urut',
             'name' => 'nama',
             'type' => 'jenis',
             'main_menu' => 'menu utama',

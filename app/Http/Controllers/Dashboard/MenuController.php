@@ -48,7 +48,7 @@ class MenuController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = Menu::query()
-                    ->orderBy('name')
+                    ->orderBy('id')
                     ->orderBy('main_menu');
 
                 return DataTables::eloquent($data)
@@ -62,6 +62,11 @@ class MenuController extends Controller implements HasMiddleware
                     })
                     ->addColumn('name', function ($row) {
                         return '<span class="text-truncate d-flex align-items-center"><i class="mdi mdi-' . $row->icon . ' mdi-20px text-warning me-2"></i>'. $row->name .'</span>';
+                    })
+                    ->addColumn('main_menu', function ($row) {
+                        $menu = Menu::find($row->main_menu);
+
+                        return optional($menu)->name;
                     })
                     ->addColumn('visibility', function ($row) {
                         $visibilities = json_decode($row->visibility, true);
@@ -102,6 +107,7 @@ class MenuController extends Controller implements HasMiddleware
     {
         try {
             $menu = new Menu();
+            $menu->serial_number = $request->input('serial_number');
             $menu->name = $request->input('name');
             $menu->type = $request->input('type');
             $menu->main_menu = $request->input('type') == 'sub_menu' ? $request->input('main_menu') : null;
@@ -128,6 +134,7 @@ class MenuController extends Controller implements HasMiddleware
     public function update(MenuRequest $request, Menu $menu)
     {
         try {
+            $menu->serial_number = $request->input('serial_number');
             $menu->name = $request->input('name');
             $menu->type = $request->input('type');
             $menu->main_menu = $request->input('type') == 'sub_menu' ? $request->input('main_menu') : null;

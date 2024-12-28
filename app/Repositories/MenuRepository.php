@@ -34,9 +34,17 @@ class MenuRepository
 
         return $this->apiResponse('Success', $menus->map(function (Menu $menu) {
             return [
+                'id' => $menu->id,
                 'name' => $menu->name,
-                'slug' => $menu->slug,
             ];
         }), null, Response::HTTP_OK);
+    }
+
+    public function getMenus()
+    {
+        return $this->menu
+            ->mainMenu()
+            ->orderBy('serial_number')
+            ->get();
     }
 }

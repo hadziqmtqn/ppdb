@@ -36,5 +36,7 @@ class LoginController extends Controller
             Log::error($exception->getMessage());
             return redirect()->back()->with('error', 'Gagal masuk');
         }
+
+        return to_route('login')->with('error', 'Cek kembali akun Anda');
     }
 }
