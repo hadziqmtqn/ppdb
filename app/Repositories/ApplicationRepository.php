@@ -25,7 +25,7 @@ class ApplicationRepository
             'website' => $application->website,
             'mainWebsite' => $application->main_website,
             'registerVerification' => $application->register_verification,
-            'logo' => $application->hasMedia('logo') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(5),'logo') : null,
+            'logo' => $application->hasMedia('logo') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(5),'logo') : asset('assets/sekolah.png'),
         ]);
     }
 }
