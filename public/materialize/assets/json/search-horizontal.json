@@ -1,0 +1,69 @@
+{
+    "pages": [
+        {
+            "name": "Dashboard",
+            "icon": "mdi-home-outline",
+            "url": "/dashboard"
+        },
+        {
+            "name": "Institusi",
+            "icon": "mdi-office-building",
+            "url": "/institution"
+        },
+        {
+            "name": "Pegawai",
+            "icon": "mdi-account-group",
+            "url": "/employee"
+        },
+        {
+            "name": "Role And Permission",
+            "icon": "mdi-shield-account",
+            "url": "/role-and-permission"
+        },
+        {
+            "name": "Aplikasi",
+            "icon": "mdi-application",
+            "url": "/application"
+        },
+        {
+            "name": "Tahun Ajaran",
+            "icon": "mdi-calendar",
+            "url": "/school-year"
+        },
+        {
+            "name": "Job Position",
+            "icon": "mdi-account-tag-outline",
+            "url": "/job-position"
+        },
+        {
+            "name": "Level Jabatan",
+            "icon": "mdi-account-tie-outline",
+            "url": "/level-position"
+        },
+        {
+            "name": "Homebase Pegawai",
+            "icon": "mdi-home-city-outline",
+            "url": "/homebase"
+        },
+        {
+            "name": "Riwayat Pendidikan",
+            "icon": "mdi-school-outline",
+            "url": "/educational-background"
+        },
+        {
+            "name": "Data Penilai",
+            "icon": "mdi-account-star-outline",
+            "url": "/evaluator"
+        },
+        {
+            "name": "Nilai Indikator Kompetensi",
+            "icon": "mdi-chart-box-plus-outline",
+            "url": "/competency-indicator-value"
+        },
+        {
+            "name": "Rekap Kompetensi",
+            "icon": "mdi-chart-arc",
+            "url": "/competency-summary"
+        }
+    ]
+}
