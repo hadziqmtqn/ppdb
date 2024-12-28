@@ -37,9 +37,14 @@ class Menu extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function scopeMainMenu(Builder $query): Builder
+    public function scopeFilterByType(Builder $query, $type): Builder
     {
-        return $query->where('type', 'main_menu');
+        return $query->where('type', $type);
+    }
+
+    public function scopeMainMenu(Builder $query, $mainMenu): Builder
+    {
+        return $query->where('main_menu', $mainMenu);
     }
 
     public function scopeSearch(Builder $query, $search): Builder
