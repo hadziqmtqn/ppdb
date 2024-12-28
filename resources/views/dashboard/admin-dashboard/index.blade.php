@@ -1,7 +1,10 @@
 @extends('layouts.master')
 @section('content')
-    <div class="layout-demo-info">
-        <h4>Layout container</h4>
-        <p>Container layout sets a <code>max-width</code> at each responsive breakpoint.</p>
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
+    <div class="card mb-3">
+        <h5 class="card-header">{{ $title }}</h5>
+        <div class="card-body">
+            <p class="card-text">Some quick example text to build on the card title and make up.</p>
+        </div>
     </div>
 @endsection

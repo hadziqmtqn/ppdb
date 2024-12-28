@@ -10,3 +10,6 @@ role,role-write
 role,role-delete
 application,application-read
 application,application-write
+menu,menu-read
+menu,menu-write
+menu,menu-delete

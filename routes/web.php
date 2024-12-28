@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
+use App\Http\Controllers\Dashboard\MenuController;
+use App\Http\Controllers\Dashboard\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,4 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin-dashboard')->group(function () {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     });
+
+    Route::prefix('menu')->group(function () {
+        Route::get('/', [MenuController::class, 'index'])->name('menu');
+        Route::post('/store', [MenuController::class, 'store'])->name('menu.store');
+        Route::post('/datatable', [MenuController::class, 'datatable']);
+    });
+
+    Route::get('select-permission', [PermissionController::class, 'select']);
 });

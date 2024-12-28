@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Database\Seeders\Auth\AdminSeeder;
 use Database\Seeders\Auth\PermissionSeeder;
+use Database\Seeders\References\MenuSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             AdminSeeder::class,
             ApplicationSeeder::class,
+            MenuSeeder::class,
         ]);
     }
 }

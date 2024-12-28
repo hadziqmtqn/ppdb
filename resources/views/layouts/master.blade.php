@@ -212,11 +212,7 @@
                 <!-- Content -->
 
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <div class="layout-demo-wrapper">
-
-                        @yield('content')
-
-                    </div>
+                    @yield('content')
                 </div>
                 <!--/ Content -->
 
