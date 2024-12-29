@@ -24,7 +24,6 @@ class PermissionSeeder extends Seeder
             Permission::create([
                 'slug' => Str::uuid()->toString(),
                 'name' => $row['name'],
-                'category' => $row['category'],
             ]);
         }
     }

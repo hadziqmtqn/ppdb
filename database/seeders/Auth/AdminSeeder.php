@@ -13,6 +13,7 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
+        // Super Admin Role
         $role = Role::create([
             'slug' => Str::uuid()->toString(),
             'name' => 'super-admin'
@@ -27,5 +28,17 @@ class AdminSeeder extends Seeder
         $superAdmin->save();
 
         $superAdmin->assignRole($role);
+
+        // Admin Role
+        Role::create([
+            'slug' => Str::uuid()->toString(),
+            'name' => 'admin'
+        ]);
+
+        // User Role
+        Role::create([
+            'slug' => Str::uuid()->toString(),
+            'name' => 'user'
+        ]);
     }
 }

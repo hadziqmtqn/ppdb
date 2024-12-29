@@ -6,52 +6,65 @@
         Edit {{ $title }}
     </h4>
     <div class="card mb-4">
-        <div class="card-header header-elements">
+        <div class="card-header header-elements d-flex justify-content-between">
             <h5 class="m-0 me-2">Edit {{ $title }}</h5>
         </div>
         <form action="{{ route('role.update', $role->slug) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-flush-spacing">
-                        <tbody>
-                        <tr>
-                            <td class="text-nowrap fw-medium">
-                                {{ ucfirst(str_replace('-', ' ', $role->name)) }} Access
-                                <i class="mdi mdi-information-outline" data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system"></i>
-                            </td>
-                            <td>
-                                <div class="row">
-                                    <div class="form-check col-md-4">
-                                        <input class="form-check-input" type="checkbox" id="selectAll" />
-                                        <label class="form-check-label" for="selectAll"> Pilih Semua </label>
+                <div class="form-floating form-floating-outline mb-3">
+                    <input type="text" name="name" id="name" class="form-control" value="{{ $role->name }}">
+                    <label for="name">Nama</label>
+                </div>
+                <div class="row">
+                    @foreach($models as $key => $model)
+                        @php
+                            $modelName = preg_replace('/^.*\\\\/', '', $model);
+                        @endphp
+                        <div class="col-md-6">
+                            <div class="card shadow-none border-2 card-action mb-4">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-action-title mb-2">{{ $modelName }}</h5>
+                                        <p class="card-subtitle">{{ $model }}</p>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        {{--@foreach($permissions as $permission)
-                            <tr>
-                                <td class="text-nowrap fw-medium">{{ $permission->name }}</td>
-                                <td>
+                                <div class="card-body border-top border-1">
                                     <div class="row">
-                                        @foreach($permission['permissions'] as $key => $roleHasPermission)
-                                            <div class="form-check col-md-4">
-                                                <input class="form-check-input" type="checkbox" name="permissions[]" id="permission-{{ $permission['name'] }}-{{ $key }}" {{ in_array($roleHasPermission->id, $role['role_has_permissions']->pluck('permission_id')->toArray()) ? 'checked' : '' }} value="{{ $roleHasPermission->name }}" />
-                                                <label class="form-check-label" for="permission-{{ $permission['name'] }}-{{ $key }}"> {{ $roleHasPermission->name }} </label>
+                                        <div class="col-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-read') }}" id="{{ $modelName . '-read-' . $key }}">
+                                                <label class="form-check-label" for="{{ $modelName . '-read-' . $key }}"> Read </label>
                                             </div>
-                                        @endforeach
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-write') }}" id="{{ $modelName . '-write-' . $key }}">
+                                                <label class="form-check-label" for="{{ $modelName . '-write-' . $key }}"> Write </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-delete') }}" id="{{ $modelName . '-delete-' . $key }}">
+                                                <label class="form-check-label" for="{{ $modelName . '-delete-' . $key }}"> Delete </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </td>
-                            </tr>
-                        @endforeach--}}
-                        </tbody>
-                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
+                @include('layouts.session')
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
             </div>
         </form>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/role/check-all.js') }}"></script>
 @endsection
