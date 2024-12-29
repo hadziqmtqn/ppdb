@@ -1,4 +1,4 @@
-<meta name="description" content="" />
+<meta name="description" content="{{ $application['description'] }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Favicon -->
@@ -49,7 +49,6 @@
 <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css">
-<link rel="stylesheet" href="{{ asset('plugins/lite-youtube-embed/src/lite-yt-embed.css') }}" />
 
 {{--custom--}}
 <style>

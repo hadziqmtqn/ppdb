@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('role')->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('role.index');
+        Route::post('/datatable', [RoleController::class, 'datatable']);
         Route::get('/{role:slug}', [RoleController::class, 'edit'])->name('role.edit');
         Route::put('/{role:slug}/update', [RoleController::class, 'update'])->name('role.update');
     });

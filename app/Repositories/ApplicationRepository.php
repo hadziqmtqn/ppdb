@@ -22,6 +22,7 @@ class ApplicationRepository
 
         return collect([
             'name' => $application->name,
+            'description' => $application->description,
             'website' => $application->website,
             'mainWebsite' => $application->main_website,
             'registerVerification' => $application->register_verification,

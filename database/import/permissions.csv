@@ -2,9 +2,6 @@ name
 admin-read
 admin-write
 admin-delete
-permission-read
-permission-write
-permission-delete
 role-read
 role-write
 application-read
@@ -12,3 +9,14 @@ application-write
 menu-read
 menu-write
 menu-delete
+user-read
+user-write
+user-delete
+application-delete
+educational-level-read
+educational-level-write
+educational-level-delete
+permission-read
+permission-write
+permission-delete
+role-delete

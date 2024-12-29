@@ -14,6 +14,7 @@ class Application extends Model implements HasMedia
     protected $fillable = [
         'slug',
         'name',
+        'description',
         'website',
         'main_website',
     ];

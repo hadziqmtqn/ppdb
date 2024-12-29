@@ -18,43 +18,6 @@
                     <label for="name">Nama</label>
                 </div>
                 <div class="row">
-                    {{--@foreach($models as $key => $model)
-                        @php
-                            $modelName = preg_replace('/^.*\\\\/', '', $model);
-                        @endphp
-                        <div class="col-md-6">
-                            <div class="card shadow-none border-2 card-action mb-4">
-                                <div class="card-header d-flex justify-content-between">
-                                    <div>
-                                        <h5 class="card-action-title mb-2">{{ $modelName }}</h5>
-                                        <p class="card-subtitle">{{ $model }}</p>
-                                    </div>
-                                </div>
-                                <div class="card-body border-top border-1">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-read') }}" id="{{ $modelName . '-read-' . $key }}">
-                                                <label class="form-check-label" for="{{ $modelName . '-read-' . $key }}"> Read </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-write') }}" id="{{ $modelName . '-write-' . $key }}">
-                                                <label class="form-check-label" for="{{ $modelName . '-write-' . $key }}"> Write </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-delete') }}" id="{{ $modelName . '-delete-' . $key }}">
-                                                <label class="form-check-label" for="{{ $modelName . '-delete-' . $key }}"> Delete </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach--}}
                     @foreach($models as $key => $model)
                         @php
                             $modelName = preg_replace('/^.*\\\\/', '', $model);
@@ -63,7 +26,7 @@
                             <div class="card shadow-none border-2 card-action mb-4">
                                 <div class="card-header d-flex justify-content-between">
                                     <div>
-                                        <h5 class="card-action-title mb-2">{{ $modelName }}</h5>
+                                        <h5 class="card-action-title mb-2">{{ ucwords(str_replace('_', ' ', Str::snake($modelName))) }}</h5>
                                         <p class="card-subtitle">{{ $model }}</p>
                                     </div>
                                 </div>
@@ -71,19 +34,19 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-check">
-                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-read') }}" id="{{ $modelName . '-read-' . $key }}" @checked(in_array(Str::slug($modelName . '-read'), $role->permissions->pluck('name')->toArray()))>
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::kebab($modelName . '-read') }}" id="{{ $modelName . '-read-' . $key }}" @checked(in_array(Str::kebab($modelName . '-read'), $role->permissions->pluck('name')->toArray()))>
                                                 <label class="form-check-label" for="{{ $modelName . '-read-' . $key }}"> Read </label>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="form-check">
-                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-write') }}" id="{{ $modelName . '-write-' . $key }}" @checked(in_array(Str::slug($modelName . '-write'), $role->permissions->pluck('name')->toArray()))>
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::kebab($modelName . '-write') }}" id="{{ $modelName . '-write-' . $key }}" @checked(in_array(Str::kebab($modelName . '-write'), $role->permissions->pluck('name')->toArray()))>
                                                 <label class="form-check-label" for="{{ $modelName . '-write-' . $key }}"> Write </label>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="form-check">
-                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::slug($modelName . '-delete') }}" id="{{ $modelName . '-delete-' . $key }}" @checked(in_array(Str::slug($modelName . '-delete'), $role->permissions->pluck('name')->toArray()))>
+                                                <input class="form-check-input" name="permissions[]" type="checkbox" value="{{ Str::kebab($modelName . '-delete') }}" id="{{ $modelName . '-delete-' . $key }}" @checked(in_array(Str::kebab($modelName . '-delete'), $role->permissions->pluck('name')->toArray()))>
                                                 <label class="form-check-label" for="{{ $modelName . '-delete-' . $key }}"> Delete </label>
                                             </div>
                                         </div>
