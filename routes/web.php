@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
+use App\Http\Controllers\Dashboard\ApplicationController;
 use App\Http\Controllers\Dashboard\MenuController;
 use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\RoleController;
@@ -46,6 +47,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/datatable', [RoleController::class, 'datatable']);
         Route::get('/{role:slug}', [RoleController::class, 'edit'])->name('role.edit');
         Route::put('/{role:slug}/update', [RoleController::class, 'update'])->name('role.update');
+    });
+
+    Route::prefix('application')->group(function () {
+        Route::get('/', [ApplicationController::class, 'index'])->name('application.index');
+        Route::post('/', [ApplicationController::class, 'store'])->name('application.store');
     });
 
     // TODO Select Routes
