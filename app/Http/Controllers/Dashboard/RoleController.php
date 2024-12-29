@@ -50,10 +50,9 @@ class RoleController extends Controller implements HasMiddleware
     {
         $title = 'Role';
         $role->load('permissions');
-        $permissions = Permission::all();
         $models = $this->modelRepository->getAllModelsFromClassmap();
 
-        return view('dashboard.role.edit', compact('title', 'role', 'permissions', 'models'));
+        return view('dashboard.role.edit', compact('title', 'role', 'models'));
     }
 
     public function update(UpdateRequest $request, Role $role)
