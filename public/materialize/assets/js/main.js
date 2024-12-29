@@ -506,13 +506,15 @@ if (typeof $ !== 'undefined') {
       };
 
       // Search JSON
-      var searchJson = 'search-vertical.json'; // For vertical layout
+      /*var searchJson = 'search-vertical.json'; // For vertical layout
       if ($('#layout-menu').hasClass('menu-horizontal')) {
         var searchJson = 'search-horizontal.json'; // For vertical layout
-      }
+      }*/
+      const searchJson = '/search-menu';
       // Search API AJAX call
       var searchData = $.ajax({
-        url: assetsPath + 'json/' + searchJson, //? Use your own search api instead
+        //url: assetsPath + 'json/' + searchJson, //? Use your own search api instead
+        url: searchJson,
         dataType: 'json',
         async: false
       }).responseJSON;

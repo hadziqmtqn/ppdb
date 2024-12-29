@@ -182,4 +182,9 @@ class MenuController extends Controller implements HasMiddleware
     {
         return $this->menuRepository->getMainMenu($request);
     }
+
+    public function searchMenu()
+    {
+        return $this->menuRepository->searchMenus();
+    }
 }

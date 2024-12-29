@@ -1,5 +1,5 @@
 no,serial_number,name,type,main_menu,visibility,url,icon
-1,1,Dashboard,main_menu,,"[""dashboard""]",/admin-dashboard,home-outline
+1,1,Dashboard,main_menu,,"[""dashboard""]",/dashboard,home-outline
 2,2,Pengaturan,main_menu,,"[""permission-read"",""role-read""]",#,cog-outline
 3,1,Role,sub_menu,2,"[""role-read"",""permission-read""]",/role,shield-outline
 4,2,Admin,sub_menu,2,"[""admin-read"",""admin-write""]",/admin,account-multiple

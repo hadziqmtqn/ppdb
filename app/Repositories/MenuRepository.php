@@ -81,4 +81,20 @@ class MenuRepository
                 ]);
             })->filter();
     }
+
+    public function searchMenus(): Collection
+    {
+        return collect([
+            'pages' => $this->menu
+                ->where('url', '!=', '#')
+                ->get()
+                ->map(function (Menu $menu) {
+                    return [
+                        'name' => $menu->name,
+                        'icon' => 'mdi-' . $menu->icon,
+                        'url' => url($menu->url),
+                    ];
+                })->all()
+        ]);
+    }
 }

@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{menu:slug}/delete', [MenuController::class, 'destroy']);
     });
 
+    Route::get('search-menu', [MenuController::class, 'searchMenu']);
+
     Route::prefix('role')->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('role.index');
         Route::post('/datatable', [RoleController::class, 'datatable']);
