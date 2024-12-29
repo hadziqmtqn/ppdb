@@ -26,4 +26,9 @@ class EducationalLevel extends Model
             $educationalLevel->code = strtoupper(Str::slug($educationalLevel->name));
         });
     }
+
+    public static function getIdByCode($code): ?int
+    {
+        return self::query()->where('code', $code)->first()->id;
+    }
 }

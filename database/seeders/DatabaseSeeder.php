@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ApplicationSeeder::class,
             MenuSeeder::class,
             EducationalLevelSeeder::class,
+            EducationalInstitutionSeeder::class,
         ]);
     }
 }

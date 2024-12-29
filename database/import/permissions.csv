@@ -20,3 +20,6 @@ permission-read
 permission-write
 permission-delete
 role-delete
+educational-institution-read
+educational-institution-write
+educational-institution-delete
