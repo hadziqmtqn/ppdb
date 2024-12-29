@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\ApplicationController;
 use App\Http\Controllers\Dashboard\MenuController;
 use App\Http\Controllers\Dashboard\PermissionController;
+use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\RoleController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('application')->group(function () {
         Route::get('/', [ApplicationController::class, 'index'])->name('application.index');
         Route::post('/', [ApplicationController::class, 'store'])->name('application.store');
+    });
+
+    Route::prefix('educational-level')->group(function () {
+        Route::get('/', [EducationalLevelController::class, 'index'])->name('educational-level.index');
+        Route::post('/datatable', [EducationalLevelController::class, 'datatable']);
+        Route::put('{educationalLevel:slug}/store', [EducationalLevelController::class, 'store']);
     });
 
     // TODO Select Routes

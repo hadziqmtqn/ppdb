@@ -19,11 +19,11 @@ class EducationalLevel extends Model
 
         static::creating(function (EducationalLevel $educationalLevel) {
             $educationalLevel->slug = Str::uuid()->toString();
-            $educationalLevel->code = strtoupper($educationalLevel->name);
+            $educationalLevel->code = strtoupper(Str::slug($educationalLevel->name));
         });
 
         static::updating(function (EducationalLevel $educationalLevel) {
-            $educationalLevel->code = strtoupper($educationalLevel->name);
+            $educationalLevel->code = strtoupper(Str::slug($educationalLevel->name));
         });
     }
 }
