@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\ApplicationController;
+use App\Http\Controllers\Dashboard\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\MenuController;
 use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
@@ -61,6 +62,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [EducationalLevelController::class, 'index'])->name('educational-level.index');
         Route::post('/datatable', [EducationalLevelController::class, 'datatable']);
         Route::put('{educationalLevel:slug}/store', [EducationalLevelController::class, 'store']);
+    });
+
+    Route::prefix('educational-institution')->group(function () {
+        Route::get('/', [EducationalInstitutionController::class, 'index'])->name('educational-institution.index');
+        Route::post('/datatable', [EducationalInstitutionController::class, 'datatable']);
+        Route::post('/store', [EducationalInstitutionController::class, 'store']);
+        Route::get('{educationalInstitution:slug}/show', [EducationalInstitutionController::class, 'show'])->name('educational-institution.show');
+        Route::put('{educationalInstitution:slug}/update', [EducationalInstitutionController::class, 'update'])->name('educational-institution.update');
     });
 
     // TODO Select Routes

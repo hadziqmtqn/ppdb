@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -41,5 +42,10 @@ class EducationalInstitution extends Model implements HasMedia
         static::creating(function (EducationalInstitution $educationalInstitution) {
             $educationalInstitution->slug = Str::uuid()->toString();
         });
+    }
+
+    public function educationalLevel(): BelongsTo
+    {
+        return $this->belongsTo(EducationalLevel::class);
     }
 }
