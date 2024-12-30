@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Application\ApplicationRequest;
@@ -39,6 +39,7 @@ class ApplicationController extends Controller implements HasMiddleware
             $application->website = $request->input('website');
             $application->main_website = $request->input('main_website');
             $application->register_verification = $request->input('register_verification');
+            $application->notification_method = $request->input('notification_method');
             $application->save();
 
             if ($request->hasFile('logo') && $request->file('logo')->isValid()) {

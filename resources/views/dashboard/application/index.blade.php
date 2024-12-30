@@ -33,11 +33,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating form-floating-outline mb-3">
-                            <select name="register_verification" id="registrer_verification" class="form-select select2">
-                                <option value="0" {{ $application['registerVerification'] == 0 ? 'selected' : '' }}>Tidak</option>
-                                <option value="1" {{ $application['registerVerification'] == 1 ? 'selected' : '' }}>Ya</option>
+                            <select name="register_verification" id="register_verification" class="form-select select2">
+                                <option value="0" @selected($application['registerVerification'] == '0')>Tidak</option>
+                                <option value="1" @selected($application['registerVerification'] == '1')>Ya</option>
                             </select>
-                            <label for="registrer_verification">Verifikasi Akun</label>
+                            <label for="register_verification">Verifikasi Akun</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="notification_method" id="notification_method" class="form-select select2">
+                                <option value="email" @selected($application['notificationMethod'] == 'email')>Email</option>
+                                <option value="whatsapp" @selected($application['notificationMethod'] == 'whatsapp')>Whatsapp</option>
+                            </select>
+                            <label for="notification_method">Metode Notifikasi</label>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -47,6 +56,7 @@
                         </div>
                     </div>
                 </div>
+                @include('layouts.session')
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>

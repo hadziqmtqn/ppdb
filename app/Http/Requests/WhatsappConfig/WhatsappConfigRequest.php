@@ -11,11 +11,19 @@ class WhatsappConfigRequest extends FormRequest
         return [
             'domain' => ['required'],
             'api_key' => ['required'],
+            'is_active' => ['required', 'boolean'],
         ];
     }
 
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'is_active' => 'status aktif'
+        ];
     }
 }

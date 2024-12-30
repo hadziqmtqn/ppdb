@@ -14,6 +14,7 @@ class ApplicationRequest extends FormRequest
             'website' => ['nullable', 'url'],
             'main_website' => ['nullable', 'url'],
             'register_verification' => ['required', 'boolean'],
+            'notification_method' => ['required', 'in:email,whatsapp'],
             'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:700'],
         ];
     }
@@ -31,6 +32,7 @@ class ApplicationRequest extends FormRequest
             'website' => 'website',
             'main_website' => 'website utama',
             'register_verification' => 'verifikasi akun',
+            'notification_method' => 'metode notifikasi',
             'logo' => 'logo',
         ];
     }

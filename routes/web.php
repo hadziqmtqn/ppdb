@@ -5,12 +5,13 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
-use App\Http\Controllers\Dashboard\ApplicationController;
 use App\Http\Controllers\Dashboard\EducationalInstitutionController;
-use App\Http\Controllers\Dashboard\MenuController;
-use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
-use App\Http\Controllers\Dashboard\RoleController;
+use App\Http\Controllers\Dashboard\Setting\ApplicationController;
+use App\Http\Controllers\Dashboard\Setting\MenuController;
+use App\Http\Controllers\Dashboard\Setting\PermissionController;
+use App\Http\Controllers\Dashboard\Setting\RoleController;
+use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -76,6 +77,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [EducationalInstitutionController::class, 'store'])->name('educational-institution.store');
         Route::get('/{educationalInstitution:slug}', [EducationalInstitutionController::class, 'show'])->name('educational-institution.show');
         Route::put('/{educationalInstitution:slug}/update', [EducationalInstitutionController::class, 'update'])->name('educational-institution.update');
+    });
+
+    Route::prefix('whatsapp-config')->group(function () {
+        Route::get('/', [WhatsAppConfigController::class, 'index'])->name('whatsapp-config.index');
+        Route::post('/store', [WhatsAppConfigController::class, 'store'])->name('whatsapp-config.store');
     });
 
     // TODO Select Routes
