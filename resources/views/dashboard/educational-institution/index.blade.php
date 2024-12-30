@@ -27,4 +27,6 @@
 @section('scripts')
     <script src="{{ asset('js/educational-institution/datatable.js') }}"></script>
     <script src="{{ asset('js/educational-level/select.js') }}"></script>
+    <script src="{{ asset('js/idn-location/address.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/validation.js') }}"></script>
 @endsection

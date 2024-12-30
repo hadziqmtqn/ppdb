@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EducationalInstitution\EducationalInstitutionRequest;
+use App\Http\Requests\EducationalInstitution\UpdateEducationalInstitutionRequest;
 use App\Models\EducationalInstitution;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -55,7 +56,7 @@ class EducationalInstitutionController extends Controller implements HasMiddlewa
                         return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-warning') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
                     })
                     ->addColumn('action', function ($row) {
-                        return '<a href="' . route('role.edit', $row->slug) . '" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
+                        return '<a href="' . route('educational-institution.show', $row->slug) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a>';
                     })
                     ->rawColumns(['is_active', 'action'])
                     ->make();
@@ -102,11 +103,35 @@ class EducationalInstitutionController extends Controller implements HasMiddlewa
         return view('dashboard.educational-institution.show', compact('title', 'educationalInstitution'));
     }
 
-    public function update(EducationalInstitutionRequest $request, EducationalInstitution $educationalInstitution)
+    public function update(UpdateEducationalInstitutionRequest $request, EducationalInstitution $educationalInstitution)
     {
-        $educationalInstitution->update($request->validated());
+        try {
+            $educationalInstitution->educational_level_id = $request->input('educational_level_id');
+            $educationalInstitution->name = $request->input('name');
+            $educationalInstitution->email = $request->input('email');
+            $educationalInstitution->website = $request->input('website');
+            $educationalInstitution->province = $request->input('province');
+            $educationalInstitution->city = $request->input('city');
+            $educationalInstitution->district = $request->input('district');
+            $educationalInstitution->village = $request->input('village');
+            $educationalInstitution->street = $request->input('street');
+            $educationalInstitution->postal_code = $request->input('postal_code');
+            $educationalInstitution->is_active = $request->input('is_active');
+            $educationalInstitution->save();
 
-        return $educationalInstitution;
+            if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+                if ($educationalInstitution->hasMedia('logo')) {
+                    $educationalInstitution->clearMediaCollection('logo');
+                }
+
+                $educationalInstitution->addMediaFromRequest('logo')->toMediaCollection('logo');
+            }
+        }catch (Exception $exception){
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Terjadi Kesalahan');
+        }
+
+        return to_route('educational-institution.index')->with('success', 'Data berhasil disimpan');
     }
 
     public function destroy(EducationalInstitution $educationalInstitution)

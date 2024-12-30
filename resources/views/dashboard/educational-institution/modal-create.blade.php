@@ -6,7 +6,7 @@
                 <div class="text-center mb-4">
                     <h3 class="mb-2 pb-1">Tambah {{ $title }}</h3>
                 </div>
-                <form action="{{ route('educational-institution.store') }}" id="form" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" method="POST">
+                <form action="{{ route('educational-institution.store') }}" id="form" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="col-12 fv-plugins-icon-container">
                         <div class="form-floating form-floating-outline mb-3">
@@ -20,6 +20,38 @@
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ old('email') }}">
                             <label for="email">Email</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="url" class="form-control" name="website" id="website" placeholder="Website" value="{{ old('website') }}">
+                            <label for="website">Website</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="province" id="select-province" class="form-select select2" data-allow-clear="true"></select>
+                            <label for="select-province">Provinsi</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="city" id="select-city" class="form-select select2" data-allow-clear="true"></select>
+                            <label for="select-city">Kota/Kabupaten</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="district" id="select-district" class="form-select select2" data-allow-clear="true"></select>
+                            <label for="select-district">Kecamatan</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="village" id="select-village" class="form-select select2" data-allow-clear="true"></select>
+                            <label for="select-village">Desa/Kelurahan</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="street" id="street" class="form-control" value="{{ old('street') }}" placeholder="Jalan">
+                            <label for="street">Jalan</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="number" name="postal_code" class="form-control" id="postal_code" value="{{ old('postal_code') }}" placeholder="Kode Pos">
+                            <label for="postal_code">Kode Pos</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="file" name="logo" class="form-control" id="logo" accept=".jpg,,jpeg,.png">
+                            <label for="logo">Logo</label>
                         </div>
                         @include('layouts.session')
                     </div>
