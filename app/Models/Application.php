@@ -17,7 +17,16 @@ class Application extends Model implements HasMedia
         'description',
         'website',
         'main_website',
+        'register_verification',
+        'notification_method'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'register_verification' => 'boolean',
+        ];
+    }
 
     protected static function boot(): void
     {

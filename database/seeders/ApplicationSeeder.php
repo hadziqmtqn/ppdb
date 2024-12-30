@@ -14,6 +14,8 @@ class ApplicationSeeder extends Seeder
         $application->description = 'Aplikasi Pendaftaran Peserta Didik Baru';
         $application->website = 'https://ppdb.bkn.my.id';
         $application->main_website = 'https://bkn.my.id';
+        $application->register_verification = true;
+        $application->notification_method = 'email';
         $application->save();
     }
 }

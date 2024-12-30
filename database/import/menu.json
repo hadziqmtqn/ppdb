@@ -1,0 +1,110 @@
+[
+  {
+    "serial_number": 1,
+    "name": "Dashboard",
+    "type": "main_menu",
+    "main_menu": null,
+    "visibility": ["dashboard"],
+    "url": "/dashboard",
+    "icon": "home-outline",
+    "sub_menu": []
+  },
+  {
+    "serial_number": 2,
+    "name": "Lembaga Pendidikan",
+    "type": "main_menu",
+    "main_menu": null,
+    "visibility": ["educational-institution-read"],
+    "url": "#",
+    "icon": "school-outline",
+    "sub_menu": [
+      {
+        "id": null,
+        "serial_number": 1,
+        "name": "Lembaga",
+        "type": "sub_menu",
+        "visibility": ["educational-institution-read"],
+        "url": "/educational-institution",
+        "icon": "town-hall"
+      }
+    ]
+  },
+  {
+    "serial_number": 3,
+    "name": "Referensi",
+    "type": "main_menu",
+    "main_menu": null,
+    "visibility": ["educational-level-read"],
+    "url": "#",
+    "icon": "tag-outline",
+    "sub_menu": [
+      {
+        "serial_number": 1,
+        "name": "Level Pendidikan",
+        "type": "sub_menu",
+        "visibility": ["educational-level-read"],
+        "url": "/educational-level",
+        "icon": "school-outline"
+      }
+    ]
+  },
+  {
+    "serial_number": 4,
+    "name": "Pengaturan",
+    "type": "main_menu",
+    "main_menu": null,
+    "visibility": ["permission-read", "role-read"],
+    "url": "#",
+    "icon": "cog-outline",
+    "sub_menu": [
+      {
+        "serial_number": 1,
+        "name": "Role",
+        "type": "sub_menu",
+        "visibility": ["role-read", "permission-read"],
+        "url": "/role",
+        "icon": "shield-outline"
+      },
+      {
+        "serial_number": 2,
+        "name": "Admin",
+        "type": "sub_menu",
+        "visibility": ["admin-read", "admin-write"],
+        "url": "/admin",
+        "icon": "account-multiple"
+      },
+      {
+        "serial_number": 3,
+        "name": "Menu",
+        "type": "sub_menu",
+        "visibility": ["menu-read"],
+        "url": "/menu",
+        "icon": "menu"
+      },
+      {
+        "serial_number": 4,
+        "name": "Aplikasi",
+        "type": "sub_menu",
+        "visibility": ["application-read"],
+        "url": "/application",
+        "icon": "apps"
+      },
+      {
+        "serial_number": 5,
+        "name": "Konfig. Whatsapp",
+        "type": "sub_menu",
+        "visibility": ["whatsapp-config-read"],
+        "url": "/whatsapp-config",
+        "icon": "whatsapp"
+      },
+      {
+        "serial_number": 6,
+        "name": "Konfig. Email",
+        "type": "sub_menu",
+        "visibility": ["email-config-read"],
+        "url": "/email-config",
+        "icon": "email-fast-outline"
+      }
+    ]
+  }
+]

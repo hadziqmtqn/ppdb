@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('website')->nullable();
             $table->string('main_website')->nullable();
             $table->boolean('register_verification')->default(false);
+            $table->enum('notification_method', ['email', 'whatsapp']);
             $table->timestamps();
         });
     }

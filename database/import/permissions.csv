@@ -23,3 +23,7 @@ role-delete
 educational-institution-read
 educational-institution-write
 educational-institution-delete
+whatsapp-config-read
+whatsapp-config-write
+email-config-read
+email-config-write

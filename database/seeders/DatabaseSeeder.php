@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             EducationalLevelSeeder::class,
             EducationalInstitutionSeeder::class,
+            WhatsappConfigSeeder::class
         ]);
     }
 }
