@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\ApplicationRepository;
+use App\Repositories\EducationalLevelRepository;
 use App\Repositories\MenuRepository;
 use App\Repositories\ModelRepository;
 use App\Repositories\MyAccountRepository;
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MenuRepository::class, MenuRepository::class);
         $this->app->bind(RoleRepository::class, RoleRepository::class);
         $this->app->bind(ModelRepository::class, ModelRepository::class);
+        $this->app->bind(EducationalLevelRepository::class, EducationalLevelRepository::class);
     }
 
     /**

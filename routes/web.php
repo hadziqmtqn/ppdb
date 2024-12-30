@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('educational-institution')->group(function () {
         Route::get('/', [EducationalInstitutionController::class, 'index'])->name('educational-institution.index');
         Route::post('/datatable', [EducationalInstitutionController::class, 'datatable']);
-        Route::post('/store', [EducationalInstitutionController::class, 'store']);
+        Route::post('/store', [EducationalInstitutionController::class, 'store'])->name('educational-institution.store');
         Route::get('{educationalInstitution:slug}/show', [EducationalInstitutionController::class, 'show'])->name('educational-institution.show');
         Route::put('{educationalInstitution:slug}/update', [EducationalInstitutionController::class, 'update'])->name('educational-institution.update');
     });
@@ -75,4 +75,5 @@ Route::middleware('auth')->group(function () {
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);
     Route::get('select-main-menu', [MenuController::class, 'select']);
+    Route::get('select-educational-level', [EducationalLevelController::class, 'select']);
 });

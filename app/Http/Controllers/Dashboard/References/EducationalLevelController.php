@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\References;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EducationalLevel\EducationalLevelRequest;
 use App\Models\EducationalLevel;
+use App\Repositories\EducationalLevelRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -20,6 +21,13 @@ use Yajra\DataTables\Facades\DataTables;
 class EducationalLevelController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected EducationalLevelRepository $educationalLevelRepository;
+
+    public function __construct(EducationalLevelRepository $educationalLevelRepository)
+    {
+        $this->educationalLevelRepository = $educationalLevelRepository;
+    }
 
     public static function middleware(): array
     {
@@ -77,5 +85,10 @@ class EducationalLevelController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil disimpan!', $educationalLevel, null, Response::HTTP_OK);
+    }
+
+    public function select(Request $request)
+    {
+        return $this->educationalLevelRepository->select($request);
     }
 }
