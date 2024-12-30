@@ -11,14 +11,17 @@ document.addEventListener('DOMContentLoaded', function (e) {
         if (formValidation) {
             const fv = FormValidation.formValidation(formValidation, {
                 fields: {
-                    domain: {
+                    mail_username: {
                         validators: {
                             notEmpty: {
                                 message: 'Kolom ini wajib diisi'
                             },
+                            emailAddress: {
+                                message: 'Harap masukkan email valid'
+                            }
                         }
                     },
-                    api_key: {
+                    mail_password_app: {
                         validators: {
                             notEmpty: {
                                 message: 'Kolom ini wajib diisi'

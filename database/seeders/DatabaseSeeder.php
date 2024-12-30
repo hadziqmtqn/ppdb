@@ -6,6 +6,8 @@ use Database\Seeders\Auth\AdminSeeder;
 use Database\Seeders\Auth\PermissionSeeder;
 use Database\Seeders\References\EducationalLevelSeeder;
 use Database\Seeders\References\MenuSeeder;
+use Database\Seeders\Setting\EmailConfigSeeder;
+use Database\Seeders\Setting\WhatsappConfigSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +24,8 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             EducationalLevelSeeder::class,
             EducationalInstitutionSeeder::class,
-            WhatsappConfigSeeder::class
+            WhatsappConfigSeeder::class,
+            EmailConfigSeeder::class,
         ]);
     }
 }

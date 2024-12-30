@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Setting;
 
 use App\Models\WhatsappConfig;
 use Illuminate\Database\Seeder;

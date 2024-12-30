@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
+use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
 use App\Http\Controllers\Dashboard\Setting\MenuController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
@@ -82,6 +83,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('whatsapp-config')->group(function () {
         Route::get('/', [WhatsAppConfigController::class, 'index'])->name('whatsapp-config.index');
         Route::post('/store', [WhatsAppConfigController::class, 'store'])->name('whatsapp-config.store');
+    });
+
+    Route::prefix('email-config')->group(function () {
+        Route::get('/', [EmailConfigController::class, 'index'])->name('email-config.index');
+        Route::post('/store', [EmailConfigController::class, 'store'])->name('email-config.store');
     });
 
     // TODO Select Routes
