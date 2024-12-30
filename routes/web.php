@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\OAuthController;
+use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\ApplicationController;
 use App\Http\Controllers\Dashboard\EducationalInstitutionController;
@@ -33,6 +34,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    });
+
+    Route::prefix('account')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('account.index');
+        Route::post('/update', [AccountController::class, 'update'])->name('account.update');
     });
 
     Route::prefix('menu')->group(function () {

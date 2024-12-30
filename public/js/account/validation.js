@@ -1,7 +1,3 @@
-/**
- *  Pages Validation
- */
-
 'use strict';
 const formValidation = document.querySelector('#form');
 
@@ -10,13 +6,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
         if (formValidation) {
             const fv = FormValidation.formValidation(formValidation, {
                 fields: {
-                    serial_number: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Kolom ini wajib diisi'
-                            },
-                        }
-                    },
                     name: {
                         validators: {
                             notEmpty: {
@@ -24,21 +13,32 @@ document.addEventListener('DOMContentLoaded', function (e) {
                             },
                         }
                     },
-                    type: {
+                    email: {
                         validators: {
                             notEmpty: {
                                 message: 'Kolom ini wajib diisi'
                             },
+                            emailAddress: {
+                                message: 'Harap masukkan email valid'
+                            }
                         }
                     },
-                    main_menu: {
+                    current_password: {
+                        validators: {
+                            stringLength: {
+                                min: 6,
+                                message: 'Kata sandi minimal 6 karakter'
+                            },
+                        },
+                    },
+                    password: {
                         validators: {
                             callback: {
-                                message: 'Kolom ini wajib diisi jika Sub Menu',
+                                message: 'Kolom ini wajib diisi jika Kata Sandi sekarang diisi',
                                 callback: function (input) {
-                                    const subMenuType = document.querySelector('#type');
+                                    const currentPassword = document.querySelector('#currentPassword');
 
-                                    if (subMenuType && subMenuType.value === 'sub_menu') {
+                                    if (currentPassword && currentPassword.value.trim() !== '') {
                                         return input.value.trim() !== '';
                                     }
 
@@ -46,20 +46,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
                                 },
                             },
                         },
-                    },
-                    "visibility[]": {
-                        validators: {
-                            notEmpty: {
-                                message: 'Kolom ini wajib diisi'
-                            },
-                        }
-                    },
-                    url: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Kolom ini wajib diisi'
-                            },
-                        }
                     },
                 },
                 plugins: {
@@ -83,33 +69,4 @@ document.addEventListener('DOMContentLoaded', function (e) {
             });
         }
     })();
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const typeSelect = document.querySelector('#type');
-    const mainMenuVisibility = document.querySelector('#mainMenuVisibility');
-
-    if (typeSelect) {
-        // Inisialisasi Select2
-        $(typeSelect).select2();
-
-        // Event listener untuk Select2
-        $(typeSelect).on('select2:select', function (e) {
-            const selectedValue = e.params.data.id; // Mendapatkan nilai yang dipilih
-
-            if (selectedValue === 'sub_menu') {
-                // Tampilkan form "Main Menu"
-                mainMenuVisibility.classList.remove('d-none');
-            } else {
-                // Sembunyikan form "Main Menu"
-                mainMenuVisibility.classList.add('d-none');
-            }
-        });
-
-        // Inisialisasi status awal (jika sudah ada nilai terpilih)
-        const initialValue = typeSelect.value;
-        if (initialValue === 'sub_menu') {
-            mainMenuVisibility.classList.remove('d-none');
-        }
-    }
 });
