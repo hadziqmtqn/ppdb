@@ -19,7 +19,6 @@ class MenuSeeder extends Seeder
             $menu->serial_number = $row['serial_number'];
             $menu->name = $row['name'];
             $menu->type = $row['type'];
-            $menu->main_menu = !empty($row['main_menu']) ? $row['main_menu'] : null;
             $menu->visibility = json_encode($row['visibility']);
             $menu->url = $row['url'];
             $menu->icon = !empty($row['icon']) ? $row['icon'] : null;

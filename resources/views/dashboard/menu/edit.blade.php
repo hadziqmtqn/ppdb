@@ -3,10 +3,10 @@
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span>
         <span class="text-muted fw-light"><a href="{{ route('menu.index') }}">Menu</a> /</span>
-        {{ $title }}
+        Edit {{ $title }}
     </h4>
     <div class="card mb-3">
-        <h5 class="card-header">Tambah {{ $title }}</h5>
+        <h5 class="card-header">Edit {{ $title }}</h5>
         <form action="{{ route('menu.update', $menu->slug) }}" id="form" method="POST">
             @csrf
             @method('PUT')

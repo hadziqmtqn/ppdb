@@ -3,7 +3,6 @@
     "serial_number": 1,
     "name": "Dashboard",
     "type": "main_menu",
-    "main_menu": null,
     "visibility": ["dashboard"],
     "url": "/dashboard",
     "icon": "home-outline",
@@ -13,13 +12,11 @@
     "serial_number": 2,
     "name": "Lembaga Pendidikan",
     "type": "main_menu",
-    "main_menu": null,
     "visibility": ["educational-institution-read"],
     "url": "#",
     "icon": "school-outline",
     "sub_menu": [
       {
-        "id": null,
         "serial_number": 1,
         "name": "Lembaga",
         "type": "sub_menu",
@@ -33,7 +30,6 @@
     "serial_number": 3,
     "name": "Referensi",
     "type": "main_menu",
-    "main_menu": null,
     "visibility": ["educational-level-read"],
     "url": "#",
     "icon": "tag-outline",
@@ -52,7 +48,6 @@
     "serial_number": 4,
     "name": "Pengaturan",
     "type": "main_menu",
-    "main_menu": null,
     "visibility": ["permission-read", "role-read"],
     "url": "#",
     "icon": "cog-outline",
@@ -104,6 +99,14 @@
         "visibility": ["email-config-read"],
         "url": "/email-config",
         "icon": "email-fast-outline"
+      },
+      {
+        "serial_number": 7,
+        "name": "Templat Pesan",
+        "type": "sub_menu",
+        "visibility": ["message-template-read"],
+        "url": "/message-template",
+        "icon": "message-badge-outline"
       }
     ]
   }
