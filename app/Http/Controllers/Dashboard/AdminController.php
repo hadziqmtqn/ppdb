@@ -67,7 +67,9 @@ class AdminController extends Controller implements HasMiddleware
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="' . route('admin.show', $row->username) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
-                        $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                        if ($row->roles->first()->name != 'super-admin') {
+                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                        }
 
                         return $btn;
                     })
@@ -128,7 +130,7 @@ class AdminController extends Controller implements HasMiddleware
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             if ($request->input('password')) $user->password = Hash::make($request->input('password'));
-            $user->is_active = $request->input('is_active');
+            if ($user->roles->first()->name != 'super-admin') $user->is_active = $request->input('is_active');
             $user->save();
 
             if ($request->hasFile('photo') && $request->file('photo')->isValid()) {

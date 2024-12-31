@@ -9,13 +9,14 @@ class UpdateAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'role_id' => ['required', 'integer', 'exists:roles,id'],
             'name' => ['required', 'min:5'],
             'email' => ['required', 'email', 'unique:users,email,' . $this->route('user')->id . 'id'],
             'educational_institution_id' => ['required_if:role_id,2', 'nullable', 'integer', 'exists:educational_institutions,id'],
             'whatsapp_number' => ['required', 'numeric', 'min:10'],
             'password' => ['nullable', 'min:8', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'],
             'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:700'],
-            'is_active' => ['required', 'boolean']
+            'is_active' => ['required_if:role_id,2', 'nullable', 'boolean']
         ];
     }
 

@@ -16,6 +16,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
+                        <input type="hidden" name="role_id" value="{{ $user->roles->first()->id }}">
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control" name="role" id="role" placeholder="Role" value="{{ ucfirst(str_replace('-', ' ', $user->roles->first()->name)) }}" disabled>
                             <label for="role">Role</label>
@@ -55,15 +56,17 @@
                             <label for="photo">Foto</label>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-floating form-floating-outline mb-3">
-                            <select name="is_active" id="active" class="form-select select2">
-                                <option value="1" @selected($user->is_active == 1)>Aktif</option>
-                                <option value="0" @selected($user->is_active == 0)>Tidak Aktif</option>
-                            </select>
-                            <label for="active">Status Aktif</label>
+                    @if($user->roles->first()->name != 'super-admin')
+                        <div class="col-md-6">
+                            <div class="form-floating form-floating-outline mb-3">
+                                <select name="is_active" id="active" class="form-select select2">
+                                    <option value="1" @selected($user->is_active == 1)>Aktif</option>
+                                    <option value="0" @selected($user->is_active == 0)>Tidak Aktif</option>
+                                </select>
+                                <label for="active">Status Aktif</label>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="divider text-start">
                     <div class="divider-text">Keamanan</div>
