@@ -27,6 +27,6 @@ whatsapp-config-read
 whatsapp-config-write
 email-config-read
 email-config-write
-template-message-read
-template-message-write
-template-message-delete
+message-template-read
+message-template-write
+message-template-delete

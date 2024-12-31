@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\References;
+namespace Database\Seeders\Setting;
 
 use App\Models\Menu;
 use Illuminate\Database\Seeder;
