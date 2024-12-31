@@ -123,4 +123,9 @@ class RoleController extends Controller implements HasMiddleware
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
+
+    public function select(Request $request)
+    {
+        return $this->roleRepository->select($request);
+    }
 }

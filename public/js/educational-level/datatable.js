@@ -25,7 +25,6 @@ $(function () {
         ]
     });
 
-
     // Menyimpan halaman saat ini sebelum reload
     function reloadTable() {
         const currentPage = dataTable.page();

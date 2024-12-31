@@ -21,7 +21,7 @@ class MyAccountRepository
 
         return collect([
             'name' => $user->name,
-            'role' => ucfirst(str_replace('-', ' ',$user->roles->first()->name)),
+            'role' => ucfirst(str_replace('-', ' ', $user->roles->first()->name)),
             'createdAt' => Carbon::parse($user->created_at)->isoFormat('DD MMM Y'),
             'photo' => $user->hasMedia('photo') ? $user->getFirstTemporaryUrl(Carbon::now()->addMinutes(5), 'photo') : url('https://ui-avatars.com/api/?name='. $user->name .'&color=7F9CF5&background=EBF4FF'),
         ]);

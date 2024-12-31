@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AccountController;
+use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
@@ -90,8 +91,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [EmailConfigController::class, 'store'])->name('email-config.store');
     });
 
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+        Route::post('/datatable', [AdminController::class, 'datatable']);
+        Route::post('/store', [AdminController::class, 'store'])->name('admin.store');
+        Route::get('/{user:username}', [AdminController::class, 'show'])->name('admin.show');
+        Route::put('/{user:username}/update', [AdminController::class, 'update'])->name('admin.update');
+        Route::delete('/{user:username}/delete', [AdminController::class, 'destroy']);
+    });
+
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);
     Route::get('select-main-menu', [MenuController::class, 'select']);
     Route::get('select-educational-level', [EducationalLevelController::class, 'select']);
+    Route::get('select-role', [RoleController::class, 'select']);
 });

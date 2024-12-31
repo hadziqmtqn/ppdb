@@ -29,7 +29,7 @@ class LoginController extends Controller
                     return to_route('login')->with('error', 'Akun Anda tidak aktif');
                 }
 
-                return to_route('dashboard')
+                return redirect()->intended(route('dashboard'))
                     ->with('success', 'Selamat datang ' . auth()->user()->name);
             }
         }catch (Exception $exception){

@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PermissionSeeder::class,
-            AdminSeeder::class,
             ApplicationSeeder::class,
             MenuSeeder::class,
             EducationalLevelSeeder::class,
             EducationalInstitutionSeeder::class,
+            AdminSeeder::class,
             WhatsappConfigSeeder::class,
             EmailConfigSeeder::class,
         ]);
