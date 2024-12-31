@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRequest;
+use App\Http\Requests\Admin\UpdateAdminRequest;
 use App\Models\Admin;
 use App\Models\User;
 use App\Traits\ApiResponse;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller implements HasMiddleware
@@ -110,22 +112,55 @@ class AdminController extends Controller implements HasMiddleware
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
-    public function show(Admin $admin)
+    public function show(User $user): View
     {
-        return $admin;
+        $title = 'Admin';
+        $user->load('admin.educationalInstitution:id,name');
+
+        return \view('dashboard.admin.show', compact('title', 'user'));
     }
 
-    public function update(AdminRequest $request, Admin $admin)
+    public function update(UpdateAdminRequest $request, User $user)
     {
-        $admin->update($request->validated());
+        try {
+            $user->load('admin');
+            DB::beginTransaction();
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            if ($request->input('password')) $user->password = Hash::make($request->input('password'));
+            $user->is_active = $request->input('is_active');
+            $user->save();
 
-        return $admin;
+            if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+                if ($user->hasMedia('photo')) $user->clearMediaCollection('photo');
+                $user->addMediaFromRequest('photo')->toMediaCollection('photo');
+            }
+
+            $admin = $user->admin;
+            $admin->educational_institution_id = $request->input('educational_institution_id');
+            $admin->whatsapp_number = $request->input('whatsapp_number');
+            $admin->save();
+            DB::commit();
+        }catch (Exception $exception) {
+            DB::rollBack();
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Data gagal disimpan');
+        }
+
+        return to_route('admin.index')->with('success', 'Data berhasil disimpan');
     }
 
-    public function destroy(Admin $admin)
+    public function destroy(User $user): \Symfony\Component\HttpFoundation\JsonResponse
     {
-        $admin->delete();
+        try {
+            if ($user->hasMedia('photo')) $user->clearMediaCollection('photo');
 
-        return response()->json();
+            $user->delete();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dihapus', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil dihapus', null, null, Response::HTTP_OK);
     }
 }

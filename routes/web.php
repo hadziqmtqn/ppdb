@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
-use App\Http\Controllers\Dashboard\EducationalInstitutionController;
+use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
@@ -105,4 +105,5 @@ Route::middleware('auth')->group(function () {
     Route::get('select-main-menu', [MenuController::class, 'select']);
     Route::get('select-educational-level', [EducationalLevelController::class, 'select']);
     Route::get('select-role', [RoleController::class, 'select']);
+    Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);
 });

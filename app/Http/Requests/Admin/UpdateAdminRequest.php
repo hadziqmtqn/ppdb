@@ -4,18 +4,18 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminRequest extends FormRequest
+class UpdateAdminRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'role_id' => ['required', 'integer', 'exists:roles,id'],
             'name' => ['required', 'min:5'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email', 'unique:users,email,' . $this->route('user')->id . 'id'],
             'educational_institution_id' => ['required_if:role_id,2', 'nullable', 'integer', 'exists:educational_institutions,id'],
             'whatsapp_number' => ['required', 'numeric', 'min:10'],
-            'password' => ['required', 'min:8', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'],
-            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:700']
+            'password' => ['nullable', 'min:8', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:700'],
+            'is_active' => ['required', 'boolean']
         ];
     }
 
@@ -35,14 +35,14 @@ class AdminRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'role_id' => 'role',
             'name' => 'nama',
             'email' => 'email',
             'educational_institution_id' => 'lembaga',
             'whatsapp_number' => 'no. whatsapp',
             'password' => 'kata sandi',
             'password_confirmation' => 'konfirmasi kata sandi',
-            'photo' => 'foto'
+            'photo' => 'foto',
+            'is_active' => 'status aktif'
         ];
     }
 }

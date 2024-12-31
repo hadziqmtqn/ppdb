@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EducationalInstitution\EducationalInstitutionRequest;
 use App\Http\Requests\EducationalInstitution\UpdateEducationalInstitutionRequest;
 use App\Models\EducationalInstitution;
+use App\Repositories\EducationalInstitutionRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class EducationalInstitutionController extends Controller implements HasMiddleware
 {
+    protected EducationalInstitutionRepository $educationalInstitutionRepository;
+
+    public function __construct(EducationalInstitutionRepository $educationalInstitutionRepository)
+    {
+        $this->educationalInstitutionRepository = $educationalInstitutionRepository;
+    }
+
     public static function middleware(): array
     {
         // TODO: Implement middleware() method.
@@ -134,10 +142,8 @@ class EducationalInstitutionController extends Controller implements HasMiddlewa
         return to_route('educational-institution.index')->with('success', 'Data berhasil disimpan');
     }
 
-    public function destroy(EducationalInstitution $educationalInstitution)
+    public function select(Request $request)
     {
-        $educationalInstitution->delete();
-
-        return response()->json();
+        return $this->educationalInstitutionRepository->select($request);
     }
 }
