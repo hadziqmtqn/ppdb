@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
+use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
@@ -111,6 +112,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/{messageTemplate:slug}/update', [MessageTemplateController::class, 'update'])->name('message-template.update');
         Route::delete('/{messageTemplate:slug}/delete', [MessageTemplateController::class, 'destroy']);
     });
+
+    Route::get('email-verification/{emailChange:token}', [EmailChangeController::class, 'verification'])->name('email-change.verification');
 
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);

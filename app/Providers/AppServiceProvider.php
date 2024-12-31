@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\EmailChangePolicy;
 use App\Repositories\ApplicationRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
@@ -10,6 +11,7 @@ use App\Repositories\ModelRepository;
 use App\Repositories\MyAccountRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ModelRepository::class, ModelRepository::class);
         $this->app->bind(EducationalLevelRepository::class, EducationalLevelRepository::class);
         $this->app->bind(EducationalInstitutionRepository::class, EducationalInstitutionRepository::class);
+
+        Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);
     }
 
     /**

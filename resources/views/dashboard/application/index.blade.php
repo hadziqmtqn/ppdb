@@ -38,6 +38,7 @@
                                 <option value="1" @selected($application['registerVerification'] == '1')>Ya</option>
                             </select>
                             <label for="register_verification">Verifikasi Akun</label>
+                            <small class="fst-italic">Pengguna baru harus memverifikasi akun setelah registrasi</small>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -47,6 +48,7 @@
                                 <option value="whatsapp" @selected($application['notificationMethod'] == 'whatsapp')>Whatsapp</option>
                             </select>
                             <label for="notification_method">Metode Notifikasi</label>
+                            <small class="fst-italic">Metode pesan dikirim ke pengguna</small>
                         </div>
                     </div>
                     <div class="col-md-6">

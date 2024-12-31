@@ -61,6 +61,7 @@
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" name="icon" id="icon" placeholder="Ikon" class="form-control" value="{{ old('icon') }}">
                             <label for="icon">Ikon</label>
+                            <small class="fst-italic">Ikon diambil dari situs <a href="{{ url('https://pictogrammers.com/library/mdi/') }}" target="_blank">Material Design Icon</a>. Anda hanya mengambil nama ikon seperti <strong>ab-testing</strong></small>
                         </div>
                         @include('layouts.session')
                     </div>

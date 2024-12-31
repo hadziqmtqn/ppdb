@@ -32,7 +32,7 @@ class AdminSeeder extends Seeder
         $superAdmin->name = 'Super Admin';
         $superAdmin->email = 'superadmin@bkn.my.id';
         $superAdmin->password = Hash::make('superadmin');
-        $superAdmin->account_verified = true;
+        $superAdmin->email_verified_at = now();
         $superAdmin->save();
 
         $superAdmin->assignRole($superAdminRole);
@@ -63,6 +63,7 @@ class AdminSeeder extends Seeder
             $user->name = $row['name'];
             $user->email = $row['email'];
             $user->password = Hash::make($row['password']);
+            $user->email_verified_at = now();
             $user->save();
 
             $user->assignRole($adminRole);
