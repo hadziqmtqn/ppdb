@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->string('title');
             $table->unsignedBigInteger('educational_institution_id');
             $table->string('category');
+            $table->enum('recipient', ['super-admin', 'admin', 'user']);
             $table->text('message');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

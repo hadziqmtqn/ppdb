@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class MessageTemplate extends Model
@@ -12,6 +13,7 @@ class MessageTemplate extends Model
         'title',
         'educational_institution_id',
         'category',
+        'recipient',
         'message',
         'is_active',
     ];
@@ -31,5 +33,28 @@ class MessageTemplate extends Model
         static::creating(function (MessageTemplate $messageTemplate) {
             $messageTemplate->slug = Str::uuid()->toString();
         });
+
+        static::created(function (MessageTemplate $messageTemplate) {
+            self::where([
+                'educational_institution_id' => $messageTemplate->educational_institution_id,
+                'category' => $messageTemplate->category,
+                'recipient' => $messageTemplate->recipient
+            ])
+                ->update(['is_active' => false]);
+        });
+
+        static::updated(function (MessageTemplate $messageTemplate) {
+            self::where([
+                'educational_institution_id' => $messageTemplate->educational_institution_id,
+                'category' => $messageTemplate->category,
+                'recipient' => $messageTemplate->recipient
+            ])
+                ->update(['is_active' => false]);
+        });
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
     }
 }

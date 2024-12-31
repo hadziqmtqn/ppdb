@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
 use App\Http\Controllers\Dashboard\Setting\MenuController;
+use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
@@ -100,6 +101,15 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{user:username}/delete', [AdminController::class, 'destroy']);
         Route::post('/{user:username}/restore', [AdminController::class, 'restore']);
         Route::delete('/{user:username}/force-delete', [AdminController::class, 'forceDelete']);
+    });
+
+    Route::prefix('message-template')->group(function () {
+        Route::get('/', [MessageTemplateController::class, 'index'])->name('message-template.index');
+        Route::post('/store', [MessageTemplateController::class, 'store'])->name('message-template.store');
+        Route::post('/datatable', [MessageTemplateController::class, 'datatable']);
+        Route::get('/{messageTemplate:slug}', [MessageTemplateController::class, 'show'])->name('message-template.show');
+        Route::put('/{messageTemplate:slug}/update', [MessageTemplateController::class, 'update'])->name('message-template.update');
+        Route::delete('/{messageTemplate:slug}/delete', [MessageTemplateController::class, 'destroy']);
     });
 
     // TODO Select Routes

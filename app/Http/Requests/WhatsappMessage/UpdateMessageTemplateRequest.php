@@ -4,7 +4,7 @@ namespace App\Http\Requests\WhatsappMessage;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MessageTemplateRequest extends FormRequest
+class UpdateMessageTemplateRequest extends FormRequest
 {
     public function rules(): array
     {
@@ -14,6 +14,7 @@ class MessageTemplateRequest extends FormRequest
             'category' => ['required'],
             'recipient' => ['required', 'in:super-admin,admin,user'],
             'message' => ['required'],
+            'is_active' => ['required', 'boolean']
         ];
     }
 
@@ -30,6 +31,7 @@ class MessageTemplateRequest extends FormRequest
             'category' => 'kategori',
             'recipient' => 'penerima',
             'message' => 'pesan',
+            'is_active' => 'status aktif',
         ];
     }
 }

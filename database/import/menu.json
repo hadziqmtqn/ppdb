@@ -48,7 +48,15 @@
     "serial_number": 4,
     "name": "Pengaturan",
     "type": "main_menu",
-    "visibility": ["permission-read", "role-read"],
+    "visibility": [
+      "role-read",
+      "admin-read",
+      "menu-read",
+      "application-read",
+      "whatapp-config-read",
+      "email-config-read",
+      "message-template-read"
+    ],
     "url": "#",
     "icon": "cog-outline",
     "sub_menu": [
@@ -56,7 +64,7 @@
         "serial_number": 1,
         "name": "Role",
         "type": "sub_menu",
-        "visibility": ["role-read", "permission-read"],
+        "visibility": ["role-read"],
         "url": "/role",
         "icon": "shield-outline"
       },
@@ -64,7 +72,7 @@
         "serial_number": 2,
         "name": "Admin",
         "type": "sub_menu",
-        "visibility": ["admin-read", "admin-write"],
+        "visibility": ["admin-read"],
         "url": "/admin",
         "icon": "account-multiple"
       },
