@@ -98,6 +98,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/{user:username}', [AdminController::class, 'show'])->name('admin.show');
         Route::put('/{user:username}/update', [AdminController::class, 'update'])->name('admin.update');
         Route::delete('/{user:username}/delete', [AdminController::class, 'destroy']);
+        Route::post('/{user:username}/restore', [AdminController::class, 'restore']);
+        Route::delete('/{user:username}/force-delete', [AdminController::class, 'forceDelete']);
     });
 
     // TODO Select Routes

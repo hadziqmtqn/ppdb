@@ -32,6 +32,7 @@ class AdminController extends Controller implements HasMiddleware
             new Middleware(PermissionMiddleware::using('admin-read'), only: ['index', 'show']),
             new Middleware(PermissionMiddleware::using('admin-write'), only: ['store', 'update']),
             new Middleware(PermissionMiddleware::using('admin-delete'), only: ['destroy', 'restore']),
+            new Middleware('role:super-admin', only: ['forceDelete'])
         ];
     }
 
@@ -48,7 +49,18 @@ class AdminController extends Controller implements HasMiddleware
             if ($request->ajax()) {
                 $data = User::query()
                     ->with('admin.educationalInstitution:id,name')
-                    ->whereHas('admin');
+                    ->whereHas('admin')
+                    ->when($request->get('status'), function ($query) use ($request) {
+                        $query->when($request->get('status') == 'active', function ($query) use ($request) {
+                            $query->where('is_active', true);
+                        })
+                            ->when($request->get('status') == 'inactive', function ($query) use ($request) {
+                                $query->where('is_active', false);
+                            })
+                            ->when($request->get('status') == 'deleted', function ($query) use ($request) {
+                                $query->onlyTrashed();
+                            });
+                    });
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -66,9 +78,16 @@ class AdminController extends Controller implements HasMiddleware
                         return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="' . route('admin.show', $row->username) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
-                        if ($row->roles->first()->name != 'super-admin') {
-                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                        $btn = null;
+
+                        if (!$row->deleted_at) {
+                            $btn = '<a href="' . route('admin.show', $row->username) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
+                            if ($row->roles->first()->name != 'super-admin') {
+                                $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                            }
+                        }else {
+                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
+                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="force-delete btn btn-sm btn-danger"><i class="mdi mdi-trash-can-outline me-1"></i>Hapus Permanen</button>';
                         }
 
                         return $btn;
@@ -155,14 +174,55 @@ class AdminController extends Controller implements HasMiddleware
     public function destroy(User $user): \Symfony\Component\HttpFoundation\JsonResponse
     {
         try {
-            if ($user->hasMedia('photo')) $user->clearMediaCollection('photo');
+            DB::beginTransaction();
+            $user->is_active = false;
+            $user->save();
 
             $user->delete();
+            DB::commit();
         }catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal dihapus', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $this->apiResponse('Data berhasil dihapus', null, null, Response::HTTP_OK);
+    }
+
+    public function restore($username): \Symfony\Component\HttpFoundation\JsonResponse
+    {
+        try {
+            $trashedUser = User::onlyTrashed()
+                ->filterByUsername($username)
+                ->firstOrFail();
+
+            $trashedUser->restore();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dikembalikan', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil dikembalikan', null, null, Response::HTTP_OK);
+    }
+
+    public function forceDelete($username): \Symfony\Component\HttpFoundation\JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+            $trashedUser = User::onlyTrashed()
+                ->filterByUsername($username)
+                ->firstOrFail();
+
+            if ($trashedUser->hasMedia('photo')) $trashedUser->clearMediaCollection('photo');
+
+            $trashedUser->forceDelete();
+            DB::commit();
+        }catch (Exception $exception) {
+            DB::rollBack();
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dihapus permanent', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil dihapus permanent', null, null, Response::HTTP_OK);
     }
 }

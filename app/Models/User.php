@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -71,5 +72,10 @@ class User extends Authenticatable implements HasMedia
     public function admin(): HasOne
     {
         return $this->hasOne(Admin::class, 'user_id');
+    }
+
+    public function scopeFilterByUsername(Builder $query, $username): Builder
+    {
+        return $query->where('username', $username);
     }
 }
