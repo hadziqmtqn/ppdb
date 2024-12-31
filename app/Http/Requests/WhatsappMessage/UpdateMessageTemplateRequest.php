@@ -10,9 +10,9 @@ class UpdateMessageTemplateRequest extends FormRequest
     {
         return [
             'title' => ['required'],
-            'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id'],
+            'educational_institution_id' => ['nullable', 'integer', 'exists:educational_institutions,id'],
             'category' => ['required'],
-            'recipient' => ['required', 'in:super-admin,admin,user'],
+            'recipient' => ['nullable', 'in:super-admin,admin,user,all'],
             'message' => ['required'],
             'is_active' => ['required', 'boolean']
         ];

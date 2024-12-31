@@ -2,7 +2,7 @@
 @section('content')
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span>
-        <span class="text-muted fw-light"><a href="{{ route('menu.index') }}">Menu</a> /</span>
+        <span class="text-muted fw-light"><a href="{{ route('menu.index') }}">{{ $title }}</a> /</span>
         Edit {{ $title }}
     </h4>
     <div class="card mb-3">
