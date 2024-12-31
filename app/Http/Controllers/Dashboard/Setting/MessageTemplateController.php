@@ -9,12 +9,15 @@ use App\Models\MessageTemplate;
 use App\Models\Role;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Yajra\DataTables\Facades\DataTables;
 
 class MessageTemplateController extends Controller implements HasMiddleware
 {
@@ -53,6 +56,44 @@ class MessageTemplateController extends Controller implements HasMiddleware
     {
         return Role::select('name')
             ->get();
+    }
+
+    public function datatable(Request $request): JsonResponse
+    {
+        try {
+            if ($request->ajax()) {
+                $data = MessageTemplate::query()
+                    ->with('educationalInstitution:id,name');
+
+                return DataTables::eloquent($data)
+                    ->addIndexColumn()
+                    ->filter(function ($instance) use ($request) {
+                        $search = $request->get('search');
+
+                        $instance->when($search, function ($query) use ($search) {
+                            $query->whereAny(['title', 'category'], 'LIKE', '%' . $search . '%');
+                        });
+                    })
+                    ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
+                    ->addColumn('recipient', fn($row) => ucfirst(str_replace('-', ' ', $row->recipient)))
+                    ->addColumn('category', fn($row) => ucfirst(str_replace('_', ' ', $row->category)))
+                    ->addColumn('is_active', function ($row) {
+                        return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-warning') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
+                    })
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="' . route('message-template.show', $row->slug) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
+                        $btn .= '<button href="javascript:void(0)" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+
+                        return $btn;
+                    })
+                    ->rawColumns(['action', 'is_active'])
+                    ->make();
+            }
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+
+        return response()->json(true);
     }
 
     public function store(MessageTemplateRequest $request)

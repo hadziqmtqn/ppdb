@@ -40,6 +40,7 @@ class MessageTemplate extends Model
                 'category' => $messageTemplate->category,
                 'recipient' => $messageTemplate->recipient
             ])
+                ->where('id', '!=', $messageTemplate->id)
                 ->update(['is_active' => false]);
         });
 
@@ -49,6 +50,7 @@ class MessageTemplate extends Model
                 'category' => $messageTemplate->category,
                 'recipient' => $messageTemplate->recipient
             ])
+                ->where('id', '!=', $messageTemplate->id)
                 ->update(['is_active' => false]);
         });
     }

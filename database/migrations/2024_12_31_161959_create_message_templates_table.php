@@ -11,9 +11,9 @@ return new class extends Migration {
             $table->id();
             $table->uuid('slug')->unique();
             $table->string('title');
-            $table->unsignedBigInteger('educational_institution_id');
+            $table->unsignedBigInteger('educational_institution_id')->nullable();
             $table->string('category');
-            $table->enum('recipient', ['super-admin', 'admin', 'user']);
+            $table->string('recipient')->nullable();
             $table->text('message');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
