@@ -20,7 +20,8 @@
         "spatie/laravel-medialibrary": "^11.11",
         "spatie/laravel-permission": "^6.10",
         "spatie/laravel-sluggable": "^3.7",
-        "yajra/laravel-datatables": "^11.0"
+        "yajra/laravel-datatables": "^11.0",
+        "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -11,7 +11,7 @@ class WhatsappConfigSeeder extends Seeder
     {
         $whatsappConfig = new WhatsappConfig();
         $whatsappConfig->domain = 'https://bdg.wablas.com';
-        $whatsappConfig->api_key = 'test';
+        $whatsappConfig->api_key = 'vz3Wd95U5Qbb6WOb8sKRoZ1UhrIGdfgYyRqBxOEMGE7hNz1EFZqwi1gOjs37uUV9';
         $whatsappConfig->is_active = false;
         $whatsappConfig->save();
     }

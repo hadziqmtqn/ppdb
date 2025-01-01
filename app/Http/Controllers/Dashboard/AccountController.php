@@ -42,7 +42,8 @@ class AccountController extends Controller
                 return redirect()->back()->with('error', 'Password lama yang anda masukan salah.');
             }
 
-            $account = User::findOrFail(auth()->user()->id);
+            $account = User::with('admin')
+                ->findOrFail(auth()->user()->id);
 
             DB::beginTransaction();
             $account->name = $request->input('name');
@@ -58,7 +59,7 @@ class AccountController extends Controller
                 $emailChange->save();
 
                 // TODO Kirim pesan
-                $this->emailChangeRepository->sendMessage($emailChange->new_email, $token);
+                $this->emailChangeRepository->sendMessage($emailChange->new_email, $token, optional($account->admin)->whatsapp_number);
             }else {
                 $account->email = $request->input('email');
             }

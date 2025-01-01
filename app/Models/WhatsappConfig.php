@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -28,5 +29,10 @@ class WhatsappConfig extends Model
         static::creating(function (WhatsappConfig $whatsappConfig) {
             $whatsappConfig->slug = Str::uuid()->toString();
         });
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }
