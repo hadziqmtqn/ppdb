@@ -4,6 +4,6 @@
     "educational_institution_id": null,
     "category": "verifikasi_email",
     "recipient": "all",
-    "message": "Kami telah mengirim pesan ke {metode_pengiriman} untuk memverifikasi alamat email baru (email_baru} Anda ini.\n\nTautan dalam pesan akan kedaluwarsa dalam 24 jam.\n\nAbaikan pesan ini jika Anda tidak merasa mengubah email akun Anda. Terima kasih.\n\n\nAdmin {nama_aplikasi}"
+    "message": "Kami telah mengirim pesan ke {metode_pengiriman} ini untuk memverifikasi alamat email baru {email_baru} Anda ini. Klik link dibawah ini untuk memverfikasi\n\n{tautan}\n\nTautan dalam pesan akan kedaluwarsa dalam 24 jam.\n\nAbaikan pesan ini jika Anda tidak merasa mengubah email akun Anda. Terima kasih.\n\n\nAdmin {nama_aplikasi}"
   }
 ]

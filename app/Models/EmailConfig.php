@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -29,5 +30,10 @@ class EmailConfig extends Model
         static::creating(function (EmailConfig $emailConfig) {
             $emailConfig->slug = Str::uuid()->toString();
         });
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }
