@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class RegistrationSchedule extends Model
@@ -31,5 +33,23 @@ class RegistrationSchedule extends Model
         static::creating(function (RegistrationSchedule $registrationSchedule) {
             $registrationSchedule->slug = Str::uuid()->toString();
         });
+    }
+
+    public function schoolYear(): BelongsTo
+    {
+        return $this->belongsTo(SchoolYear::class);
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
+    }
+
+    public function scopeFilterData(Builder $query, $filter): Builder
+    {
+        return $query->where([
+            'educational_institution_id' => $filter['educational_institution_id'],
+            'school_year_id' => $filter['school_year_id']
+        ]);
     }
 }

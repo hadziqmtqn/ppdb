@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
+use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
 use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
@@ -124,10 +125,17 @@ Route::middleware('auth')->group(function () {
         Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update'])->name('school-year.update');
     });
 
+    Route::prefix('registration-schedule')->group(function () {
+        Route::post('/datatable', [RegistrationScheduleController::class, 'datatable']);
+        Route::post('/store', [RegistrationScheduleController::class, 'store']);
+        Route::put('/{registrationSchedule:slug}/update', [RegistrationScheduleController::class, 'update']);
+    });
+
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);
     Route::get('select-main-menu', [MenuController::class, 'select']);
     Route::get('select-educational-level', [EducationalLevelController::class, 'select']);
     Route::get('select-role', [RoleController::class, 'select']);
     Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);
+    Route::get('select-school-year', [SchoolYearController::class, 'select']);
 });

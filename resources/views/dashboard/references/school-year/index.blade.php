@@ -16,12 +16,35 @@
             </table>
         </div>
     </div>
+    <div class="card mb-3">
+        <h5 class="card-header">Jadwal Pendaftaran</h5>
+        <div class="card-datatable">
+            <table class="table table-striped text-nowrap" id="datatable-registration-schedule">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Lembaga</th>
+                    <th>Tahun Ajaran</th>
+                    <th>Tanggal</th>
+                    <th>Opsi</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
     @if(auth()->user()->can('school-year-write'))
         @include('dashboard.references.school-year.modal-create')
+    @endif
+    @if(auth()->user()->can('registration-schedule-write'))
+        @include('dashboard.references.registration-schedule.modal-create')
     @endif
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/school-year/datatable.js') }}"></script>
     <script src="{{ asset('js/school-year/validation.js') }}"></script>
+    <script src="{{ asset('js/registration-schedule/datatable.js') }}"></script>
+    <script src="{{ asset('js/registration-schedule/create.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/school-year/select.js') }}"></script>
 @endsection

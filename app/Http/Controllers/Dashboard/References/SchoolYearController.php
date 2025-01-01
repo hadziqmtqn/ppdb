@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SchoolYear\SchoolYearRequest;
 use App\Http\Requests\SchoolYear\UpdateSchoolYearRequest;
 use App\Models\SchoolYear;
+use App\Repositories\SchoolYearRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SchoolYearController extends Controller implements HasMiddleware
 {
+    protected SchoolYearRepository $schoolYearRepository;
+
+    public function __construct(SchoolYearRepository $schoolYearRepository)
+    {
+        $this->schoolYearRepository = $schoolYearRepository;
+    }
+
     public static function middleware(): array
     {
         // TODO: Implement middleware() method.
@@ -102,5 +110,10 @@ class SchoolYearController extends Controller implements HasMiddleware
         }
 
         return to_route('school-year.index')->with('success', 'Data berhasil disimpan!');
+    }
+
+    public function select(Request $request)
+    {
+        return $this->schoolYearRepository->select($request);
     }
 }
