@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -32,10 +33,26 @@ class EmailChange extends Model
         static::creating(function (EmailChange $emailChange) {
             $emailChange->slug = Str::uuid()->toString();
         });
+
+        static::created(function (EmailChange $emailChange) {
+            self::where('user_id', $emailChange->user_id)
+                ->where('id', '!=', $emailChange->id)
+                ->delete();
+        });
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeUserId(Builder $query, $userId): Builder
+    {
+        return $query->where('user_id', $userId);
+    }
+
+    public function scopeFilterByStatus(Builder $query, $status): Builder
+    {
+        return $query->where('status', $status);
     }
 }

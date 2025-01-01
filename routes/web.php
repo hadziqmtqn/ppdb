@@ -113,7 +113,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{messageTemplate:slug}/delete', [MessageTemplateController::class, 'destroy']);
     });
 
-    Route::get('email-verification/{emailChange:token}', [EmailChangeController::class, 'verification'])->name('email-change.verification');
+    Route::get('email-verification', [EmailChangeController::class, 'verification'])->name('email-change.verification');
 
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);

@@ -27,8 +27,12 @@ class AccountController extends Controller
     public function index(): View
     {
         $title = 'Akun Saya';
+        $emailChange = EmailChange::userId(auth()->id())
+            ->filterByStatus('pending')
+            ->latest()
+            ->first();
 
-        return view('dashboard.account.index', compact('title'));
+        return view('dashboard.account.index', compact('title', 'emailChange'));
     }
 
     public function update(AccountRequest $request)

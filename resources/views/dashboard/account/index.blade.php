@@ -20,6 +20,9 @@
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ auth()->user()->email }}">
                             <label for="email">Email</label>
+                            @if($emailChange)
+                                <small class="fst-italic">Harap verifikasi email baru <span class="text-primary">{{ $emailChange->new_email }}</span>, kami telah mengirim tautan ke email baru Anda.</small>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-6">

@@ -52,7 +52,7 @@ class EmailChangeRepository
                         $this->app()->name,
                         $this->app()->notification_method,
                         $newEmail,
-                        route('email-change.verification', $token)
+                        route('email-change.verification', ['token' => $token])
                     ], $this->message()->message)
                 ]));
         }
