@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -45,5 +46,10 @@ class SchoolYear extends Model
                     ->update(['is_active' => false]);
             }
         });
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

@@ -32,3 +32,4 @@ message-template-write
 message-template-delete
 school-year-read
 school-year-write
+registration-schedule-write

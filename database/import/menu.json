@@ -14,7 +14,8 @@
     "type": "main_menu",
     "visibility": [
       "educational-institution-read",
-      "school-year-read"
+      "school-year-read",
+      "registration-schedule-write"
     ],
     "url": "#",
     "icon": "school-outline",
@@ -31,7 +32,10 @@
         "serial_number": 2,
         "name": "Tahun Ajaran",
         "type": "sub_menu",
-        "visibility": ["school-year-read"],
+        "visibility": [
+          "school-year-read",
+          "registration-schedule-write"
+        ],
         "url": "/school-year",
         "icon": "calendar-outline"
       }
