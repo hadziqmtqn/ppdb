@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationSchedule\RegistrationScheduleRequest;
+use App\Http\Requests\RegistrationSchedule\UpdateRegistrationScheduleRequest;
 use App\Models\RegistrationSchedule;
 use App\Traits\ApiResponse;
 use Exception;
@@ -59,7 +60,7 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
                         return '<span class="badge rounded-pill '. $badge .'">'. $status .'</span>';
                     })
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-start-date="'. date('Y-m-d', strtotime($row->start_date)) .'" data-end-date="'. date('Y-m-d', strtotime($row->end_date)) .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
+                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. optional($row->educationalInstitution)->name .'" data-school-year="'. optional($row->schoolYear)->first_year . '-' . optional($row->schoolYear)->last_year .'" data-start-date="'. date('Y-m-d', strtotime($row->start_date)) .'" data-end-date="'. date('Y-m-d', strtotime($row->end_date)) .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditRegistrationSchedule"><i class="mdi mdi-pencil"></i></button>';
                     })
                     ->rawColumns(['action', 'status'])
                     ->make();
@@ -93,10 +94,17 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
         return $this->apiResponse('Data berhasil disimpan!', $registrationSchedule, null, Response::HTTP_OK);
     }
 
-    public function update(RegistrationScheduleRequest $request, RegistrationSchedule $registrationSchedule)
+    public function update(UpdateRegistrationScheduleRequest $request, RegistrationSchedule $registrationSchedule): JsonResponse
     {
-        $registrationSchedule->update($request->validated());
+        try {
+            $registrationSchedule->start_date = $request->input('start_date');
+            $registrationSchedule->end_date = $request->input('end_date');
+            $registrationSchedule->save();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        return $registrationSchedule;
+        return $this->apiResponse('Data berhasil disimpan!', $registrationSchedule, null, Response::HTTP_OK);
     }
 }

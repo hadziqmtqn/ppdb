@@ -38,6 +38,7 @@
     @endif
     @if(auth()->user()->can('registration-schedule-write'))
         @include('dashboard.references.registration-schedule.modal-create')
+        @include('dashboard.references.registration-schedule.modal-edit')
     @endif
 @endsection
 
