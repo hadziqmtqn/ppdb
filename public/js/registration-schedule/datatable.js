@@ -22,6 +22,7 @@ $(function () {
             {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'schoolYear', name: 'schoolYear'},
             {data: 'date', name: 'date'},
+            {data: 'status', name: 'status', orderable: false, searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         dom:

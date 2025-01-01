@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
-    <div class="card mb-3">
+    <div class="card mb-4">
         <h5 class="card-header">{{ $title }}</h5>
         <div class="card-datatable">
             <table class="table table-striped text-nowrap" id="datatable">
@@ -16,7 +16,7 @@
             </table>
         </div>
     </div>
-    <div class="card mb-3">
+    <div class="card mb-4">
         <h5 class="card-header">Jadwal Pendaftaran</h5>
         <div class="card-datatable">
             <table class="table table-striped text-nowrap" id="datatable-registration-schedule">
@@ -26,6 +26,7 @@
                     <th>Lembaga</th>
                     <th>Tahun Ajaran</th>
                     <th>Tanggal</th>
+                    <th>Status</th>
                     <th>Opsi</th>
                 </tr>
                 </thead>
