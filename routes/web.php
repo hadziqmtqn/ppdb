@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
+use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
 use App\Http\Controllers\Dashboard\Setting\MenuController;
@@ -114,6 +115,14 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('email-verification', [EmailChangeController::class, 'verification'])->name('email-change.verification');
+
+    Route::prefix('school-year')->group(function () {
+        Route::get('/', [SchoolYearController::class, 'index'])->name('school-year.index');
+        Route::post('/datatable', [SchoolYearController::class, 'datatable']);
+        Route::post('/store', [SchoolYearController::class, 'store'])->name('school-year.store');
+        Route::get('/{schoolYear:slug}', [SchoolYearController::class, 'show'])->name('school-year.show');
+        Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update'])->name('school-year.update');
+    });
 
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);
