@@ -30,3 +30,6 @@ email-config-write
 message-template-read
 message-template-write
 message-template-delete
+school-year-read
+school-year-write
+school-year-delete

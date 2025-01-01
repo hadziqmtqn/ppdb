@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\References;
 
 use App\Models\EducationalInstitution;
 use App\Models\EducationalLevel;

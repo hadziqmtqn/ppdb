@@ -12,7 +12,10 @@
     "serial_number": 2,
     "name": "Lembaga Pendidikan",
     "type": "main_menu",
-    "visibility": ["educational-institution-read"],
+    "visibility": [
+      "educational-institution-read",
+      "school-year-read"
+    ],
     "url": "#",
     "icon": "school-outline",
     "sub_menu": [
@@ -23,6 +26,14 @@
         "visibility": ["educational-institution-read"],
         "url": "/educational-institution",
         "icon": "town-hall"
+      },
+      {
+        "serial_number": 2,
+        "name": "Tahun Ajaran",
+        "type": "sub_menu",
+        "visibility": ["school-year-read"],
+        "url": "/school-year",
+        "icon": "calendar-outline"
       }
     ]
   },
