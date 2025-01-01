@@ -16,8 +16,12 @@
             </table>
         </div>
     </div>
+    @if(auth()->user()->can('school-year-write'))
+        @include('dashboard.references.school-year.modal-create')
+    @endif
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/school-year/datatable.js') }}"></script>
+    <script src="{{ asset('js/school-year/validation.js') }}"></script>
 @endsection

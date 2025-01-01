@@ -105,6 +105,7 @@
                         </div>
                     </div>
                 </div>
+                @include('layouts.session')
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>

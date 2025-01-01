@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SchoolYear\SchoolYearRequest;
+use App\Http\Requests\SchoolYear\UpdateSchoolYearRequest;
 use App\Models\SchoolYear;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -88,7 +89,7 @@ class SchoolYearController extends Controller implements HasMiddleware
         return \view('dashboard.references.school-year.show', compact('title', 'schoolYear'));
     }
 
-    public function update(SchoolYearRequest $request, SchoolYear $schoolYear)
+    public function update(UpdateSchoolYearRequest $request, SchoolYear $schoolYear)
     {
         try {
             $schoolYear->first_year = $request->input('first_year');
@@ -100,6 +101,6 @@ class SchoolYearController extends Controller implements HasMiddleware
             return redirect()->back()->with('error', 'Data gagal disimpan!');
         }
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+        return to_route('school-year.index')->with('success', 'Data berhasil disimpan!');
     }
 }
