@@ -18,9 +18,11 @@
     </div>
     @can('registration-category-write')
         @include('dashboard.references.registration-category.modal-edit')
+        @include('dashboard.references.registration-category.modal-create')
     @endcan
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/registration-category/datatable.js') }}"></script>
+    <script src="{{ asset('js/registration-category/create.js') }}"></script>
 @endsection

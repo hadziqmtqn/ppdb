@@ -73,7 +73,7 @@ class RegistrationCategoryController extends Controller implements HasMiddleware
         return response()->json(true);
     }
 
-    public function store(RegistrationCategoryRequest $request)
+    public function store(RegistrationCategoryRequest $request): JsonResponse
     {
         try {
             $registrationCategory = new RegistrationCategory();
@@ -81,10 +81,10 @@ class RegistrationCategoryController extends Controller implements HasMiddleware
             $registrationCategory->save();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return redirect()->back()->with('error', 'Data gagal disimpan!');
+            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+        return $this->apiResponse('Data berhasil disimpan!', $registrationCategory, null, Response::HTTP_OK);
     }
 
     public function update(UpdateRegistrationCategoryRequest $request, RegistrationCategory $registrationCategory): JsonResponse
