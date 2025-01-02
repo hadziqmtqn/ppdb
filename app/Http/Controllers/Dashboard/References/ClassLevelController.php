@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard\References;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassLevelRequest;
 use App\Models\ClassLevel;
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
+use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
 use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
 use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
@@ -129,6 +130,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/datatable', [RegistrationScheduleController::class, 'datatable']);
         Route::post('/store', [RegistrationScheduleController::class, 'store']);
         Route::put('/{registrationSchedule:slug}/update', [RegistrationScheduleController::class, 'update']);
+    });
+
+    Route::prefix('registration-category')->group(function () {
+        Route::get('/', [RegistrationCategoryController::class, 'index'])->name('registration-category.index');
+        Route::post('/datatable', [RegistrationCategoryController::class, 'datatable']);
+        Route::post('/store', [RegistrationCategoryController::class, 'store'])->name('registration-category.store');
+        Route::put('/{registrationCategory:slug}/update', [RegistrationCategoryController::class, 'update']);
+        Route::delete('/{registrationCategory:slug}/delete', [RegistrationCategoryController::class, 'destroy']);
     });
 
     // TODO Select Routes

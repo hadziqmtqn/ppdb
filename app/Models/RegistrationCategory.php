@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class RegistrationCategory extends Model
@@ -32,5 +33,10 @@ class RegistrationCategory extends Model
         static::updating(function (RegistrationCategory $registrationCategory) {
             $registrationCategory->code = strtoupper(Str::slug($registrationCategory->name));
         });
+    }
+
+    public function classLevels(): HasMany
+    {
+        return $this->hasMany(ClassLevel::class, 'registration_category_id');
     }
 }

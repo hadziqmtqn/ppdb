@@ -9,7 +9,7 @@ class RegistrationCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
+            'name' => ['required', 'unique:registration_categories,name'],
         ];
     }
 
