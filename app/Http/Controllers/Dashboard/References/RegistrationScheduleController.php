@@ -50,14 +50,22 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
                     ->addColumn('schoolYear', fn($row) => optional($row->schoolYear)->first_year . '-' . optional($row->schoolYear)->last_year)
                     ->addColumn('date', fn($row) => Carbon::parse($row->start_date)->isoFormat('DD MMMM Y') . ' - ' . Carbon::parse($row->end_date)->isoFormat('DD MMMM Y'))
                     ->addColumn('status', function ($row) {
+                        $toDay = date('Y-m-d');
                         $startDate = date('Y-m-d', strtotime($row->start_date));
                         $endDate = date('Y-m-d', strtotime($row->end_date));
-                        $toDay = date('Y-m-d');
 
-                        $badge = $startDate > $toDay && $endDate > $toDay ? 'bg-warning' : ($startDate <= $toDay && $endDate >= $toDay ? 'bg-primary' : 'bg-danger');
-                        $status = $startDate > $toDay && $endDate > $toDay ? 'Akan dilaksanakan' : ($startDate <= $toDay && $endDate >= $toDay ? 'Sedang berlangsung' : 'Telah berakhir');
+                        $data = null;
+                        foreach ([
+                            'bg-warning' => ['Akan dilaksanakan', $startDate > $toDay],
+                            'bg-primary' => ['Sedang berlangsung', $startDate <= $toDay && $endDate >= $toDay],
+                            'bg-danger' => ['Telah berakhir', $endDate < $toDay],
+                        ] as $badge => [$status, $condition]) {
+                            if ($condition) {
+                                $data = '<span class="badge rounded-pill '. $badge .'">'. $status .'</span>';
+                            }
+                        }
 
-                        return '<span class="badge rounded-pill '. $badge .'">'. $status .'</span>';
+                        return $data;
                     })
                     ->addColumn('action', function ($row) {
                         return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. optional($row->educationalInstitution)->name .'" data-school-year="'. optional($row->schoolYear)->first_year . '-' . optional($row->schoolYear)->last_year .'" data-start-date="'. date('Y-m-d', strtotime($row->start_date)) .'" data-end-date="'. date('Y-m-d', strtotime($row->end_date)) .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditRegistrationSchedule"><i class="mdi mdi-pencil"></i></button>';

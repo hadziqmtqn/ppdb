@@ -9,11 +9,12 @@ return new class extends Migration {
     {
         Schema::create('class_levels', function (Blueprint $table) {
             $table->id();
-            $table->uuid('slug');
+            $table->uuid('slug')->unique();
             $table->unsignedBigInteger('educational_institution_id');
             $table->unsignedBigInteger('registration_category_id');
             $table->string('code');
             $table->string('name');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
 
             $table->foreign('educational_institution_id')->references('id')->on('educational_institutions')->restrictOnDelete();

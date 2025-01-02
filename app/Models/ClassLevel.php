@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class ClassLevel extends Model
@@ -13,12 +14,14 @@ class ClassLevel extends Model
         'registration_category_id',
         'code',
         'name',
+        'is_active'
     ];
 
     protected function casts(): array
     {
         return [
             'slug' => 'string',
+            'is_active' => 'boolean'
         ];
     }
 
@@ -34,5 +37,15 @@ class ClassLevel extends Model
         static::updating(function (ClassLevel $classLevel) {
             $classLevel->code = strtoupper(Str::slug($classLevel->name));
         });
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
+    }
+
+    public function registrationCategory(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationCategory::class);
     }
 }
