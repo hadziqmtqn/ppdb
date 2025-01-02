@@ -33,3 +33,9 @@ message-template-delete
 school-year-read
 school-year-write
 registration-schedule-write
+registration-category-read
+registration-category-write
+registration-category-delete
+class-level-read
+class-level-write
+class-level-delete

@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use Database\Seeders\Auth\AdminSeeder;
 use Database\Seeders\Auth\PermissionSeeder;
+use Database\Seeders\References\ClassLevelSeeder;
 use Database\Seeders\References\EducationalInstitutionSeeder;
 use Database\Seeders\References\EducationalLevelSeeder;
+use Database\Seeders\References\RegistrationCategorySeeder;
 use Database\Seeders\References\RegistrationScheduleSeeder;
 use Database\Seeders\References\SchoolYearSeeder;
 use Database\Seeders\Setting\EmailConfigSeeder;
@@ -32,7 +34,9 @@ class DatabaseSeeder extends Seeder
             EmailConfigSeeder::class,
             MessageTemplateSeeder::class,
             SchoolYearSeeder::class,
-            RegistrationScheduleSeeder::class
+            RegistrationScheduleSeeder::class,
+            RegistrationCategorySeeder::class,
+            ClassLevelSeeder::class
         ]);
     }
 }

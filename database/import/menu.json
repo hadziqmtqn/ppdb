@@ -45,7 +45,11 @@
     "serial_number": 3,
     "name": "Referensi",
     "type": "main_menu",
-    "visibility": ["educational-level-read"],
+    "visibility": [
+      "educational-level-read",
+      "registration-category-read",
+      "class-level-read"
+    ],
     "url": "#",
     "icon": "tag-outline",
     "sub_menu": [
@@ -56,6 +60,22 @@
         "visibility": ["educational-level-read"],
         "url": "/educational-level",
         "icon": "school-outline"
+      },
+      {
+        "serial_number": 2,
+        "name": "Kategori Pendaftaran",
+        "type": "sub_menu",
+        "visibility": ["registration-category-read"],
+        "url": "/registration-category",
+        "icon": "content-duplicate"
+      },
+      {
+        "serial_number": 3,
+        "name": "Kelas",
+        "type": "sub_menu",
+        "visibility": ["class-level-read"],
+        "url": "/class-level",
+        "icon": "library-outline"
       }
     ]
   },
