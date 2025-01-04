@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Major extends Model
@@ -32,8 +33,31 @@ class Major extends Model
             $major->code = strtoupper(Str::slug($major->name));
         });
 
-        static::creating(function (Major $major) {
+        static::created(function (Major $major) {
+            self::where([
+                'educational_institution_id' => $major->educational_institution_id,
+                'code' => $major->code
+            ])
+                ->where('id', '!=', $major->id)
+                ->update(['is_active' => false]);
+        });
+
+        static::updating(function (Major $major) {
             $major->code = strtoupper(Str::slug($major->name));
         });
+
+        static::updated(function (Major $major) {
+            self::where([
+                'educational_institution_id' => $major->educational_institution_id,
+                'code' => $major->code
+            ])
+                ->where('id', '!=', $major->id)
+                ->update(['is_active' => false]);
+        });
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
     }
 }

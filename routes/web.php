@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
+use App\Http\Controllers\Dashboard\References\MajorController;
 use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
 use App\Http\Controllers\Dashboard\References\RegistrationPathController;
 use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
@@ -156,6 +157,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [RegistrationPathController::class, 'store']);
         Route::put('/{registrationPath:slug}/update', [RegistrationPathController::class, 'update']);
         Route::delete('/{registrationPath:slug}/delete', [RegistrationPathController::class, 'destroy']);
+    });
+
+    Route::prefix('major')->group(function () {
+        Route::get('/', [MajorController::class, 'index'])->name('major.index');
+        Route::post('/datatable', [MajorController::class, 'datatable']);
+        Route::post('/store', [MajorController::class, 'store']);
+        Route::put('/{major:slug}/update', [MajorController::class, 'update']);
+        Route::delete('/{major:slug}/delete', [MajorController::class, 'destroy']);
     });
 
     // TODO Select Routes

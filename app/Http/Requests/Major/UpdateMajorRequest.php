@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\RegistrationPath;
+namespace App\Http\Requests\Major;
 
 use App\Traits\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdateRegistrationPathRequest extends FormRequest
+class UpdateMajorRequest extends FormRequest
 {
     use ApiResponse;
 
@@ -29,7 +29,7 @@ class UpdateRegistrationPathRequest extends FormRequest
     {
         return [
             'name' => 'nama',
-            'is_active' => 'status aktif'
+            'is_active' => 'status aktif',
         ];
     }
 

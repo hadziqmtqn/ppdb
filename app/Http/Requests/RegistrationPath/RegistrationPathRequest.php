@@ -16,7 +16,7 @@ class RegistrationPathRequest extends FormRequest
     {
         return [
             'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id'],
-            'name' => ['required', 'unique:registration_paths,name'],
+            'name' => ['required'],
         ];
     }
 

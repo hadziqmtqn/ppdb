@@ -33,8 +33,26 @@ class RegistrationPath extends Model
             $registrationPath->code = strtoupper(Str::slug($registrationPath->name));
         });
 
+        static::created(function (RegistrationPath $registrationPath) {
+            self::where([
+                'educational_institution_id' => $registrationPath->educational_institution_id,
+                'code' => $registrationPath->code
+            ])
+                ->where('id', '!=', $registrationPath->id)
+                ->update(['is_active' => false]);
+        });
+
         static::updating(function (RegistrationPath $registrationPath) {
             $registrationPath->code = strtoupper(Str::slug($registrationPath->name));
+        });
+
+        static::updated(function (RegistrationPath $registrationPath) {
+            self::where([
+                'educational_institution_id' => $registrationPath->educational_institution_id,
+                'code' => $registrationPath->code
+            ])
+                ->where('id', '!=', $registrationPath->id)
+                ->update(['is_active' => false]);
         });
     }
 
