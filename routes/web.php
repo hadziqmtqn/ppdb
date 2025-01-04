@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\References\ClassLevelController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
+use App\Http\Controllers\Dashboard\References\RegistrationPathController;
 use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
 use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
@@ -147,6 +148,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [ClassLevelController::class, 'store']);
         Route::put('/{classLevel:slug}/update', [ClassLevelController::class, 'update']);
         Route::delete('/{classLevel:slug}/delete', [ClassLevelController::class, 'destroy']);
+    });
+
+    Route::prefix('registration-path')->group(function () {
+        Route::get('/', [RegistrationPathController::class, 'index'])->name('registration-path.index');
+        Route::post('/datatable', [RegistrationPathController::class, 'datatable']);
+        Route::post('/store', [RegistrationPathController::class, 'store']);
+        Route::put('/{registrationPath:slug}/update', [RegistrationPathController::class, 'update']);
+        Route::delete('/{registrationPath:slug}/delete', [RegistrationPathController::class, 'destroy']);
     });
 
     // TODO Select Routes

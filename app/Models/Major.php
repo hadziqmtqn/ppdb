@@ -12,12 +12,14 @@ class Major extends Model
         'educational_institution_id',
         'code',
         'name',
+        'is_active'
     ];
 
     protected function casts(): array
     {
         return [
-            'slug' => 'string'
+            'slug' => 'string',
+            'is_active' => 'boolean'
         ];
     }
 

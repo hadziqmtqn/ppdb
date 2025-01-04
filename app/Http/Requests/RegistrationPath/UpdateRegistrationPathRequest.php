@@ -8,14 +8,15 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class RegistrationPathRequest extends FormRequest
+class UpdateRegistrationPathRequest extends FormRequest
 {
     use ApiResponse;
 
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:registration_paths,name'],
+            'name' => ['required', 'unique:registration_paths,name,' . $this->route('registrationPath')->slug . ',slug'],
+            'is_active' => ['required', 'boolean']
         ];
     }
 
@@ -27,7 +28,8 @@ class RegistrationPathRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nama'
+            'name' => 'nama',
+            'is_active' => 'status aktif'
         ];
     }
 

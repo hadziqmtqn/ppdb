@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->uuid('slug')->unique();
             $table->string('code')->unique();
             $table->string('name')->unique();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

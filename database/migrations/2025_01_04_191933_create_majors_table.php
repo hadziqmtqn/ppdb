@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('educational_institution_id');
             $table->string('code')->unique();
             $table->string('name')->unique();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
 
             $table->foreign('educational_institution_id')->references('id')->on('educational_institutions')->restrictOnDelete();

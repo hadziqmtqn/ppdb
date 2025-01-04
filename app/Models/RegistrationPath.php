@@ -11,12 +11,14 @@ class RegistrationPath extends Model
         'slug',
         'code',
         'name',
+        'is_active'
     ];
 
     protected function casts(): array
     {
         return [
             'slug' => 'string',
+            'is_active' => 'boolean'
         ];
     }
 

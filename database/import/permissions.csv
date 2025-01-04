@@ -42,3 +42,6 @@ class-level-delete
 registration-path-read
 registration-path-write
 registration-path-delete
+major-read
+major-write
+major-delete
