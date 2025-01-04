@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationCategory\RegistrationCategoryRequest;
 use App\Http\Requests\RegistrationCategory\UpdateRegistrationCategoryRequest;
 use App\Models\RegistrationCategory;
+use App\Repositories\RegistrationCategoryRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,6 +22,13 @@ use Yajra\DataTables\Facades\DataTables;
 class RegistrationCategoryController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected RegistrationCategoryRepository $registrationCategoryRepository;
+
+    public function __construct(RegistrationCategoryRepository $registrationCategoryRepository)
+    {
+        $this->registrationCategoryRepository = $registrationCategoryRepository;
+    }
 
     public static function middleware(): array
     {
@@ -114,5 +122,10 @@ class RegistrationCategoryController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
+    }
+
+    public function select(Request $request)
+    {
+        return $this->registrationCategoryRepository->select($request);
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
+use App\Http\Controllers\Dashboard\References\ClassLevelController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
@@ -140,6 +141,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{registrationCategory:slug}/delete', [RegistrationCategoryController::class, 'destroy']);
     });
 
+    Route::prefix('class-level')->group(function () {
+        Route::get('/', [ClassLevelController::class, 'index'])->name('class-level.index');
+        Route::post('/datatable', [ClassLevelController::class, 'datatable']);
+        Route::post('/store', [ClassLevelController::class, 'store']);
+        Route::put('/{classLevel:slug}/update', [ClassLevelController::class, 'update']);
+        Route::delete('/{classLevel:slug}/delete', [ClassLevelController::class, 'destroy']);
+    });
+
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);
     Route::get('select-main-menu', [MenuController::class, 'select']);
@@ -147,4 +156,5 @@ Route::middleware('auth')->group(function () {
     Route::get('select-role', [RoleController::class, 'select']);
     Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);
     Route::get('select-school-year', [SchoolYearController::class, 'select']);
+    Route::get('select-registration-category', [RegistrationCategoryController::class, 'select']);
 });

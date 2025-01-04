@@ -8,8 +8,8 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nama</th>
                     <th>Kode</th>
+                    <th>Nama</th>
                     <th>Opsi</th>
                 </tr>
                 </thead>
