@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->uuid('slug')->unique();
             $table->unsignedBigInteger('educational_institution_id');
-            $table->string('code')->unique();
-            $table->string('name')->unique();
+            $table->string('code');
+            $table->string('name');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 

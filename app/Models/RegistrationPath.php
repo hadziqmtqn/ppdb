@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class RegistrationPath extends Model
 {
     protected $fillable = [
         'slug',
+        'educational_institution_id',
         'code',
         'name',
         'is_active'
@@ -34,5 +36,10 @@ class RegistrationPath extends Model
         static::updating(function (RegistrationPath $registrationPath) {
             $registrationPath->code = strtoupper(Str::slug($registrationPath->name));
         });
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
     }
 }

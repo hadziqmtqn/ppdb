@@ -52,11 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         errorMessage.classList.add('invalid-feedback');
                         errorMessage.innerHTML = errors[key].join('<br>');
 
-                        // Append error message after the input field
-                        if (input.parentNode.classList.contains('form-floating')) {
-                            input.parentNode.appendChild(errorMessage);
+                        // Check if the input is a select2 element
+                        if ($(input).hasClass('select2-hidden-accessible')) {
+                            const select2Container = $(input).next('.select2-container');
+                            if (select2Container.length) {
+                                select2Container.addClass('is-invalid');
+                                select2Container.after(errorMessage);
+                            }
                         } else {
-                            input.parentNode.insertBefore(errorMessage, input.nextSibling);
+                            // Append error message after the input field
+                            if (input.parentNode.classList.contains('form-floating')) {
+                                input.parentNode.appendChild(errorMessage);
+                            } else {
+                                input.parentNode.insertBefore(errorMessage, input.nextSibling);
+                            }
                         }
                     }
                 }

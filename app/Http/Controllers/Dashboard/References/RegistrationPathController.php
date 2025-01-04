@@ -44,7 +44,8 @@ class RegistrationPathController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = RegistrationPath::query();
+                $data = RegistrationPath::query()
+                    ->with('educationalInstitution:id,name');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -55,6 +56,7 @@ class RegistrationPathController extends Controller implements HasMiddleware
                             $query->whereAny(['name'], 'LIKE', '%' . $search . '%');
                         });
                     })
+                    ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
                         $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
@@ -76,6 +78,7 @@ class RegistrationPathController extends Controller implements HasMiddleware
     {
         try {
             $registrationPath = new RegistrationPath();
+            $registrationPath->educational_institution_id = $request->input('educational_institution_id');
             $registrationPath->name = $request->input('name');
             $registrationPath->save();
         }catch (Exception $exception) {

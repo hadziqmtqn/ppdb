@@ -9,6 +9,10 @@
                 <form onsubmit="return false" id="formCreate" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework">
                     <div class="col-12 fv-plugins-icon-container">
                         <div class="form-floating form-floating-outline mb-3">
+                            <select name="educational_institution_id" id="select-educational-institution" class="form-select select2"></select>
+                            <label for="select-educational-institution">Lembaga</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
                             <input type="text" name="name" id="name" class="form-control" placeholder="Nama">
                             <label for="name">Nama</label>
                         </div>

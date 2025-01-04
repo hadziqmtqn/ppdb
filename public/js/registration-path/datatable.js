@@ -19,6 +19,7 @@ $(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'is_active', name: 'is_active', orderable: false, searchable: false},

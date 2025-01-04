@@ -15,6 +15,7 @@ class RegistrationPathRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id'],
             'name' => ['required', 'unique:registration_paths,name'],
         ];
     }
@@ -27,6 +28,7 @@ class RegistrationPathRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'educational_institution_id' => 'lembaga',
             'name' => 'nama'
         ];
     }

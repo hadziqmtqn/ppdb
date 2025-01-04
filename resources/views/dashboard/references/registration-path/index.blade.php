@@ -8,6 +8,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Lembaga</th>
                     <th>Kode</th>
                     <th>Nama</th>
                     <th>Status</th>
@@ -26,4 +27,5 @@
 @section('scripts')
     <script src="{{ asset('js/registration-path/datatable.js') }}"></script>
     <script src="{{ asset('js/registration-path/create.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
 @endsection
