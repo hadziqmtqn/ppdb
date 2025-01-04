@@ -48,7 +48,9 @@
     "visibility": [
       "educational-level-read",
       "registration-category-read",
-      "class-level-read"
+      "class-level-read",
+      "registration-path-read",
+      "major-read"
     ],
     "url": "#",
     "icon": "tag-outline",
@@ -76,6 +78,22 @@
         "visibility": ["class-level-read"],
         "url": "/class-level",
         "icon": "library-outline"
+      },
+      {
+        "serial_number": 4,
+        "name": "Jalur Pendaftaran",
+        "type": "sub_menu",
+        "visibility": ["registration-path-read"],
+        "url": "/registration-path",
+        "icon": "source-branch"
+      },
+      {
+        "serial_number": 4,
+        "name": "Jurusan",
+        "type": "sub_menu",
+        "visibility": ["major-read"],
+        "url": "/major",
+        "icon": "select-arrow-up"
       }
     ]
   },

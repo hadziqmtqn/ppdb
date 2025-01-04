@@ -7,7 +7,9 @@ use Database\Seeders\Auth\PermissionSeeder;
 use Database\Seeders\References\ClassLevelSeeder;
 use Database\Seeders\References\EducationalInstitutionSeeder;
 use Database\Seeders\References\EducationalLevelSeeder;
+use Database\Seeders\References\MajorSeeder;
 use Database\Seeders\References\RegistrationCategorySeeder;
+use Database\Seeders\References\RegistrationPathSeeder;
 use Database\Seeders\References\RegistrationScheduleSeeder;
 use Database\Seeders\References\SchoolYearSeeder;
 use Database\Seeders\Setting\EmailConfigSeeder;
@@ -36,7 +38,9 @@ class DatabaseSeeder extends Seeder
             SchoolYearSeeder::class,
             RegistrationScheduleSeeder::class,
             RegistrationCategorySeeder::class,
-            ClassLevelSeeder::class
+            ClassLevelSeeder::class,
+            RegistrationPathSeeder::class,
+            MajorSeeder::class
         ]);
     }
 }

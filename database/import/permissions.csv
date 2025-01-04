@@ -39,3 +39,6 @@ registration-category-delete
 class-level-read
 class-level-write
 class-level-delete
+registration-path-read
+registration-path-write
+registration-path-delete
