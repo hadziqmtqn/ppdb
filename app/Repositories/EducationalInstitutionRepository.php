@@ -51,6 +51,10 @@ class EducationalInstitutionRepository
             ->orderBy('educational_level_id')
             ->get()
             ->map(function (EducationalInstitution $educationalInstitution) {
+                $startDate = date('Y-m-d', strtotime(optional($educationalInstitution->registrationScheduleActive)->start_date));
+                $endDate = date('Y-m-d', strtotime(optional($educationalInstitution->registrationScheduleActive)->end_date));
+                $toDay = date('Y-m-d');
+
                 return collect([
                     'name' => $educationalInstitution->name,
                     'educationalLevel' => optional($educationalInstitution->educationalLevel)->name,
@@ -59,10 +63,11 @@ class EducationalInstitutionRepository
                     'website' => $educationalInstitution->website,
                     'profile' => $educationalInstitution->profile,
                     'logo' => $educationalInstitution->hasMedia('logo') ? $educationalInstitution->getFirstTemporaryUrl(Carbon::now()->addMinutes(5), 'logo') : asset('assets/sekolah.png'),
-                    'startDateSchedule' => Carbon::parse(optional($educationalInstitution->registrationScheduleActive)->start_date)->isoFormat('DD MMMM Y'),
-                    'endDateSchedule' => Carbon::parse(optional($educationalInstitution->registrationScheduleActive)->end_date)->isoFormat('DD MMMM Y'),
+                    'startDateSchedule' => Carbon::parse($startDate)->isoFormat('DD MMMM Y'),
+                    'endDateSchedule' => Carbon::parse($endDate)->isoFormat('DD MMMM Y'),
                     'quota' => optional($educationalInstitution->registrationScheduleActive)->quota,
-                    'remainingQuota' => optional($educationalInstitution->registrationScheduleActive)->remaining_quota
+                    'remainingQuota' => optional($educationalInstitution->registrationScheduleActive)->remaining_quota,
+                    'remainingDays' => $startDate > $toDay && $endDate > $toDay ? 'Belum dibuka' : ($startDate <= $toDay && $endDate >= $toDay ? 'Sisa ' . Carbon::parse($endDate)->shortAbsoluteDiffForHumans() . ' lagi' : 'Telah ditutup')
                 ]);
             });
     }
