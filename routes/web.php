@@ -204,7 +204,9 @@ Route::middleware('auth')->group(function () {
     Route::get('select-main-menu', [MenuController::class, 'select']);
     Route::get('select-educational-level', [EducationalLevelController::class, 'select']);
     Route::get('select-role', [RoleController::class, 'select']);
-    Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);
     Route::get('select-school-year', [SchoolYearController::class, 'select']);
-    Route::get('select-registration-category', [RegistrationCategoryController::class, 'select']);
 });
+
+Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);
+Route::get('select-registration-category', [RegistrationCategoryController::class, 'select']);
+Route::get('select-class-level', [ClassLevelController::class, 'select']);

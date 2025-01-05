@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassLevel\ClassLevelRequest;
+use App\Http\Requests\ClassLevel\SelectRequest;
 use App\Http\Requests\ClassLevel\UpdateClassLevelRequest;
 use App\Models\ClassLevel;
+use App\Repositories\ClassLevelRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,6 +23,13 @@ use Yajra\DataTables\Facades\DataTables;
 class ClassLevelController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected ClassLevelRepository $classLevelRepository;
+
+    public function __construct(ClassLevelRepository $classLevelRepository)
+    {
+        $this->classLevelRepository = $classLevelRepository;
+    }
 
     public static function middleware(): array
     {
@@ -117,5 +126,10 @@ class ClassLevelController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
+    }
+
+    public function select(SelectRequest $request)
+    {
+        return $this->classLevelRepository->select($request);
     }
 }

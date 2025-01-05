@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Policies\EmailChangePolicy;
 use App\Repositories\ApplicationRepository;
+use App\Repositories\ClassLevelRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
 use App\Repositories\MenuRepository;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EmailChangeRepository::class, EmailChangeRepository::class);
         $this->app->bind(SchoolYearRepository::class, SchoolYearRepository::class);
         $this->app->bind(RegistrationCategoryRepository::class, RegistrationCategoryRepository::class);
+        $this->app->bind(ClassLevelRepository::class, ClassLevelRepository::class);
 
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);
     }

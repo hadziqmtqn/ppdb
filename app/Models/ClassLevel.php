@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -47,5 +48,20 @@ class ClassLevel extends Model
     public function registrationCategory(): BelongsTo
     {
         return $this->belongsTo(RegistrationCategory::class);
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeEducationalInstitutionId(Builder $query, $educationalInstitutionId): Builder
+    {
+        return $query->where('educational_institution_id', $educationalInstitutionId);
+    }
+
+    public function scopeRegistrationCategoryId(Builder $query, $registrationCategoryId): Builder
+    {
+        return $query->where('registration_category_id', $registrationCategoryId);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -13,7 +14,15 @@ class Student extends Model implements HasMedia
 
     protected $fillable = [
         'slug',
+        'serial_number',
+        'registration_number',
         'user_id',
+        'school_year_id',
+        'educational_institution_id',
+        'registration_category_id',
+        'registration_path_id',
+        'major_id',
+        'class_level_id',
         'whatsapp_number',
     ];
 
@@ -23,6 +32,21 @@ class Student extends Model implements HasMedia
 
         static::creating(function (Student $student) {
             $student->slug = Str::uuid()->toString();
+            $student->serial_number = self::where([
+                'school_year_id' => $student->school_year_id,
+                'educational_institution_id' => $student->educational_institution_id
+            ])->max('serial_number') + 1;
+            $student->registration_number = optional(optional($student->educationalInstitution->educationalLevel)->code) . str_replace('20', '', optional($student->schoolYear)->first_year . optional($student->schoolYear)->last_year) . Str::padLeft($student->serial_number, 4, '0');
         });
+    }
+
+    public function schoolYear(): BelongsTo
+    {
+        return $this->belongsTo(SchoolYear::class);
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
     }
 }
