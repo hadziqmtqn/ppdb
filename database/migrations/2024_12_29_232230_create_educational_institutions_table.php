@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('village')->nullable();
             $table->string('street')->nullable();
             $table->integer('postal_code')->nullable();
+            $table->text('profile')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 

@@ -90,6 +90,7 @@ class EducationalInstitutionController extends Controller implements HasMiddlewa
             $educationalInstitution->village = $request->input('village');
             $educationalInstitution->street = $request->input('street');
             $educationalInstitution->postal_code = $request->input('postal_code');
+            $educationalInstitution->profile = $request->input('profile');
             $educationalInstitution->save();
 
             if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
@@ -124,6 +125,7 @@ class EducationalInstitutionController extends Controller implements HasMiddlewa
             $educationalInstitution->village = $request->input('village');
             $educationalInstitution->street = $request->input('street');
             $educationalInstitution->postal_code = $request->input('postal_code');
+            $educationalInstitution->profile = $request->input('profile');
             $educationalInstitution->is_active = $request->input('is_active');
             $educationalInstitution->save();
 

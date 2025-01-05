@@ -27,8 +27,6 @@
 
 @yield('content')
 
-<script src="{{ asset('materialize/assets//js/pages-pricing.js') }}"></script>
-
 <!-- /Modal -->
 
 <!-- / Sections:End -->

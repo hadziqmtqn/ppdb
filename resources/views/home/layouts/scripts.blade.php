@@ -11,5 +11,3 @@
 <script src="{{ asset('materialize/assets/js/front-main.js') }}"></script>
 
 <!-- Page JS -->
-<script src="{{ asset('materialize/assets/js/pages-pricing.js') }}"></script>
-<script src="{{ asset('materialize/assets/js/front-page-payment.js') }}"></script>

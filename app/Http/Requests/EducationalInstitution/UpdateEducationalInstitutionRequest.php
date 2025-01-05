@@ -19,6 +19,7 @@ class UpdateEducationalInstitutionRequest extends FormRequest
             'village' => ['nullable'],
             'street' => ['nullable'],
             'postal_code' => ['nullable', 'integer', 'digits:5'],
+            'profile' => ['nullable'],
             'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:700'],
             'is_active' => ['required', 'boolean'],
         ];

@@ -89,6 +89,12 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating form-floating-outline mb-3">
+                            <textarea name="profile" class="form-control" id="profile" style="min-height: 100px" placeholder="Profil Singkat">{{ $educationalInstitution->profile }}</textarea>
+                            <label for="profile">Profil</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating form-floating-outline mb-3">
                             <input type="file" name="logo" class="form-control" id="logo" accept=".jpg,,jpeg,.png">
                             <label for="logo">Logo</label>
                         </div>

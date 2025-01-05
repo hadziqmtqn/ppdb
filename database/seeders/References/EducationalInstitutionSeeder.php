@@ -26,6 +26,7 @@ class EducationalInstitutionSeeder extends Seeder
             $educationalInstitution->educational_level_id = EducationalLevel::getIdByCode($row['educational-level-code']);
             $educationalInstitution->email = $row['email'];
             $educationalInstitution->website = $row['website'];
+            $educationalInstitution->profile = $educationalInstitution->name . ' adalah institusi pendidikan yang mengintegrasikan kurikulum nasional dengan pendidikan karakter, didukung fasilitas modern dan tenaga pendidik profesional. Berfokus pada pembentukan siswa berintegritas dan kompeten, sekolah ini menawarkan lingkungan belajar yang inovatif untuk mencetak generasi unggul dan siap menghadapi tantangan global.';
             $educationalInstitution->save();
         }
     }

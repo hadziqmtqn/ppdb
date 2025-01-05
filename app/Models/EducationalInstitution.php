@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -24,6 +26,7 @@ class EducationalInstitution extends Model implements HasMedia
         'village',
         'street',
         'postal_code',
+        'profile',
         'is_active',
     ];
 
@@ -47,5 +50,18 @@ class EducationalInstitution extends Model implements HasMedia
     public function educationalLevel(): BelongsTo
     {
         return $this->belongsTo(EducationalLevel::class);
+    }
+
+    public function registrationScheduleActive(): HasOne
+    {
+        return $this->hasOne(RegistrationSchedule::class, 'educational_institution_id')
+            ->whereHas('schoolYear', function ($query) {
+                $query->where('is_active', true);
+            });
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

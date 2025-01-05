@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\SchoolYear;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,5 +40,15 @@ class SchoolYearRepository
                 'year' => $schoolYear->first_year . '-' . $schoolYear->last_year
             ]);
         }), null, Response::HTTP_OK);
+    }
+
+    public function getSchoolYearActive(): Collection
+    {
+        $schoolYear = $this->schoolYear->active()
+            ->firstOrFail();
+
+        return collect([
+            'year' => $schoolYear->first_year . '/' . $schoolYear->last_year
+        ]);
     }
 }

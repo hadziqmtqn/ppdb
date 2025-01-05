@@ -25,7 +25,7 @@ use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
-use App\Http\Controllers\Home\StudentRegistrationController;
+use App\Http\Controllers\Home\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,7 +44,7 @@ Route::middleware('guest')->group(function () {
     });
 
     Route::prefix('register')->group(function () {
-        Route::get('/', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
+        Route::get('/', [RegistrationController::class, 'index'])->name('student-registration.index');
     });
 });
 
