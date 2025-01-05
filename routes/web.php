@@ -8,13 +8,16 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
+use App\Http\Controllers\Dashboard\References\DistanceToSchoolController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\References\MajorController;
+use App\Http\Controllers\Dashboard\References\ProfessionController;
 use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
 use App\Http\Controllers\Dashboard\References\RegistrationPathController;
 use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
 use App\Http\Controllers\Dashboard\References\SchoolYearController;
+use App\Http\Controllers\Dashboard\References\TransportationController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
 use App\Http\Controllers\Dashboard\Setting\MenuController;
@@ -165,6 +168,30 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [MajorController::class, 'store']);
         Route::put('/{major:slug}/update', [MajorController::class, 'update']);
         Route::delete('/{major:slug}/delete', [MajorController::class, 'destroy']);
+    });
+
+    Route::prefix('distance-to-school')->group(function () {
+        Route::get('/', [DistanceToSchoolController::class, 'index'])->name('distance-to-school.index');
+        Route::post('/datatable', [DistanceToSchoolController::class, 'datatable']);
+        Route::post('/store', [DistanceToSchoolController::class, 'store']);
+        Route::put('/{distanceToSchool:slug}/update', [DistanceToSchoolController::class, 'update']);
+        Route::delete('/{distanceToSchool:slug}/delete', [DistanceToSchoolController::class, 'destroy']);
+    });
+
+    Route::prefix('transportation')->group(function () {
+        Route::get('/', [TransportationController::class, 'index'])->name('transportation.index');
+        Route::post('/datatable', [TransportationController::class, 'datatable']);
+        Route::post('/store', [TransportationController::class, 'store']);
+        Route::put('/{transportation:slug}/update', [TransportationController::class, 'update']);
+        Route::delete('/{transportation:slug}/delete', [TransportationController::class, 'destroy']);
+    });
+
+    Route::prefix('profession')->group(function () {
+        Route::get('/', [ProfessionController::class, 'index'])->name('profession.index');
+        Route::post('/datatable', [ProfessionController::class, 'datatable']);
+        Route::post('/store', [ProfessionController::class, 'store']);
+        Route::put('/{profession:slug}/update', [ProfessionController::class, 'update']);
+        Route::delete('/{profession:slug}/delete', [ProfessionController::class, 'destroy']);
     });
 
     // TODO Select Routes

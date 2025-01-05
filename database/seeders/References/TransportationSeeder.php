@@ -10,7 +10,7 @@ class TransportationSeeder extends Seeder
     public function run(): void
     {
         foreach ([
-            'Jalan kaki',
+            'Jalan Kaki',
             'Sepeda',
             'Sepeda Motor',
             'Mobil Pribadi',

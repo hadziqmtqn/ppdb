@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\DistanceToSchool;
+namespace App\Http\Requests\Profession;
 
 use App\Traits\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class DistanceToSchoolRequest extends FormRequest
+class ProfessionRequest extends FormRequest
 {
     use ApiResponse;
 
