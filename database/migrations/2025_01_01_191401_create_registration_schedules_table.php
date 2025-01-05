@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('school_year_id');
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('quota')->default(0);
+            $table->integer('remaining_quota')->default(0);
             $table->timestamps();
 
             $table->foreign('educational_institution_id')->references('id')->on('educational_institutions')->restrictOnDelete();

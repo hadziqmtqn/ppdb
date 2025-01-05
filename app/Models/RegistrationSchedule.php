@@ -15,6 +15,8 @@ class RegistrationSchedule extends Model
         'school_year_id',
         'start_date',
         'end_date',
+        'quota',
+        'remaining_quota'
     ];
 
     protected function casts(): array
