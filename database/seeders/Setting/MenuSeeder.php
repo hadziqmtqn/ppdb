@@ -14,9 +14,9 @@ class MenuSeeder extends Seeder
         $data = json_decode(File::get(database_path('import/menu.json')), true);
 
         // Memproses setiap item dalam file JSON
-        foreach ($data as $row) {
+        foreach ($data as $key => $row) {
             $menu = new Menu();
-            $menu->serial_number = $row['serial_number'];
+            $menu->serial_number = $key + 1;
             $menu->name = $row['name'];
             $menu->type = $row['type'];
             $menu->visibility = json_encode($row['visibility']);
@@ -26,9 +26,9 @@ class MenuSeeder extends Seeder
 
             // Memproses sub_menu jika ada
             if (!empty($row['sub_menu'])) {
-                foreach ($row['sub_menu'] as $subRow) {
+                foreach ($row['sub_menu'] as $subKey => $subRow) {
                     $subMenu = new Menu();
-                    $subMenu->serial_number = $subRow['serial_number'];
+                    $subMenu->serial_number = $subKey + 1;
                     $subMenu->name = $subRow['name'];
                     $subMenu->type = $subRow['type'];
                     $subMenu->main_menu = $menu->id; // Menggunakan ID menu utama yang baru disimpan

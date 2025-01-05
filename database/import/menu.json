@@ -1,6 +1,5 @@
 [
   {
-    "serial_number": 1,
     "name": "Dashboard",
     "type": "main_menu",
     "visibility": ["dashboard"],
@@ -9,7 +8,6 @@
     "sub_menu": []
   },
   {
-    "serial_number": 2,
     "name": "Lembaga Pendidikan",
     "type": "main_menu",
     "visibility": [
@@ -21,7 +19,6 @@
     "icon": "school-outline",
     "sub_menu": [
       {
-        "serial_number": 1,
         "name": "Lembaga",
         "type": "sub_menu",
         "visibility": ["educational-institution-read"],
@@ -29,7 +26,6 @@
         "icon": "town-hall"
       },
       {
-        "serial_number": 2,
         "name": "Tahun Ajaran",
         "type": "sub_menu",
         "visibility": [
@@ -42,7 +38,6 @@
     ]
   },
   {
-    "serial_number": 3,
     "name": "Referensi",
     "type": "main_menu",
     "visibility": [
@@ -50,13 +45,15 @@
       "registration-category-read",
       "class-level-read",
       "registration-path-read",
-      "major-read"
+      "major-read",
+      "distance-to-school-read",
+      "transportation-read",
+      "profession-read"
     ],
     "url": "#",
     "icon": "tag-outline",
     "sub_menu": [
       {
-        "serial_number": 1,
         "name": "Level Pendidikan",
         "type": "sub_menu",
         "visibility": ["educational-level-read"],
@@ -64,7 +61,6 @@
         "icon": "school-outline"
       },
       {
-        "serial_number": 2,
         "name": "Kategori Pendaftaran",
         "type": "sub_menu",
         "visibility": ["registration-category-read"],
@@ -72,7 +68,6 @@
         "icon": "content-duplicate"
       },
       {
-        "serial_number": 3,
         "name": "Kelas",
         "type": "sub_menu",
         "visibility": ["class-level-read"],
@@ -80,7 +75,6 @@
         "icon": "library-outline"
       },
       {
-        "serial_number": 4,
         "name": "Jalur Pendaftaran",
         "type": "sub_menu",
         "visibility": ["registration-path-read"],
@@ -88,17 +82,36 @@
         "icon": "source-branch"
       },
       {
-        "serial_number": 4,
         "name": "Jurusan",
         "type": "sub_menu",
         "visibility": ["major-read"],
         "url": "/major",
         "icon": "select-arrow-up"
+      },
+      {
+        "name": "Jarak ke Sekolah",
+        "type": "sub_menu",
+        "visibility": ["distance-to-school-read"],
+        "url": "/distance-to-school",
+        "icon": "map-marker-minus-outline"
+      },
+      {
+        "name": "Transportasi",
+        "type": "sub_menu",
+        "visibility": ["transportation-read"],
+        "url": "/transportation",
+        "icon": "train-car"
+      },
+      {
+        "name": "Pekerjaan",
+        "type": "sub_menu",
+        "visibility": ["profession-read"],
+        "url": "/profession",
+        "icon": "account-tie-hat-outline"
       }
     ]
   },
   {
-    "serial_number": 4,
     "name": "Pengaturan",
     "type": "main_menu",
     "visibility": [
@@ -114,7 +127,6 @@
     "icon": "cog-outline",
     "sub_menu": [
       {
-        "serial_number": 1,
         "name": "Role",
         "type": "sub_menu",
         "visibility": ["role-read"],
@@ -122,7 +134,6 @@
         "icon": "shield-outline"
       },
       {
-        "serial_number": 2,
         "name": "Admin",
         "type": "sub_menu",
         "visibility": ["admin-read"],
@@ -130,7 +141,6 @@
         "icon": "account-multiple"
       },
       {
-        "serial_number": 3,
         "name": "Menu",
         "type": "sub_menu",
         "visibility": ["menu-read"],
@@ -138,7 +148,6 @@
         "icon": "menu"
       },
       {
-        "serial_number": 4,
         "name": "Aplikasi",
         "type": "sub_menu",
         "visibility": ["application-read"],
@@ -146,7 +155,6 @@
         "icon": "apps"
       },
       {
-        "serial_number": 5,
         "name": "Konfig. Whatsapp",
         "type": "sub_menu",
         "visibility": ["whatsapp-config-read"],
@@ -154,7 +162,6 @@
         "icon": "whatsapp"
       },
       {
-        "serial_number": 6,
         "name": "Konfig. Email",
         "type": "sub_menu",
         "visibility": ["email-config-read"],
@@ -162,7 +169,6 @@
         "icon": "email-fast-outline"
       },
       {
-        "serial_number": 7,
         "name": "Templat Pesan",
         "type": "sub_menu",
         "visibility": ["message-template-read"],

@@ -45,3 +45,12 @@ registration-path-delete
 major-read
 major-write
 major-delete
+distance-to-school-read
+distance-to-school-write
+distance-to-school-delete
+transportation-read
+transportation-write
+transportation-delete
+profession-read
+profession-write
+profession-delete
