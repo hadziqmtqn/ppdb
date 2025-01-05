@@ -25,6 +25,7 @@ use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
+use App\Http\Controllers\Home\StudentRegistrationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,6 +41,10 @@ Route::middleware('guest')->group(function () {
     Route::prefix('oauth')->group(function () {
         Route::get('/{provider}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect-to-provider');
         Route::get('/{provider}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.handle-callback');
+    });
+
+    Route::prefix('register')->group(function () {
+        Route::get('/', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
     });
 });
 

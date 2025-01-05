@@ -44,9 +44,9 @@
             </form>
 
             <p class="text-center mt-2">
-                <span>New on our platform?</span>
-                <a href="#">
-                    <span>Create an account</span>
+                <span>Belum punya akun?</span>
+                <a href="{{ route('student-registration.index') }}">
+                    <span>Buat akun baru</span>
                 </a>
             </p>
 

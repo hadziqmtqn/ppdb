@@ -15,7 +15,7 @@
 
     <title>{{ $title }} | {{ $application['name'] }}</title>
 
-    <meta name="description" content="" />
+    <meta name="description" content="{{ $application['description'] }}" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ $application['logo'] }}" />
