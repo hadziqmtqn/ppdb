@@ -45,7 +45,16 @@ class EducationalInstitutionRepository
 
     public function getEducationalInstitutionWithSchedule(): Collection
     {
-        return $this->educationalInstitution->with('registrationScheduleActive', 'educationalLevel:id,name,code', 'majors')
+        return $this->educationalInstitution->with([
+            'registrationScheduleActive',
+            'educationalLevel:id,name,code',
+            'majors' => function ($query) {
+                $query->active();
+            },
+            'registrationPaths' => function ($query) {
+                $query->active();
+            }
+        ])
             ->whereHas('registrationScheduleActive')
             ->active()
             ->orderBy('educational_level_id')
@@ -69,7 +78,8 @@ class EducationalInstitutionRepository
                     'quota' => optional($educationalInstitution->registrationScheduleActive)->quota,
                     'remainingQuota' => optional($educationalInstitution->registrationScheduleActive)->remaining_quota,
                     'remainingDays' => $startDate > $toDay && $endDate > $toDay ? 'Belum dibuka' : ($startDate <= $toDay && $endDate >= $toDay ? 'Sisa ' . Carbon::parse($endDate)->shortAbsoluteDiffForHumans() . ' lagi' : 'Telah ditutup'),
-                    'hasMajors' => $educationalInstitution->majors->isNotEmpty() ? 'YES' : 'NO'
+                    'hasMajors' => $educationalInstitution->majors->isNotEmpty() ? 'YES' : 'NO',
+                    'hasRegistrationPaths' => $educationalInstitution->registrationPaths->isNotEmpty() ? 'YES' : 'NO'
                 ]);
             });
     }

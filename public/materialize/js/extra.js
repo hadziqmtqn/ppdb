@@ -16,7 +16,8 @@
         customDelimiter = document.querySelector('.custom-delimiter-mask'),
         prefixMask = document.querySelector('.prefix-mask'),
         postalCodeMask = document.querySelector('.postal-code-mask'),
-        numberOnly = $('.number-only');
+        numberOnly = $('.number-only'),
+        phoneNumber = $('.phone-number');
 
     // Autosize
     // --------------------------------------------------------------------
@@ -37,7 +38,7 @@
             onCreditCardTypeChanged: function (type) {
                 if (type !== '' && type !== 'unknown') {
                     document.querySelector('.card-type').innerHTML =
-                        '<img src="' + assetsPath + 'img/icons/payments/' + type + '-cc.png" height="28"/>';
+                        '<img src="' + assetsPath + 'img/icons/payments/' + type + '-cc.png" height="28" alt="icon"/>';
                 } else {
                     document.querySelector('.card-type').innerHTML = '';
                 }
@@ -49,7 +50,7 @@
     if (phoneMask) {
         new Cleave(phoneMask, {
             phone: true,
-            phoneRegionCode: 'US'
+            phoneRegionCode: 'ID'
         });
     }
 
@@ -128,9 +129,17 @@
     // Prefix
     if (prefixMask) {
         new Cleave(prefixMask, {
-            prefix: '+63',
-            blocks: [3, 3, 3, 4],
+            prefix: '+62',
+            blocks: [3, 4, 4, 4],
             uppercase: true
+        });
+    }
+
+    // Phone Number
+    if (phoneNumber) {
+        new Cleave(phoneNumber, {
+            prefix: '+62',
+            blocks: [3, 4, 4, 4],
         });
     }
 })();

@@ -10,11 +10,15 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             // Ambil nilai data-id dari tombol yang diklik
             const educationalInstitutionId = this.getAttribute('data-id');
+            const educationName = this.getAttribute('data-education-name');
             const hasMajors = this.getAttribute('data-major');
 
             // Setel nilai pada input tersembunyi
             const hiddenInput = document.querySelector('#select-educational-institution');
             hiddenInput.value = educationalInstitutionId;
+
+            const education = document.querySelector('#educationName');
+            education.value = educationName;
 
             // Hapus atau tambahkan kembali elemen #showMajors berdasarkan nilai hasMajors
             if (hasMajors === 'YES') {

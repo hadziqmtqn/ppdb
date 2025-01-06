@@ -70,4 +70,9 @@ class EducationalInstitution extends Model implements HasMedia
     {
         return $this->hasMany(Major::class, 'educational_institution_id');
     }
+
+    public function registrationPaths(): HasMany
+    {
+        return $this->hasMany(RegistrationPath::class, 'educational_institution_id');
+    }
 }

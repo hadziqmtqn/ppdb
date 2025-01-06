@@ -10,12 +10,20 @@
                     <div class="col-12 fv-plugins-icon-container">
                         <input type="hidden" name="educational_institution_id" id="select-educational-institution">
                         <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" class="form-control" value="" id="educationName" disabled>
+                            <label for="educationName">Lembaga Pendidikan</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
                             <select name="registration_category_id" class="form-select select2" id="select-registration-category"></select>
                             <label for="select-registration-category">Kategori Pendaftaran</label>
                         </div>
-                        <div class="form-floating form-floating-outline mb-3">
-                            <select name="registration_path_id" class="form-select select2" id="select-registration-path"></select>
-                            <label for="select-registration-path">Jalur Pendaftaran</label>
+                        <div id="registrationPathsContainer">
+                            <div id="showRegistrationPaths">
+                                <div class="form-floating form-floating-outline mb-3">
+                                    <select name="registration_path_id" class="form-select select2" id="select-registration-path"></select>
+                                    <label for="select-registration-path">Jalur Pendaftaran</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
                             <select name="class_level_id" class="form-select select2" id="select-class-level"></select>
@@ -36,6 +44,10 @@
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="email" name="email" id="email" class="form-control" placeholder="Email">
                             <label for="email">Email</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" id="whatsapp_number" class="form-control phone-number-mask" minlength="10" maxlength="13" placeholder="No. Whatsapp">
+                            <label for="whatsapp_number">No. Whatsapp</label>
                         </div>
                         <div class="form-password-toggle mb-3">
                             <div class="input-group input-group-merge">
