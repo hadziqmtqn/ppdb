@@ -12,10 +12,10 @@ trait MessageTrait
         return Application::firstOrFail();
     }
 
-    protected function message(): ?MessageTemplate
+    protected function message($category, $recipient): ?MessageTemplate
     {
-        return MessageTemplate::filterByCategory('verifikasi_email')
-            ->filterByRecipient('all')
+        return MessageTemplate::filterByCategory($category)
+            ->filterByRecipient($recipient)
             ->active()
             ->first();
     }

@@ -48,6 +48,7 @@ class SchoolYearRepository
             ->firstOrFail();
 
         return collect([
+            'id' => $schoolYear->id,
             'year' => $schoolYear->first_year . '/' . $schoolYear->last_year
         ]);
     }

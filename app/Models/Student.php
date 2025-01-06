@@ -49,4 +49,24 @@ class Student extends Model implements HasMedia
     {
         return $this->belongsTo(EducationalInstitution::class);
     }
+
+    public function registrationCategory(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationCategory::class);
+    }
+
+    public function classLevel(): BelongsTo
+    {
+        return $this->belongsTo(ClassLevel::class);
+    }
+
+    public function major(): BelongsTo
+    {
+        return $this->belongsTo(Major::class);
+    }
+
+    public function registrationPath(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationPath::class);
+    }
 }
