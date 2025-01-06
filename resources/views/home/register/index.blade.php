@@ -88,6 +88,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/register/select-institution.js') }}"></script>
+    <script src="{{ asset('js/register/form-reset.js') }}"></script>
     <script src="{{ asset('js/registration-category/select.js') }}"></script>
     <script src="{{ asset('js/registration-path/select.js') }}"></script>
     <script src="{{ asset('js/class-level/select.js') }}"></script>
