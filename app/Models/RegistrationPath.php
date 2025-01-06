@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -59,5 +60,15 @@ class RegistrationPath extends Model
     public function educationalInstitution(): BelongsTo
     {
         return $this->belongsTo(EducationalInstitution::class);
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeEducationalInstitutionId(Builder $query, $educationalInstitutionId): Builder
+    {
+        return $query->where('educational_institution_id', $educationalInstitutionId);
     }
 }

@@ -56,6 +56,7 @@ class EducationalInstitutionRepository
                 $toDay = date('Y-m-d');
 
                 return collect([
+                    'id' => $educationalInstitution->id,
                     'name' => $educationalInstitution->name,
                     'educationalLevel' => optional($educationalInstitution->educationalLevel)->name,
                     'colorLevel' => optional($educationalInstitution->educationalLevel)->code == 'SD' ? 'bg-danger' : (optional($educationalInstitution->educationalLevel)->code == 'SMP' ? 'bg-primary' : 'bg-info'),

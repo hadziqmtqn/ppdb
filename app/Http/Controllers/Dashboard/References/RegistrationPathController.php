@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationPath\RegistrationPathRequest;
+use App\Http\Requests\RegistrationPath\SelectRequest;
 use App\Http\Requests\RegistrationPath\UpdateRegistrationPathRequest;
 use App\Models\RegistrationPath;
+use App\Repositories\RegistrationPathRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,6 +23,13 @@ use Yajra\DataTables\Facades\DataTables;
 class RegistrationPathController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected RegistrationPathRepository $registrationPathRepository;
+
+    public function __construct(RegistrationPathRepository $registrationPathRepository)
+    {
+        $this->registrationPathRepository = $registrationPathRepository;
+    }
 
     public static function middleware(): array
     {
@@ -113,5 +122,10 @@ class RegistrationPathController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
+    }
+
+    public function select(SelectRequest $request)
+    {
+        return $this->registrationPathRepository->select($request);
     }
 }

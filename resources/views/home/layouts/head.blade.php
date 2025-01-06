@@ -14,7 +14,11 @@
 <link rel="stylesheet" href="{{ asset('materialize/assets/css/demo.css') }}" />
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page.css') }}" />
 <!-- Vendors CSS -->
-
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/select2/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/toastr/toastr.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/animate-css/animate.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/@form-validation/form-validation.css') }}" />
 <!-- Page CSS -->
 
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-payment.css') }}" />

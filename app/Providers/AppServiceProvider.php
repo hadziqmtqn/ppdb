@@ -12,6 +12,7 @@ use App\Repositories\ModelRepository;
 use App\Repositories\MyAccountRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RegistrationCategoryRepository;
+use App\Repositories\RegistrationPathRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\SchoolYearRepository;
 use App\Repositories\SendMessage\EmailChangeRepository;
@@ -37,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SchoolYearRepository::class, SchoolYearRepository::class);
         $this->app->bind(RegistrationCategoryRepository::class, RegistrationCategoryRepository::class);
         $this->app->bind(ClassLevelRepository::class, ClassLevelRepository::class);
+        $this->app->bind(RegistrationPathRepository::class, RegistrationPathRepository::class);
 
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);
     }

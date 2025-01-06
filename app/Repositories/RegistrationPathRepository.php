@@ -2,33 +2,29 @@
 
 namespace App\Repositories;
 
-use App\Models\ClassLevel;
+use App\Models\RegistrationPath;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class ClassLevelRepository
+class RegistrationPathRepository
 {
     use ApiResponse;
 
-    protected ClassLevel $classLevel;
+    protected RegistrationPath $registrationPath;
 
-    public function __construct(ClassLevel $classLevel)
+    public function __construct(RegistrationPath $registrationPath)
     {
-        $this->classLevel = $classLevel;
+        $this->registrationPath = $registrationPath;
     }
 
     public function select($request): JsonResponse
     {
         try {
-            $classLevels = $this->classLevel->query()
+            $registrationPaths = $this->registrationPath->query()
                 ->educationalInstitutionId($request['educational_institution_id'])
-                ->registrationCategoryId($request['registration_category_id'])
-                ->when($request['search'], function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request['search'] . '%');
-                })
                 ->active()
                 ->get();
         }catch (Exception $exception) {
@@ -36,10 +32,10 @@ class ClassLevelRepository
             return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Get data success', $classLevels->map(function (ClassLevel $classLevel) {
+        return $this->apiResponse('Get data success', $registrationPaths->map(function (RegistrationPath $registrationPath) {
             return collect([
-                'id' => $classLevel->id,
-                'name' => $classLevel->name
+                'id' => $registrationPath->id,
+                'name' => $registrationPath->name
             ]);
         }), null, Response::HTTP_OK);
     }

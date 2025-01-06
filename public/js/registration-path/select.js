@@ -1,20 +1,18 @@
 $(document).ready(function () {
-    const select = $('#select-class-level');
+    const select = $('#select-registration-path');
     const educationalInstitution = $('#select-educational-institution');
-    const registrationCategory = $('#select-registration-category');
 
     select.wrap('<div class="position-relative"></div>').select2({
         placeholder: 'Pilih',
         dropdownParent: select.parent(),
         ajax: {
-            url: '/select-class-level',
+            url: '/select-registration-path',
             dataType: 'json',
             delay: 250,
             data: function(params) {
                 return {
                     search: params.term,
-                    educational_institution_id: educationalInstitution.val(),
-                    registration_category_id: registrationCategory.val()
+                    educational_institution_id: educationalInstitution.val()
                 }
             },
             processResults: function (data) {
@@ -32,10 +30,6 @@ $(document).ready(function () {
     });
 
     educationalInstitution.on('change', function() {
-        select.val(null).trigger('change');
-    });
-
-    registrationCategory.on('change', function() {
         select.val(null).trigger('change');
     });
 });

@@ -210,3 +210,4 @@ Route::middleware('auth')->group(function () {
 Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);
 Route::get('select-registration-category', [RegistrationCategoryController::class, 'select']);
 Route::get('select-class-level', [ClassLevelController::class, 'select']);
+Route::get('select-registration-path', [RegistrationPathController::class, 'select']);
