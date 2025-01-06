@@ -16,7 +16,7 @@
                     <label for="title">Judul</label>
                 </div>
                 <div class="form-floating form-floating-outline mb-3">
-                    <select name="educational_institution_id" id="select-educational-institution" class="form-select select2">
+                    <select name="educational_institution_id" id="select-educational-institution" class="form-select select2" data-allow-clear="true">
                         <option value="{{ $messageTemplate->educational_institution_id }}" selected>{{ optional($messageTemplate->educationalInstitution)->name }}</option>
                     </select>
                     <label for="select-educational-institution">Lembaga</label>

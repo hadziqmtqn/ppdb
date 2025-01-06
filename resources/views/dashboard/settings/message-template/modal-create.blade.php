@@ -14,7 +14,7 @@
                             <label for="title">Judul</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <select name="educational_institution_id" id="select-educational-institution" class="form-select select2"></select>
+                            <select name="educational_institution_id" id="select-educational-institution" class="form-select select2" data-allow-clear="true"></select>
                             <label for="select-educational-institution">Lembaga</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
