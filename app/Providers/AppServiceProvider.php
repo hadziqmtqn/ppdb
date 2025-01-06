@@ -7,6 +7,7 @@ use App\Repositories\ApplicationRepository;
 use App\Repositories\ClassLevelRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
+use App\Repositories\MajorRepository;
 use App\Repositories\MenuRepository;
 use App\Repositories\ModelRepository;
 use App\Repositories\MyAccountRepository;
@@ -39,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RegistrationCategoryRepository::class, RegistrationCategoryRepository::class);
         $this->app->bind(ClassLevelRepository::class, ClassLevelRepository::class);
         $this->app->bind(RegistrationPathRepository::class, RegistrationPathRepository::class);
+        $this->app->bind(MajorRepository::class, MajorRepository::class);
 
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);
     }

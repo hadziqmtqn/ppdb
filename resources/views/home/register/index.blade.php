@@ -74,7 +74,7 @@
                                     <div class="progress-bar rounded" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <button type="button" class="btn btn-outline-primary waves-light waves-effect w-100" data-id="{{ $educationalInstitution['id'] }}" data-bs-toggle="modal" data-bs-target="#modalRegister">Daftar Sekarang</button>
+                                    <button type="button" class="btn btn-outline-primary waves-light waves-effect w-100" data-id="{{ $educationalInstitution['id'] }}" data-major="{{ $educationalInstitution['hasMajors'] }}" data-bs-toggle="modal" data-bs-target="#modalRegister">Daftar Sekarang</button>
                                 </div>
                             </div>
                         </div>
@@ -92,4 +92,5 @@
     <script src="{{ asset('js/registration-category/select.js') }}"></script>
     <script src="{{ asset('js/registration-path/select.js') }}"></script>
     <script src="{{ asset('js/class-level/select.js') }}"></script>
+    <script src="{{ asset('js/major/select.js') }}"></script>
 @endsection

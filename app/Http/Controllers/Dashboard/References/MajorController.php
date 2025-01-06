@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Major\MajorRequest;
+use App\Http\Requests\Major\SelectRequest;
 use App\Http\Requests\Major\UpdateMajorRequest;
 use App\Models\Major;
+use App\Repositories\MajorRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,6 +23,13 @@ use Yajra\DataTables\Facades\DataTables;
 class MajorController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected MajorRepository $majorRepository;
+
+    public function __construct(MajorRepository $majorRepository)
+    {
+        $this->majorRepository = $majorRepository;
+    }
 
     public static function middleware(): array
     {
@@ -112,5 +121,10 @@ class MajorController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
+    }
+
+    public function select(SelectRequest $request)
+    {
+        return $this->majorRepository->select($request);
     }
 }

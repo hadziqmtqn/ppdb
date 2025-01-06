@@ -45,7 +45,7 @@ class EducationalInstitutionRepository
 
     public function getEducationalInstitutionWithSchedule(): Collection
     {
-        return $this->educationalInstitution->with('registrationScheduleActive', 'educationalLevel:id,name,code')
+        return $this->educationalInstitution->with('registrationScheduleActive', 'educationalLevel:id,name,code', 'majors')
             ->whereHas('registrationScheduleActive')
             ->active()
             ->orderBy('educational_level_id')
@@ -68,7 +68,8 @@ class EducationalInstitutionRepository
                     'endDateSchedule' => Carbon::parse($endDate)->isoFormat('DD MMMM Y'),
                     'quota' => optional($educationalInstitution->registrationScheduleActive)->quota,
                     'remainingQuota' => optional($educationalInstitution->registrationScheduleActive)->remaining_quota,
-                    'remainingDays' => $startDate > $toDay && $endDate > $toDay ? 'Belum dibuka' : ($startDate <= $toDay && $endDate >= $toDay ? 'Sisa ' . Carbon::parse($endDate)->shortAbsoluteDiffForHumans() . ' lagi' : 'Telah ditutup')
+                    'remainingDays' => $startDate > $toDay && $endDate > $toDay ? 'Belum dibuka' : ($startDate <= $toDay && $endDate >= $toDay ? 'Sisa ' . Carbon::parse($endDate)->shortAbsoluteDiffForHumans() . ' lagi' : 'Telah ditutup'),
+                    'hasMajors' => $educationalInstitution->majors->isNotEmpty() ? 'YES' : 'NO'
                 ]);
             });
     }

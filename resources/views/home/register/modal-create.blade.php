@@ -21,6 +21,14 @@
                             <select name="class_level_id" class="form-select select2" id="select-class-level"></select>
                             <label for="select-class-level">Kelas</label>
                         </div>
+                        <div id="showMajorsContainer">
+                            <div id="showMajors">
+                                <div class="form-floating form-floating-outline mb-3">
+                                    <select name="major_id" class="form-select select2" id="select-major"></select>
+                                    <label for="select-major">Jurusan</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" name="name" id="name" class="form-control" placeholder="Nama">
                             <label for="name">Nama</label>
