@@ -116,7 +116,7 @@
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 
-@include('home.layouts.scripts')
+@include('layouts.script')
 @yield('scripts')
 </body>
 </html>

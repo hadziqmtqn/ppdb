@@ -25,6 +25,28 @@
                             <input type="text" name="name" id="name" class="form-control" placeholder="Nama">
                             <label for="name">Nama</label>
                         </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-password-toggle mb-3">
+                            <div class="input-group input-group-merge">
+                                <div class="form-floating form-floating-outline">
+                                    <input class="form-control" type="password" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="multicol-password2" />
+                                    <label for="password">Kata Sandi</label>
+                                </div>
+                                <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-password-toggle mb-3">
+                            <div class="input-group input-group-merge">
+                                <div class="form-floating form-floating-outline">
+                                    <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="multicol-confirm-password2" />
+                                    <label for="password_confirmation">Konfirmasi Kata Sandi</label>
+                                </div>
+                                <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-12 text-center">
                         <button type="button" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light" id="btn-submit">Submit</button>

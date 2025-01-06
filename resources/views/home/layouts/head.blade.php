@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/@form-validation/form-validation.css') }}" />
 <!-- Page CSS -->
 
-<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-payment.css') }}" />
+{{--<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-payment.css') }}" />--}}
 
 <!-- Helpers -->
 <script src="{{ asset('materialize/assets/vendor/js/helpers.js') }}"></script>
