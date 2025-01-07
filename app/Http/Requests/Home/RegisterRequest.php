@@ -24,8 +24,9 @@ class RegisterRequest extends FormRequest
             'major_id' => ['required_if:has_major,YES', 'nullable', 'integer', 'exists:majors,id'],
             'name' => ['required', 'string', 'min:3'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'whatsapp_number' => ['required', 'unique:students,whatsapp_number'],
-            'password' => ['required', 'string', 'confirmed', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/']
+            'whatsapp_number' => ['required', 'numeric', 'unique:students,whatsapp_number', 'min_digits:10', 'max_digits:13'],
+            'password' => ['required', 'string', 'confirmed', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'],
+            'password_confirmation' => ['required', 'same:password']
         ];
     }
 
@@ -39,6 +40,7 @@ class RegisterRequest extends FormRequest
         return [
             'registration_path_id.required_if' => ':attribute wajib diisi jika lembaga memiliki jalur pendaftaran',
             'major_id.required_if' => ':attribute wajib diisi jika lembaga memiliki jurusan',
+            'password.regex' => ':attribute minimal terdiri dari angka, 1 huruf besar, huruf kecil, dan karakter khusus',
         ];
     }
 

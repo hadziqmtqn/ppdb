@@ -36,7 +36,7 @@ class Student extends Model implements HasMedia
                 'school_year_id' => $student->school_year_id,
                 'educational_institution_id' => $student->educational_institution_id
             ])->max('serial_number') + 1;
-            $student->registration_number = optional(optional($student->educationalInstitution->educationalLevel)->code) . str_replace('20', '', optional($student->schoolYear)->first_year . optional($student->schoolYear)->last_year) . Str::padLeft($student->serial_number, 4, '0');
+            $student->registration_number = optional(optional($student->educationalInstitution)->educationalLevel)->code . str_replace('20', '', optional($student->schoolYear)->first_year . optional($student->schoolYear)->last_year) . Str::padLeft($student->serial_number, 4, '0');
         });
     }
 

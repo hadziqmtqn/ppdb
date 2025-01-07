@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegistrationController extends Controller
@@ -40,7 +41,7 @@ class RegistrationController extends Controller
         return \view('home.register.index', compact('title', 'educationalInstitutions'));
     }
 
-    public function store(RegisterRequest $request)
+    public function store(RegisterRequest $request): JsonResponse
     {
         $schoolYearActive = $this->schoolYearRepository->getSchoolYearActive();
 
@@ -63,6 +64,7 @@ class RegistrationController extends Controller
             $student->user_id = $user->id;
             $student->school_year_id = $schoolYearActive['id'];
             $student->educational_institution_id = $request->input('educational_institution_id');
+            $student->registration_category_id = $request->input('registration_category_id');
             $student->class_level_id = $request->input('class_level_id');
             $student->registration_path_id = $request->input('registration_path_id');
             $student->major_id = $request->input('major_id');
@@ -74,6 +76,7 @@ class RegistrationController extends Controller
             $this->registrationMessageRepository->sendMessage([
                 'educationalInstitution' => optional($student->educationalInstitution)->name,
                 'name' => $user->name,
+                'email' => $user->email,
                 'whatsappNumber' => $student->whatsapp_number,
                 'password' => $password,
                 'registrationPath' => optional($student->registrationPath)->name

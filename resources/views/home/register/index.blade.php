@@ -93,4 +93,5 @@
     <script src="{{ asset('js/registration-path/select.js') }}"></script>
     <script src="{{ asset('js/class-level/select.js') }}"></script>
     <script src="{{ asset('js/major/select.js') }}"></script>
+    <script src="{{ asset('js/register/create.js') }}"></script>
 @endsection

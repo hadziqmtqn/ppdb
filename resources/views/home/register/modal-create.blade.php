@@ -9,6 +9,8 @@
                 <form onsubmit="return false" id="formCreate" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework">
                     <div class="col-12 fv-plugins-icon-container">
                         <input type="hidden" name="educational_institution_id" id="select-educational-institution">
+                        <input type="hidden" name="has_registration_path" id="hasRegistrationPath">
+                        <input type="hidden" name="has_major" id="hasMajor">
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control" value="" id="educationName" disabled>
                             <label for="educationName">Lembaga Pendidikan</label>
@@ -46,7 +48,7 @@
                             <label for="email">Email</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" id="whatsapp_number" class="form-control phone-number-mask" minlength="10" maxlength="13" placeholder="No. Whatsapp">
+                            <input type="text" id="whatsapp_number" name="whatsapp_number" class="form-control phone-number-mask" minlength="10" maxlength="13" placeholder="No. Whatsapp">
                             <label for="whatsapp_number">No. Whatsapp</label>
                         </div>
                         <div class="form-password-toggle mb-3">

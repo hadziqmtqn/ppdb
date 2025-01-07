@@ -9,5 +9,6 @@ Button Text
 
 Thanks,<br>
 {{ config('app.name') }}--}}
-    {{ $data }}
+    {{--{{ $data }}--}}
+{!! nl2br(e($data['message'])) !!}
 @endcomponent

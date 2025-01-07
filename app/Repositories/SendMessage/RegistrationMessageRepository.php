@@ -20,7 +20,7 @@ class RegistrationMessageRepository
     public function sendMessage($data): void
     {
         $placeholders = [
-            "lembaga" => $data['educationalInstitution'],
+            "{lembaga}" => $data['educationalInstitution'],
             "{nama_aplikasi}" => $this->app()->name,
             "{nama}" => $data['name'],
             "{no_whatsapp}" => $data['whatsappNumber'],
@@ -52,7 +52,7 @@ class RegistrationMessageRepository
         // TODO Whatsapp
         if ($this->app()->notification_method == 'whatsapp') {
             $this->sendWhatsappMessage([
-                'phone' => $data['whatsapp_number'],
+                'phone' => $data['whatsappNumber'],
                 'message' => $this->replacePlaceholders($this->message($category, $recipient)->message, $placeholders)
             ]);
         }

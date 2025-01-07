@@ -22,8 +22,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const hiddenInput = document.querySelector('#select-educational-institution');
             hiddenInput.value = educationalInstitutionId;
 
+            // education name
             const education = document.querySelector('#educationName');
             education.value = educationName;
+
+            // input has registration path
+            const hasRegistrationPathInput = document.querySelector('#hasRegistrationPath');
+            hasRegistrationPathInput.value = hasRegistrationPath;
+
+            // input has major
+            const hasMajorInput = document.querySelector('#hasMajor');
+            hasMajorInput.value = hasMajors;
 
             // Hapus atau tambahkan kembali elemen #showRegistrationPaths
             if (hasRegistrationPath === 'YES') {
