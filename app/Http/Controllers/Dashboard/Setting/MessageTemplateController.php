@@ -7,6 +7,7 @@ use App\Http\Requests\WhatsappMessage\MessageTemplateRequest;
 use App\Http\Requests\WhatsappMessage\UpdateMessageTemplateRequest;
 use App\Models\MessageTemplate;
 use App\Models\Role;
+use App\Repositories\MessageTemplateRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -17,11 +18,19 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class MessageTemplateController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected MessageTemplateRepository $messageTemplateRepository;
+
+    public function __construct(MessageTemplateRepository $messageTemplateRepository)
+    {
+        $this->messageTemplateRepository = $messageTemplateRepository;
+    }
 
     public static function middleware(): array
     {
@@ -142,10 +151,20 @@ class MessageTemplateController extends Controller implements HasMiddleware
         return to_route('message-template.index')->with('success', 'Data berhasil disimpan!');
     }
 
-    public function destroy(MessageTemplate $messageTemplate)
+    public function destroy(MessageTemplate $messageTemplate): \Symfony\Component\HttpFoundation\JsonResponse
     {
-        $messageTemplate->delete();
+        try {
+            $messageTemplate->delete();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dihapus!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        return response()->json();
+        return $this->apiResponse('Data berhasil dihapus!', $messageTemplate, null, Response::HTTP_OK);
+    }
+
+    public function select(Request $request)
+    {
+        return $this->messageTemplateRepository->select($request);
     }
 }

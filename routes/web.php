@@ -21,6 +21,7 @@ use App\Http\Controllers\Dashboard\References\TransportationController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
 use App\Http\Controllers\Dashboard\Setting\MenuController;
+use App\Http\Controllers\Dashboard\Setting\MessageReceiverController;
 use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
@@ -200,12 +201,21 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{profession:slug}/delete', [ProfessionController::class, 'destroy']);
     });
 
+    Route::prefix('message-receiver')->group(function () {
+        Route::post('/', [MessageReceiverController::class, 'store']);
+        Route::post('/datatable', [MessageReceiverController::class, 'datatable']);
+        Route::get('/{messageReceiver:slug}/show', [MessageReceiverController::class, 'show'])->name('message-receiver.show');
+        Route::put('/{messageReceiver:slug}/update', [MessageReceiverController::class, 'update'])->name('message-receiver.update');
+        Route::delete('/{messageReceiver:slug}/delete', [MessageReceiverController::class, 'destroy']);
+    });
+
     // TODO Select Routes
     Route::get('select-permission', [PermissionController::class, 'select']);
     Route::get('select-main-menu', [MenuController::class, 'select']);
     Route::get('select-educational-level', [EducationalLevelController::class, 'select']);
     Route::get('select-role', [RoleController::class, 'select']);
     Route::get('select-school-year', [SchoolYearController::class, 'select']);
+    Route::get('select-message-template', [MessageTemplateController::class, 'select']);
 });
 
 Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);

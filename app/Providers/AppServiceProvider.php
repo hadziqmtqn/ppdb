@@ -9,6 +9,7 @@ use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
 use App\Repositories\MajorRepository;
 use App\Repositories\MenuRepository;
+use App\Repositories\MessageTemplateRepository;
 use App\Repositories\ModelRepository;
 use App\Repositories\MyAccountRepository;
 use App\Repositories\PermissionRepository;
@@ -42,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ClassLevelRepository::class, ClassLevelRepository::class);
         $this->app->bind(RegistrationPathRepository::class, RegistrationPathRepository::class);
         $this->app->bind(MajorRepository::class, MajorRepository::class);
+        $this->app->bind(MessageTemplateRepository::class, MessageTemplateRepository::class);
 
         // TODO Send Messages
         $this->app->bind(EmailChangeRepository::class, EmailChangeRepository::class);

@@ -66,6 +66,11 @@ class MessageTemplate extends Model
         return $query->where('is_active', true);
     }
 
+    public function scopeEducationalInstitutionId(Builder $query, $educationalInstitutionId): Builder
+    {
+        return $query->where('educational_institution_id', $educationalInstitutionId);
+    }
+
     public function scopeFilterByCategory(Builder $query, $category): Builder
     {
         return $query->where('category', $category);

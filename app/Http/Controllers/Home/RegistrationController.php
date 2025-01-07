@@ -11,6 +11,7 @@ use App\Repositories\SchoolYearRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -81,6 +82,9 @@ class RegistrationController extends Controller
                 'password' => $password,
                 'registrationPath' => optional($student->registrationPath)->name
             ]);
+
+            // TODO Login
+            Auth::login($user);
             DB::commit();
         }catch (Exception $exception) {
             DB::rollBack();
@@ -88,6 +92,6 @@ class RegistrationController extends Controller
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Data berhasil disimpan!', null, null, Response::HTTP_OK);
+        return $this->apiResponse('Data berhasil disimpan!', null, route('dashboard'), Response::HTTP_OK);
     }
 }

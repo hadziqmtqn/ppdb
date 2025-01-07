@@ -54,3 +54,6 @@ transportation-delete
 profession-read
 profession-write
 profession-delete
+message-receiver-read
+message-receiver-write
+message-receiver-delete
