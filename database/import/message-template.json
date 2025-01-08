@@ -15,9 +15,23 @@
   },
   {
     "title": "Registrasi Akun Siswa (Admin)",
-    "educational_institution_id": null,
+    "educational_institution_id": 1,
     "category": "registrasi",
     "recipient": "admin",
-    "message": "Assalamu`alaikum Wr. Wb.\n\nAda registrasi siswa baru atas nama:\n\n*Nama* : {nama}\n*No. WhatsApp* : {no_whatsapp}\n*Email* : {email}\n*Kata Sandi* : {kata_sandi}\n*Tanggal Registrasi* : {tanggal_registrasi}\n*Jalur Pendaftaran* : {jalur_pendaftaran}"
+    "message": "Assalamu`alaikum Wr. Wb.\n\nAda registrasi siswa baru atas nama:\n\n*Nama* : {nama}\n*No. WhatsApp* : {no_whatsapp}\n*Email* : {email}\n*Kata Sandi* : {kata_sandi}\n*Tanggal Registrasi* : {tanggal_registrasi}\n*Lembaga*: {lembaga}\n*Jalur Pendaftaran* : {jalur_pendaftaran}"
+  },
+  {
+    "title": "Registrasi Akun Siswa (Admin)",
+    "educational_institution_id": 2,
+    "category": "registrasi",
+    "recipient": "admin",
+    "message": "Assalamu`alaikum Wr. Wb.\n\nAda registrasi siswa baru atas nama:\n\n*Nama* : {nama}\n*No. WhatsApp* : {no_whatsapp}\n*Email* : {email}\n*Kata Sandi* : {kata_sandi}\n*Tanggal Registrasi* : {tanggal_registrasi}\n*Lembaga*: {lembaga}\n*Jalur Pendaftaran* : {jalur_pendaftaran}"
+  },
+  {
+    "title": "Registrasi Akun Siswa (Admin)",
+    "educational_institution_id": 3,
+    "category": "registrasi",
+    "recipient": "admin",
+    "message": "Assalamu`alaikum Wr. Wb.\n\nAda registrasi siswa baru atas nama:\n\n*Nama* : {nama}\n*No. WhatsApp* : {no_whatsapp}\n*Email* : {email}\n*Kata Sandi* : {kata_sandi}\n*Tanggal Registrasi* : {tanggal_registrasi}\n*Lembaga*: {lembaga}\n*Jalur Pendaftaran* : {jalur_pendaftaran}"
   }
 ]

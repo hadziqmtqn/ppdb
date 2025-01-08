@@ -21,6 +21,7 @@ $(function () {
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'messageTemplate', name: 'messageTemplate'},
             {data: 'user', name: 'user'},
+            {data: 'contact', name: 'contact'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         dom:

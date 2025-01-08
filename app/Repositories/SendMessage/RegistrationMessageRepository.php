@@ -30,31 +30,42 @@ class RegistrationMessageRepository
             "{jalur_pendaftaran}" => $data['registrationPath']
         ];
 
-        if ($this->message('registrasi', 'admin')) {
-            $this->processingMessages('registrasi', 'admin', $data, $placeholders);
+        // TODO Base Message Template
+        $adminMessage = $this->message('registrasi', 'admin');
+        $userMessage = $this->message('registrasi', 'user');
+
+        // TODO Admin Message
+        if ($adminMessage) {
+            if (($this->app()->notification_method == 'email') && optional($adminMessage)->messageReceiver) {
+                Mail::to(optional(optional($adminMessage->messageReceiver)->user)->email)
+                    ->send(new RegisterMail([
+                        'message' => $this->replacePlaceholders($adminMessage->message, $placeholders)
+                    ]));
+            }
+
+            if (($this->app()->notification_method == 'whatsapp') && optional(optional(optional($adminMessage->messageReceiver)->user)->admin)->whatsapp_number) {
+                $this->sendWhatsappMessage([
+                    'phone' => optional(optional(optional($adminMessage->messageReceiver)->user)->admin)->whatsapp_number,
+                    'message' => $this->replacePlaceholders($adminMessage->message, $placeholders)
+                ]);
+            }
         }
 
-        if ($this->message('registrasi', 'user')) {
-            $this->processingMessages('registrasi', 'user', $data, $placeholders);
-        }
-    }
+        // TODO User Message
+        if ($userMessage) {
+            if (($this->app()->notification_method == 'email') && $data['email']) {
+                Mail::to($data['email'])
+                    ->send(new RegisterMail([
+                        'message' => $this->replacePlaceholders($userMessage->message, $placeholders)
+                    ]));
+            }
 
-    protected function processingMessages($category, $recipient, $data, $placeholders): void
-    {
-        // TODO Email
-        if ($this->app()->notification_method == 'email') {
-            Mail::to($data['email'])
-                ->send(new RegisterMail([
-                    'message' => $this->replacePlaceholders($this->message($category, $recipient)->message, $placeholders)
-                ]));
-        }
-
-        // TODO Whatsapp
-        if ($this->app()->notification_method == 'whatsapp') {
-            $this->sendWhatsappMessage([
-                'phone' => $data['whatsappNumber'],
-                'message' => $this->replacePlaceholders($this->message($category, $recipient)->message, $placeholders)
-            ]);
+            if (($this->app()->notification_method == 'whatsapp') && $data['whatsappNumber']) {
+                $this->sendWhatsappMessage([
+                    'phone' => $data['whatsappNumber'],
+                    'message' => $this->replacePlaceholders($userMessage->message, $placeholders)
+                ]);
+            }
         }
     }
 }

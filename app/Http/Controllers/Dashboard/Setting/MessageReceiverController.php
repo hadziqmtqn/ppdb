@@ -35,7 +35,7 @@ class MessageReceiverController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = MessageReceiver::query()
-                    ->with('messageTemplate.educationalInstitution:id,name', 'user:id,name');
+                    ->with('messageTemplate.educationalInstitution:id,name', 'user:id,name,email', 'user.admin');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -50,6 +50,7 @@ class MessageReceiverController extends Controller implements HasMiddleware
                     })
                     ->addColumn('messageTemplate', fn($row) => optional($row->messageTemplate)->title . ' - ' . optional(optional($row->messageTemplate)->educationalInstitution)->name)
                     ->addColumn('user', fn($row) => optional($row->user)->name)
+                    ->addColumn('contact', fn($row) => optional($row->user)->email . ' | ' . optional(optional($row->user)->admin)->whatsapp_number)
                     ->addColumn('action', function ($row) {
                         return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
                     })

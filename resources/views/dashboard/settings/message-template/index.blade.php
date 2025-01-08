@@ -28,6 +28,7 @@
                     <th>#</th>
                     <th>Pesan</th>
                     <th>Penerima</th>
+                    <th>Kontak</th>
                     <th>Opsi</th>
                 </tr>
                 </thead>

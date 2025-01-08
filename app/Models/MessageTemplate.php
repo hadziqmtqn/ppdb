@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class MessageTemplate extends Model
@@ -79,5 +80,10 @@ class MessageTemplate extends Model
     public function scopeFilterByRecipient(Builder $query, $recipient): Builder
     {
         return $query->where('recipient', $recipient);
+    }
+
+    public function messageReceiver(): HasOne
+    {
+        return $this->hasOne(MessageReceiver::class, 'message_template_id');
     }
 }

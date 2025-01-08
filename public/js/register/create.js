@@ -44,8 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.data.type === 'success') {
                 toastr.success(response.data.message);
                 unBlockUi();
-                form.reset();
-                $('#modalCreate').modal('hide');
+
+                if (response.data.redirect) {
+                    window.location.href = response.data.redirect;
+                }
+
                 return;
             }
 

@@ -14,7 +14,8 @@ trait MessageTrait
 
     protected function message($category, $recipient): ?MessageTemplate
     {
-        return MessageTemplate::filterByCategory($category)
+        return MessageTemplate::with('messageReceiver.user')
+            ->filterByCategory($category)
             ->filterByRecipient($recipient)
             ->active()
             ->first();
