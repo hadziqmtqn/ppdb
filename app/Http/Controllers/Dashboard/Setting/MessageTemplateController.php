@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Dashboard\Setting;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\WhatsappMessage\MessageTemplateRequest;
-use App\Http\Requests\WhatsappMessage\UpdateMessageTemplateRequest;
+use App\Http\Requests\MessageTemplate\MessageTemplateRequest;
+use App\Http\Requests\MessageTemplate\SelectRequest;
+use App\Http\Requests\MessageTemplate\UpdateMessageTemplateRequest;
 use App\Models\MessageTemplate;
 use App\Models\Role;
 use App\Repositories\MessageTemplateRepository;
@@ -163,8 +164,13 @@ class MessageTemplateController extends Controller implements HasMiddleware
         return $this->apiResponse('Data berhasil dihapus!', $messageTemplate, null, Response::HTTP_OK);
     }
 
-    public function select(Request $request)
+    public function select(SelectRequest $request)
     {
         return $this->messageTemplateRepository->select($request);
+    }
+
+    public function selectUser(SelectRequest $request)
+    {
+        return $this->messageTemplateRepository->selectUser($request);
     }
 }

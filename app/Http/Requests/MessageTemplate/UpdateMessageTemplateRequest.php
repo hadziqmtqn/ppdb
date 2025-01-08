@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\WhatsappMessage;
+namespace App\Http\Requests\MessageTemplate;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MessageTemplateRequest extends FormRequest
+class UpdateMessageTemplateRequest extends FormRequest
 {
     public function rules(): array
     {
@@ -14,6 +14,7 @@ class MessageTemplateRequest extends FormRequest
             'category' => ['required'],
             'recipient' => ['nullable', 'in:super-admin,admin,user,all'],
             'message' => ['required'],
+            'is_active' => ['required', 'boolean']
         ];
     }
 
@@ -30,6 +31,7 @@ class MessageTemplateRequest extends FormRequest
             'category' => 'kategori',
             'recipient' => 'penerima',
             'message' => 'pesan',
+            'is_active' => 'status aktif',
         ];
     }
 }

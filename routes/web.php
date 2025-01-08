@@ -202,10 +202,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('message-receiver')->group(function () {
-        Route::post('/', [MessageReceiverController::class, 'store']);
+        Route::post('/store', [MessageReceiverController::class, 'store']);
         Route::post('/datatable', [MessageReceiverController::class, 'datatable']);
-        Route::get('/{messageReceiver:slug}/show', [MessageReceiverController::class, 'show'])->name('message-receiver.show');
-        Route::put('/{messageReceiver:slug}/update', [MessageReceiverController::class, 'update'])->name('message-receiver.update');
         Route::delete('/{messageReceiver:slug}/delete', [MessageReceiverController::class, 'destroy']);
     });
 
@@ -216,6 +214,7 @@ Route::middleware('auth')->group(function () {
     Route::get('select-role', [RoleController::class, 'select']);
     Route::get('select-school-year', [SchoolYearController::class, 'select']);
     Route::get('select-message-template', [MessageTemplateController::class, 'select']);
+    Route::get('select-message-user', [MessageTemplateController::class, 'selectUser']);
 });
 
 Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);

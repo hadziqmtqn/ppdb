@@ -19,13 +19,35 @@
             </table>
         </div>
     </div>
-    @if(auth()->user()->can('message-template-write'))
+    <div class="card mb-3">
+        <h5 class="card-header">Penerima Pesan</h5>
+        <div class="card-datatable">
+            <table class="table table-striped text-nowrap" id="datatableMessageReceiver">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Pesan</th>
+                    <th>Penerima</th>
+                    <th>Opsi</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    @can('message-template-write')
         @include('dashboard.settings.message-template.modal-create')
-    @endif
+    @endcan
+    @can('message-receiver-write')
+        @include('dashboard.settings.message-receiver.modal-create')
+    @endcan
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/message-template/datatable.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/message-template/select.js') }}"></script>
     <script src="{{ asset('js/message-template/validation.js') }}"></script>
+    <script src="{{ asset('js/message-receiver/datatable.js') }}"></script>
+    <script src="{{ asset('js/message-template/select-user.js') }}"></script>
+    <script src="{{ asset('js/message-receiver/create.js') }}"></script>
 @endsection

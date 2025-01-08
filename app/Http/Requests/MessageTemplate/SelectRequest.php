@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\MessageReceiver;
+namespace App\Http\Requests\MessageTemplate;
 
 use App\Traits\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
@@ -8,14 +8,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdateMessageReceiverRequest extends FormRequest
+class SelectRequest extends FormRequest
 {
     use ApiResponse;
 
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id']
         ];
     }
 
@@ -27,7 +27,7 @@ class UpdateMessageReceiverRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'user_id' => 'penerima'
+            'educational_institution_id' => 'lembaga'
         ];
     }
 

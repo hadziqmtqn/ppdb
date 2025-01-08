@@ -89,4 +89,16 @@ class User extends Authenticatable implements HasMedia
     {
         return $query->where('username', $username);
     }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeSearch(Builder $query, $search): Builder
+    {
+        return $query->when($search['search'], function ($query) use ($search) {
+            $query->whereAny(['name', 'email'], 'like', '%' . $search['search'] . '%');
+        });
+    }
 }
