@@ -222,6 +222,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('account-verification')->group(function () {
         Route::get('/', [AccountVerificationController::class, 'index'])->name('account-verification.index')->middleware('verification_process');
         Route::get('/account-verification', [AccountVerificationController::class, 'verification'])->name('account-verification.verification')->middleware('verification_process');
+        Route::post('/resend', [AccountVerificationController::class, 'resend'])->name('account-verification.resend')->middleware('verification_process');
     });
 });
 

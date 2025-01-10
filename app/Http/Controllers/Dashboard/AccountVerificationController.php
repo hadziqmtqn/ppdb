@@ -67,6 +67,7 @@ class AccountVerificationController extends Controller
     public function resend()
     {
         try {
+            DB::beginTransaction();
             // TODO Send Account Verification
             $saveNewAccount = $this->saveNewAccountRepository->save([
                 'user_id' => auth()->id(),
@@ -74,7 +75,9 @@ class AccountVerificationController extends Controller
             ]);
 
             $this->accountVerificationRepository->sendMessage($saveNewAccount['email'], route('account-verification.verification', ['token' => $saveNewAccount['token']]), auth()->user()->student->whatsapp_number);
+            DB::commit();
         }catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return redirect()->back()->with('error', 'Data gagal dikirim');
         }

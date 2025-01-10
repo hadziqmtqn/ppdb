@@ -65,10 +65,19 @@
                         Tautan aktivasi akun yang dikirimkan ke {{ $application['notificationMethod'] }} Anda: <span class="text-primary">{{ $application['notificationMethod'] == 'email' ? $myAccount['email'] : $myAccount['whatsapp'] }}</span> Silakan ikuti tautan di dalamnya untuk melanjutkan.
                     </p>
                     <hr>
-                    <p class="text-center mb-0">
-                        Tidak menerima tautan verifikasi Akun?
-                        <a href="javascript:void(0);"> Kirim Ulang </a>
-                    </p>
+                    <form action="{{ route('account-verification.resend') }}" method="POST">
+                        @csrf
+                        <p class="text-center mb-0">
+                            Tidak menerima tautan verifikasi Akun?
+                            <button type="submit" class="btn btn-sm btn-outline-primary"> Kirim Ulang </button>
+                        </p>
+                        @include('layouts.session')
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success mt-2">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @endif
+                    </form>
                 </div>
             </div>
             <img alt="mask" src="{{ asset('materialize/assets/img/illustrations/auth-basic-login-mask-light.png') }}" class="authentication-image d-none d-lg-block" data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark-img="illustrations/auth-basic-login-mask-dark.png" />

@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->dateTime('expired_at');
             $table->enum('status', ['pending', 'verified'])->default('pending');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 
