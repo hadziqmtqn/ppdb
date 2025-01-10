@@ -25,7 +25,7 @@ class AccountVerificationMail extends Mailable
     {
         return new Envelope(
             from: new Address(config('mail.from.address'), Application::first()->name),
-            subject: 'Perubahan Email Baru',
+            subject: 'Verifikasi Email',
         );
     }
 

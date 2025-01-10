@@ -101,4 +101,9 @@ class User extends Authenticatable implements HasMedia
             $query->whereAny(['name', 'email'], 'like', '%' . $search['search'] . '%');
         });
     }
+
+    public function student(): HasOne
+    {
+        return $this->hasOne(Student::class, 'user_id');
+    }
 }

@@ -101,7 +101,7 @@ class RegistrationController extends Controller
                     'email' => $user->email
                 ]);
 
-                $this->accountVerificationRepository->sendMessage($saveNewAccount['email'], null, optional($account->admin)->whatsapp_number);
+                $this->accountVerificationRepository->sendMessage($saveNewAccount['email'], route('account-verification.verification', ['token' => $saveNewAccount['token']]), $student->whatsapp_number);
             }
 
             // TODO Login

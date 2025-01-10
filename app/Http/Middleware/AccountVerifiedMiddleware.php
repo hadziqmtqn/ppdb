@@ -9,6 +9,10 @@ class AccountVerifiedMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        // jika email sudah diverifikasi lanjutkan proses berikutnya
+        if (auth()->user()->email_verified_at) return $next($request);
+
+        // jika email belum diverifikasi kembalikan ke laman verifikasi
+        return to_route('account-verification.index');
     }
 }
