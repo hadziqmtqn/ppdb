@@ -16,8 +16,9 @@ use App\Repositories\PermissionRepository;
 use App\Repositories\RegistrationCategoryRepository;
 use App\Repositories\RegistrationPathRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\SaveNewAccountRepository;
 use App\Repositories\SchoolYearRepository;
-use App\Repositories\SendMessage\EmailChangeRepository;
+use App\Repositories\SendMessage\AccountVerificationRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -44,9 +45,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RegistrationPathRepository::class, RegistrationPathRepository::class);
         $this->app->bind(MajorRepository::class, MajorRepository::class);
         $this->app->bind(MessageTemplateRepository::class, MessageTemplateRepository::class);
+        $this->app->bind(SaveNewAccountRepository::class, SaveNewAccountRepository::class);
 
         // TODO Send Messages
-        $this->app->bind(EmailChangeRepository::class, EmailChangeRepository::class);
+        $this->app->bind(AccountVerificationRepository::class, AccountVerificationRepository::class);
         $this->app->bind(RegistrationMessageRepository::class, RegistrationMessageRepository::class);
 
         // TODO Policy

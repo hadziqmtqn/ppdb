@@ -3,15 +3,23 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EmailChange\VerificationRequest;
+use App\Http\Requests\AccountVerification\VerificationRequest;
 use App\Models\AccountVerification;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
-class EmailChangeController extends Controller
+class AccountVerificationController extends Controller
 {
+    public function index(): View
+    {
+        $title = 'Verifikasi Akun';
+
+        return \view('dashboard.account-verification.index', compact('title'));
+    }
+
     public function verification(VerificationRequest $request)
     {
         try {

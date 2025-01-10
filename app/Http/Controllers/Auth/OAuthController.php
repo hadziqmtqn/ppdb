@@ -52,7 +52,6 @@ class OAuthController extends Controller
                 $newUser->oauth_id = $user->getId();
                 $newUser->oauth_type = $provider;
                 $newUser->password = Hash::make('Pas$w0Rdd1122');
-                $newUser->account_verified = !$application['registerVerification'];
                 $newUser->save();
 
                 $newUser->assignRole('user');

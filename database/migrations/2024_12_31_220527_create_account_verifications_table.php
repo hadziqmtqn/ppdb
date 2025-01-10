@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('email_changes', function (Blueprint $table) {
+        Schema::create('account_verifications', function (Blueprint $table) {
             $table->id();
             $table->uuid('slug')->unique();
             $table->unsignedBigInteger('user_id');
@@ -21,6 +21,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('email_changes');
+        Schema::dropIfExists('account_verifications');
     }
 };

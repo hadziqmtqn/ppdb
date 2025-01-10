@@ -3,7 +3,7 @@
 <html lang="en" class="light-style layout-wide customizer-hide"
       dir="ltr"
       data-theme="theme-default"
-      data-assets-path="../materialize/assets/"
+      data-assets-path="/materialize/assets/"
       data-template="horizontal-menu-template">
 <head>
     <meta charset="utf-8" />

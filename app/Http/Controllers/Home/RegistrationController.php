@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Home\RegisterRequest;
 use App\Models\Student;
 use App\Models\User;
+use App\Repositories\ApplicationRepository;
 use App\Repositories\EducationalInstitutionRepository;
+use App\Repositories\SaveNewAccountRepository;
 use App\Repositories\SchoolYearRepository;
+use App\Repositories\SendMessage\AccountVerificationRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -26,12 +29,18 @@ class RegistrationController extends Controller
     protected EducationalInstitutionRepository $educationalInstitutionRepository;
     protected RegistrationMessageRepository $registrationMessageRepository;
     protected SchoolYearRepository $schoolYearRepository;
+    protected ApplicationRepository $applicationRepository;
+    protected AccountVerificationRepository $accountVerificationRepository;
+    protected SaveNewAccountRepository $saveNewAccountRepository;
 
-    public function __construct(EducationalInstitutionRepository $educationalInstitutionRepository, RegistrationMessageRepository $registrationMessageRepository, SchoolYearRepository $schoolYearRepository)
+    public function __construct(EducationalInstitutionRepository $educationalInstitutionRepository, RegistrationMessageRepository $registrationMessageRepository, SchoolYearRepository $schoolYearRepository, ApplicationRepository $applicationRepository, AccountVerificationRepository $accountVerificationRepository, SaveNewAccountRepository $saveNewAccountRepository)
     {
         $this->educationalInstitutionRepository = $educationalInstitutionRepository;
         $this->registrationMessageRepository = $registrationMessageRepository;
         $this->schoolYearRepository = $schoolYearRepository;
+        $this->applicationRepository = $applicationRepository;
+        $this->accountVerificationRepository = $accountVerificationRepository;
+        $this->saveNewAccountRepository = $saveNewAccountRepository;
     }
 
     public function index(): View
@@ -45,6 +54,7 @@ class RegistrationController extends Controller
     public function store(RegisterRequest $request): JsonResponse
     {
         $schoolYearActive = $this->schoolYearRepository->getSchoolYearActive();
+        $application = $this->applicationRepository->getApplication();
 
         try {
             DB::beginTransaction();
@@ -54,6 +64,7 @@ class RegistrationController extends Controller
             $user->email = $request->input('email');
             $password = $request->input('password');
             $user->password = Hash::make($password);
+            $user->email_verified_at = !$application['registerVerification'] ? now() : null;
             $user->save();
             $user->refresh();
 
@@ -82,6 +93,16 @@ class RegistrationController extends Controller
                 'password' => $password,
                 'registrationPath' => optional($student->registrationPath)->name
             ]);
+
+            // TODO Send Account Verification
+            if ($application['registerVerification']) {
+                $saveNewAccount = $this->saveNewAccountRepository->save([
+                    'user_id' => $user->id,
+                    'email' => $user->email
+                ]);
+
+                $this->accountVerificationRepository->sendMessage($saveNewAccount['email'], null, optional($account->admin)->whatsapp_number);
+            }
 
             // TODO Login
             Auth::login($user);

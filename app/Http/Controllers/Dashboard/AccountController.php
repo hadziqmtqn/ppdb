@@ -4,30 +4,31 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\AccountRequest;
-use App\Models\EmailChange;
+use App\Models\AccountVerification;
 use App\Models\User;
-use App\Repositories\SendMessage\EmailChangeRepository;
+use App\Repositories\SaveNewAccountRepository;
+use App\Repositories\SendMessage\AccountVerificationRepository;
 use Exception;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AccountController extends Controller
 {
-    protected EmailChangeRepository $emailChangeRepository;
+    protected AccountVerificationRepository $accountVerificationRepository;
+    protected SaveNewAccountRepository $saveNewAccountRepository;
 
-    public function __construct(EmailChangeRepository $emailChangeRepository)
+    public function __construct(AccountVerificationRepository $accountVerificationRepository, SaveNewAccountRepository $saveNewAccountRepository)
     {
-        $this->emailChangeRepository = $emailChangeRepository;
+        $this->accountVerificationRepository = $accountVerificationRepository;
+        $this->saveNewAccountRepository = $saveNewAccountRepository;
     }
 
     public function index(): View
     {
         $title = 'Akun Saya';
-        $emailChange = EmailChange::userId(auth()->id())
+        $emailChange = AccountVerification::userId(auth()->id())
             ->filterByStatus('pending')
             ->latest()
             ->first();
@@ -50,16 +51,13 @@ class AccountController extends Controller
 
             // tambahkan data email baru sementara untuk diverifikasi
             if ($request->input('email') != $account->email) {
-                $emailChange = new EmailChange();
-                $emailChange->user_id = $account->id;
-                $emailChange->new_email = $request->input('email');
-                $token = Str::random(30);
-                $emailChange->token = Hash::make($token);
-                $emailChange->expired_at = Carbon::now()->addDay();
-                $emailChange->save();
+                $emailChange = $this->saveNewAccountRepository->save([
+                    'user_id' => $account->id,
+                    'email' => $request->input('email')
+                ]);
 
                 // TODO Kirim pesan
-                $this->emailChangeRepository->sendMessage($emailChange->new_email, $token, optional($account->admin)->whatsapp_number);
+                $this->accountVerificationRepository->sendMessage($emailChange['email'], route('email-change.verification', ['token' => $emailChange['token']]), optional($account->admin)->whatsapp_number);
             }else {
                 $account->email = $request->input('email');
             }
