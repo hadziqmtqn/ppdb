@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard\Student;
 
-use App\Http\Requests\PreviousSchoolRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PreviousSchool\PreviousSchoolRequest;
 use App\Models\PreviousSchool;
 
 class PreviousSchoolController extends Controller

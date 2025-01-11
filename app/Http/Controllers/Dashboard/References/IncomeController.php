@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard\References;
 
-use App\Http\Requests\IncomeRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Income\IncomeRequest;
 use App\Models\Income;
 
 class IncomeController extends Controller

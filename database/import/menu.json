@@ -121,7 +121,7 @@
         "type": "sub_menu",
         "visibility": ["income-read"],
         "url": "/income",
-        "icon": "coin-outline"
+        "icon": "cash"
       }
     ]
   },

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard\Student;
 
-use App\Http\Requests\PlaceOfRecidenceRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PlaceOfRecidence\PlaceOfRecidenceRequest;
 use App\Models\PlaceOfRecidence;
 
 class PlaceOfRecidenceController extends Controller

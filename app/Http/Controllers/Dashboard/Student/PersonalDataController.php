@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard\Student;
 
-use App\Http\Requests\PersonalDataRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PersonalData\PersonalDataRequest;
 use App\Models\PersonalData;
 
 class PersonalDataController extends Controller
