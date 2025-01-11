@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('major_id')->nullable();
             $table->unsignedBigInteger('class_level_id');
             $table->string('whatsapp_number')->unique();
+            $table->string('nisn')->nullable();
+            $table->enum('registration_status', ['belum_diterima', 'diterima', 'ditolak'])->default('belum_diterima');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

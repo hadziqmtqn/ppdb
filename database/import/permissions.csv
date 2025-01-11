@@ -60,3 +60,17 @@ message-receiver-delete
 student-read
 student-write
 student-delete
+education-read
+education-write
+education-delete
+income-read
+income-write
+income-delete
+personal-data-read
+personal-data-write
+family-read
+family-write
+place-of-recidence-read
+place-of-recidence-write
+previous-school-read
+previous-school-write

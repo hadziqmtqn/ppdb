@@ -108,6 +108,20 @@
         "visibility": ["profession-read"],
         "url": "/profession",
         "icon": "account-tie-hat-outline"
+      },
+      {
+        "name": "Pendidikan",
+        "type": "sub_menu",
+        "visibility": ["education-read"],
+        "url": "/education",
+        "icon": "school-outline"
+      },
+      {
+        "name": "Penghasilan",
+        "type": "sub_menu",
+        "visibility": ["income-read"],
+        "url": "/income",
+        "icon": "coin-outline"
       }
     ]
   },

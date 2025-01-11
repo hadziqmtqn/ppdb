@@ -8,6 +8,8 @@ use Database\Seeders\References\ClassLevelSeeder;
 use Database\Seeders\References\DistanceToSchoolSeeder;
 use Database\Seeders\References\EducationalInstitutionSeeder;
 use Database\Seeders\References\EducationalLevelSeeder;
+use Database\Seeders\References\EducationSeeder;
+use Database\Seeders\References\IncomeSeeder;
 use Database\Seeders\References\MajorSeeder;
 use Database\Seeders\References\ProfessionSeeder;
 use Database\Seeders\References\RegistrationCategorySeeder;
@@ -46,7 +48,9 @@ class DatabaseSeeder extends Seeder
             MajorSeeder::class,
             DistanceToSchoolSeeder::class,
             TransportationSeeder::class,
-            ProfessionSeeder::class
+            ProfessionSeeder::class,
+            EducationSeeder::class,
+            IncomeSeeder::class
         ]);
     }
 }
