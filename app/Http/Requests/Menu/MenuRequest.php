@@ -13,8 +13,8 @@ class MenuRequest extends FormRequest
             'name' => ['required'],
             'type' => ['required', 'in:"main_menu","sub_menu"'],
             'main_menu' => ['required_if:type,"sub_menu"', 'nullable'],
-            'visibility' => ['required', 'array'],
-            'visibility.*' => ['required', 'exists:permissions,name'],
+            'visibility' => ['nullable', 'array'],
+            'visibility.*' => ['nullable', 'exists:permissions,name'],
             'url' => ['required'],
             'icon' => ['nullable'],
         ];

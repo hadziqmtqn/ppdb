@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
                             },
                         },
                     },
-                    "visibility[]": {
+                    /*"visibility[]": {
                         validators: {
                             notEmpty: {
                                 message: 'Kolom ini wajib diisi'
                             },
                         }
-                    },
+                    },*/
                     url: {
                         validators: {
                             notEmpty: {

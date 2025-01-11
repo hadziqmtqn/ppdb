@@ -31,32 +31,22 @@ class OAuthController extends Controller
         $application = $this->applicationRepository->getApplication();
 
         try {
-            $user = Socialite::driver($provider)->user();
+            $socialite = Socialite::driver($provider)->user();
 
-            $finduser = User::query()
-                ->where('email', $user->getEmail())
+            $user = User::query()
+                ->where('email', $socialite->getEmail())
                 ->first();
 
             DB::beginTransaction();
 
-            if ($finduser) {
-                if (!$finduser->is_active) {
+            if ($user) {
+                if (!$user->is_active) {
                     return to_route('login')->with('error', 'Akun Anda tidak aktif');
                 }
 
-                Auth::login($finduser);
+                Auth::login($user);
             } else {
-                $newUser = new User();
-                $newUser->name = $user->getName();
-                $newUser->email = $user->getEmail();
-                $newUser->oauth_id = $user->getId();
-                $newUser->oauth_type = $provider;
-                $newUser->password = Hash::make('Pas$w0Rdd1122');
-                $newUser->save();
-
-                $newUser->assignRole('user');
-
-                Auth::login($newUser);
+                return to_route('login')->with('error', 'Akun tidak terdaftar');
             }
 
             DB::commit();

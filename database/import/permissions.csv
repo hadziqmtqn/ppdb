@@ -57,3 +57,6 @@ profession-delete
 message-receiver-read
 message-receiver-write
 message-receiver-delete
+student-read
+student-write
+student-delete

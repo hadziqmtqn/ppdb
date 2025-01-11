@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string('name');
             $table->enum('type', ['main_menu', 'sub_menu'])->default('main_menu');
             $table->string('main_menu')->nullable();
-            $table->json('visibility');
+            $table->json('visibility')->nullable();
             $table->string('url');
             $table->string('icon')->nullable();
             $table->timestamps();

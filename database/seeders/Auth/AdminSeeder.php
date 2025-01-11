@@ -48,11 +48,27 @@ class AdminSeeder extends Seeder
             'name' => 'admin'
         ]);
 
+        $adminRolePermissions = Reader::createFromPath(database_path('import/admin-permissions.csv'))
+            ->setHeaderOffset(0);
+        $adminPermission = [];
+        foreach ($adminRolePermissions as $adminRolePermission) {
+            $adminPermission[] = $adminRolePermission['name'];
+        }
+        $adminRole->syncPermissions($adminPermission);
+
         // User Role
-        Role::create([
+        $userRole = Role::create([
             'slug' => Str::uuid()->toString(),
             'name' => 'user'
         ]);
+
+        $userRolePermissions = Reader::createFromPath(database_path('import/user-permissions.csv'))
+            ->setHeaderOffset(0);
+        $userPermission = [];
+        foreach ($userRolePermissions as $userRolePermission) {
+            $userPermission[] = $userRolePermission['name'];
+        }
+        $userRole->syncPermissions($userPermission);
 
         // Admin seeder
         $rows = Reader::createFromPath(database_path('import/admin.csv'))
