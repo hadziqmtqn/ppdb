@@ -43,7 +43,8 @@ class ProfessionController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = Profession::query();
+                $data = Profession::query()
+                    ->withCount('fatherProfessions', 'motherProfessions', 'guardianProfessions');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -56,7 +57,9 @@ class ProfessionController extends Controller implements HasMiddleware
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        if (($row->father_educations_count == 0) && ($row->mother_educations_count == 0) && ($row->guardian_educations_count == 0)) {
+                            $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        }
 
                         return $btn;
                     })
@@ -100,6 +103,12 @@ class ProfessionController extends Controller implements HasMiddleware
     public function destroy(Profession $profession): JsonResponse
     {
         try {
+            $profession->load('fatherProfessions', 'motherProfessions', 'guardianProfessions');
+
+            if ($profession->fatherProfessions->isNotEmpty() || $profession->motherProfessions->isNotEmpty() || $profession->guardianProfessions->isNotEmpty()) {
+                return $this->apiResponse('Data tidak bisa dihapus', null, null, Response::HTTP_BAD_REQUEST);
+            }
+
             $profession->delete();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());

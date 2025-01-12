@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Profession extends Model
@@ -26,5 +27,20 @@ class Profession extends Model
         static::creating(function (Profession $profession) {
             $profession->slug = Str::uuid()->toString();
         });
+    }
+
+    public function fatherProfessions(): HasMany
+    {
+        return $this->hasMany(Family::class, 'father_profession_id');
+    }
+
+    public function motherProfessions(): HasMany
+    {
+        return $this->hasMany(Family::class, 'mother_profession_id');
+    }
+
+    public function guardianProfessions(): HasMany
+    {
+        return $this->hasMany(Family::class, 'guardian_profession_id');
     }
 }

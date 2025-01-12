@@ -43,7 +43,8 @@ class TransportationController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = Transportation::query();
+                $data = Transportation::query()
+                    ->withCount('placeOfRecidences');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -56,7 +57,9 @@ class TransportationController extends Controller implements HasMiddleware
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        if ($row->place_of_recidences_count == 0) {
+                            $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        }
 
                         return $btn;
                     })
@@ -100,6 +103,12 @@ class TransportationController extends Controller implements HasMiddleware
     public function destroy(Transportation $transportation): JsonResponse
     {
         try {
+            $transportation->loadCount('placeOfRecidences');
+
+            if ($transportation->place_of_recidences_count > 0) {
+                return $this->apiResponse('Data tidak bisa diubah', null, null, Response::HTTP_BAD_REQUEST);
+            }
+
             $transportation->delete();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());

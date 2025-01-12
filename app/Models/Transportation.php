@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Transportation extends Model
@@ -26,5 +27,10 @@ class Transportation extends Model
         static::creating(function (Transportation $transportation) {
             $transportation->slug = Str::uuid()->toString();
         });
+    }
+
+    public function placeOfRecidences(): HasMany
+    {
+        return $this->hasMany(PlaceOfRecidence::class, 'transportation_id');
     }
 }
