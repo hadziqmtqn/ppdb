@@ -21,7 +21,7 @@ class StudentRegistrationController extends Controller
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('student.educationalInstitution:id,name', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
+        $user->load('student.educationalInstitution:id,name', 'student.educationalInstitution.majors', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
         $menus = $this->studentRegistrationRepository->menus($user);
 
         return view('dashboard.student.student-registration.index', compact('title', 'user', 'menus'));

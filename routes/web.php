@@ -50,7 +50,7 @@ Route::middleware('guest')->group(function () {
     });
 
     Route::prefix('register')->group(function () {
-        Route::get('/', [RegistrationController::class, 'index'])->name('student-registration.index');
+        Route::get('/', [RegistrationController::class, 'index'])->name('registration.index');
         Route::post('/store', [RegistrationController::class, 'store']);
     });
 });

@@ -45,7 +45,7 @@
 
             <p class="text-center mt-2">
                 <span>Belum punya akun?</span>
-                <a href="{{ route('student-registration.index') }}">
+                <a href="{{ route('registration.index') }}">
                     <span>Buat akun baru</span>
                 </a>
             </p>

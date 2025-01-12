@@ -12,6 +12,7 @@
         timeMask = document.querySelector('.time-mask'),
         numeralMask = document.querySelector('.numeral-mask'),
         blockMask = document.querySelector('.block-mask'),
+        uppercaseMask = document.querySelector('.uppercase-mask'),
         delimiterMask = document.querySelector('.delimiter-mask'),
         customDelimiter = document.querySelector('.custom-delimiter-mask'),
         prefixMask = document.querySelector('.prefix-mask'),
@@ -103,6 +104,13 @@
     //Block
     if (blockMask) {
         new Cleave(blockMask, {
+            blocks: [4, 3, 3],
+            uppercase: true
+        });
+    }
+
+    if (uppercaseMask) {
+        new Cleave(uppercaseMask, {
             blocks: [4, 3, 3],
             uppercase: true
         });
