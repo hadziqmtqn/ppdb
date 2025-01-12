@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Income extends Model
@@ -26,5 +27,20 @@ class Income extends Model
         static::creating(function (Income $income) {
             $income->slug = Str::uuid()->toString();
         });
+    }
+
+    public function fatherIncomes(): HasMany
+    {
+        return $this->hasMany(Family::class, 'father_income_id');
+    }
+
+    public function motherIncomes(): HasMany
+    {
+        return $this->hasMany(Family::class, 'mother_income_id');
+    }
+
+    public function guardianIncomes(): HasMany
+    {
+        return $this->hasMany(Family::class, 'guardian_income_id');
     }
 }

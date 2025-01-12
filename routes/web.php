@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\References\DistanceToSchoolController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\References\EducationController;
+use App\Http\Controllers\Dashboard\References\IncomeController;
 use App\Http\Controllers\Dashboard\References\MajorController;
 use App\Http\Controllers\Dashboard\References\ProfessionController;
 use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
@@ -210,6 +211,14 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [EducationController::class, 'store']);
             Route::put('/{education:slug}/update', [EducationController::class, 'update']);
             Route::delete('/{education:slug}/delete', [EducationController::class, 'destroy']);
+        });
+
+        Route::prefix('income')->group(function () {
+            Route::get('/', [IncomeController::class, 'index'])->name('income.index');
+            Route::post('/datatable', [IncomeController::class, 'datatable']);
+            Route::post('/store', [IncomeController::class, 'store']);
+            Route::put('/{income:slug}/update', [IncomeController::class, 'update']);
+            Route::delete('/{income:slug}/delete', [IncomeController::class, 'destroy']);
         });
 
         Route::prefix('message-receiver')->group(function () {
