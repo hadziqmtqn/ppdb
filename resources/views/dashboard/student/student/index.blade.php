@@ -24,4 +24,5 @@
 @section('scripts')
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
     <script src="{{ asset('js/registration-category/select.js') }}"></script>
+    <script src="{{ asset('js/student/datatable.js') }}"></script>
 @endsection

@@ -41,11 +41,26 @@ class StudentController extends Controller implements HasMiddleware
 
     public function datatable(Request $request): JsonResponse
     {
+        $auth = auth()->user();
+        $role = $auth->roles->first()->name;
+
         try {
             if ($request->ajax()) {
                 $data = User::query()
-                    ->with('student')
-                    ->whereHas('student')
+                    ->with('student.educationalInstitution', 'student.classLevel', 'student.major', 'student.registrationCategory', 'student.registrationPath', 'student.schoolYear')
+                    ->when(($role == 'admin'),
+                        // Admin: Filter berdasarkan educational institution
+                        fn($query) => $query->whereHas('student', fn($query) =>
+                        $query->where('educational_institution_id', optional($auth->admin)->educational_institution_id)
+                        ),
+                        // Bukan admin: Cek apakah user atau super-admin
+                        fn($query) => $query->when(($role == 'user'),
+                            // User: Filter berdasarkan ID user
+                            fn($query) => $query->where('id', $auth->id),
+                            // Super-admin: Semua student
+                            fn($query) => $query->whereHas('student')
+                        )
+                    )
                     ->when($request->get('status'), function ($query) use ($request) {
                         $query->when($request->get('status') == 'active', function ($query) use ($request) {
                             $query->where('is_active', true);
@@ -67,9 +82,21 @@ class StudentController extends Controller implements HasMiddleware
                             $query->whereAny(['name', 'email'], 'LIKE', '%' . $search . '%');
                         });
                     })
-                    ->addColumn('educationalInstitution', fn($row) => optional(optional($row->admin)->educationalInstitution)->name)
-                    ->addColumn('role', fn($row) => '<span class="badge rounded-pill ' . ($row->roles->first()->name == 'super-admin' ? 'bg-primary' : 'bg-secondary') . '">'. ucfirst(str_replace('-', ' ', $row->roles->first()->name)) .'</span>')
-                    ->addColumn('whatsappNumber', fn($row) => optional($row->admin)->whatsapp_number)
+                    ->addColumn('registrationNumber', fn($row) => optional($row->student)->registration_number)
+                    ->addColumn('educationalInstitution', fn($row) => optional(optional($row->student)->educationalInstitution)->name)
+                    ->addColumn('registrationCategory', fn($row) => optional(optional($row->student)->registrationCategory)->name)
+                    ->addColumn('whatsappNumber', fn($row) => optional($row->student)->whatsapp_number)
+                    ->addColumn('registrationStatus', function ($row) {
+                        $registrationStatus = optional($row->student)->registration_status;
+
+                        $badge = match ($registrationStatus) {
+                            'belum_diterima' => 'bg-warning',
+                            'diterima' => 'bg-primary',
+                            default => 'bg-danger',
+                        };
+
+                        return '<span class="badge rounded-pill '. $badge .'">'. strtoupper(str_replace('_', ' ', $registrationStatus)) .'</span>';
+                    })
                     ->addColumn('is_active', function ($row) {
                         return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
                     })
@@ -77,10 +104,8 @@ class StudentController extends Controller implements HasMiddleware
                         $btn = null;
 
                         if (!$row->deleted_at) {
-                            $btn = '<a href="' . route('admin.show', $row->username) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
-                            if ($row->roles->first()->name != 'super-admin') {
-                                $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
-                            }
+                            $btn = '<a href="' . route('student.show', $row->username) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
+                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
                         }else {
                             $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
                             $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="force-delete btn btn-sm btn-danger"><i class="mdi mdi-trash-can-outline me-1"></i>Hapus Permanen</button>';
@@ -88,7 +113,7 @@ class StudentController extends Controller implements HasMiddleware
 
                         return $btn;
                     })
-                    ->rawColumns(['is_active', 'role', 'action'])
+                    ->rawColumns(['is_active', 'registrationStatus', 'action'])
                     ->make();
             }
         }catch (Exception $exception) {
