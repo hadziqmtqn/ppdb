@@ -3,21 +3,14 @@
     <div class="card-body pt-0">
         <div class="demo-inline-spacing">
             <div class="list-group">
-                <a href="{{ route('student-registration.index', $user->username) }}" class="list-group-item list-group-item-action {{ url()->current() == route('student-registration.index', $user->username) ? 'active' : '' }} waves-effect">
-                    <i class="mdi mdi-account-plus-outline me-2"></i>Pendaftaran
-                </a>
-                <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">
-                    <i class="mdi mdi-account-outline me-2"></i>Data Pribadi
-                </a>
-                <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">
-                    <i class="mdi mdi-account-network me-2"></i>Keluarga
-                </a>
-                <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">
-                    <i class="mdi mdi-map-marker-outline me-2"></i>Tempat Tinggal
-                </a>
-                <a href="javascript:void(0);" class="list-group-item list-group-item-action waves-effect">
-                    <i class="mdi mdi-school-outline me-2"></i>Asal Sekolah
-                </a>
+                @foreach($menus as $key => $menu)
+                    <a href="{{ $menu['url'] }}" class="list-group-item list-group-item-action {{ url()->current() == $menu['url'] ? 'active' : '' }} waves-effect">
+                        <span class="d-flex justify-content-between">
+                            <span><i class="mdi {{ $menu['icon'] }} me-2"></i>{{ $key }}</span>
+                            <span><i class="mdi mdi-{{ $menu['isCompleted'] ? 'check text-success' : 'information-outline text-warning' }}" data-bs-toggle="tooltip" title="{{ $menu['isCompleted'] ? 'Lengkap' : 'Belum Lengkap' }}"></i></span>
+                        </span>
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>

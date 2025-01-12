@@ -3,11 +3,23 @@
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span>
         <span class="text-muted fw-light"><a href="{{ route('student.index') }}">Siswa</a> /</span>
-        Detail {{ $title }}
+        Pendaftaran
     </h4>
     <div class="row">
         <div class="col-md-4">
             @include('dashboard.student.menu')
+        </div>
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <h5 class="card-header">Pendaftaran</h5>
+                <form id="form" onsubmit="return false">
+                    <div class="card-body">
+                        <div class="form-floating form-floating-outline mb-3">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
