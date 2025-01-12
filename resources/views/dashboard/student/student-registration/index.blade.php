@@ -12,9 +12,12 @@
         <div class="col-md-8">
             <div class="card mb-3">
                 <h5 class="card-header">Pendaftaran</h5>
-                <form id="form" onsubmit="return false">
+                <form id="form" onsubmit="return false" data-username="{{ $user->username }}">
                     <div class="card-body">
                         <input type="hidden" value="{{ optional($user->student)->educational_institution_id }}" id="select-educational-institution">
+                        <input type="hidden" name="has_registration_path" value="{{ optional(optional($user->student)->educationalInstitution)->registrationPaths->isNotEmpty() ? 'YES' : 'NO' }}">
+                        <input type="hidden" name="has_major" value="{{ optional(optional($user->student)->educationalInstitution)->majors->isNotEmpty() ? 'YES' : 'NO' }}">
+                        <input type="hidden" name="nisn_is_required" value="{{ optional(optional(optional($user->student)->educationalInstitution)->educationalLevel)->code != 'SD' ? 'YES' : 'NO' }}">
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control" id="educationalInstitution" value="{{ optional(optional($user->student)->educationalInstitution)->name }}" readonly>
                             <label for="educationalInstitution">Lembaga</label>
@@ -61,6 +64,10 @@
                             <input type="text" class="form-control uppercase-input" name="name" id="name" value="{{ $user->name }}" placeholder="Nama Lengkap">
                             <label for="name">Nama Lengkap</label>
                         </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" id="whatsapp_number" name="whatsapp_number" class="form-control phone-number-mask" minlength="10" maxlength="13" placeholder="No. Whatsapp" value="{{ optional($user->student)->whatsapp_number }}">
+                            <label for="whatsapp_number">No. Whatsapp</label>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="button" class="btn btn-primary waves-effect waves-light" id="btn-submit">Simpan</button>
@@ -76,6 +83,7 @@
     <script src="{{ asset('js/registration-path/select.js') }}"></script>
     <script src="{{ asset('js/class-level/select.js') }}"></script>
     <script src="{{ asset('js/major/select.js') }}"></script>
+    <script src="{{ asset('js/student/student-registration/update.js') }}"></script>
     <script>
         const inputField = document.querySelector('.uppercase-input');
 

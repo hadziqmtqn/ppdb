@@ -238,6 +238,7 @@ Route::middleware('auth')->group(function () {
         // TODO Student Registration
         Route::prefix('student-registration')->group(function () {
             Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
+            Route::post('/{user:username}/store', [StudentRegistrationController::class, 'store']);
         });
 
         // TODO Select Routes

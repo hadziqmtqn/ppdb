@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Home;
+namespace App\Http\Requests\Student\StudengRegistration;
 
+use App\Rules\Student\StudentRegistration\NisnRule;
+use App\Rules\Student\StudentRegistration\WhatsappNumberRule;
 use App\Traits\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class RegisterRequest extends FormRequest
+class StudentRequest extends FormRequest
 {
     use ApiResponse;
 
     public function rules(): array
     {
         return [
-            'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id'],
             'registration_category_id' => ['required', 'integer', 'exists:registration_categories,id'],
             'has_registration_path' => ['required', 'in:YES,NO'],
             'registration_path_id' => ['required_if:has_registration_path,YES', 'nullable', 'integer', 'exists:registration_paths,id'],
@@ -23,12 +24,9 @@ class RegisterRequest extends FormRequest
             'has_major' => ['required', 'in:YES,NO'],
             'major_id' => ['required_if:has_major,YES', 'nullable', 'integer', 'exists:majors,id'],
             'nisn_is_required' => ['required', 'in:YES,NO'],
-            'nisn' => ['required_if:nisn_is_required,YES', 'nullable', 'unique:students,nisn', 'digits:10'],
+            'nisn' => ['required_if:nisn_is_required,YES', 'nullable', 'digits:10', new NisnRule($this->route('user')->username)],
             'name' => ['required', 'string', 'min:3'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'whatsapp_number' => ['required', 'numeric', 'unique:students,whatsapp_number', 'min_digits:10', 'max_digits:13'],
-            'password' => ['required', 'string', 'confirmed', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'],
-            'password_confirmation' => ['required', 'same:password']
+            'whatsapp_number' => ['required', 'numeric', 'min_digits:10', 'max_digits:13', new WhatsappNumberRule($this->route('user')->username)],
         ];
     }
 
@@ -43,24 +41,19 @@ class RegisterRequest extends FormRequest
             'registration_path_id.required_if' => ':attribute wajib diisi',
             'major_id.required_if' => ':attribute wajib diisi',
             'nisn.required_if' => ':attribute wajib diisi',
-            'password.regex' => ':attribute minimal terdiri dari angka, 1 huruf besar, huruf kecil, dan karakter khusus',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'educational_institution_id' => 'lembaga',
             'registration_category_id' => 'kategori pendaftaran',
             'registration_path_id' => 'jalur pendaftaran',
             'class_level_id' => 'kelas',
             'major_id' => 'jurusan',
             'nisn' => 'NISN',
             'name' => 'nama lengkap',
-            'email' => 'email',
             'whatsapp_number' => 'nomor whatsapp',
-            'password' => 'kata sandi',
-            'password_confirmation' => 'konfirmasi kata sandi'
         ];
     }
 
