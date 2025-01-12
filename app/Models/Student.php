@@ -42,6 +42,11 @@ class Student extends Model implements HasMedia
         });
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class);

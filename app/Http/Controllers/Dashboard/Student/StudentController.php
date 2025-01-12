@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Student\StudentRequest;
 use App\Models\Student;
 use App\Models\User;
 use App\Traits\ApiResponse;
@@ -12,9 +11,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class StudentController extends Controller implements HasMiddleware
@@ -100,15 +101,19 @@ class StudentController extends Controller implements HasMiddleware
                     ->addColumn('is_active', function ($row) {
                         return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
                     })
-                    ->addColumn('action', function ($row) {
+                    ->addColumn('action', function ($row) use ($auth) {
                         $btn = null;
 
                         if (!$row->deleted_at) {
                             $btn = '<a href="' . route('student.show', $row->username) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
-                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                            if (!$auth->hasRole('user')) {
+                                $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                            }
                         }else {
-                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
-                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="force-delete btn btn-sm btn-danger"><i class="mdi mdi-trash-can-outline me-1"></i>Hapus Permanen</button>';
+                            if (!$auth->hasRole('user')) {
+                                $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
+                                $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="force-delete btn btn-sm btn-danger"><i class="mdi mdi-trash-can-outline me-1"></i>Hapus Permanen</button>';
+                            }
                         }
 
                         return $btn;
@@ -123,27 +128,29 @@ class StudentController extends Controller implements HasMiddleware
         return response()->json(true);
     }
 
-    public function store(StudentRequest $request)
+    public function show(User $user)
     {
-        return Student::create($request->validated());
+        Gate::authorize('view-student', $user);
+
+        $title = 'Siswa';
+        $user->load('student.educationalInstitution:id,name', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
+
+        if (!$user->student) {
+            return to_route('student.index')->with('warning', 'Ini bukan data siswa');
+        }
+
+        return \view('dashboard.student.student.show', compact('title', 'user'));
     }
 
-    public function show(Student $student)
+    public function destroy(Student $student): JsonResponse
     {
-        return $student;
-    }
+        try {
+            $student->delete();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dihapus!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-    public function update(StudentRequest $request, Student $student)
-    {
-        $student->update($request->validated());
-
-        return $student;
-    }
-
-    public function destroy(Student $student)
-    {
-        $student->delete();
-
-        return response()->json();
+        return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
     }
 }

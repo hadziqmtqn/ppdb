@@ -30,6 +30,7 @@ use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
+use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
 use App\Http\Controllers\Home\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
@@ -232,6 +233,11 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index');
             Route::post('/datatable', [StudentController::class, 'datatable']);
             Route::get('/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
+        });
+
+        // TODO Student Registration
+        Route::prefix('student-registration')->group(function () {
+            Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
         });
 
         // TODO Select Routes

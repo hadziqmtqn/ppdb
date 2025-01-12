@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Policies\EmailChangePolicy;
+use App\Policies\UserPolicy;
 use App\Repositories\ApplicationRepository;
 use App\Repositories\ClassLevelRepository;
 use App\Repositories\EducationalInstitutionRepository;
@@ -53,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
 
         // TODO Policy
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);
+        Gate::policy(UserPolicy::class, UserPolicy::class);
     }
 
     /**
