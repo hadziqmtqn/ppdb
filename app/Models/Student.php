@@ -22,8 +22,10 @@ class Student extends Model implements HasMedia
         'registration_category_id',
         'registration_path_id',
         'major_id',
+        'nisn',
         'class_level_id',
         'whatsapp_number',
+        'registration_status'
     ];
 
     protected static function boot(): void

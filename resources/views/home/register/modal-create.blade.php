@@ -11,6 +11,7 @@
                         <input type="hidden" name="educational_institution_id" id="select-educational-institution">
                         <input type="hidden" name="has_registration_path" id="hasRegistrationPath">
                         <input type="hidden" name="has_major" id="hasMajor">
+                        <input type="hidden" name="nisn_is_required" id="nisnIsRequired">
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" class="form-control" value="" id="educationName" disabled>
                             <label for="educationName">Lembaga Pendidikan</label>
@@ -36,6 +37,14 @@
                                 <div class="form-floating form-floating-outline mb-3">
                                     <select name="major_id" class="form-select select2" id="select-major"></select>
                                     <label for="select-major">Jurusan</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="showNisnContainer">
+                            <div id="showNisn">
+                                <div class="form-floating form-floating-outline mb-3">
+                                    <input type="number" class="form-control" name="nisn" id="nisn" placeholder="Nomor Induk Siswa Nasional">
+                                    <label for="nisn">NISN</label>
                                 </div>
                             </div>
                         </div>

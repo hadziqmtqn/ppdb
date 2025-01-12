@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const showMajors = document.querySelector('#showMajors'),
         showMajorsContainer = document.querySelector('#showMajorsContainer');
 
+    // NISN wajib diisi
+    const showNisnContainer = document.querySelector('#showNisnContainer'),
+        showNisn = document.querySelector('#showNisn');
+
     modalButtons.forEach(button => {
         button.addEventListener('click', function () {
             // Ambil nilai data-id dari tombol yang diklik
@@ -17,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const educationName = this.getAttribute('data-education-name');
             const hasRegistrationPath = this.getAttribute('data-registration-path');
             const hasMajors = this.getAttribute('data-major');
+            const nisnIsRequired = this.getAttribute('data-nisn-is-required');
 
             // Setel nilai pada input tersembunyi
             const hiddenInput = document.querySelector('#select-educational-institution');
@@ -33,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // input has major
             const hasMajorInput = document.querySelector('#hasMajor');
             hasMajorInput.value = hasMajors;
+
+            const nisnIsRequiredInput = document.querySelector('#nisnIsRequired');
+            nisnIsRequiredInput.value = nisnIsRequired;
 
             // Hapus atau tambahkan kembali elemen #showRegistrationPaths
             if (hasRegistrationPath === 'YES') {
@@ -57,6 +65,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Jika elemen ada di dalam DOM, hapus
                 if (showMajorsContainer.contains(showMajors)) {
                     showMajors.remove();
+                }
+            }
+
+            // Hapus atau tambahkan kembali elemen #showNisn berdasarkan nilai nisnIsRequired
+            if (nisnIsRequired === 'YES') {
+                // Jika elemen tidak ada di dalam DOM, tambahkan kembali
+                if (!showNisnContainer.contains(showNisn)) {
+                    showNisnContainer.appendChild(showNisn);
+                }
+            } else {
+                // Jika elemen ada di dalam DOM, hapus
+                if (showNisnContainer.contains(showNisn)) {
+                    showNisn.remove();
                 }
             }
         });

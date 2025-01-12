@@ -79,7 +79,8 @@ class EducationalInstitutionRepository
                     'remainingQuota' => optional($educationalInstitution->registrationScheduleActive)->remaining_quota,
                     'remainingDays' => $startDate > $toDay && $endDate > $toDay ? 'Belum dibuka' : ($startDate <= $toDay && $endDate >= $toDay ? 'Sisa ' . Carbon::parse($endDate)->shortAbsoluteDiffForHumans() . ' lagi' : 'Telah ditutup'),
                     'hasMajors' => $educationalInstitution->majors->isNotEmpty() ? 'YES' : 'NO',
-                    'hasRegistrationPaths' => $educationalInstitution->registrationPaths->isNotEmpty() ? 'YES' : 'NO'
+                    'hasRegistrationPaths' => $educationalInstitution->registrationPaths->isNotEmpty() ? 'YES' : 'NO',
+                    'nisnIsRequired' => optional($educationalInstitution->educationalLevel)->code == 'SD' ? 'NO' : 'YES'
                 ]);
             });
     }

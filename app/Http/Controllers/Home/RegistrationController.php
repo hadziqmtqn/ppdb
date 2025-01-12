@@ -80,6 +80,7 @@ class RegistrationController extends Controller
             $student->class_level_id = $request->input('class_level_id');
             $student->registration_path_id = $request->input('registration_path_id');
             $student->major_id = $request->input('major_id');
+            $student->nisn = $request->input('nisn');
             $student->whatsapp_number = $request->input('whatsapp_number');
             $student->save();
             $student->refresh();
