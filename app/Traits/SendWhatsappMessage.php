@@ -30,21 +30,5 @@ trait SendWhatsappMessage
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         curl_exec($curl);
         curl_close($curl);
-
-        /*try {
-            $client = new Client();
-            $response = $client->sendAsync(new Request('POST', $whatsappApi->domain . '/api/send_message'), [
-                'form_params' => [
-                    'token' => $whatsappApi->api_key,
-                    'number' => $textMessage['phone'],
-                    'message' => $textMessage['message'],
-                    'date' => Carbon::now()->format('Y-m-d'),
-                    'time' => Carbon::now()->addSeconds(5)
-                ]
-            ])->wait();
-            Log::info($response->getBody());
-        }catch (Exception $exception) {
-            Log::error($exception->getMessage());
-        }*/
     }
 }
