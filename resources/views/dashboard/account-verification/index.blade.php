@@ -62,7 +62,7 @@
                 <div class="card-body mt-2">
                     <h4 class="mb-2">Verifikasi akun Anda 👨‍🎓</h4>
                     <p class="text-start mb-2">
-                        Tautan aktivasi akun yang dikirimkan ke {{ $application['notificationMethod'] }} Anda: <span class="text-primary">{{ $application['notificationMethod'] == 'email' ? $myAccount['email'] : $myAccount['whatsapp'] }}</span> Silakan ikuti tautan di dalamnya untuk melanjutkan.
+                        Tautan aktivasi akun yang dikirimkan ke {{ $application['notificationMethod'] }} Anda: <span class="text-primary">{{ $application['notificationMethod'] == 'email' ? $myAccount['email'] : $myAccount['whatsappNumber'] }}</span> Silakan ikuti tautan di dalamnya untuk melanjutkan.
                     </p>
                     <hr>
                     <form action="{{ route('account-verification.resend') }}" method="POST">
