@@ -3,6 +3,8 @@
 namespace App\Traits;
 
 use App\Models\WhatsappConfig;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Log;
 
 trait SendWhatsappMessage
@@ -16,7 +18,8 @@ trait SendWhatsappMessage
             return;
         }
 
-        $curl = curl_init();
+        // wablas
+        /*$curl = curl_init();
         $payload = [
             "data" => [$textMessage]
         ];
@@ -29,6 +32,15 @@ trait SendWhatsappMessage
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         curl_exec($curl);
-        curl_close($curl);
+        curl_close($curl);*/
+
+        // lite wanesia
+        (new Client())->sendAsync(new Request('POST', $whatsappApi->domain), [
+            'form_params' => [
+                'token' => $whatsappApi->api_key,
+                'number' => $textMessage['phone'],
+                'message' => $textMessage['message'],
+            ]
+        ])->wait();
     }
 }
