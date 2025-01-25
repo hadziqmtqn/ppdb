@@ -9,8 +9,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="url" name="domain" id="domain" class="form-control" placeholder="Domain" value="{{ $whatsappConfig->domain }}">
-                            <label for="domain">Domain</label>
+                            <input type="url" name="domain" id="domain" class="form-control" placeholder="Domain/Endpoint" value="{{ $whatsappConfig->domain }}">
+                            <label for="domain">Domain/Endpoint</label>
                         </div>
                     </div>
                     <div class="col-md-6">

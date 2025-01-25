@@ -25,7 +25,7 @@ trait SendWhatsappMessage
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($payload));
-        curl_setopt($curl, CURLOPT_URL, $whatsappApi->domain."/api/v2/send-message");
+        curl_setopt($curl, CURLOPT_URL, $whatsappApi->domain);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         curl_exec($curl);
