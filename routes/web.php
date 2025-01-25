@@ -29,6 +29,7 @@ use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
+use App\Http\Controllers\Dashboard\Student\PersonalDataController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
 use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
 use App\Http\Controllers\Home\RegistrationController;
@@ -239,6 +240,10 @@ Route::middleware('auth')->group(function () {
         Route::prefix('student-registration')->group(function () {
             Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
             Route::post('/{user:username}/store', [StudentRegistrationController::class, 'store']);
+        });
+
+        Route::prefix('personal-data')->group(function () {
+            Route::get('/{user:username}', [PersonalDataController::class, 'index'])->name('personal-data.index');
         });
 
         // TODO Select Routes

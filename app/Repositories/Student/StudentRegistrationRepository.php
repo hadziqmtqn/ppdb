@@ -26,7 +26,7 @@ class StudentRegistrationRepository
             ]),
             'Data Pribadi' => collect([
                 'icon' => 'mdi-account-outline',
-                'url' => '#',
+                'url' => route('personal-data.index', $user->username),
                 'isCompleted' => (bool)$user->personalData
             ]),
             'Keluarga' => collect([
