@@ -14,7 +14,7 @@ class PersonalDataRequest extends FormRequest
     {
         return [
             'place_of_birth' => ['required'],
-            'data_of_birth' => ['required', 'date', 'date_format:Y-m-d', 'before:today'],
+            'date_of_birth' => ['required', 'date', 'date_format:Y-m-d', 'before:today'],
             'gender' => ['required'],
             'child_to' => ['required', 'integer', 'min:1'],
             'number_of_brothers' => ['required', 'integer', 'min:1', 'gte:child_to'],
@@ -39,7 +39,7 @@ class PersonalDataRequest extends FormRequest
     {
         return [
             'place_of_birth' => 'tempat lahir',
-            'data_of_birth' => 'tanggal lahir',
+            'date_of_birth' => 'tanggal lahir',
             'gender' => 'jenis kelamin',
             'child_to' => 'anak ke',
             'number_of_brothers' => 'jumlah saudara kandung',

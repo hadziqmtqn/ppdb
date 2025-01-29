@@ -3,14 +3,12 @@
 namespace App\Http\Requests\Profession;
 
 use App\Traits\ApiResponse;
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\HttpFoundation\Response;
 
 class ProfessionRequest extends FormRequest
 {
-    use ApiResponse;
+    use ApiResponse, HandlesValidationFailure;
 
     public function rules(): array
     {
@@ -22,10 +20,5 @@ class ProfessionRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException($this->apiResponse($validator->errors(), null, null, Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

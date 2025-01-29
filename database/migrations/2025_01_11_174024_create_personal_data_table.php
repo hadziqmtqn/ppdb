@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->uuid('slug')->unique();
             $table->unsignedBigInteger('user_id');
             $table->string('place_of_birth');
-            $table->date('data_of_birth');
+            $table->date('date_of_birth');
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
             $table->integer('child_to');
             $table->integer('number_of_brothers');

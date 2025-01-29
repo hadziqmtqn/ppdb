@@ -3,14 +3,12 @@
 namespace App\Http\Requests\RegistrationPath;
 
 use App\Traits\ApiResponse;
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\HttpFoundation\Response;
 
 class SelectRequest extends FormRequest
 {
-    use ApiResponse;
+    use ApiResponse, HandlesValidationFailure;
 
     public function rules(): array
     {
@@ -29,10 +27,5 @@ class SelectRequest extends FormRequest
         return [
             'educational_institution_id' => 'lembaga'
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException($this->apiResponse($validator->errors(), null, Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

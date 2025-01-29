@@ -43,7 +43,7 @@ class PersonalDataController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('student.educationalInstitution:id,name', 'student.educationalInstitution.majors', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
+        $user->load('personalData');
         $menus = $this->studentRegistrationRepository->menus($user);
 
         return view('dashboard.student.personal-data.index', compact('title', 'user', 'menus'));
@@ -59,7 +59,7 @@ class PersonalDataController extends Controller implements HasMiddleware
                 ->firstOrNew();
             $personalData->user_id = $user->id;
             $personalData->place_of_birth = $request->input('place_of_birth');
-            $personalData->data_of_birth = $request->input('data_of_birth');
+            $personalData->date_of_birth = $request->input('date_of_birth');
             $personalData->gender = $request->input('gender');
             $personalData->child_to = $request->input('child_to');
             $personalData->number_of_brothers = $request->input('number_of_brothers');
@@ -71,6 +71,6 @@ class PersonalDataController extends Controller implements HasMiddleware
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Data berhasil disimpan!', $personalData, null, Response::HTTP_OK);
+        return $this->apiResponse('Data berhasil disimpan!', $personalData, route('personal-data.index', $user->username), Response::HTTP_OK);
     }
 }

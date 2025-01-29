@@ -12,7 +12,7 @@ class PersonalData extends Model
         'slug',
         'user_id',
         'place_of_birth',
-        'data_of_birth',
+        'date_of_birth',
         'gender',
         'child_to',
         'number_of_brothers',
@@ -24,7 +24,7 @@ class PersonalData extends Model
     {
         return [
             'slug' => 'string',
-            'data_of_birth' => 'date',
+            'date_of_birth' => 'date',
         ];
     }
 

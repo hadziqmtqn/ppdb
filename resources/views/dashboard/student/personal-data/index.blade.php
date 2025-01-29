@@ -15,32 +15,34 @@
                 <form id="form" onsubmit="return false" data-username="{{ $user->username }}">
                     <div class="card-body">
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="place_of_birth" id="place_of_birth" class="form-control" placeholder="Tempat Lahir">
+                            <input type="text" name="place_of_birth" id="place_of_birth" class="form-control" placeholder="Tempat Lahir" value="{{ optional($user->personalData)->place_of_birth }}">
                             <label for="place_of_birth">Tempat Lahir</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="date_of_birth" id="date_of_birth" class="form-control bs-datepicker-max-today" placeholder="Tanggal Lahir" readonly>
+                            <input type="text" name="date_of_birth" id="date_of_birth" class="form-control bs-datepicker-max-today" placeholder="Tanggal Lahir" value="{{ $user->personalData ? date('Y-m-d', strtotime($user->personalData->date_of_birth)) : null }}" readonly>
                             <label for="date_of_birth">Tanggal Lahir</label>
                         </div>
-                        <div class="mb-2">Jenis Kelamin</div>
-                        <div class="form-check form-check-inline mb-3">
-                            <input name="gender" class="form-check-input" type="radio" value="Laki-laki" id="gender-male">
-                            <label class="form-check-label" for="gender-male">Laki-laki</label>
-                        </div>
-                        <div class="form-check form-check-inline mb-3">
-                            <input name="gender" class="form-check-input" type="radio" value="Perempuan" id="gender-famale">
-                            <label class="form-check-label" for="gender-famale">Perempuan</label>
+                        <div>Jenis Kelamin</div>
+                        <div class="mb-2">
+                            <div class="form-check form-check-inline">
+                                <input name="gender" class="form-check-input" type="radio" value="Laki-laki" {{ optional($user->personalData)->gender === 'Laki-laki' ? 'checked' : '' }} id="gender-male">
+                                <label class="form-check-label" for="gender-male">Laki-laki</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input name="gender" class="form-check-input" type="radio" value="Perempuan" {{ optional($user->personalData)->gender === 'Perempuan' ? 'checked' : '' }} id="gender-famale">
+                                <label class="form-check-label" for="gender-famale">Perempuan</label>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-floating form-floating-outline mb-3">
-                                    <input type="number" name="child_to" class="form-control" id="child_to" placeholder="Anak Ke">
+                                    <input type="number" name="child_to" class="form-control" id="child_to" placeholder="Anak Ke" value="{{ optional($user->personalData)->child_to }}">
                                     <label for="child_to">Anak Ke</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating form-floating-outline mb-3">
-                                    <input type="number" name="number_of_brothers" class="form-control" id="number_of_brothers" placeholder="Dari Jumlah Saudara Kandung">
+                                    <input type="number" name="number_of_brothers" class="form-control" id="number_of_brothers" placeholder="Dari Jumlah Saudara Kandung" value="{{ optional($user->personalData)->number_of_brothers }}">
                                     <label for="number_of_brothers">Dari Jumlah Saudara Kandung</label>
                                 </div>
                             </div>
@@ -49,7 +51,7 @@
                             <select name="family_relationship" id="family_relationship" class="form-select select2">
                                 <option value=""></option>
                                 @foreach(['Anak Kandung', 'Anak Angkat', 'Anak Tiri', 'Anak Sambung', 'Anak Asuh'] as $familyRelationship)
-                                    <option value="{{ $familyRelationship }}">{{ $familyRelationship }}</option>
+                                    <option value="{{ $familyRelationship }}" {{ optional($user->personalData)->family_relationship === $familyRelationship ? 'selected' : '' }}>{{ $familyRelationship }}</option>
                                 @endforeach
                             </select>
                             <label for="family_relationship">Hubungan Keluarga</label>
@@ -58,7 +60,7 @@
                             <select name="religion" id="religion" class="form-select select2">
                                 <option value=""></option>
                                 @foreach(['Islam','Protestan','Katolik','Buddha','Hindu','Khonghucu'] as $religion)
-                                    <option value="{{ $religion }}">{{ $religion }}</option>
+                                    <option value="{{ $religion }}" {{ optional($user->personalData)->religion === $religion ? 'selected' : '' }}>{{ $religion }}</option>
                                 @endforeach
                             </select>
                             <label for="religion">Agama</label>
@@ -74,5 +76,5 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/student/personal-data/store.js') }}"></script>
 @endsection
