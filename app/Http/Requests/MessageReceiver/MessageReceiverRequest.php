@@ -3,14 +3,12 @@
 namespace App\Http\Requests\MessageReceiver;
 
 use App\Traits\ApiResponse;
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\HttpFoundation\Response;
 
 class MessageReceiverRequest extends FormRequest
 {
-    use ApiResponse;
+    use ApiResponse, HandlesValidationFailure;
 
     public function rules(): array
     {
@@ -33,10 +31,5 @@ class MessageReceiverRequest extends FormRequest
             'message_template_id' => 'templat pesan',
             'user_id' => 'penerima'
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException($this->apiResponse($validator->errors(), null, null, Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

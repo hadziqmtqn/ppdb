@@ -3,14 +3,12 @@
 namespace App\Http\Requests\ClassLevel;
 
 use App\Traits\ApiResponse;
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\HttpFoundation\Response;
 
 class UpdateClassLevelRequest extends FormRequest
 {
-    use ApiResponse;
+    use ApiResponse, HandlesValidationFailure;
 
     public function rules(): array
     {
@@ -31,10 +29,5 @@ class UpdateClassLevelRequest extends FormRequest
             'name' => 'nama',
             'is_active' => 'status aktif'
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException($this->apiResponse($validator->errors(), null, null, Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

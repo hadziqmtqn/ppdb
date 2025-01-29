@@ -40,8 +40,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating form-floating-outline mb-3">
-                                    <input type="number" name="number_of_brothers" class="form-control" id="number_of_brothers" placeholder="Dari Jumlah Saudara">
-                                    <label for="number_of_brothers">Dari Jumlah Saudara</label>
+                                    <input type="number" name="number_of_brothers" class="form-control" id="number_of_brothers" placeholder="Dari Jumlah Saudara Kandung">
+                                    <label for="number_of_brothers">Dari Jumlah Saudara Kandung</label>
                                 </div>
                             </div>
                         </div>

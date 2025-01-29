@@ -244,6 +244,7 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('personal-data')->group(function () {
             Route::get('/{user:username}', [PersonalDataController::class, 'index'])->name('personal-data.index');
+            Route::post('/{user:username}/store', [PersonalDataController::class, 'store']);
         });
 
         // TODO Select Routes

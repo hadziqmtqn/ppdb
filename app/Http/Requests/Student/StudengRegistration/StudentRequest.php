@@ -5,14 +5,12 @@ namespace App\Http\Requests\Student\StudengRegistration;
 use App\Rules\Student\StudentRegistration\NisnRule;
 use App\Rules\Student\StudentRegistration\WhatsappNumberRule;
 use App\Traits\ApiResponse;
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Symfony\Component\HttpFoundation\Response;
 
 class StudentRequest extends FormRequest
 {
-    use ApiResponse;
+    use ApiResponse, HandlesValidationFailure;
 
     public function rules(): array
     {
@@ -55,10 +53,5 @@ class StudentRequest extends FormRequest
             'name' => 'nama lengkap',
             'whatsapp_number' => 'nomor whatsapp',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException($this->apiResponse($validator->errors(), null, null, Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

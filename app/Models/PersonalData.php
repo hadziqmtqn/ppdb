@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -34,5 +35,10 @@ class PersonalData extends Model
         static::creating(function (PersonalData $personalData) {
             $personalData->slug = Str::uuid()->toString();
         });
+    }
+
+    public function scopeUserId(Builder $query, $userId): Builder
+    {
+        return $query->where('user_id', $userId);
     }
 }
