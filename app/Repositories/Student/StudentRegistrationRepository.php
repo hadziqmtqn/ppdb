@@ -31,7 +31,7 @@ class StudentRegistrationRepository
             ]),
             'Keluarga' => collect([
                 'icon' => 'mdi-account-network',
-                'url' => '#',
+                'url' => route('family.index', $user->username),
                 'isCompleted' => (bool)$user->family
             ]),
             'Tempat Tinggal' => collect([
