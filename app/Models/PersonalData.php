@@ -15,7 +15,7 @@ class PersonalData extends Model
         'gender',
         'child_to',
         'number_of_brothers',
-        'status_of_child',
+        'family_relationship',
         'religion',
     ];
 

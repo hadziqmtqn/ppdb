@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
             $table->integer('child_to');
             $table->integer('number_of_brothers');
-            $table->string('status_of_child');
+            $table->string('family_relationship');
             $table->enum('religion', ['Islam', 'Protestan', 'Katolik', 'Buddha', 'Hindu', 'Khonghucu']);
             $table->timestamps();
 
