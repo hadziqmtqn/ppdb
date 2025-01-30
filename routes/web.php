@@ -238,6 +238,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [MediaFileController::class, 'index'])->name('media-file.index');
             Route::post('/datatable', [MediaFileController::class, 'datatable']);
             Route::post('/store', [MediaFileController::class, 'store']);
+            Route::get('/{mediaFile:slug}', [MediaFileController::class, 'show'])->name('media-file.show');
+            Route::put('/{mediaFile:slug}/update', [MediaFileController::class, 'update']);
+            Route::delete('/{mediaFile:slug}/delete', [MediaFileController::class, 'destroy']);
         });
 
         // TODO Student Registration

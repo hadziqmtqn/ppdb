@@ -19,7 +19,6 @@
         </div>
     </div>
     @can('media-file-write')
-        @include('dashboard.references.media-file.modal-edit')
         @include('dashboard.references.media-file.modal-create')
     @endcan
 @endsection
@@ -27,4 +26,5 @@
 @section('scripts')
     <script src="{{ asset('js/media-file/datatable.js') }}"></script>
     <script src="{{ asset('js/media-file/create.js') }}"></script>
+    <script src="{{ asset('js/media-file/select-educational-institutions.js') }}"></script>
 @endsection

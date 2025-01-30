@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('formCreate');
+    const form = document.getElementById('formEdit');
+    const slug = form.dataset.slug;
     const btnSubmit = document.getElementById('btn-submit');
     const educationalInstitutionsSelect = $('#educational-institutions');
 
@@ -58,14 +59,19 @@ document.addEventListener('DOMContentLoaded', function () {
             selectedInstitutions.forEach(id => formData.append('educational_institutions[]', id));
         }
 
+        // Menambahkan _method untuk PUT request
+        formData.append('_method', 'PUT');
+
         try {
-            const response = await axios.post(`/media-file/store`, formData);
+            const response = await axios.post(`/media-file/${slug}/update`, formData);
             if (response.data.type === 'success') {
                 toastr.success(response.data.message);
                 unBlockUi();
-                form.reset();
-                $('#datatable').DataTable().ajax.reload();
-                $('#modalCreate').modal('hide');
+
+                if (response.data.redirect) {
+                    window.location.href = response.data.redirect;
+                }
+
                 return;
             }
 
