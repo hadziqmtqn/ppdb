@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-8">
             <div class="card mb-3">
-                <h5 class="card-header">Data Tempat Tinggal</h5>
+                <h5 class="card-header">Data Asal Sekolah</h5>
                 <form id="form" onsubmit="return false" data-username="{{ $user->username }}">
                     <div class="card-body">
                         <div class="form-floating form-floating-outline mb-3">
