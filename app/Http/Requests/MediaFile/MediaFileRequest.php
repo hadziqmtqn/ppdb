@@ -15,13 +15,31 @@ class MediaFileRequest extends FormRequest
         return [
             'name' => ['required'],
             'category' => ['required', 'in:"semua_unit","unit_tertentu"'],
-            'educational_institution_id' => ['required_if:category,unit_tertentu', 'nullable', 'integer', 'exists:educational_institutions,id'],
-            'is_active' => ['required', 'boolean'],
+            'educational_institutions' => ['required_if:category,unit_tertentu', 'nullable', 'array'],
+            'educational_institutions.*' => ['required_if:category,unit_tertentu', 'nullable', 'integer', 'exists:educational_institutions,id'],
         ];
     }
 
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'educational_institutions.required_if' => ':attribute wajib diisi jika kategori unit tertentu',
+            'educational_institutions.*.required_if' => ':attribute wajib diisi jika kategori unit tertentu',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'nama file',
+            'category' => 'kategori',
+            'educational_institutions' => 'lembaga pendidikan',
+            'educational_institutions.*' => 'lembaga pendidikan',
+        ];
     }
 }

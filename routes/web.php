@@ -15,6 +15,7 @@ use App\Http\Controllers\Dashboard\References\EducationalLevelController;
 use App\Http\Controllers\Dashboard\References\EducationController;
 use App\Http\Controllers\Dashboard\References\IncomeController;
 use App\Http\Controllers\Dashboard\References\MajorController;
+use App\Http\Controllers\Dashboard\References\MediaFileController;
 use App\Http\Controllers\Dashboard\References\ProfessionController;
 use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
 use App\Http\Controllers\Dashboard\References\RegistrationPathController;
@@ -233,13 +234,19 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{messageReceiver:slug}/delete', [MessageReceiverController::class, 'destroy']);
         });
 
+        Route::prefix('media-file')->group(function () {
+            Route::get('/', [MediaFileController::class, 'index'])->name('media-file.index');
+            Route::post('/datatable', [MediaFileController::class, 'datatable']);
+            Route::post('/store', [MediaFileController::class, 'store']);
+        });
+
+        // TODO Student Registration
         Route::prefix('student')->group(function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index');
             Route::post('/datatable', [StudentController::class, 'datatable']);
             Route::get('/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
         });
 
-        // TODO Student Registration
         Route::middleware('student_access')->group(function () {
             Route::prefix('student-registration')->group(function () {
                 Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
