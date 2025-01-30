@@ -74,3 +74,6 @@ residence-read
 residence-write
 previous-school-read
 previous-school-write
+media-file-read
+media-file-write
+media-file-delete

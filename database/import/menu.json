@@ -122,6 +122,13 @@
         "visibility": ["income-read"],
         "url": "/income",
         "icon": "cash"
+      },
+      {
+        "name": "Media File",
+        "type": "sub_menu",
+        "visibility": ["media-file-read"],
+        "url": "/media-file",
+        "icon": "file-document-outline"
       }
     ]
   },
