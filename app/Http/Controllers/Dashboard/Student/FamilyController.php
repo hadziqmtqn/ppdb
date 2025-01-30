@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\Family\FamilyRequest;
+use App\Models\Education;
 use App\Models\Family;
+use App\Models\Income;
+use App\Models\Profession;
 use App\Models\User;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
@@ -45,8 +48,14 @@ class FamilyController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('family');
         $menus = $this->studentRegistrationRepository->menus($user);
+        $educations = Education::select(['id', 'name'])
+            ->get();
+        $professions = Profession::select(['id', 'name'])
+            ->get();
+        $incomes = Income::select(['id', 'nominal'])
+            ->get();
 
-        return view('dashboard.student.family.index', compact('title', 'user', 'menus'));
+        return view('dashboard.student.family.index', compact('title', 'user', 'menus', 'educations', 'professions', 'incomes'));
     }
 
     public function store(FamilyRequest $request, User $user): JsonResponse

@@ -24,16 +24,26 @@ class FamilyRequest extends FormRequest
             'mother_profession_id' => ['nullable', 'integer', 'exists:professions,id'],
             'mother_income_id' => ['nullable', 'integer', 'exists:incomes,id'],
             'have_a_guardian' => ['required', 'boolean'],
-            'guardian_name' => ['nullable', 'min:3'],
-            'guardian_education_id' => ['nullable', 'integer', 'exists:education,id'],
-            'guardian_profession_id' => ['nullable', 'integer', 'exists:professions,id'],
-            'guardian_income_id' => ['nullable', 'integer', 'exists:incomes,id'],
+            'guardian_name' => ['required_if:have_a_guardian,1', 'nullable', 'min:3'],
+            'guardian_education_id' => ['required_if:have_a_guardian,1', 'nullable', 'integer', 'exists:education,id'],
+            'guardian_profession_id' => ['required_if:have_a_guardian,1', 'nullable', 'integer', 'exists:professions,id'],
+            'guardian_income_id' => ['required_if:have_a_guardian,1', 'nullable', 'integer', 'exists:incomes,id'],
         ];
     }
 
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'guardian_name.required_if' => ':attribute wajib diisi jika punya wali',
+            'guardian_education_id.required_if' => ':attribute wajib diisi jika punya wali',
+            'guardian_profession_id.required_if' => ':attribute wajib diisi jika punya wali',
+            'guardian_income_id.required_if' => ':attribute wajib diisi jika punya wali',
+        ];
     }
 
     public function attributes(): array
