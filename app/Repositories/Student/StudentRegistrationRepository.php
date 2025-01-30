@@ -36,7 +36,7 @@ class StudentRegistrationRepository
             ]),
             'Tempat Tinggal' => collect([
                 'icon' => 'mdi-map-marker-outline',
-                'url' => '#',
+                'url' => route('place-of-recidence.index', $user->username),
                 'isCompleted' => (bool)$user->placeOfRecidence
             ]),
             'Asal Sekolah' => collect([

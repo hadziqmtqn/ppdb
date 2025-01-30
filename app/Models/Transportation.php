@@ -31,6 +31,6 @@ class Transportation extends Model
 
     public function placeOfRecidences(): HasMany
     {
-        return $this->hasMany(PlaceOfRecidence::class, 'transportation_id');
+        return $this->hasMany(Residence::class, 'transportation_id');
     }
 }

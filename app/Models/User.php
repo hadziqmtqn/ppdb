@@ -117,9 +117,9 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(Family::class, 'user_id');
     }
 
-    public function placeOfRecidence(): HasOne
+    public function residence(): HasOne
     {
-        return $this->hasOne(PlaceOfRecidence::class, 'user_id');
+        return $this->hasOne(Residence::class, 'user_id');
     }
 
     public function previousSchool(): HasOne

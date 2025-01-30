@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Family extends Model
@@ -48,5 +49,50 @@ class Family extends Model
     public function scopeUserId(Builder $query, $userId): Builder
     {
         return $query->where('user_id', $userId);
+    }
+
+    public function fatherEducation(): BelongsTo
+    {
+        return $this->belongsTo(Education::class, 'father_education_id');
+    }
+
+    public function fatherProfession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class, 'father_profession_id');
+    }
+
+    public function fatherIncome(): BelongsTo
+    {
+        return $this->belongsTo(Income::class, 'father_income_id');
+    }
+
+    public function motherEducation(): BelongsTo
+    {
+        return $this->belongsTo(Education::class, 'mother_education_id');
+    }
+
+    public function motherProfession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class, 'mother_profession_id');
+    }
+
+    public function motherIncome(): BelongsTo
+    {
+        return $this->belongsTo(Income::class, 'mother_income_id');
+    }
+
+    public function guardianEducation(): BelongsTo
+    {
+        return $this->belongsTo(Education::class, 'guardian_education_id');
+    }
+
+    public function guardianProfession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class, 'guardian_profession_id');
+    }
+
+    public function guardianIncome(): BelongsTo
+    {
+        return $this->belongsTo(Income::class, 'guardian_income_id');
     }
 }

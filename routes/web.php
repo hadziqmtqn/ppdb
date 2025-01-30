@@ -31,6 +31,7 @@ use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
 use App\Http\Controllers\Dashboard\Student\FamilyController;
 use App\Http\Controllers\Dashboard\Student\PersonalDataController;
+use App\Http\Controllers\Dashboard\Student\ResidenceController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
 use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
 use App\Http\Controllers\Home\RegistrationController;
@@ -252,6 +253,11 @@ Route::middleware('auth')->group(function () {
             Route::prefix('family')->group(function () {
                 Route::get('/{user:username}', [FamilyController::class, 'index'])->name('family.index');
                 Route::post('/{user:username}/store', [FamilyController::class, 'store']);
+            });
+
+            Route::prefix('place-of-recidence')->group(function () {
+                Route::get('/{user:username}', [ResidenceController::class, 'index'])->name('place-of-recidence.index');
+                Route::post('/{user:username}/store', [ResidenceController::class, 'store']);
             });
         });
 

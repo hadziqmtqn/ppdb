@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('place_of_recidences', function (Blueprint $table) {
+        Schema::create('residences', function (Blueprint $table) {
             $table->id();
             $table->uuid('slug');
             $table->unsignedBigInteger('user_id');
@@ -29,6 +29,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('place_of_recidences');
+        Schema::dropIfExists('residences');
     }
 };

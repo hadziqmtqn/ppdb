@@ -70,7 +70,7 @@ personal-data-read
 personal-data-write
 family-read
 family-write
-place-of-recidence-read
-place-of-recidence-write
+residence-read
+residence-write
 previous-school-read
 previous-school-write
