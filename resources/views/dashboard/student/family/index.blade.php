@@ -96,11 +96,11 @@
                         <div>Apakah Punya Wali?</div>
                         <div class="mb-2">
                             <div class="form-check form-check-inline">
-                                <input name="have_a_guardian" class="form-check-input" type="radio" value="1" {{ optional($user->family)->have_a_guardian == 1 ? 'checked' : '' }} id="yes">
+                                <input name="have_a_guardian" class="form-check-input" type="radio" value="1" {{ optional($user->family)->have_a_guardian == '1' ? 'checked' : '' }} id="yes">
                                 <label class="form-check-label" for="yes">Ya</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input name="have_a_guardian" class="form-check-input" type="radio" value="0" {{ optional($user->family)->have_a_guardian == 0 ? 'checked' : '' }} id="no">
+                                <input name="have_a_guardian" class="form-check-input" type="radio" value="0" {{ optional($user->family)->have_a_guardian == '0' ? 'checked' : '' }} id="no">
                                 <label class="form-check-label" for="no">Tidak</label>
                             </div>
                         </div>

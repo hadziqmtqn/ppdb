@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('previous_schools', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('slug');
+            $table->uuid('slug');
             $table->unsignedBigInteger('user_id');
             $table->string('school_name');
             $table->enum('status', ['Negeri', 'Swasta']);

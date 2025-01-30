@@ -16,7 +16,7 @@ class StudentRegistrationRepository
 
     public function menus(User $user): Collection
     {
-        $user->load('student', 'personalData', 'family', 'placeOfRecidence', 'previousSchool');
+        $user->load('student', 'personalData', 'family', 'residence', 'previousSchool');
 
         return collect([
             'Pendaftaran' => collect([
@@ -37,11 +37,11 @@ class StudentRegistrationRepository
             'Tempat Tinggal' => collect([
                 'icon' => 'mdi-map-marker-outline',
                 'url' => route('place-of-recidence.index', $user->username),
-                'isCompleted' => (bool)$user->placeOfRecidence
+                'isCompleted' => (bool)$user->residence
             ]),
             'Asal Sekolah' => collect([
                 'icon' => 'mdi-school-outline',
-                'url' => '#',
+                'url' => route('previous-school.index', $user->username),
                 'isCompleted' => (bool)$user->previousSchool
             ])
         ]);

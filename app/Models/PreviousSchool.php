@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -12,8 +13,19 @@ class PreviousSchool extends Model
         'user_id',
         'school_name',
         'status',
-        'address',
+        'province',
+        'city',
+        'district',
+        'village',
+        'street'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'slug' => 'string'
+        ];
+    }
 
     protected static function boot(): void
     {
@@ -22,5 +34,10 @@ class PreviousSchool extends Model
         static::creating(function (PreviousSchool $previousSchool) {
             $previousSchool->slug = Str::uuid()->toString();
         });
+    }
+
+    public function scopeUserId(Builder $query, $userId): Builder
+    {
+        return $query->where('user_id', $userId);
     }
 }
