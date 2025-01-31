@@ -43,6 +43,11 @@ class StudentRegistrationRepository
                 'icon' => 'mdi-school-outline',
                 'url' => route('previous-school.index', $user->username),
                 'isCompleted' => (bool)$user->previousSchool
+            ]),
+            'Unggah Berkas' => collect([
+                'icon' => 'mdi-upload-outline',
+                'url' => route('file-uploading.index', $user->username),
+                'isCompleted' => false
             ])
         ]);
     }

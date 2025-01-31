@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -36,5 +37,15 @@ class MediaFile extends Model
         static::updating(function (MediaFile $uploadFile) {
             $uploadFile->file_code = Str::slug($uploadFile->name);
         });
+    }
+
+    public function scopeFilterByCategory(Builder $query, $category): Builder
+    {
+        return $query->where('category', $category);
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

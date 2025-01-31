@@ -9,6 +9,7 @@ use App\Repositories\ClassLevelRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
 use App\Repositories\MajorRepository;
+use App\Repositories\MediaFileRepoitory;
 use App\Repositories\MenuRepository;
 use App\Repositories\MessageTemplateRepository;
 use App\Repositories\ModelRepository;
@@ -33,22 +34,23 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // TODO Regular
-        $this->app->bind(ApplicationRepository::class, ApplicationRepository::class);
-        $this->app->bind(MyAccountRepository::class, MyAccountRepository::class);
-        $this->app->bind(PermissionRepository::class, PermissionRepository::class);
-        $this->app->bind(MenuRepository::class, MenuRepository::class);
-        $this->app->bind(RoleRepository::class, RoleRepository::class);
-        $this->app->bind(ModelRepository::class, ModelRepository::class);
-        $this->app->bind(EducationalLevelRepository::class, EducationalLevelRepository::class);
-        $this->app->bind(EducationalInstitutionRepository::class, EducationalInstitutionRepository::class);
-        $this->app->bind(SchoolYearRepository::class, SchoolYearRepository::class);
-        $this->app->bind(RegistrationCategoryRepository::class, RegistrationCategoryRepository::class);
-        $this->app->bind(ClassLevelRepository::class, ClassLevelRepository::class);
-        $this->app->bind(RegistrationPathRepository::class, RegistrationPathRepository::class);
-        $this->app->bind(MajorRepository::class, MajorRepository::class);
-        $this->app->bind(MessageTemplateRepository::class, MessageTemplateRepository::class);
-        $this->app->bind(SaveNewAccountRepository::class, SaveNewAccountRepository::class);
-        $this->app->bind(StudentRegistrationRepository::class, StudentRegistrationRepository::class);
+        $this->app->singleton(ApplicationRepository::class, ApplicationRepository::class);
+        $this->app->singleton(MyAccountRepository::class, MyAccountRepository::class);
+        $this->app->singleton(PermissionRepository::class, PermissionRepository::class);
+        $this->app->singleton(MenuRepository::class, MenuRepository::class);
+        $this->app->singleton(RoleRepository::class, RoleRepository::class);
+        $this->app->singleton(ModelRepository::class, ModelRepository::class);
+        $this->app->singleton(EducationalLevelRepository::class, EducationalLevelRepository::class);
+        $this->app->singleton(EducationalInstitutionRepository::class, EducationalInstitutionRepository::class);
+        $this->app->singleton(SchoolYearRepository::class, SchoolYearRepository::class);
+        $this->app->singleton(RegistrationCategoryRepository::class, RegistrationCategoryRepository::class);
+        $this->app->singleton(ClassLevelRepository::class, ClassLevelRepository::class);
+        $this->app->singleton(RegistrationPathRepository::class, RegistrationPathRepository::class);
+        $this->app->singleton(MajorRepository::class, MajorRepository::class);
+        $this->app->singleton(MessageTemplateRepository::class, MessageTemplateRepository::class);
+        $this->app->singleton(SaveNewAccountRepository::class, SaveNewAccountRepository::class);
+        $this->app->singleton(StudentRegistrationRepository::class, StudentRegistrationRepository::class);
+        $this->app->singleton(MediaFileRepoitory::class, MediaFileRepoitory::class);
 
         // TODO Send Messages
         $this->app->bind(AccountVerificationRepository::class, AccountVerificationRepository::class);

@@ -77,3 +77,6 @@ previous-school-write
 media-file-read
 media-file-write
 media-file-delete
+file-uploading-read
+file-uploading-write
+file-uploading-delete

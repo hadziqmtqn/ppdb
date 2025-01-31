@@ -31,6 +31,7 @@ use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
 use App\Http\Controllers\Dashboard\Student\FamilyController;
+use App\Http\Controllers\Dashboard\Student\FileUploadingController;
 use App\Http\Controllers\Dashboard\Student\PersonalDataController;
 use App\Http\Controllers\Dashboard\Student\PreviousSchoolController;
 use App\Http\Controllers\Dashboard\Student\ResidenceController;
@@ -274,6 +275,11 @@ Route::middleware('auth')->group(function () {
             Route::prefix('previous-school')->group(function () {
                 Route::get('/{user:username}', [PreviousSchoolController::class, 'index'])->name('previous-school.index');
                 Route::post('/{user:username}/store', [PreviousSchoolController::class, 'store']);
+            });
+
+            Route::prefix('file-uploading')->group(function () {
+                Route::get('/{user:username}', [FileUploadingController::class, 'index'])->name('file-uploading.index');
+                Route::post('/{user:username}/store', [FileUploadingController::class, 'store']);
             });
         });
 
