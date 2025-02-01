@@ -114,10 +114,10 @@
                             </div>
                             <div class="card-info">
                                 <h4 class="card-title mb-3">Data Registrasi</h4>
-                                @foreach($registrations as $title => $registration)
+                                @foreach($registrations as $key => $registration)
                                     <div class="d-flex align-items-center flex-wrap">
                                         <div class="me-auto">
-                                            <span class="text-heading fw-medium">{{ $title }}</span>
+                                            <span class="text-heading fw-medium">{{ $key }}</span>
                                         </div>
                                         <div class="text-end">
                                             <span>{{ $registration }}</span>
@@ -134,14 +134,22 @@
                             <div class="card-icon mb-3">
                                 <div class="avatar">
                                     <div class="avatar-initial rounded bg-label-success">
-                                        <i class="mdi mdi-wallet-giftcard mdi-24px"></i>
+                                        <i class="mdi mdi-account-outline mdi-24px"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-info">
-                                <h4 class="card-title mb-3">Loyalty Program</h4>
-                                <span class="badge bg-label-success mb-1 rounded-pill">Platinum member</span>
-                                <p class="mb-0">3000 points to next tier</p>
+                                <h4 class="card-title mb-3">Data Pribadi</h4>
+                                @foreach($personalData as $key => $data)
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <div class="me-auto">
+                                            <span class="text-heading fw-medium">{{ $key }}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            <span>{{ $data }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -152,17 +160,22 @@
                             <div class="card-icon mb-3">
                                 <div class="avatar">
                                     <div class="avatar-initial rounded bg-label-warning">
-                                        <i class="mdi mdi-star-outline mdi-24px"></i>
+                                        <i class="mdi mdi-account-multiple-outline mdi-24px"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-info">
-                                <h4 class="card-title mb-3">Wishlist</h4>
-                                <div class="d-flex align-items-end mb-1 gap-1">
-                                    <h4 class="text-warning mb-0">15</h4>
-                                    <p class="mb-0">Items in wishlist</p>
-                                </div>
-                                <p class="mb-0 text-truncate">Receive notification when items go on sale</p>
+                                <h4 class="card-title mb-3">Data Keluarga</h4>
+                                @foreach($families as $key => $familiy)
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <div class="me-auto">
+                                            <span class="text-heading fw-medium">{{ $key }}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            <span>{{ $familiy }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

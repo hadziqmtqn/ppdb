@@ -158,8 +158,10 @@ class StudentController extends Controller implements HasMiddleware
         }
 
         $registrations = $this->studentRepository->registration($user);
+        $personalData = $this->studentRepository->personalData($user);
+        $families = $this->studentRepository->family($user);
 
-        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations'));
+        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families'));
     }
 
     public function destroy(Student $student): JsonResponse

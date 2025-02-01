@@ -3,17 +3,12 @@
 namespace App\Repositories\Student;
 
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class StudentRepository
 {
-    protected User $user;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
-
+    // TODO Registration
     public function registration(User $user): Collection
     {
         return collect([
@@ -24,6 +19,40 @@ class StudentRepository
             'Kelas' => optional(optional($user->student)->classLevel)->name,
             'NISN' => optional($user->student)->nisn,
             'No. Whatsapp' => optional($user->student)->whatsapp_number,
+        ]);
+    }
+
+    // TODO Personal Data
+    public function personalData(User $user): Collection
+    {
+        return collect([
+            'Nama Lengkap' => $user->name,
+            'Tempat Lahir' => optional($user->personalData)->place_of_birth,
+            'Tanggal Lahir' => $user->personalData ? Carbon::parse(optional($user->personalData)->date_of_birth)->isoFormat('DD MMMM Y') : null,
+            'Jenis Kelamin' => optional($user->personalData)->gender,
+            'Hubungan Keluarga' => optional($user->personalData)->family_relationship,
+            'Agama' => optional($user->personalData)->religion,
+        ]);
+    }
+
+    // TODO Family
+    public function family(User $user): Collection
+    {
+        return collect([
+            'NIK' => optional($user->family)->national_identification_number,
+            'No. KK' => optional($user->family)->family_card_number,
+            'Nama Ayah Kandung' => optional($user->family)->father_name,
+            '- Pendidikan Ayah' => optional(optional($user->family)->fatherEducation)->name,
+            '- Pekerjaan Ayah' => optional(optional($user->family)->fatherProfession)->name,
+            '- Penghasilan Ayah' => optional(optional($user->family)->fatherIncome)->nominal,
+            'Nama Ibu Kandung' => optional($user->family)->mother_name,
+            '- Pendidikan Ibu' => optional(optional($user->family)->motherEducation)->name,
+            '- Pekerjaan Ibu' => optional(optional($user->family)->motherProfession)->name,
+            '- Penghasilan Ibu' => optional(optional($user->family)->motherIncome)->nominal,
+            'Nama Wali' => optional($user->family)->guardian_name,
+            '- Pendidikan Wali' => optional(optional($user->family)->guardianEducation)->name,
+            '- Pekerjaan Wali' => optional(optional($user->family)->guardianProfession)->name,
+            '- Penghasilan Wali' => optional(optional($user->family)->guardianIncome)->nominal,
         ]);
     }
 }
