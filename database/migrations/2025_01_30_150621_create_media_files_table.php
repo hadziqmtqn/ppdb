@@ -12,8 +12,6 @@ return new class extends Migration {
             $table->string('slug')->unique();
             $table->string('name');
             $table->string('file_code')->unique();
-            $table->enum('category', ['semua_unit', 'unit_tertentu']);
-            $table->json('educational_institutions')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

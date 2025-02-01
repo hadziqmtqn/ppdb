@@ -2,32 +2,35 @@
 
 namespace Database\Seeders\References;
 
+use App\Models\DetailMediaFile;
 use App\Models\MediaFile;
+use App\Models\RegistrationPath;
 use Illuminate\Database\Seeder;
-use League\Csv\Exception;
-use League\Csv\InvalidArgument;
-use League\Csv\Reader;
-use League\Csv\UnavailableStream;
+use Illuminate\Support\Facades\File;
 
 class MediaFileSeeder extends Seeder
 {
-    /**
-     * @throws UnavailableStream
-     * @throws InvalidArgument
-     * @throws Exception
-     */
     public function run(): void
     {
-        $rows = Reader::createFromPath(database_path('import/media-file.csv'))
-            ->setHeaderOffset(0)
-            ->setDelimiter(';');
+        $rows = json_decode(File::get(database_path('import/media-file.json')), true);
 
         foreach ($rows as $row) {
-            $file = new MediaFile();
-            $file->name = $row['name'];
-            $file->category = $row['category'];
-            $file->educational_institutions = $row['category'] == 'unit_tertentu' && !empty($row['educational_institutions']) ? $row['educational_institutions'] : null;
-            $file->save();
+            $mediaFile = new MediaFile();
+            $mediaFile->name = $row['name'];
+            $mediaFile->save();
+
+            if ($row['detail_media_files']) {
+                foreach ($row['detail_media_files'] as $detail_media_file) {
+                    $detailMediaFile = new DetailMediaFile();
+                    $detailMediaFile->media_file_id = $mediaFile->id;
+                    $detailMediaFile->educational_institution_id = $detail_media_file['educational_institution_id'];
+                    $detailMediaFile->registration_path_id = RegistrationPath::where([
+                        'educational_institution_id' => $detail_media_file['educational_institution_id'],
+                        'code' => $detail_media_file['registration_path_code']
+                    ])->first()->id ?? null;
+                    $detailMediaFile->save();
+                }
+            }
         }
     }
 }

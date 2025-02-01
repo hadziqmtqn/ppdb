@@ -12,8 +12,6 @@ class MediaFile extends Model
         'slug',
         'name',
         'file_code',
-        'category',
-        'educational_institutions',
         'is_active',
     ];
 
@@ -21,7 +19,6 @@ class MediaFile extends Model
     {
         return [
             'is_active' => 'boolean',
-            'educational_institutions' => 'array'
         ];
     }
 
@@ -37,11 +34,6 @@ class MediaFile extends Model
         static::updating(function (MediaFile $uploadFile) {
             $uploadFile->file_code = Str::slug($uploadFile->name);
         });
-    }
-
-    public function scopeFilterByCategory(Builder $query, $category): Builder
-    {
-        return $query->where('category', $category);
     }
 
     public function scopeActive(Builder $query): Builder

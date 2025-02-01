@@ -11,6 +11,7 @@
                     <th>Nama</th>
                     <th>Kategori</th>
                     <th>Lembaga</th>
+                    <th>Jurusan Pendaftaran</th>
                     <th>Status</th>
                     <th>Opsi</th>
                 </tr>

@@ -17,6 +17,8 @@ class MediaFileRequest extends FormRequest
             'category' => ['required', 'in:"semua_unit","unit_tertentu"'],
             'educational_institutions' => ['required_if:category,unit_tertentu', 'nullable', 'array'],
             'educational_institutions.*' => ['required_if:category,unit_tertentu', 'nullable', 'integer', 'exists:educational_institutions,id'],
+            'registration_paths' => ['nullable', 'array'],
+            'registration_paths.*' => ['nullable', 'string', 'exists:registration_path,code'],
         ];
     }
 
@@ -40,6 +42,8 @@ class MediaFileRequest extends FormRequest
             'category' => 'kategori',
             'educational_institutions' => 'lembaga pendidikan',
             'educational_institutions.*' => 'lembaga pendidikan',
+            'registration_paths' => 'jalur pendaftaran',
+            'registration_paths.*' => 'jalur pendaftaran',
         ];
     }
 }

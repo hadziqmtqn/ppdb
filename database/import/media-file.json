@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Akta Kelahiran",
+    "detail_media_files": null
+  },
+  {
+    "name": "Kartu Keluarga",
+    "detail_media_files": null
+  },
+  {
+    "name": "Pas Foto",
+    "detail_media_files": null
+  },
+  {
+    "name": "NISN",
+    "detail_media_files": [
+      {
+        "educational_institution_id": 2,
+        "registration_path_code": null
+      },
+      {
+        "educational_institution_id": 3,
+        "registration_path_code": null
+      }
+    ]
+  },
+  {
+    "name": "Sertifikat Prestasi",
+    "detail_media_files": [
+      {
+        "educational_institution_id": 2,
+        "registration_path_code": "PRESTASI"
+      },
+      {
+        "educational_institution_id": 3,
+        "registration_path_code": "PRESTASI"
+      }
+    ]
+  }
+]

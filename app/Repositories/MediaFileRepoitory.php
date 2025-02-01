@@ -18,7 +18,7 @@ class MediaFileRepoitory
         $mediaFiles = $this->mediaFile->query()
             ->select(['file_code', 'name', 'educational_institutions', 'category'])
             ->get()
-            ->filter(function ($uploadFileCategory) use ($educationalInstitutionId) {
+            ->filter(function (MediaFile $uploadFileCategory) use ($educationalInstitutionId) {
                 // Konversi string JSON ke array, jika gagal jadikan array kosong
                 $institutions = json_decode($uploadFileCategory->educational_institutions, true) ?? [];
 
