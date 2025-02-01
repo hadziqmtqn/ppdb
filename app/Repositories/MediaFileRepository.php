@@ -24,11 +24,16 @@ class MediaFileRepository
     {
         $mediaFiles = $this->mediaFile->query()
             ->whereHas('detailMediaFile', function ($query) use ($data) {
-                /*$query->where('educational_institution_id', $data['educational_institution_id'])
-                    ->where(function ($query) use ($data) {
-                        $query->orWhere('registration_path_id', $data['registration_path_id']);
-                    });*/
-                $query->where(function ($query) use ($data) {});
+                $query->where(function ($query) use ($data) {
+                    $query->where('educational_institution_id', $data['educational_institution_id'])
+                        ->whereNull('registration_path_id');
+                })
+                    ->orWhere(function ($query) use ($data) {
+                        $query->where([
+                            'educational_institution_id' => $data['educational_institution_id'],
+                            'registration_path_id' => $data['registration_path_id']
+                        ]);
+                    });
             })
             ->orWhereDoesntHave('detailMediaFiles')
             ->select(['file_code', 'name'])
