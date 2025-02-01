@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\User;
+use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -12,8 +13,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +27,12 @@ class StudentController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRepository $studentRepository;
+    protected StudentRegistrationRepository $studentRegistrationRepository;
 
-    public function __construct(StudentRepository $studentRepository)
+    public function __construct(StudentRepository $studentRepository, StudentRegistrationRepository $studentRegistrationRepository)
     {
         $this->studentRepository = $studentRepository;
+        $this->studentRegistrationRepository = $studentRegistrationRepository;
     }
 
     public static function middleware(): array
@@ -157,13 +162,27 @@ class StudentController extends Controller implements HasMiddleware
             return to_route('student.index')->with('warning', 'Ini bukan data siswa');
         }
 
+        // TODO Photo Url
+        $student = optional($user->student);
+        $photoUrl = url('https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF');
+
+        if ($student->hasMedia('pas-foto')) {
+            $media = $student->getFirstMedia('pas-foto');
+
+            if ($media && Str::startsWith($media->mime_type, 'image/')) {
+                $photoUrl = $media->getTemporaryUrl(Carbon::now()->addMinutes(30));
+            }
+        }
+
+        // TODO Detail data
         $registrations = $this->studentRepository->registration($user);
         $personalData = $this->studentRepository->personalData($user);
         $families = $this->studentRepository->family($user);
         $residences = $this->studentRepository->resicende($user);
         $previousSchools = $this->studentRepository->previousSchool($user);
+        $mediaFiles = $this->studentRegistrationRepository->getFiles($user->student);
 
-        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools'));
+        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl'));
     }
 
     public function destroy(Student $student): JsonResponse

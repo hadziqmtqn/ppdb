@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="customer-avatar-section">
                         <div class="d-flex align-items-center flex-column">
-                            <img class="img-fluid rounded mb-3 mt-4" src="{{ asset('materialize/assets/img/avatars/12.png') }}" height="120" width="120" alt="User avatar">
+                            <img class="img-fluid rounded mb-3 mt-4" src="{{ $photoUrl }}" height="120" width="120" alt="User avatar">
                             <div class="customer-info text-center mb-4">
                                 <h5 class="mb-1">{{ $user->name }}</h5>
                                 <span>{{ optional(optional($user->student)->educationalInstitution)->name }}</span>
@@ -97,7 +97,7 @@
                     <a class="nav-link active waves-effect waves-light" href="{{ route('student.show', $user->username) }}"><i class="mdi mdi-account-outline mdi-20px me-1"></i>Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light" href="#"><i class="mdi mdi-lock-open-outline mdi-20px me-1"></i>Security</a>
+                    <a class="nav-link waves-effect waves-light" href="#"><i class="mdi mdi-lock-open-outline mdi-20px me-1"></i>Keamanan</a>
                 </li>
             </ul>
 
@@ -229,6 +229,44 @@
                                     </div>
                                 @endforeach
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body pb-0">
+                            <div class="card-icon mb-3">
+                                <div class="avatar">
+                                    <div class="avatar-initial rounded bg-label-success">
+                                        <i class="mdi mdi-file-cloud-outline mdi-24px"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h4 class="card-title">Berkas</h4>
+                            </div>
+                        </div>
+                        <div class="card-datatable">
+                            <table class="table w-100 text-nowrap table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Nama Berkas</th>
+                                    <th style="text-align: end">Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($mediaFiles as $mediaFile)
+                                    <tr>
+                                        <td>{{ $mediaFile['fileName'] }}</td>
+                                        <td style="text-align: end">
+                                            @if($mediaFile['fileUrl'])
+                                                <a href="{{ $mediaFile['fileUrl'] }}" class="btn btn-xs btn-outline-dark" target="_blank"><i class="mdi mdi-file-link-outline me-1"></i>Lihat</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
