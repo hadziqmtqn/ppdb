@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
+use App\Http\Controllers\Dashboard\References\DetailMediaFileController;
 use App\Http\Controllers\Dashboard\References\DistanceToSchoolController;
 use App\Http\Controllers\Dashboard\References\EducationalInstitutionController;
 use App\Http\Controllers\Dashboard\References\EducationalLevelController;
@@ -239,9 +240,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [MediaFileController::class, 'index'])->name('media-file.index');
             Route::post('/datatable', [MediaFileController::class, 'datatable']);
             Route::post('/store', [MediaFileController::class, 'store']);
-            Route::get('/{mediaFile:slug}', [MediaFileController::class, 'show'])->name('media-file.show');
-            Route::put('/{mediaFile:slug}/update', [MediaFileController::class, 'update']);
+            /*Route::get('/{mediaFile:slug}', [MediaFileController::class, 'show'])->name('media-file.show');
+            Route::put('/{mediaFile:slug}/update', [MediaFileController::class, 'update']);*/
             Route::delete('/{mediaFile:slug}/delete', [MediaFileController::class, 'destroy']);
+        });
+
+        Route::prefix('detail-media-file')->group(function () {
+            Route::get('/{detailMediaFile:slug}', [DetailMediaFileController::class, 'show'])->name('detail-media-file.show');
+            Route::put('/{detailMediaFile:slug}/update', [DetailMediaFileController::class, 'update']);
         });
 
         // TODO Student Registration

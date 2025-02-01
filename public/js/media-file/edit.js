@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formEdit');
     const slug = form.dataset.slug;
     const btnSubmit = document.getElementById('btn-submit');
-    const educationalInstitutionsSelect = $('#educational-institutions');
+    //const educationalInstitutionsSelect = $('#educational-institutions');
 
     if (!form || !btnSubmit) {
         return;
@@ -54,16 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(form);
 
         // Pastikan Select2 mengirimkan array dengan benar
-        const selectedInstitutions = educationalInstitutionsSelect.val();
+        /*const selectedInstitutions = educationalInstitutionsSelect.val();
         if (selectedInstitutions) {
             selectedInstitutions.forEach(id => formData.append('educational_institutions[]', id));
-        }
+        }*/
 
         // Menambahkan _method untuk PUT request
         formData.append('_method', 'PUT');
 
         try {
-            const response = await axios.post(`/media-file/${slug}/update`, formData);
+            const response = await axios.post(`/detail-media-file/${slug}/update`, formData);
             if (response.data.type === 'success') {
                 toastr.success(response.data.message);
                 unBlockUi();

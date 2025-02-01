@@ -1,44 +1,47 @@
 @extends('layouts.master')
 @section('content')
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
+    <h4 class="py-3 mb-4">
+        <span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span>
+        <span class="text-muted fw-light"><a href="{{ route('media-file.index') }}">{{ $title }}</a> /</span>
+        Detail {{ $title }}
+    </h4>
     <div class="card mb-3">
         <h5 class="card-header">{{ $title }}</h5>
-        <form onsubmit="return false" id="formEdit" data-slug="{{ $mediaFile->slug }}">
+        <form onsubmit="return false" id="formEdit" data-slug="{{ $detailMediaFile->slug }}">
             <div class="card-body">
                 <div class="form-floating form-floating-outline mb-3">
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Nama File" value="{{ $mediaFile->name }}">
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Nama File" value="{{ optional($detailMediaFile->mediaFile)->name }}">
                     <label for="name">Nama File</label>
-                </div>
-                <div class="mb-3">
-                    <div>Kategori</div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="category" id="all" value="semua_unit" {{ $mediaFile->category == 'semua_unit' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="all">Semua Unit</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="category" id="specific" value="unit_tertentu" {{ $mediaFile->category == 'unit_tertentu' ? 'checked' : '' }}>
-                        <label class="form-check-label" for="specific">Unit Tertentu</label>
-                    </div>
-                </div>
-                <div id="educational-institutions-wrapper" style="display: {{ $mediaFile->category == 'semua_unit' ? 'd-none' : 'd-block' }};">
-                    <div class="form-floating form-floating-outline mb-3">
-                        <select name="educational_institutions" id="educational-institutions" class="form-select select2" multiple>
-                            <option value=""></option>
-                            @foreach($educationalInstitutions as $educationalInstitution)
-                                <option value="{{ $educationalInstitution->id }}" {{ $educationalInstitutionsSelected ? in_array($educationalInstitution->id, $educationalInstitutionsSelected) ? 'selected' : '' : '' }}>{{ $educationalInstitution->name }}</option>
-                            @endforeach
-                        </select>
-                        <label for="educational-institutions">Lembaga</label>
-                    </div>
                 </div>
                 <div class="mb-2">Status</div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="is_active" id="active" value="1" {{ $mediaFile->is_active ? 'checked' : '' }}>
+                    <input class="form-check-input" type="radio" name="is_active" id="active" value="1" {{ optional($detailMediaFile->mediaFile)->is_active ? 'checked' : '' }}>
                     <label class="form-check-label" for="active">Aktif</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="is_active" id="non_active" value="0" {{ !$mediaFile->is_active ? 'checked' : '' }}>
+                    <input class="form-check-input" type="radio" name="is_active" id="non_active" value="0" {{ !optional($detailMediaFile->mediaFile)->is_active ? 'checked' : '' }}>
                     <label class="form-check-label" for="non_active">Tidak Aktif</label>
+                </div>
+                <div class="divider">
+                    <div class="divider-text divider-primary">Detail File</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="educational_institution_id" id="select-educational-institution" class="form-select select2">
+                                <option value="{{ $detailMediaFile->educational_institution_id }}" selected>{{ optional($detailMediaFile->educationalInstitution)->name }}</option>
+                            </select>
+                            <label for="select-educational-institution">Lembaga</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="registration_path_id" id="select-registration-path" class="form-select select2">
+                                <option value="{{ $detailMediaFile->registration_path_id }}" selected>{{ optional($detailMediaFile->registrationPath)->name }}</option>
+                            </select>
+                            <label for="select-registration-path">Jalur Pendaftaran</label>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-footer">
@@ -50,6 +53,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/media-file/select-educational-institutions.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/registration-path/select.js') }}"></script>
     <script src="{{ asset('js/media-file/edit.js') }}"></script>
 @endsection

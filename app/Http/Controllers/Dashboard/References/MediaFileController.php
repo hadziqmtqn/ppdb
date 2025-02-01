@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaFile\MediaFileRequest;
-use App\Http\Requests\MediaFile\UpdateMediaFileRequest;
 use App\Models\EducationalInstitution;
 use App\Models\MediaFile;
 use App\Traits\ApiResponse;
@@ -75,6 +74,8 @@ class MediaFileController extends Controller implements HasMiddleware
                                 if ($detailMediaFile->registration_path_id) {
                                     $badge .= '<div class="d-flex align-items-center lh-1 me-3 mb-3 mb-sm-1">
                                         <span class="badge badge-dot '. $randomColor .' me-1"></span> '. optional($detailMediaFile->educationalInstitution)->name . ($detailMediaFile->registrationPath ? ' - Jalur: ' . optional($detailMediaFile->registrationPath)->name : null) .'
+                                        <a href="'. route('detail-media-file.show', $detailMediaFile->slug) .'" class="btn btn-xs btn-outline-warning ms-1" data-slug="'. $detailMediaFile->slug .'" data-educational-institution="'. $detailMediaFile->educational_institution_id .'" data-registration-path="'. $detailMediaFile->registration_path_id .'">Edit</a>
+                                        <button href="javascript:void(0)" class="delete-detail-media-file btn btn-xs btn-outline-danger ms-1" data-slug="'. $detailMediaFile->slug .'">Hapus</button>
                                     </div>';
                                 }
                             }
@@ -84,10 +85,8 @@ class MediaFileController extends Controller implements HasMiddleware
                     })
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="'. route('media-file.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
-
-                        return $btn;
+//                        $btn = '<a href="'. route('media-file.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
+                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
                     })
                     ->rawColumns(['action', 'is_active', 'category', 'educationalInstitutions', 'detailMediaFiles'])
                     ->make();
@@ -99,14 +98,14 @@ class MediaFileController extends Controller implements HasMiddleware
         return response()->json(true);
     }
 
-    public function show(MediaFile $mediaFile): View
+    /*public function show(MediaFile $mediaFile): View
     {
         $title = 'Media File';
         $educationalInstitutions = $this->selectEducations();
         $educationalInstitutionsSelected = $mediaFile->educational_institutions ? json_decode($mediaFile->educational_institutions, true) : null;
 
         return \view('dashboard.references.media-file.edit', compact('title', 'educationalInstitutions', 'mediaFile', 'educationalInstitutionsSelected'));
-    }
+    }*/
 
     public function store(MediaFileRequest $request): JsonResponse
     {
@@ -122,22 +121,6 @@ class MediaFileController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil disimpan!', $mediaFile, null, Response::HTTP_OK);
-    }
-
-    public function update(UpdateMediaFileRequest $request, MediaFile $mediaFile): JsonResponse
-    {
-        try {
-            $mediaFile->name = $request->input('name');
-            $mediaFile->category = $request->input('category');
-            $mediaFile->educational_institutions = $request->input('category') == 'unit_tertentu' ? json_encode(array_map('intval', $request->input('educational_institutions'))) : null;
-            $mediaFile->is_active = $request->input('is_active');
-            $mediaFile->save();
-        }catch (Exception $exception) {
-            Log::error($exception->getMessage());
-            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return $this->apiResponse('Data berhasil disimpan!', $mediaFile, route('media-file.index'), Response::HTTP_OK);
     }
 
     public function destroy(MediaFile $mediaFile): JsonResponse

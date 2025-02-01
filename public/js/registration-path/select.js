@@ -1,6 +1,11 @@
 $(document).ready(function () {
     const select = $('#select-registration-path');
-    const educationalInstitution = $('#select-educational-institution');
+    let educationalInstitution = $('#select-educational-institution');
+
+    // Jika elemen dengan ID 'select-educational-institution' tidak ada, gunakan elemen dengan ID 'select-educational-institution-0'
+    if (educationalInstitution.length === 0) {
+        educationalInstitution = $('#select-educational-institution-0');
+    }
 
     select.wrap('<div class="position-relative"></div>').select2({
         placeholder: 'Pilih',

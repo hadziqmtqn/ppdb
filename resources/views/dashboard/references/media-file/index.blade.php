@@ -19,11 +19,13 @@
     </div>
     @can('media-file-write')
         @include('dashboard.references.media-file.modal-create')
+        {{--@include('dashboard.references.media-file.modal-edit-detail-media-file')--}}
     @endcan
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/media-file/datatable.js') }}"></script>
     <script src="{{ asset('js/media-file/create.js') }}"></script>
-    <script src="{{ asset('js/media-file/select-educational-institutions.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    {{--<script src="{{ asset('js/media-file/select-educational-institutions.js') }}"></script>--}}
 @endsection

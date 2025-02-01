@@ -24,6 +24,11 @@ class DetailMediaFile extends Model
         });
     }
 
+    public function mediaFile(): BelongsTo
+    {
+        return $this->belongsTo(MediaFile::class);
+    }
+
     public function educationalInstitution(): BelongsTo
     {
         return $this->belongsTo(EducationalInstitution::class);
