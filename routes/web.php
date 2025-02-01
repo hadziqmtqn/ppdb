@@ -240,14 +240,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [MediaFileController::class, 'index'])->name('media-file.index');
             Route::post('/datatable', [MediaFileController::class, 'datatable']);
             Route::post('/store', [MediaFileController::class, 'store']);
-            /*Route::get('/{mediaFile:slug}', [MediaFileController::class, 'show'])->name('media-file.show');
-            Route::put('/{mediaFile:slug}/update', [MediaFileController::class, 'update']);*/
             Route::delete('/{mediaFile:slug}/delete', [MediaFileController::class, 'destroy']);
         });
 
         Route::prefix('detail-media-file')->group(function () {
             Route::get('/{detailMediaFile:slug}', [DetailMediaFileController::class, 'show'])->name('detail-media-file.show');
             Route::put('/{detailMediaFile:slug}/update', [DetailMediaFileController::class, 'update']);
+            Route::delete('/{detailMediaFile:slug}/delete', [DetailMediaFileController::class, 'destroy']);
         });
 
         // TODO Student Registration
@@ -297,6 +296,7 @@ Route::middleware('auth')->group(function () {
         Route::get('select-school-year', [SchoolYearController::class, 'select']);
         Route::get('select-message-template', [MessageTemplateController::class, 'select']);
         Route::get('select-message-user', [MessageTemplateController::class, 'selectUser']);
+        Route::get('select-media-file', [MediaFileController::class, 'select']);
     });
 
     Route::prefix('account-verification')->group(function () {

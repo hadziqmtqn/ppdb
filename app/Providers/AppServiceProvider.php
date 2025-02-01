@@ -9,7 +9,7 @@ use App\Repositories\ClassLevelRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
 use App\Repositories\MajorRepository;
-use App\Repositories\MediaFileRepoitory;
+use App\Repositories\MediaFileRepository;
 use App\Repositories\MenuRepository;
 use App\Repositories\MessageTemplateRepository;
 use App\Repositories\ModelRepository;
@@ -50,11 +50,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(MessageTemplateRepository::class, MessageTemplateRepository::class);
         $this->app->singleton(SaveNewAccountRepository::class, SaveNewAccountRepository::class);
         $this->app->singleton(StudentRegistrationRepository::class, StudentRegistrationRepository::class);
-        $this->app->singleton(MediaFileRepoitory::class, MediaFileRepoitory::class);
+        $this->app->singleton(MediaFileRepository::class, MediaFileRepository::class);
 
         // TODO Send Messages
-        $this->app->bind(AccountVerificationRepository::class, AccountVerificationRepository::class);
-        $this->app->bind(RegistrationMessageRepository::class, RegistrationMessageRepository::class);
+        $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);
+        $this->app->singleton(RegistrationMessageRepository::class, RegistrationMessageRepository::class);
 
         // TODO Policy
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);

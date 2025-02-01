@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaFile\MediaFileRequest;
+use App\Models\DetailMediaFile;
 use App\Models\EducationalInstitution;
 use App\Models\MediaFile;
+use App\Repositories\MediaFileRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
@@ -21,6 +24,13 @@ use Yajra\DataTables\Facades\DataTables;
 class MediaFileController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected MediaFileRepository $mediaFileRepository;
+
+    public function __construct(MediaFileRepository $mediaFileRepository)
+    {
+        $this->mediaFileRepository = $mediaFileRepository;
+    }
 
     public static function middleware(): array
     {
@@ -85,7 +95,6 @@ class MediaFileController extends Controller implements HasMiddleware
                     })
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
-//                        $btn = '<a href="'. route('media-file.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
                         return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
                     })
                     ->rawColumns(['action', 'is_active', 'category', 'educationalInstitutions', 'detailMediaFiles'])
@@ -98,24 +107,26 @@ class MediaFileController extends Controller implements HasMiddleware
         return response()->json(true);
     }
 
-    /*public function show(MediaFile $mediaFile): View
-    {
-        $title = 'Media File';
-        $educationalInstitutions = $this->selectEducations();
-        $educationalInstitutionsSelected = $mediaFile->educational_institutions ? json_decode($mediaFile->educational_institutions, true) : null;
-
-        return \view('dashboard.references.media-file.edit', compact('title', 'educationalInstitutions', 'mediaFile', 'educationalInstitutionsSelected'));
-    }*/
-
     public function store(MediaFileRequest $request): JsonResponse
     {
         try {
-            $mediaFile = new MediaFile();
-            $mediaFile->name = $request->input('name');
-            $mediaFile->category = $request->input('category');
-            $mediaFile->educational_institutions = $request->input('category') == 'unit_tertentu' ? json_encode(array_map('intval', $request->input('educational_institutions'))) : null;
-            $mediaFile->save();
+            DB::beginTransaction();
+            if ($request->input('create_new') == 'YA') {
+                $mediaFile = new MediaFile();
+                $mediaFile->name = $request->input('name');
+                $mediaFile->save();
+            }else {
+                $mediaFile = MediaFile::findOrFail($request->input('media_file_id'));
+            }
+
+            $detailMediaFile = new DetailMediaFile();
+            $detailMediaFile->media_file_id = $mediaFile->id;
+            $detailMediaFile->educational_institution_id = $request->input('educational_institution_id');
+            $detailMediaFile->registration_path_id = $request->input('registration_path_id');
+            $detailMediaFile->save();
+            DB::commit();
         }catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -133,5 +144,10 @@ class MediaFileController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
+    }
+
+    public function select(Request $request)
+    {
+        return $this->mediaFileRepository->getMediaFiles($request);
     }
 }

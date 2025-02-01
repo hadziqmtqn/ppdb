@@ -8,13 +8,34 @@
                 </div>
                 <form onsubmit="return false" id="formCreate" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework">
                     <div class="col-12 fv-plugins-icon-container">
+                        <div class="mb-3">
+                            <div>Tambah Nama File Baru</div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="create_new" id="yes" value="YA">
+                                <label class="form-check-label" for="yes">Ya</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="create_new" id="no" value="TIDAK" checked>
+                                <label class="form-check-label" for="no">Tidak</label>
+                            </div>
+                        </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama File">
-                            <label for="name">Nama File</label>
+                            <select name="media_file_id" id="select-media-file" class="form-select select2"></select>
+                            <label for="select-media-file">Media File</label>
+                        </div>
+                        <div id="newMediaFile" style="display: none">
+                            <div class="form-floating form-floating-outline mb-3">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Masukkan Nama File Baru">
+                                <label for="name">Nama File Baru</label>
+                            </div>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
                             <select name="educational_institution_id" id="select-educational-institution" class="form-select select2"></select>
                             <label for="select-educational-institution">Lembaga</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="registration_path_id" id="select-registration-path" class="form-select select2" data-allow-clear="true"></select>
+                            <label for="select-registration-path">Jalur Pendaftaran</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">

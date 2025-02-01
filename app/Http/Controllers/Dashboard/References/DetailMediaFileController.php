@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class DetailMediaFileController extends Controller implements HasMiddleware
@@ -69,10 +70,15 @@ class DetailMediaFileController extends Controller implements HasMiddleware
         return $this->apiResponse('Data berhasil disimpan!', $detailMediaFile, route('media-file.index'), Response::HTTP_OK);
     }
 
-    public function destroy(DetailMediaFile $detailMediaFile)
+    public function destroy(DetailMediaFile $detailMediaFile): JsonResponse
     {
-        $detailMediaFile->delete();
+        try {
+            $detailMediaFile->delete();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dihapus!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        return response()->json();
+        return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
     }
 }

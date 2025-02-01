@@ -13,12 +13,11 @@ class MediaFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'category' => ['required', 'in:"semua_unit","unit_tertentu"'],
-            'educational_institutions' => ['required_if:category,unit_tertentu', 'nullable', 'array'],
-            'educational_institutions.*' => ['required_if:category,unit_tertentu', 'nullable', 'integer', 'exists:educational_institutions,id'],
-            'registration_paths' => ['nullable', 'array'],
-            'registration_paths.*' => ['nullable', 'string', 'exists:registration_path,code'],
+            'create_new' => ['required', 'in:YA,TIDAK'],
+            'name' => ['required_if:create_new,YA', 'nullable'],
+            'media_file_id' => ['required_if:create_new,TIDAK', 'nullable'],
+            'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id'],
+            'registration_path_id' => ['nullable', 'integer', 'exists:registration_paths,id'],
         ];
     }
 
@@ -30,20 +29,19 @@ class MediaFileRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'educational_institutions.required_if' => ':attribute wajib diisi jika kategori unit tertentu',
-            'educational_institutions.*.required_if' => ':attribute wajib diisi jika kategori unit tertentu',
+            'name.required_if' => ':attribute wajib diisi tambah baru',
+            'media_file_id.required_if' => ':attribute wajib diisi tambah baru',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => 'nama file',
-            'category' => 'kategori',
-            'educational_institutions' => 'lembaga pendidikan',
-            'educational_institutions.*' => 'lembaga pendidikan',
-            'registration_paths' => 'jalur pendaftaran',
-            'registration_paths.*' => 'jalur pendaftaran',
+            'create_new' => 'tambah baru',
+            'name' => 'nama file baru',
+            'media_file_id' => 'media file',
+            'educational_institution_id' => 'lembaga',
+            'registration_path_id' => 'jalur pendaftaran',
         ];
     }
 }

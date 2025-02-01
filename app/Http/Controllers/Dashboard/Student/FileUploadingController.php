@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Repositories\MediaFileRepoitory;
+use App\Repositories\MediaFileRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -18,9 +18,9 @@ class FileUploadingController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRegistrationRepository $studentRegistrationRepository;
-    protected MediaFileRepoitory $mediaFileRepoitory;
+    protected MediaFileRepository $mediaFileRepoitory;
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, MediaFileRepoitory $mediaFileRepoitory)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, MediaFileRepository $mediaFileRepoitory)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
         $this->mediaFileRepoitory = $mediaFileRepoitory;
