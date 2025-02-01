@@ -101,6 +101,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(response => {
                             load(); // Menginformasikan FilePond bahwa penghapusan berhasil
                             toastr.success(response.data.message);
+
+                            // Menghapus tombol "Lihat"
+                            const inputElement = document.querySelector(`input[name="${fileName}"]`);
+                            const listItem = inputElement.closest('.list-group-item');
+                            const viewLink = listItem.querySelector('a.btn-outline-primary');
+                            if (viewLink) {
+                                viewLink.remove();
+                            }
                         })
                         .catch(err => {
                             toastr.error(err.response.data.message);
