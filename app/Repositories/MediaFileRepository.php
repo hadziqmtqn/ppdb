@@ -3,8 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\MediaFile;
+use App\Models\Student;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,18 +22,18 @@ class MediaFileRepository
         $this->mediaFile = $mediaFile;
     }
 
-    public function getFiles(array $data): array
+    public function getFiles(Student $student): array
     {
         $mediaFiles = $this->mediaFile->query()
-            ->whereHas('detailMediaFile', function ($query) use ($data) {
-                $query->where(function ($query) use ($data) {
-                    $query->where('educational_institution_id', $data['educational_institution_id'])
+            ->whereHas('detailMediaFile', function ($query) use ($student) {
+                $query->where(function ($query) use ($student) {
+                    $query->where('educational_institution_id', $student->educational_institution_id)
                         ->whereNull('registration_path_id');
                 })
-                    ->orWhere(function ($query) use ($data) {
+                    ->orWhere(function ($query) use ($student) {
                         $query->where([
-                            'educational_institution_id' => $data['educational_institution_id'],
-                            'registration_path_id' => $data['registration_path_id']
+                            'educational_institution_id' => $student->educational_institution_id,
+                            'registration_path_id' => $student->registration_path_id
                         ]);
                     });
             })
@@ -42,7 +44,10 @@ class MediaFileRepository
 
         $file = [];
         foreach ($mediaFiles as $uploadFileCategory) {
-            $file[$uploadFileCategory->file_code] = $uploadFileCategory->name;
+            $file[$uploadFileCategory->file_code] = [
+                'fileName' => $uploadFileCategory->name,
+                'fileUrl' => $student->hasMedia($uploadFileCategory->file_code) ? $student->getFirstTemporaryUrl(Carbon::now()->addMinutes(30), $uploadFileCategory->file_code) : null
+            ];
         }
 
         return $file;

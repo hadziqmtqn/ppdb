@@ -19,13 +19,11 @@
                                 @foreach($files as $file => $asset)
                                     <li class="list-group-item">
                                         <div class="d-flex justify-content-between w-100">
-                                            <h5 class="mb-1">{{ $asset }}</h5>
-                                            <small>3 days ago</small>
+                                            <h5 class="mb-1">{{ $asset['fileName'] }}</h5>
+                                            @if($asset['fileUrl'])
+                                                <a href="{{ url($asset['fileUrl']) }}" class="btn btn-xs btn-outline-primary" target="_blank">Lihat</a>
+                                            @endif
                                         </div>
-                                        {{--<div class="input-group">
-                                            <input type="file" class="form-control" id="{{ $key }}" name="{{ $key }}" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                            <button class="btn btn-outline-primary waves-effect" type="button" id="inputGroupFileAddon04">Unggah</button>
-                                        </div>--}}
                                         <hr>
                                         <div class="mb-3">
                                             <input type="file" class="filepond" name="{{ $file }}" data-allow-reorder="false" data-max-file-size="2MB" data-max-files="1">

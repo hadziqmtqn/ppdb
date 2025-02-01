@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Inisialisasi FilePond untuk semua input file
     const inputElements = document.querySelectorAll('input[type="file"]');
-    //const datatable = $('#datatable');
     toastrOption();
 
     let uploadInProgress = false; // Flag untuk melacak proses upload
@@ -35,10 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Mendapatkan username dari form
                     const username = document.getElementById('form').dataset.username;
 
-                    // Menambahkan data dari input hidden (school_year_id) ke FormData
-                    /*const schoolYear = document.getElementById('schoolYear').value;
-                    formData.append('school_year_id', schoolYear);*/
-
                     // Menggunakan Axios untuk upload file beserta form data lainnya
                     axios.post(`/file-uploading/${username}/store`, formData, {
                         headers: {
@@ -52,8 +47,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
                         .then(response => {
                             load(response.data.fileId); // Memberitahu FilePond bahwa upload sukses
-                            //datatable.DataTable().ajax.reload();
                             toastr.success(response.data.message);
+
+                            const inputElement = document.querySelector(`input[name="${fileName}"]`);
+                            const listItem = inputElement.closest('.list-group-item');
+                            const viewLink = listItem.querySelector('a.btn-outline-primary');
+
+                            console.log(response.data);
+
+                            const data = response.data.data;
+
+                            if (viewLink) {
+                                viewLink.href = data.fileUrl;
+                                viewLink.style.display = 'inline-block';
+                            } else {
+                                const link = document.createElement('a');
+                                link.href = data.fileUrl;
+                                link.className = 'btn btn-xs btn-outline-primary';
+                                link.target = '_blank';
+                                link.innerText = 'Lihat';
+                                listItem.querySelector('.d-flex').appendChild(link);
+                            }
+
                             uploadInProgress = false; // Set flag ketika proses upload selesai
                         })
                         .catch(err => {
@@ -73,13 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 revert: (uniqueFileId, load, error) => {
                     // Mendapatkan username dari form
                     const username = document.getElementById('form').dataset.username;
-                    //const schoolYear = document.getElementById('schoolYear').value;
 
                     // Menggunakan Axios untuk menghapus file
                     axios.delete(`/file-uploading/${username}/delete`, {
                         data: {
                             file: fileName,
-                            //school_year_id: schoolYear
                         },
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest' // Menandakan bahwa ini AJAX request
@@ -87,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     })
                         .then(response => {
                             load(); // Menginformasikan FilePond bahwa penghapusan berhasil
-                            //datatable.DataTable().ajax.reload();
                             toastr.success(response.data.message);
                         })
                         .catch(err => {

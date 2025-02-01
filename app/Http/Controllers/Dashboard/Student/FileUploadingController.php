@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -48,10 +49,7 @@ class FileUploadingController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('student');
         $menus = $this->studentRegistrationRepository->menus($user);
-        $files = $this->mediaFileRepoitory->getFiles([
-            'educational_institution_id' => optional($user->student)->educational_institution_id,
-            'registration_path_id' => optional($user->student)->registration_path_id
-        ]);
+        $files = $this->mediaFileRepoitory->getFiles($user->student);
 
         return view('dashboard.student.file-uploading.index', compact('title', 'user', 'menus', 'files'));
     }
@@ -65,11 +63,9 @@ class FileUploadingController extends Controller implements HasMiddleware
 
             $student = $user->student;
 
-            $mediaFiles = $this->mediaFileRepoitory->getFiles([
-                'educational_institution_id' => $student->educational_institution_id,
-                'registration_path_id' => $student->registration_path_id
-            ]);
+            $mediaFiles = $this->mediaFileRepoitory->getFiles($student);
 
+            $fileUrl = null;
             foreach ($mediaFiles as $file => $mediaFile) {
                 if ($request->hasFile($file) && $request->file($file)->isValid()) {
                     if ($student->hasMedia($file)) {
@@ -78,6 +74,10 @@ class FileUploadingController extends Controller implements HasMiddleware
 
                     $student->addMediaFromRequest($file)
                         ->toMediaCollection($file);
+
+                    $student->refresh();
+
+                    $fileUrl = $student->getFirstTemporaryUrl(Carbon::now()->addMinutes(30), $file);
                 }
             }
         }catch (Exception $exception) {
@@ -85,7 +85,9 @@ class FileUploadingController extends Controller implements HasMiddleware
             return $this->apiResponse('Berkas gagal diunggah!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Berkas berhasil diunggah!', null, null, Response::HTTP_OK);
+        return $this->apiResponse('Berkas berhasil diunggah!', [
+            'fileUrl' => $fileUrl
+        ], null, Response::HTTP_OK);
     }
 
     public function destroy(Request $request, User $user): JsonResponse
