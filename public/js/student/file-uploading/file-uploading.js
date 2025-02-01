@@ -5,6 +5,56 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let uploadInProgress = false; // Flag untuk melacak proses upload
 
+    // SweetAlert untuk konfirmasi penghapusan file
+    document.querySelectorAll('.btn-delete-file').forEach(button => {
+        button.addEventListener('click', function () {
+            const username = this.dataset.username;
+            const fileName = this.dataset.fileName;
+            const listItem = this.closest('.list-group-item');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak dapat mengembalikan file ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'TIDAK',
+                confirmButtonText: 'YA, HAPUS!',
+                customClass: {
+                    confirmButton: 'btn btn-danger me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect'
+                },
+                buttonsStyling: false,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/file-uploading/${username}/delete`, {
+                        data: {
+                            file: fileName,
+                        },
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest' // Menandakan bahwa ini AJAX request
+                        }
+                    })
+                        .then(response => {
+                            toastr.success(response.data.message);
+                            const viewButton = listItem.querySelector('a.btn-outline-secondary');
+                            const removeButton = listItem.querySelector('button.btn-delete-file');
+                            if (viewButton) {
+                                viewButton.remove();
+                            }
+
+                            if (removeButton) {
+                                removeButton.remove();
+                            }
+                        })
+                        .catch(err => {
+                            toastr.error(err.response.data.message);
+                        });
+                }
+            });
+        });
+    });
+
     inputElements.forEach(inputElement => {
         const fileName = inputElement.name; // Mendapatkan nama file
 
@@ -51,23 +101,83 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             const inputElement = document.querySelector(`input[name="${fileName}"]`);
                             const listItem = inputElement.closest('.list-group-item');
-                            const viewLink = listItem.querySelector('a.btn-outline-primary');
+                            let buttonGroup = listItem.querySelector('.btn-group');
 
-                            console.log(response.data);
+                            if (!buttonGroup) {
+                                buttonGroup = document.createElement('div');
+                                buttonGroup.className = 'btn-group';
+                                buttonGroup.setAttribute('role', 'group');
+                                listItem.querySelector('.d-flex').appendChild(buttonGroup);
+                            }
 
                             const data = response.data.data;
 
-                            if (viewLink) {
-                                viewLink.href = data.fileUrl;
-                                viewLink.style.display = 'inline-block';
-                            } else {
-                                const link = document.createElement('a');
-                                link.href = data.fileUrl;
-                                link.className = 'btn btn-xs btn-outline-primary';
-                                link.target = '_blank';
-                                link.innerText = 'Lihat';
-                                listItem.querySelector('.d-flex').appendChild(link);
-                            }
+                            // Membuat tombol "Lihat"
+                            const viewLink = document.createElement('a');
+                            viewLink.href = data.fileUrl;
+                            viewLink.className = 'btn btn-outline-secondary btn-xs waves-effect';
+                            viewLink.target = '_blank';
+                            viewLink.innerText = 'Lihat';
+
+                            // Membuat tombol "Hapus"
+                            const deleteButton = document.createElement('button');
+                            deleteButton.type = 'button';
+                            deleteButton.className = 'btn btn-outline-danger btn-xs waves-effect btn-delete-file';
+                            deleteButton.dataset.username = username;
+                            deleteButton.dataset.fileName = fileName;
+                            deleteButton.innerText = 'Hapus';
+
+                            // Menambahkan event listener untuk tombol "Hapus"
+                            deleteButton.addEventListener('click', function () {
+                                const username = deleteButton.dataset.username;
+                                const fileName = deleteButton.dataset.fileName;
+                                const listItem = deleteButton.closest('.list-group-item');
+
+                                Swal.fire({
+                                    title: 'Apakah Anda yakin?',
+                                    text: "Anda tidak dapat mengembalikan file ini!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    cancelButtonText: 'TIDAK',
+                                    confirmButtonText: 'YA, HAPUS!',
+                                    customClass: {
+                                        confirmButton: 'btn btn-danger me-3 waves-effect waves-light',
+                                        cancelButton: 'btn btn-label-secondary waves-effect'
+                                    },
+                                    buttonsStyling: false,
+                                    reverseButtons: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        axios.delete(`/file-uploading/${username}/delete`, {
+                                            data: {
+                                                file: fileName,
+                                            },
+                                            headers: {
+                                                'X-Requested-With': 'XMLHttpRequest' // Menandakan bahwa ini AJAX request
+                                            }
+                                        })
+                                            .then(response => {
+                                                toastr.success(response.data.message);
+                                                const viewButton = listItem.querySelector('a.btn-outline-secondary');
+                                                const removeButton = listItem.querySelector('button.btn-delete-file');
+                                                if (viewButton) {
+                                                    viewButton.remove();
+                                                }
+
+                                                if (removeButton) {
+                                                    removeButton.remove();
+                                                }
+                                            })
+                                            .catch(err => {
+                                                toastr.error(err.response.data.message);
+                                            });
+                                    }
+                                });
+                            });
+
+                            // Menambahkan tombol ke dalam grup tombol
+                            buttonGroup.appendChild(viewLink);
+                            buttonGroup.appendChild(deleteButton);
 
                             uploadInProgress = false; // Set flag ketika proses upload selesai
                         })
@@ -105,9 +215,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Menghapus tombol "Lihat"
                             const inputElement = document.querySelector(`input[name="${fileName}"]`);
                             const listItem = inputElement.closest('.list-group-item');
-                            const viewLink = listItem.querySelector('a.btn-outline-primary');
-                            if (viewLink) {
-                                viewLink.remove();
+                            const viewButton = listItem.querySelector('a.btn-outline-secondary');
+                            const removeButton = listItem.querySelector('button.btn-delete-file');
+
+                            if (viewButton) {
+                                viewButton.remove();
+                            }
+
+                            if (removeButton) {
+                                removeButton.remove();
                             }
                         })
                         .catch(err => {

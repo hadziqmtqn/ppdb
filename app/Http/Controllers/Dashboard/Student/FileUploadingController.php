@@ -65,6 +65,7 @@ class FileUploadingController extends Controller implements HasMiddleware
 
             $mediaFiles = $this->mediaFileRepoitory->getFiles($student);
 
+            $fileName = null;
             $fileUrl = null;
             foreach ($mediaFiles as $file => $mediaFile) {
                 if ($request->hasFile($file) && $request->file($file)->isValid()) {
@@ -77,6 +78,7 @@ class FileUploadingController extends Controller implements HasMiddleware
 
                     $student->refresh();
 
+                    $fileName = $file;
                     $fileUrl = $student->getFirstTemporaryUrl(Carbon::now()->addMinutes(30), $file);
                 }
             }
@@ -86,6 +88,7 @@ class FileUploadingController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Berkas berhasil diunggah!', [
+            'fileName' => $fileName,
             'fileUrl' => $fileUrl
         ], null, Response::HTTP_OK);
     }

@@ -21,7 +21,10 @@
                                         <div class="d-flex justify-content-between w-100">
                                             <h5 class="mb-1">{{ $asset['fileName'] }}</h5>
                                             @if($asset['fileUrl'])
-                                                <a href="{{ url($asset['fileUrl']) }}" class="btn btn-xs btn-outline-primary" target="_blank">Lihat</a>
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ url($asset['fileUrl']) }}" type="button" class="btn btn-outline-secondary btn-xs waves-effect">Lihat</a>
+                                                    <button type="button" class="btn btn-outline-danger btn-xs waves-effect btn-delete-file" data-username="{{ $user->username }}" data-file-name="{{ $file }}">Hapus</button>
+                                                </div>
                                             @endif
                                         </div>
                                         <hr>
