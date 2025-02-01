@@ -134,7 +134,16 @@ class StudentController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('student.educationalInstitution:id,name', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
+        $user->load([
+            'student.educationalInstitution:id,name',
+            'student.registrationCategory:id,name',
+            'student.registrationPath:id,name',
+            'student.major:id,name',
+            'personalData',
+            'family',
+            'residence',
+            'previousSchool'
+        ]);
 
         if (!$user->student) {
             return to_route('student.index')->with('warning', 'Ini bukan data siswa');
