@@ -55,4 +55,32 @@ class StudentRepository
             '- Penghasilan Wali' => optional(optional($user->family)->guardianIncome)->nominal,
         ]);
     }
+
+    // TODO Residence
+    public function resicende(User $user): Collection
+    {
+        return collect([
+            'Provinsi' => optional($user->residence)->province,
+            'Kota/Kab.' => optional($user->residence)->city,
+            'Kecamatan' => optional($user->residence)->district,
+            'Desa/Kel.' => optional($user->residence)->village,
+            'Jalan' => optional($user->residence)->street,
+            'Kode Pos' => optional($user->residence)->postal_code,
+            'Jarak Ke Sekolah' => optional(optional($user->residence)->distanceToSchool)->name,
+            'Transportasi' => optional(optional($user->residence)->transportation)->name,
+        ]);
+    }
+    // TODO Previous School
+    public function previousSchool(User $user): Collection
+    {
+        return collect([
+            'Nama Asal Sekolah' => optional($user->previousSchool)->school_name,
+            'Status' => optional($user->previousSchool)->status,
+            'Provinsi' => optional($user->previousSchool)->province,
+            'Kota/Kab.' => optional($user->previousSchool)->city,
+            'Kecamatan' => optional($user->previousSchool)->district,
+            'Desa/Kel.' => optional($user->previousSchool)->village,
+            'Jalan' => optional($user->previousSchool)->street,
+        ]);
+    }
 }

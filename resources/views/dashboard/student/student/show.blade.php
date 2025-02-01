@@ -186,24 +186,53 @@
                             <div class="card-icon mb-3">
                                 <div class="avatar">
                                     <div class="avatar-initial rounded bg-label-info">
-                                        <i class="mdi mdi-crown-outline mdi-24px"></i>
+                                        <i class="mdi mdi-home-heart mdi-24px"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-info">
-                                <h4 class="card-title mb-3">Coupons</h4>
-                                <div class="d-flex align-items-end mb-1 gap-1">
-                                    <h4 class="text-info mb-0">21</h4>
-                                    <p class="mb-0">Coupons you win</p>
+                                <h4 class="card-title mb-3">Tempat Tinggal</h4>
+                                @foreach($residences as $key => $residence)
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <div class="me-auto">
+                                            <span class="text-heading fw-medium">{{ $key }}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            <span>{{ $residence }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-icon mb-3">
+                                <div class="avatar">
+                                    <div class="avatar-initial rounded bg-label-danger">
+                                        <i class="mdi mdi-office-building-outline mdi-24px"></i>
+                                    </div>
                                 </div>
-
-                                <p class="mb-0 text-truncate">Use coupon on next purchase</p>
+                            </div>
+                            <div class="card-info">
+                                <h4 class="card-title mb-3">Asal Sekolah</h4>
+                                @foreach($previousSchools as $key => $previousSchool)
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <div class="me-auto">
+                                            <span class="text-heading fw-medium">{{ $key }}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            <span>{{ $previousSchool }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ Customer Content -->
     </div>
 @endsection
