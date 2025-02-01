@@ -66,6 +66,9 @@
                                 <span>{{ optional($user->student)->whatsapp_number }}</span>
                             </li>
                         </ul>
+                        <div class="d-flex justify-content-center">
+                            <a href="#" class="btn btn-outline-warning me-3 waves-effect waves-light" data-bs-target="#editUser" data-bs-toggle="modal">Edit Status Akun</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,17 +108,22 @@
                             <div class="card-icon mb-3">
                                 <div class="avatar">
                                     <div class="avatar-initial rounded bg-label-primary">
-                                        <i class="mdi mdi-currency-usd mdi-24px"></i>
+                                        <i class="mdi mdi-account-network mdi-24px"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-info">
-                                <h4 class="card-title mb-3">Account Balance</h4>
-                                <div class="d-flex align-items-end mb-1 gap-1">
-                                    <h4 class="text-primary mb-0">$2345</h4>
-                                    <p class="mb-0">Credit Left</p>
-                                </div>
-                                <p class="mb-0 text-truncate">Account balance for next purchase</p>
+                                <h4 class="card-title mb-3">Data Registrasi</h4>
+                                @foreach($registrations as $title => $registration)
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <div class="me-auto">
+                                            <span class="text-heading fw-medium">{{ $title }}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            <span>{{ $registration }}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

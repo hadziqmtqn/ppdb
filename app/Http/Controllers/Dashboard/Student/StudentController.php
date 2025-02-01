@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\User;
+use App\Repositories\Student\StudentRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -21,6 +22,13 @@ use Yajra\DataTables\Facades\DataTables;
 class StudentController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected StudentRepository $studentRepository;
+
+    public function __construct(StudentRepository $studentRepository)
+    {
+        $this->studentRepository = $studentRepository;
+    }
 
     public static function middleware(): array
     {
@@ -149,7 +157,9 @@ class StudentController extends Controller implements HasMiddleware
             return to_route('student.index')->with('warning', 'Ini bukan data siswa');
         }
 
-        return \view('dashboard.student.student.show', compact('title', 'user'));
+        $registrations = $this->studentRepository->registration($user);
+
+        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations'));
     }
 
     public function destroy(Student $student): JsonResponse

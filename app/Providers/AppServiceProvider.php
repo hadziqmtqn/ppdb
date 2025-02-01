@@ -23,6 +23,7 @@ use App\Repositories\SchoolYearRepository;
 use App\Repositories\SendMessage\AccountVerificationRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
+use App\Repositories\Student\StudentRepository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -51,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SaveNewAccountRepository::class, SaveNewAccountRepository::class);
         $this->app->singleton(StudentRegistrationRepository::class, StudentRegistrationRepository::class);
         $this->app->singleton(MediaFileRepository::class, MediaFileRepository::class);
+        $this->app->singleton(StudentRepository::class, StudentRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);
