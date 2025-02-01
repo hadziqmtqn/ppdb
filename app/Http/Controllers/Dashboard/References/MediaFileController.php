@@ -73,7 +73,6 @@ class MediaFileController extends Controller implements HasMiddleware
                         });
                     })
                     ->addColumn('detailMediaFiles', function ($row) {
-                        $badge = null;
                         $detailMediaFiles = $row->detailMediaFiles;
 
                         if ($detailMediaFiles->isNotEmpty()) {
@@ -81,14 +80,14 @@ class MediaFileController extends Controller implements HasMiddleware
                             $colors = ['bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'bg-light', 'bg-dark'];
                             foreach ($detailMediaFiles as $detailMediaFile) {
                                 $randomColor = $colors[array_rand($colors)];
-                                if ($detailMediaFile->registration_path_id) {
-                                    $badge .= '<div class="d-flex align-items-center lh-1 me-3 mb-3 mb-sm-1">
-                                        <span class="badge badge-dot '. $randomColor .' me-1"></span> '. optional($detailMediaFile->educationalInstitution)->name . ($detailMediaFile->registrationPath ? ' - Jalur: ' . optional($detailMediaFile->registrationPath)->name : null) .'
-                                        <a href="'. route('detail-media-file.show', $detailMediaFile->slug) .'" class="btn btn-xs btn-outline-warning ms-1" data-slug="'. $detailMediaFile->slug .'" data-educational-institution="'. $detailMediaFile->educational_institution_id .'" data-registration-path="'. $detailMediaFile->registration_path_id .'">Edit</a>
-                                        <button href="javascript:void(0)" class="delete-detail-media-file btn btn-xs btn-outline-danger ms-1" data-slug="'. $detailMediaFile->slug .'">Hapus</button>
-                                    </div>';
-                                }
+                                $badge .= '<div class="d-flex align-items-center lh-1 me-3 mb-3 mb-sm-1">
+                                    <span class="badge badge-dot '. $randomColor .' me-1"></span> '. optional($detailMediaFile->educationalInstitution)->name . ($detailMediaFile->registrationPath ? ' - Jalur: ' . optional($detailMediaFile->registrationPath)->name : null) .'
+                                    <a href="'. route('detail-media-file.show', $detailMediaFile->slug) .'" class="btn btn-xs btn-outline-warning ms-1" data-slug="'. $detailMediaFile->slug .'" data-educational-institution="'. $detailMediaFile->educational_institution_id .'" data-registration-path="'. $detailMediaFile->registration_path_id .'">Edit</a>
+                                    <button href="javascript:void(0)" class="delete-detail-media-file btn btn-xs btn-outline-danger ms-1" data-slug="'. $detailMediaFile->slug .'">Hapus</button>
+                                </div>';
                             }
+                        }else {
+                            $badge = 'Semua Unit dan Jalur Pendaftaran';
                         }
 
                         return $badge;

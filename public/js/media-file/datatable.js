@@ -51,9 +51,47 @@ $(function () {
         dataTable.page(currentPage).draw('page');
     }
 
-    dataTable.off('click').on('click', '.delete', function () {
+    dataTable.off('click.delete').on('click', '.delete', function () {
         let slug = $(this).data('slug');
         let url = '/media-file/' + slug + '/delete';
+        let token = $('meta[name="csrf-token"]').attr('content');
+
+        Swal.fire({
+            title: 'Peringatan!',
+            text: "Apakah Anda ingin menghapus data ini?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA, HAPUS!',
+            customClass: {
+                confirmButton: 'btn btn-danger me-3 waves-effect waves-light',
+                cancelButton: 'btn btn-label-secondary waves-effect'
+            },
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                blockUi();
+
+                axios.delete(url, {
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(function (response) {
+                    toastr.success(response.data.message);
+                    reloadTable();
+                    unBlockUi();
+                }).catch(function (error) {
+                    unBlockUi();
+                    toastr.error(error.response.data.message);
+                });
+            }
+        });
+    });
+
+    dataTable.off('click.delete-detail-media-file').on('click', '.delete-detail-media-file', function () {
+        let slug = $(this).data('slug');
+        let url = '/detail-media-file/' + slug + '/delete';
         let token = $('meta[name="csrf-token"]').attr('content');
 
         Swal.fire({
