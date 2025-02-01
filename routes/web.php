@@ -286,6 +286,7 @@ Route::middleware('auth')->group(function () {
             Route::prefix('file-uploading')->group(function () {
                 Route::get('/{user:username}', [FileUploadingController::class, 'index'])->name('file-uploading.index');
                 Route::post('/{user:username}/store', [FileUploadingController::class, 'store']);
+                Route::delete('/{user:username}/delete', [FileUploadingController::class, 'destroy']);
             });
         });
 

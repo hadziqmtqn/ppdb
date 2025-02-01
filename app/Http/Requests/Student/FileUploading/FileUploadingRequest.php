@@ -13,12 +13,19 @@ class FileUploadingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file_name' => ['required']
+            'file' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048']
         ];
     }
 
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'file' => 'berkas'
+        ];
     }
 }
