@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Repositories\MediaFileRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -24,12 +23,10 @@ class FileUploadingController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRegistrationRepository $studentRegistrationRepository;
-    protected MediaFileRepository $mediaFileRepoitory;
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, MediaFileRepository $mediaFileRepoitory)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
-        $this->mediaFileRepoitory = $mediaFileRepoitory;
     }
 
     public static function middleware(): array
@@ -49,7 +46,7 @@ class FileUploadingController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('student');
         $menus = $this->studentRegistrationRepository->menus($user);
-        $files = $this->mediaFileRepoitory->getFiles($user->student);
+        $files = $this->studentRegistrationRepository->getFiles($user->student);
 
         return view('dashboard.student.file-uploading.index', compact('title', 'user', 'menus', 'files'));
     }
@@ -63,7 +60,7 @@ class FileUploadingController extends Controller implements HasMiddleware
 
             $student = $user->student;
 
-            $mediaFiles = $this->mediaFileRepoitory->getFiles($student);
+            $mediaFiles = $this->studentRegistrationRepository->getFiles($student);
 
             $fileName = null;
             $fileUrl = null;
