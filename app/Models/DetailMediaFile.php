@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class DetailMediaFile extends Model
@@ -21,5 +22,15 @@ class DetailMediaFile extends Model
         static::creating(function (DetailMediaFile $detailMediaFile) {
             $detailMediaFile->slug = Str::uuid()->toString();
         });
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
+    }
+
+    public function registrationPath(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationPath::class);
     }
 }

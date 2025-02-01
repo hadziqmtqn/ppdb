@@ -7,7 +7,6 @@ use App\Http\Requests\MediaFile\MediaFileRequest;
 use App\Http\Requests\MediaFile\UpdateMediaFileRequest;
 use App\Models\EducationalInstitution;
 use App\Models\MediaFile;
-use App\Models\RegistrationPath;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -52,7 +51,8 @@ class MediaFileController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = MediaFile::query();
+                $data = MediaFile::query()
+                    ->with('detailMediaFiles.educationalInstitution:id,name', 'detailMediaFiles.registrationPath:id,name');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -63,44 +63,20 @@ class MediaFileController extends Controller implements HasMiddleware
                             $query->whereAny(['name'], 'LIKE', '%' . $search . '%');
                         });
                     })
-                    ->addColumn('category', fn($row) => '<span class="badge '. ($row->category == 'semua_unit' ? 'bg-secondary' : 'bg-info') .'">'. ucfirst(str_replace('_', ' ', $row->category)) .'</span>')
-                    ->addColumn('educationalInstitutions', function ($row) {
-                        $badges = null;
-                        if ($row->educational_institutions) {
-                            $institutionIds = json_decode($row->educational_institutions, true);
-                            $institutions = EducationalInstitution::whereIn('id', $institutionIds)
-                                ->pluck('name');
-
-                            $badges = '';
-                            $colors = ['bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'bg-light', 'bg-dark'];
-                            foreach ($institutions as $institution) {
-                                $randomColor = $colors[array_rand($colors)];
-                                $badges .= '<span class="badge '. $randomColor .'">'. $institution .'</span> ';
-                            }
-                        }
-
-                        return $badges;
-                    })
-                    ->addColumn('registration_paths', function ($row) {
+                    ->addColumn('detailMediaFiles', function ($row) {
                         $badge = null;
+                        $detailMediaFiles = $row->detailMediaFiles;
 
-                        if ($row->registration_paths) {
-                            $registrationPathCodes = json_decode($row->registration_paths, true);
-                            /*$institutionIds = $row->educational_institutions ? json_decode($row->educational_institutions, true) : [];
-                            $institutions = EducationalInstitution::whereIn('id', $institutionIds)
-                                ->pluck('id');*/
-
-                            $registrationPaths = RegistrationPath::whereIn('code', $registrationPathCodes)
-                                //->whereIn('educational_institution_id', $institutions)
-                                ->pluck('name');
-
+                        if ($detailMediaFiles->isNotEmpty()) {
                             $badge = '';
                             $colors = ['bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'bg-light', 'bg-dark'];
-                            foreach ($registrationPaths as $registrationPath) {
+                            foreach ($detailMediaFiles as $detailMediaFile) {
                                 $randomColor = $colors[array_rand($colors)];
-                                $badge .= '<div class="d-flex align-items-center lh-1 me-3 mb-3 mb-sm-0">
-                                    <span class="badge badge-dot '. $randomColor .' me-1"></span> '. $registrationPath .'
-                                </div>';
+                                if ($detailMediaFile->registration_path_id) {
+                                    $badge .= '<div class="d-flex align-items-center lh-1 me-3 mb-3 mb-sm-1">
+                                        <span class="badge badge-dot '. $randomColor .' me-1"></span> '. optional($detailMediaFile->educationalInstitution)->name . ($detailMediaFile->registrationPath ? ' - Jalur: ' . optional($detailMediaFile->registrationPath)->name : null) .'
+                                    </div>';
+                                }
                             }
                         }
 
@@ -113,7 +89,7 @@ class MediaFileController extends Controller implements HasMiddleware
 
                         return $btn;
                     })
-                    ->rawColumns(['action', 'is_active', 'category', 'educationalInstitutions', 'registration_paths'])
+                    ->rawColumns(['action', 'is_active', 'category', 'educationalInstitutions', 'detailMediaFiles'])
                     ->make();
             }
         }catch (Exception $exception) {

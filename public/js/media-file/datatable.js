@@ -20,9 +20,7 @@ $(function () {
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
-            {data: 'category', name: 'category'},
-            {data: 'educationalInstitutions', name: 'educationalInstitutions', orderable: false, searchable: false},
-            {data: 'registration_paths', name: 'registration_paths', orderable: false, searchable: false},
+            {data: 'detailMediaFiles', name: 'detailMediaFiles', orderable: false, searchable: false},
             {data: 'is_active', name: 'is_active', orderable: false, searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],

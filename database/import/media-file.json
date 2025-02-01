@@ -28,6 +28,10 @@
     "name": "Sertifikat Prestasi",
     "detail_media_files": [
       {
+        "educational_institution_id": 1,
+        "registration_path_code": "PRESTASI"
+      },
+      {
         "educational_institution_id": 2,
         "registration_path_code": "PRESTASI"
       },
