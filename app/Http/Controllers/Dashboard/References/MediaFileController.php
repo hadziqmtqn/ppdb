@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\References;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaFile\MediaFileRequest;
+use App\Http\Requests\MediaFile\UpdateMediaFileRequest;
 use App\Models\DetailMediaFile;
 use App\Models\EducationalInstitution;
 use App\Models\MediaFile;
@@ -94,7 +95,10 @@ class MediaFileController extends Controller implements HasMiddleware
                     })
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
+                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+
+                        return $btn;
                     })
                     ->rawColumns(['action', 'is_active', 'category', 'educationalInstitutions', 'detailMediaFiles'])
                     ->make();
@@ -126,6 +130,20 @@ class MediaFileController extends Controller implements HasMiddleware
             DB::commit();
         }catch (Exception $exception) {
             DB::rollBack();
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil disimpan!', $mediaFile, null, Response::HTTP_OK);
+    }
+
+    public function update(UpdateMediaFileRequest $request, MediaFile $mediaFile): JsonResponse
+    {
+        try {
+            $mediaFile->name = $request->input('name');
+            $mediaFile->is_active = $request->input('is_active');
+            $mediaFile->save();
+        }catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }

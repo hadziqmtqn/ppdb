@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating form-floating-outline mb-3">
-                            <select name="registration_path_id" id="select-registration-path" class="form-select select2">
+                            <select name="registration_path_id" id="select-registration-path" class="form-select select2" data-allow-clear="true">
                                 <option value="{{ $detailMediaFile->registration_path_id }}" selected>{{ optional($detailMediaFile->registrationPath)->name }}</option>
                             </select>
                             <label for="select-registration-path">Jalur Pendaftaran</label>

@@ -20,23 +20,20 @@ class MediaFileRepository
         $this->mediaFile = $mediaFile;
     }
 
-    public function getFiles($educationalInstitutionId): array
+    public function getFiles(array $data): array
     {
         $mediaFiles = $this->mediaFile->query()
-            ->select(['file_code', 'name', 'educational_institutions', 'category'])
-            ->get()
-            ->filter(function (MediaFile $uploadFileCategory) use ($educationalInstitutionId) {
-                // Konversi string JSON ke array, jika gagal jadikan array kosong
-                $institutions = json_decode($uploadFileCategory->educational_institutions, true) ?? [];
-
-                // Memeriksa apakah ID ada dalam `educational_institutions` atau jika category adalah 'semua_unit'
-                if (empty($institutions) && $uploadFileCategory->category === 'semua_unit') {
-                    return true; // Jika educational_institutions kosong, pastikan kita ambil berdasarkan kategori 'semua_unit'
-                }
-
-                // Memeriksa apakah ID ada dalam `educational_institutions`
-                return in_array($educationalInstitutionId, $institutions);
-            });
+            ->whereHas('detailMediaFile', function ($query) use ($data) {
+                /*$query->where('educational_institution_id', $data['educational_institution_id'])
+                    ->where(function ($query) use ($data) {
+                        $query->orWhere('registration_path_id', $data['registration_path_id']);
+                    });*/
+                $query->where(function ($query) use ($data) {});
+            })
+            ->orWhereDoesntHave('detailMediaFiles')
+            ->select(['file_code', 'name'])
+            ->active()
+            ->get();
 
         $file = [];
         foreach ($mediaFiles as $uploadFileCategory) {

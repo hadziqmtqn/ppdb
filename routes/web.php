@@ -240,6 +240,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [MediaFileController::class, 'index'])->name('media-file.index');
             Route::post('/datatable', [MediaFileController::class, 'datatable']);
             Route::post('/store', [MediaFileController::class, 'store']);
+            Route::put('/{mediaFile:slug}/update', [MediaFileController::class, 'update']);
             Route::delete('/{mediaFile:slug}/delete', [MediaFileController::class, 'destroy']);
         });
 

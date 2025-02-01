@@ -19,6 +19,7 @@
     </div>
     @can('media-file-write')
         @include('dashboard.references.media-file.modal-create')
+        @include('dashboard.references.media-file.modal-edit')
     @endcan
 @endsection
 

@@ -43,8 +43,10 @@ class FileUploadingController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('student');
         $menus = $this->studentRegistrationRepository->menus($user);
-        $educationalInstitutionId = optional($user->student)->educational_institution_id;
-        $files = $this->mediaFileRepoitory->getFiles($educationalInstitutionId);
+        $files = $this->mediaFileRepoitory->getFiles([
+            'educational_institution_id' => optional($user->student)->educational_institution_id,
+            'registration_path_id' => optional($user->student)->registration_path_id
+        ]);
 
         return view('dashboard.student.file-uploading.index', compact('title', 'user', 'menus', 'files'));
     }
