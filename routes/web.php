@@ -259,7 +259,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/datatable', [StudentController::class, 'datatable']);
         });
 
-        Route::post('student-stats', [StudentStatsController::class, 'index']);
+        Route::get('student-stats', [StudentStatsController::class, 'index']);
 
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');

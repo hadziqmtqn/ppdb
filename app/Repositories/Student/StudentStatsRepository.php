@@ -63,7 +63,12 @@ class StudentStatsRepository
     {
         try {
             return $this->apiResponse('Get data success', [
-                'totalStudents' => $this->totalStudent($request)
+                'totalStudents' => $this->totalStudent($request),
+                'notYetValidated' => $this->notYetValidated($request),
+                'validated' => $this->validated($request),
+                'registrationReceived' => $this->registrationReceived($request),
+                'notYetReceived' => $this->notYetReceived($request),
+                'registrationRejected' => $this->registrationRejected($request)
             ], null, Response::HTTP_OK);
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -75,6 +80,46 @@ class StudentStatsRepository
     {
         return $this->student
             ->statsFilter($request)
+            ->count();
+    }
+
+    private function notYetValidated($request): int
+    {
+        return $this->student
+            ->statsFilter($request)
+            ->registrationValidation('belum_divalidasi')
+            ->count();
+    }
+
+    private function validated($request): int
+    {
+        return $this->student
+            ->statsFilter($request)
+            ->registrationValidation('valid')
+            ->count();
+    }
+
+    private function registrationReceived($request): int
+    {
+        return $this->student
+            ->statsFilter($request)
+            ->registrationStatus('diterima')
+            ->count();
+    }
+
+    private function notYetReceived($request): int
+    {
+        return $this->student
+            ->statsFilter($request)
+            ->registrationStatus('belum_diterima')
+            ->count();
+    }
+
+    private function registrationRejected($request): int
+    {
+        return $this->student
+            ->statsFilter($request)
+            ->registrationStatus('ditolak')
             ->count();
     }
 }

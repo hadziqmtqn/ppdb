@@ -95,4 +95,14 @@ class Student extends Model implements HasMedia
 
         return $query;
     }
+
+    public function scopeRegistrationValidation(Builder $query, $registrationValidation): Builder
+    {
+        return $query->where('registration_validation', $registrationValidation);
+    }
+
+    public function scopeRegistrationStatus(Builder $query, $registrationStatus): Builder
+    {
+        return $query->where('registration_status', $registrationStatus);
+    }
 }
