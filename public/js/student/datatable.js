@@ -65,7 +65,7 @@ $(function () {
         initComplete: function () {
             // Pastikan filter berada di dalam `.filters` yang sudah didefinisikan dalam `dom`
             $('<select id="userStatus" class="form-select text-capitalize">' +
-                '<option value="">Semua</option>' +
+                '<option value="">Semua Status Akun</option>' +
                 '<option value="active">Aktif</option>' +
                 '<option value="inactive">Tidak Aktif</option>' +
                 '<option value="deleted">Terhapus</option>' +
@@ -78,7 +78,7 @@ $(function () {
                 });
 
             $('<select id="registrationStatus" class="form-select text-capitalize">' +
-                '<option value="">Semua</option>' +
+                '<option value="">Semua Status Registrasi</option>' +
                 '<option value="belum_diterima">Belum Diterima</option>' +
                 '<option value="diterima">Diterima</option>' +
                 '<option value="ditolak">Ditolak</option>' +

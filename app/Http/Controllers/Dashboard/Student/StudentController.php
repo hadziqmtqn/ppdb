@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\User;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
+use App\Repositories\Student\StudentStatsRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -28,11 +29,13 @@ class StudentController extends Controller implements HasMiddleware
 
     protected StudentRepository $studentRepository;
     protected StudentRegistrationRepository $studentRegistrationRepository;
+    protected StudentStatsRepository $studentStatsRepository;
 
-    public function __construct(StudentRepository $studentRepository, StudentRegistrationRepository $studentRegistrationRepository)
+    public function __construct(StudentRepository $studentRepository, StudentRegistrationRepository $studentRegistrationRepository, StudentStatsRepository $studentStatsRepository)
     {
         $this->studentRepository = $studentRepository;
         $this->studentRegistrationRepository = $studentRegistrationRepository;
+        $this->studentStatsRepository = $studentStatsRepository;
     }
 
     public static function middleware(): array
@@ -49,7 +52,7 @@ class StudentController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Siswa';
-        $stats = $this->studentRepository->stats();
+        $stats = $this->studentStatsRepository->stats();
 
         return \view('dashboard.student.student.index', compact('title', 'stats'));
     }

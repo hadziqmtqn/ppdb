@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -77,5 +78,21 @@ class Student extends Model implements HasMedia
     public function registrationPath(): BelongsTo
     {
         return $this->belongsTo(RegistrationPath::class);
+    }
+
+    public function scopeStatsFilter(Builder $query, $request): Builder
+    {
+        $educationalInstitutionId = $request['educational_institution_id'];
+        $registrationCategoryId = $request['registration_category_id'];
+        $registrationPathId = $request['registration_path_id'];
+        $registrationStatus = $request['registration_status'];
+
+        $query->where('school_year_id', $request['school_year_id']);
+        $query->when($educationalInstitutionId, fn($query) => $query->where('educational_institution_id', $educationalInstitutionId));
+        $query->when($registrationCategoryId, fn($query) => $query->where('registration_category_id', $registrationCategoryId));
+        $query->when($registrationPathId, fn($query) => $query->where('registration_path_id', $registrationPathId));
+        $query->when($registrationStatus, fn($query) => $query->where('registration_status', $registrationStatus));
+
+        return $query;
     }
 }

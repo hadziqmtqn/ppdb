@@ -10,7 +10,7 @@
                         <div class="col-sm-6 col-lg-4">
                             <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                 <div>
-                                    <h3 class="mb-2">{{ $stat['total'] }}</h3>
+                                    <h3 class="mb-2" id="{{ $stat['id'] }}">{{ $stat['total'] }}</h3>
                                     <p class="mb-0">{{ $label }}</p>
                                 </div>
                                 <div class="avatar me-sm-4">
@@ -83,4 +83,5 @@
     <script src="{{ asset('js/registration-path/select.js') }}" async></script>
     <script src="{{ asset('js/school-year/select.js') }}" async></script>
     <script src="{{ asset('js/student/datatable.js') }}" async></script>
+    <script src="{{ asset('js/student/student-stats.js') }}"></script>
 @endsection

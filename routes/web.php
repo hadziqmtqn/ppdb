@@ -39,6 +39,7 @@ use App\Http\Controllers\Dashboard\Student\ResidenceController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
 use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
 use App\Http\Controllers\Dashboard\Student\StudentSecurityController;
+use App\Http\Controllers\Dashboard\Student\StudentStatsController;
 use App\Http\Controllers\Home\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
@@ -257,6 +258,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index')->middleware('only_admin');
             Route::post('/datatable', [StudentController::class, 'datatable']);
         });
+
+        Route::post('student-stats', [StudentStatsController::class, 'index']);
 
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
