@@ -114,7 +114,8 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('whatsapp-config')->group(function () {
             Route::get('/', [WhatsAppConfigController::class, 'index'])->name('whatsapp-config.index');
-            Route::post('/store', [WhatsAppConfigController::class, 'store'])->name('whatsapp-config.store');
+            Route::post('/datatable', [WhatsAppConfigController::class, 'datatable']);
+            Route::put('/{whatsappConfig:slug}/update', [WhatsAppConfigController::class, 'update']);
         });
 
         Route::prefix('email-config')->group(function () {

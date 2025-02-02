@@ -12,6 +12,7 @@ class WhatsappConfig extends Model
         'slug',
         'domain',
         'api_key',
+        'provider',
         'is_active'
     ];
 
@@ -28,6 +29,20 @@ class WhatsappConfig extends Model
 
         static::creating(function (WhatsappConfig $whatsappConfig) {
             $whatsappConfig->slug = Str::uuid()->toString();
+        });
+
+        static::created(function (WhatsappConfig $whatsappConfig) {
+            if ($whatsappConfig->is_active) {
+                self::where('id', '!=', $whatsappConfig->id)
+                    ->update(['is_active' => false]);
+            }
+        });
+
+        static::updated(function (WhatsappConfig $whatsappConfig) {
+            if ($whatsappConfig->is_active) {
+                self::where('id', '!=', $whatsappConfig->id)
+                    ->update(['is_active' => false]);
+            }
         });
     }
 

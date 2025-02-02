@@ -8,7 +8,6 @@ use App\Repositories\ApplicationRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -28,8 +27,6 @@ class OAuthController extends Controller
 
     public function handleCallback($provider)
     {
-        $application = $this->applicationRepository->getApplication();
-
         try {
             $socialite = Socialite::driver($provider)->user();
 
@@ -56,7 +53,7 @@ class OAuthController extends Controller
             return to_route('login')->with('error', 'Gagal login aplikasi');
         }
 
-        return to_route('dashboard')
+        return redirect()->intended(route('dashboard'))
             ->with('success', 'Selamat datang ' . Auth::user()->name);
     }
 }

@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests\WhatsappConfig;
 
+use App\Traits\ApiResponse;
+use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WhatsappConfigRequest extends FormRequest
 {
+    use ApiResponse, HandlesValidationFailure;
+
     public function rules(): array
     {
         return [

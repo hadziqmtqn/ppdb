@@ -9,9 +9,10 @@ return new class extends Migration {
     {
         Schema::create('whatsapp_configs', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('domain');
             $table->string('api_key');
+            $table->string('provider');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

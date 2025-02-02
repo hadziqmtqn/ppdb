@@ -58,7 +58,8 @@ class MessageTemplateController extends Controller implements HasMiddleware
             'registrasi',
             'verifikasi_email',
             'pendaftaran_diterima',
-            'konfirmasi_pembayaran'
+            'konfirmasi_pembayaran',
+            'ubah_kata_sandi'
         ]);
     }
 
