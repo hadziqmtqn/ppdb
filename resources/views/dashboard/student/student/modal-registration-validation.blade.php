@@ -6,29 +6,22 @@
                 <div class="text-center mb-4">
                     <h3 class="mb-2 pb-1">Validasi Pendaftaran</h3>
                 </div>
-                <form id="formEdit" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
+                <form id="formValidation" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false" data-username="{{ $user->username }}">
                     <div class="col-12 fv-plugins-icon-container">
-                        {{--<div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control" name="name" id="editName" placeholder="Nama">
-                            <label for="editName">Nama</label>
+                        <div class="alert alert-outline-warning d-flex align-items-center" role="alert">
+                            <i class="mdi mdi-alert-outline me-2"></i>
+                            Sebelum mengubah status validasi pendaftaran, pastikan biodata siswa dan berkas pendukungnya telah diperiksa dengan teliti.
                         </div>
-                        <div class="mb-2">Status</div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_active" id="active" value="1">
-                            <label class="form-check-label" for="active">Aktif</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_active" id="non_active" value="0">
-                            <label class="form-check-label" for="non_active">Tidak Aktif</label>
-                        </div>--}}
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="list-group">
-                                    <label class="list-group-item">
-                                        <span class="form-check mb-0"><input class="form-check-input me-1" type="radio" name="registration_validation" value="belum_divalidasi">Belum divalidasi</span>
-                                    </label>
+                            @foreach(['belum_divalidasi', 'valid', 'tidak_valid'] as $statusValidation)
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="list-group mb-2">
+                                        <label class="list-group-item cursor-pointer">
+                                            <span class="form-check mb-0"><input class="form-check-input me-1" type="radio" id="{{ $statusValidation }}" name="registration_validation" value="{{ $statusValidation }}" {{ optional($user->student)->registration_validation == $statusValidation ? 'checked' : '' }}>{{ ucfirst(str_replace('_', ' ', $statusValidation)) }}</span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="col-12 text-center">

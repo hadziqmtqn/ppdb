@@ -265,7 +265,7 @@ Route::middleware('auth')->group(function () {
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
 
-            Route::post('student-validation', [ValidationController::class, 'store']);
+            Route::post('student-validation/{user:username}/store', [ValidationController::class, 'store']);
 
             Route::prefix('student-registration')->group(function () {
                 Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');

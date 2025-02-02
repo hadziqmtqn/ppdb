@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('formValidation');
     const username = form.dataset.username;
-    const btnSubmit = document.getElementById('btn-submit');
+    const btnSubmit = document.getElementById('btn-submit-validation');
 
     if (!form || !btnSubmit) {
         return;
