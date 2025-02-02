@@ -22,6 +22,7 @@ use App\Repositories\SaveNewAccountRepository;
 use App\Repositories\SchoolYearRepository;
 use App\Repositories\SendMessage\AccountVerificationRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
+use App\Repositories\SendMessage\SafetyChangesRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
 use Illuminate\Support\Facades\Gate;
@@ -57,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);
         $this->app->singleton(RegistrationMessageRepository::class, RegistrationMessageRepository::class);
+        $this->app->singleton(SafetyChangesRepository::class, SafetyChangesRepository::class);
 
         // TODO Policy
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);

@@ -38,6 +38,7 @@ use App\Http\Controllers\Dashboard\Student\PreviousSchoolController;
 use App\Http\Controllers\Dashboard\Student\ResidenceController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
 use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
+use App\Http\Controllers\Dashboard\Student\StudentSecurityController;
 use App\Http\Controllers\Home\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
@@ -255,10 +256,11 @@ Route::middleware('auth')->group(function () {
         Route::prefix('student')->group(function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index');
             Route::post('/datatable', [StudentController::class, 'datatable']);
-            Route::get('/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
         });
 
         Route::middleware('student_access')->group(function () {
+            Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
+
             Route::prefix('student-registration')->group(function () {
                 Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
                 Route::post('/{user:username}/store', [StudentRegistrationController::class, 'store']);
@@ -288,6 +290,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{user:username}', [FileUploadingController::class, 'index'])->name('file-uploading.index');
                 Route::post('/{user:username}/store', [FileUploadingController::class, 'store']);
                 Route::delete('/{user:username}/delete', [FileUploadingController::class, 'destroy']);
+            });
+
+            Route::prefix('student-security')->group(function () {
+                Route::get('/{user:username}/security', [StudentSecurityController::class, 'index'])->name('student-security.index');
+                Route::put('/{user:username}/store', [StudentSecurityController::class, 'store']);
             });
         });
 

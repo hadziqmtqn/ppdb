@@ -13,11 +13,7 @@ class RegistrationMessageRepository
 {
     use SendWhatsappMessage, MessageTrait, MessageReplaceTrait;
 
-    public function __construct()
-    {
-    }
-
-    public function sendMessage($data): void
+    public function sendMessage(array $data): void
     {
         $placeholders = [
             "{lembaga}" => $data['educationalInstitution'],

@@ -33,5 +33,12 @@
     "category": "registrasi",
     "recipient": "admin",
     "message": "Assalamu`alaikum Wr. Wb.\n\nAda registrasi siswa baru atas nama:\n\n*Nama* : {nama}\n*No. WhatsApp* : {no_whatsapp}\n*Email* : {email}\n*Kata Sandi* : {kata_sandi}\n*Tanggal Registrasi* : {tanggal_registrasi}\n*Lembaga*: {lembaga}\n*Jalur Pendaftaran* : {jalur_pendaftaran}"
+  },
+  {
+    "title": "Perubahan Email dan Kata Sandi Baru",
+    "educational_institution_id": null,
+    "category": "ubah_email_kata_sandi",
+    "recipient": "all",
+    "message": "Halo {nama_pengguna},\n\nBaru-baru ini Anda telah mengubah kata sandi/email akun {nama_aplikasi} Anda. Berikut adalah detail perubahan tersebut:\n\n* Tanggal: {tanggal}\n* Waktu: {waktu}\n* Kata Sandi Baru: {kata_sandi_baru}\n* Email Baru: {email_baru}\n\nJika Anda tidak melakukan perubahan ini, harap segera laporkan kepada kami untuk membantu melindungi akun Anda.\n\nKeamanan akun Anda adalah prioritas kami.\n\nSalam hangat,\nTim {nama_aplikasi}"
   }
 ]
