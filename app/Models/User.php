@@ -126,4 +126,43 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasOne(PreviousSchool::class, 'user_id');
     }
+
+    public function scopeFilterStudentDatatable(Builder $query, $request): Builder
+    {
+        $auth = auth()->user();
+        $role = $auth->roles->first()->name;
+
+        $schoolYearId = $request['school_year_id'];
+        $status = $request['status'];
+
+        $query->when(($role == 'admin'),
+            // Admin: Filter berdasarkan educational institution
+            fn($query) => $query->whereHas('student', fn($query) => $query->where('educational_institution_id', optional($auth->admin)->educational_institution_id)),
+            // Bukan admin: Cek apakah user atau super-admin
+            fn($query) => $query->when(($role == 'user'),
+                // User: Filter berdasarkan ID user
+                fn($query) => $query->where('id', $auth->id),
+                // Super-admin: Semua student
+                fn($query) => $query->whereHas('student')
+            )
+        );
+
+        $query->whereHas('student', function ($query) use ($schoolYearId) {
+            $query->where('school_year_id', $schoolYearId);
+        });
+
+        $query->when($status, function ($query) use ($status) {
+            $query->when($status == 'active', function ($query) use ($status) {
+                $query->where('is_active', true);
+            })
+                ->when($status == 'inactive', function ($query) use ($status) {
+                    $query->where('is_active', false);
+                })
+                ->when($status == 'deleted', function ($query) {
+                    $query->onlyTrashed();
+                });
+        });
+
+        return $query;
+    }
 }

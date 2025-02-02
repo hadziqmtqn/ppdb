@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Student\FilterRequest;
 use App\Models\Student;
 use App\Models\User;
 use App\Repositories\Student\StudentRegistrationRepository;
@@ -10,7 +11,6 @@ use App\Repositories\Student\StudentRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Carbon;
@@ -53,39 +53,13 @@ class StudentController extends Controller implements HasMiddleware
         return \view('dashboard.student.student.index', compact('title'));
     }
 
-    public function datatable(Request $request): JsonResponse
+    public function datatable(FilterRequest $request): JsonResponse
     {
-        $auth = auth()->user();
-        $role = $auth->roles->first()->name;
-
         try {
             if ($request->ajax()) {
                 $data = User::query()
                     ->with('student.educationalInstitution', 'student.classLevel', 'student.major', 'student.registrationCategory', 'student.registrationPath', 'student.schoolYear')
-                    ->when(($role == 'admin'),
-                        // Admin: Filter berdasarkan educational institution
-                        fn($query) => $query->whereHas('student', fn($query) =>
-                        $query->where('educational_institution_id', optional($auth->admin)->educational_institution_id)
-                        ),
-                        // Bukan admin: Cek apakah user atau super-admin
-                        fn($query) => $query->when(($role == 'user'),
-                            // User: Filter berdasarkan ID user
-                            fn($query) => $query->where('id', $auth->id),
-                            // Super-admin: Semua student
-                            fn($query) => $query->whereHas('student')
-                        )
-                    )
-                    ->when($request->get('status'), function ($query) use ($request) {
-                        $query->when($request->get('status') == 'active', function ($query) use ($request) {
-                            $query->where('is_active', true);
-                        })
-                            ->when($request->get('status') == 'inactive', function ($query) use ($request) {
-                                $query->where('is_active', false);
-                            })
-                            ->when($request->get('status') == 'deleted', function ($query) use ($request) {
-                                $query->onlyTrashed();
-                            });
-                    });
+                    ->filterStudentDatatable($request);
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -114,7 +88,8 @@ class StudentController extends Controller implements HasMiddleware
                     ->addColumn('is_active', function ($row) {
                         return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
                     })
-                    ->addColumn('action', function ($row) use ($auth) {
+                    ->addColumn('action', function ($row) {
+                        $auth = auth()->user();
                         $btn = null;
 
                         if (!$row->deleted_at) {

@@ -1,5 +1,10 @@
 $(function () {
     const table = '#datatable';
+    const schoolYear = $('#select-school-year'),
+        educationalInstitution = $('#select-educational-institution'),
+        registrationCategory = $('#select-registration-category'),
+        registrationPath = $('#select-registration-path'),
+        registrationStatus = $('#registration-status');
 
     const dataTable = $(table).DataTable({
         processing: true,
@@ -15,6 +20,12 @@ $(function () {
             },
             data: function (d) {
                 d.search = $(table + '_filter ' + 'input[type="search"]').val();
+                d.school_year_id = schoolYear.val();
+                d.educational_institution_id = educationalInstitution.val();
+                d.registration_category_id = registrationCategory.val();
+                d.registration_path_id = registrationPath.val();
+                d.registration_status = registrationStatus.val();
+                d.status = $('#userStatus').val();
             }
         },
         columns: [
@@ -27,14 +38,19 @@ $(function () {
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         dom:
-            '<"row mx-2"' +
-            '<"col-md-2"<"me-3"l>>' +
-            '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0 gap-3"fB>>' +
+            '<"row mx-1"' +
+            '<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-3"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>>' +
+            '<"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"user_status mb-3 mb-md-0">>' +
             '>t' +
             '<"row mx-2"' +
             '<"col-sm-12 col-md-6"i>' +
             '<"col-sm-12 col-md-6"p>' +
             '>',
+        language: {
+            sLengthMenu: '_MENU_',
+            search: '',
+            searchPlaceholder: 'Cari data'
+        },
         buttons: [
             {
                 text: '<i class="mdi mdi-plus me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Export</span>',
@@ -44,6 +60,22 @@ $(function () {
                 }
             }
         ],
+        initComplete: function () {
+            // Mengganti filter peran dengan pilihan manual
+            $(
+                '<select id="userStatus" class="form-select text-capitalize">' +
+                '<option value="active">Aktif</option>' +
+                '<option value="inactive">Tidak Aktif</option>' +
+                '<option value="deleted">Terhapus</option>' +
+                '</select>'
+            )
+                .appendTo('.user_status')
+                .on('change', function () {
+                    const val = $(this).val();
+                    // Mengubah pencarian berdasarkan pilihan manual
+                    dataTable.column(4).search(val ? '^' + val + '$' : '', true, false).draw();
+                });
+        },
     });
 
     function reloadTable() {
@@ -51,6 +83,18 @@ $(function () {
         dataTable.ajax.reload();
         dataTable.page(currentPage).draw('page');
     }
+
+    $('.filter').on('change', function () {
+        dataTable.ajax.params({
+            school_year_id: schoolYear.val(),
+            educational_institution_id: educationalInstitution.val(),
+            registration_path_id: registrationPath.val(),
+            registration_category: registrationCategory.val(),
+            registration_status: registrationStatus.val(),
+        });
+
+        dataTable.ajax.reload();
+    });
 
     dataTable.off('click').on('click', '.delete', function () {
         let slug = $(this).data('slug');

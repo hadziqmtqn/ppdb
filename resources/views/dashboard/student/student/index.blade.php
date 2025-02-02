@@ -123,6 +123,7 @@
 @section('scripts')
     <script src="{{ asset('js/educational-institution/select.js') }}" async></script>
     <script src="{{ asset('js/registration-category/select.js') }}" async></script>
+    <script src="{{ asset('js/registration-path/select.js') }}" async></script>
     <script src="{{ asset('js/school-year/select.js') }}" async></script>
     <script src="{{ asset('js/student/datatable.js') }}" async></script>
 @endsection
