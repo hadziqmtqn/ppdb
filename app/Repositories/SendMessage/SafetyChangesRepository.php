@@ -20,7 +20,7 @@ class SafetyChangesRepository
             "{nama_pengguna}" => $data['username'],
             "{tanggal}" => Carbon::now()->isoFormat('DD MMM Y'),
             "{waktu}" => date('H:i:s'),
-            "{kata_sandi_baru" => $data['password'],
+            "{kata_sandi_baru}" => $data['password'],
             "{email_baru}" => $data['newEmail']
         ];
 

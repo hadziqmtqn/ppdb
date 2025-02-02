@@ -61,6 +61,8 @@ class StudentSecurityController extends Controller
         try {
             $user->load('student');
 
+            $oldEmail = $user->email;
+
             $user->email = $request->input('email');
             $user->password = $request->input('password') ? Hash::make($request->input('password')) : $user->password;
             $user->save();
@@ -69,8 +71,8 @@ class StudentSecurityController extends Controller
             $this->safetyChangesRepository->sendMessage([
                 'username' => $user->name,
                 'password' => $request->input('password') ?? '_Tidak ada perubahan_',
-                'newEmail' => $request->input('email') != $user->email ? $request->input('email') : '_Tidak ada perubahan_',
-                'oldEmail' => $user->email,
+                'newEmail' => $request->input('email') != $oldEmail ? $request->input('email') : '_Tidak ada perubahan_',
+                'oldEmail' => $oldEmail,
                 'whatsappNumber' => optional($user->student)->whatsapp_number
             ]);
         }catch (Exception $exception) {
