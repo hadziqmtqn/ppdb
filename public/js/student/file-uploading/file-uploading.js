@@ -112,72 +112,79 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             const data = response.data.data;
 
-                            // Membuat tombol "Lihat"
-                            const viewLink = document.createElement('a');
+                            // Membuat atau memperbarui tombol "Lihat"
+                            let viewLink = buttonGroup.querySelector('a.btn-outline-secondary');
+                            if (!viewLink) {
+                                viewLink = document.createElement('a');
+                                viewLink.className = 'btn btn-outline-secondary btn-xs waves-effect';
+                                viewLink.target = '_blank';
+                                viewLink.innerText = 'Lihat';
+                                buttonGroup.appendChild(viewLink);
+                            }
                             viewLink.href = data.fileUrl;
-                            viewLink.className = 'btn btn-outline-secondary btn-xs waves-effect';
-                            viewLink.target = '_blank';
-                            viewLink.innerText = 'Lihat';
 
-                            // Membuat tombol "Hapus"
-                            const deleteButton = document.createElement('button');
-                            deleteButton.type = 'button';
-                            deleteButton.className = 'btn btn-outline-danger btn-xs waves-effect btn-delete-file';
+                            // Membuat atau memperbarui tombol "Hapus"
+                            let deleteButton = buttonGroup.querySelector('button.btn-delete-file');
+                            if (!deleteButton) {
+                                deleteButton = document.createElement('button');
+                                deleteButton.type = 'button';
+                                deleteButton.className = 'btn btn-outline-danger btn-xs waves-effect btn-delete-file';
+                                deleteButton.innerText = 'Hapus';
+                                buttonGroup.appendChild(deleteButton);
+                            }
                             deleteButton.dataset.username = username;
                             deleteButton.dataset.fileName = fileName;
-                            deleteButton.innerText = 'Hapus';
 
-                            // Menambahkan event listener untuk tombol "Hapus"
-                            deleteButton.addEventListener('click', function () {
-                                const username = deleteButton.dataset.username;
-                                const fileName = deleteButton.dataset.fileName;
-                                const listItem = deleteButton.closest('.list-group-item');
+                            // Menambahkan event listener untuk tombol "Hapus" jika belum ada
+                            if (!deleteButton.hasListener) {
+                                deleteButton.addEventListener('click', function () {
+                                    const username = deleteButton.dataset.username;
+                                    const fileName = deleteButton.dataset.fileName;
+                                    const listItem = deleteButton.closest('.list-group-item');
 
-                                Swal.fire({
-                                    title: 'Apakah Anda yakin?',
-                                    text: "Anda tidak dapat mengembalikan file ini!",
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    cancelButtonText: 'TIDAK',
-                                    confirmButtonText: 'YA, HAPUS!',
-                                    customClass: {
-                                        confirmButton: 'btn btn-danger me-3 waves-effect waves-light',
-                                        cancelButton: 'btn btn-label-secondary waves-effect'
-                                    },
-                                    buttonsStyling: false,
-                                    reverseButtons: true
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        axios.delete(`/file-uploading/${username}/delete`, {
-                                            data: {
-                                                file: fileName,
-                                            },
-                                            headers: {
-                                                'X-Requested-With': 'XMLHttpRequest' // Menandakan bahwa ini AJAX request
-                                            }
-                                        })
-                                            .then(response => {
-                                                toastr.success(response.data.message);
-                                                const viewButton = listItem.querySelector('a.btn-outline-secondary');
-                                                const removeButton = listItem.querySelector('button.btn-delete-file');
-                                                if (viewButton) {
-                                                    viewButton.remove();
-                                                }
-
-                                                if (removeButton) {
-                                                    removeButton.remove();
+                                    Swal.fire({
+                                        title: 'Apakah Anda yakin?',
+                                        text: "Anda tidak dapat mengembalikan file ini!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        cancelButtonText: 'TIDAK',
+                                        confirmButtonText: 'YA, HAPUS!',
+                                        customClass: {
+                                            confirmButton: 'btn btn-danger me-3 waves-effect waves-light',
+                                            cancelButton: 'btn btn-label-secondary waves-effect'
+                                        },
+                                        buttonsStyling: false,
+                                        reverseButtons: true
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            axios.delete(`/file-uploading/${username}/delete`, {
+                                                data: {
+                                                    file: fileName,
+                                                },
+                                                headers: {
+                                                    'X-Requested-With': 'XMLHttpRequest' // Menandakan bahwa ini AJAX request
                                                 }
                                             })
-                                            .catch(err => {
-                                                toastr.error(err.response.data.message);
-                                            });
-                                    }
-                                });
-                            });
+                                                .then(response => {
+                                                    toastr.success(response.data.message);
+                                                    const viewButton = listItem.querySelector('a.btn-outline-secondary');
+                                                    const removeButton = listItem.querySelector('button.btn-delete-file');
+                                                    if (viewButton) {
+                                                        viewButton.remove();
+                                                    }
 
-                            // Menambahkan tombol ke dalam grup tombol
-                            buttonGroup.appendChild(viewLink);
-                            buttonGroup.appendChild(deleteButton);
+                                                    if (removeButton) {
+                                                        removeButton.remove();
+                                                    }
+                                                })
+                                                .catch(err => {
+                                                    toastr.error(err.response.data.message);
+                                                });
+                                        }
+                                    });
+                                });
+                                deleteButton.hasListener = true; // Menandai bahwa event listener telah ditambahkan
+                            }
 
                             uploadInProgress = false; // Set flag ketika proses upload selesai
                         })

@@ -21,10 +21,12 @@ class StudentFactory extends Factory
     {
         $educationalInstitution = EducationalInstitution::pluck('id');
         $registrationCategory = RegistrationCategory::pluck('id');
-        $registrationPath = RegistrationPath::pluck('id');
 
         $selectedInstitution = $educationalInstitution->random();
         $selectedCategory = $registrationCategory->random();
+
+        $registrationPath = RegistrationPath::educationalInstitutionId($selectedInstitution)
+            ->pluck('id');
 
         $major = Major::educationalInstitutionId($selectedInstitution)
             ->pluck('id');
