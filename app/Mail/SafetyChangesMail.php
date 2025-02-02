@@ -16,7 +16,7 @@ class SafetyChangesMail extends Mailable
 
     public mixed $data;
 
-    public function __construct(mixed $data)
+    public function __construct($data)
     {
         $this->data = $data;
     }

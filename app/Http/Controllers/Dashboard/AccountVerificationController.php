@@ -82,6 +82,6 @@ class AccountVerificationController extends Controller
             return redirect()->back()->with('error', 'Data gagal dikirim');
         }
 
-        return redirect()->back()->with('success', 'Tautan verifikasi berhasil dikitim');
+        return redirect()->back()->with('success', 'Tautan verifikasi berhasil dikirim');
     }
 }

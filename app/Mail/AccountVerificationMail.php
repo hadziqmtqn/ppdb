@@ -32,7 +32,7 @@ class AccountVerificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.email-change',
+            markdown: 'emails.email-change',
         );
     }
 
