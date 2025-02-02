@@ -14,7 +14,8 @@ class SecurityRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'unique:users,email,' . $this->route('user')->username . ',username'],
-            'password' => ['nullable', 'string', 'confirmed', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/']
+            'password' => ['nullable', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'],
+            'password_confirmation' => ['nullable', 'same:password', 'string', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/']
         ];
     }
 

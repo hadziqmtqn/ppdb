@@ -8,9 +8,11 @@ use App\Models\User;
 use App\Repositories\SendMessage\SafetyChangesRepository;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,8 +33,25 @@ class StudentSecurityController extends Controller
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
+        $user->load([
+            'student.educationalInstitution:id,name',
+            'student.registrationCategory:id,name',
+            'student.registrationPath:id,name',
+        ]);
 
-        return \view('dashboard.student.security.index', compact('title', $user));
+        // TODO Photo Url
+        $student = optional($user->student);
+        $photoUrl = url('https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF');
+
+        if ($student->hasMedia('pas-foto')) {
+            $media = $student->getFirstMedia('pas-foto');
+
+            if ($media && Str::startsWith($media->mime_type, 'image/')) {
+                $photoUrl = $media->getTemporaryUrl(Carbon::now()->addMinutes(30));
+            }
+        }
+
+        return \view('dashboard.student.security.index', compact('title', 'user', 'photoUrl'));
     }
 
     public function store(SecurityRequest $request, User $user): JsonResponse
@@ -59,6 +78,6 @@ class StudentSecurityController extends Controller
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Data berhasil disimpan!', $user, route('student-security.index', $user->username), Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->apiResponse('Data berhasil disimpan!', $user, route('student-security.index', $user->username), Response::HTTP_OK);
     }
 }

@@ -16,6 +16,7 @@ class StudentRepository
             'No. Registrasi' => optional($user->student)->registration_number,
             'Kategori' => optional(optional($user->student)->registrationCategory)->name,
             'Jalur Pendaftaran' => optional(optional($user->student)->registrationPath)->name,
+            'Jurusan' => optional(optional($user->student)->major)->name,
             'Kelas' => optional(optional($user->student)->classLevel)->name,
             'NISN' => optional($user->student)->nisn,
             'No. Whatsapp' => optional($user->student)->whatsapp_number,
