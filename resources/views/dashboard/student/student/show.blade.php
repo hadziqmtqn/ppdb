@@ -215,4 +215,12 @@
             </div>
         </div>
     </div>
+
+    @if(!auth()->user()->hasRole('user'))
+        @include('dashboard.student.student.modal-registration-validation')
+    @endif
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/student/registration-validation.js') }}"></script>
 @endsection
