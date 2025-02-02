@@ -1,10 +1,9 @@
 $(function () {
     const table = '#datatable';
     const schoolYear = $('#select-school-year'),
-        educationalInstitution = $('#select-educational-institution'),
+        educationalInstitution = $('#select-educational-institution-0'),
         registrationCategory = $('#select-registration-category'),
-        registrationPath = $('#select-registration-path'),
-        registrationStatus = $('#registration-status');
+        registrationPath = $('#select-registration-path');
 
     const dataTable = $(table).DataTable({
         processing: true,
@@ -24,7 +23,7 @@ $(function () {
                 d.educational_institution_id = educationalInstitution.val();
                 d.registration_category_id = registrationCategory.val();
                 d.registration_path_id = registrationPath.val();
-                d.registration_status = registrationStatus.val();
+                d.registration_status = $('#registrationStatus').val();
                 d.status = $('#userStatus').val();
             }
         },
@@ -40,7 +39,10 @@ $(function () {
         dom:
             '<"row mx-1"' +
             '<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-3"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>>' +
-            '<"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"f<"user_status mb-3 mb-md-0">>' +
+            '<"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-3"' +
+            'f' + // Input pencarian DataTable
+            '<"filters d-flex gap-2">' + // Container untuk filter tambahan
+            '>' +
             '>t' +
             '<"row mx-2"' +
             '<"col-sm-12 col-md-6"i>' +
@@ -61,19 +63,31 @@ $(function () {
             }
         ],
         initComplete: function () {
-            // Mengganti filter peran dengan pilihan manual
-            $(
-                '<select id="userStatus" class="form-select text-capitalize">' +
+            // Pastikan filter berada di dalam `.filters` yang sudah didefinisikan dalam `dom`
+            $('<select id="userStatus" class="form-select text-capitalize">' +
+                '<option value="">Semua</option>' +
                 '<option value="active">Aktif</option>' +
                 '<option value="inactive">Tidak Aktif</option>' +
                 '<option value="deleted">Terhapus</option>' +
                 '</select>'
             )
-                .appendTo('.user_status')
+                .appendTo('.filters')
                 .on('change', function () {
                     const val = $(this).val();
-                    // Mengubah pencarian berdasarkan pilihan manual
                     dataTable.column(4).search(val ? '^' + val + '$' : '', true, false).draw();
+                });
+
+            $('<select id="registrationStatus" class="form-select text-capitalize">' +
+                '<option value="">Semua</option>' +
+                '<option value="belum_diterima">Belum Diterima</option>' +
+                '<option value="diterima">Diterima</option>' +
+                '<option value="ditolak">Ditolak</option>' +
+                '</select>'
+            )
+                .appendTo('.filters')
+                .on('change', function () {
+                    const val = $(this).val();
+                    dataTable.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
                 });
         },
     });
@@ -89,8 +103,7 @@ $(function () {
             school_year_id: schoolYear.val(),
             educational_institution_id: educationalInstitution.val(),
             registration_path_id: registrationPath.val(),
-            registration_category: registrationCategory.val(),
-            registration_status: registrationStatus.val(),
+            registration_category_id: registrationCategory.val()
         });
 
         dataTable.ajax.reload();

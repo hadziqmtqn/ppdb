@@ -133,6 +133,10 @@ class User extends Authenticatable implements HasMedia
         $role = $auth->roles->first()->name;
 
         $schoolYearId = $request['school_year_id'];
+        $educationalInstitutionId = $request['educational_institution_id'];
+        $registrationCategoryId = $request['registration_category_id'];
+        $registrationPathId = $request['registration_path_id'];
+        $registrationStatus = $request['registration_status'];
         $status = $request['status'];
 
         $query->when(($role == 'admin'),
@@ -149,6 +153,22 @@ class User extends Authenticatable implements HasMedia
 
         $query->whereHas('student', function ($query) use ($schoolYearId) {
             $query->where('school_year_id', $schoolYearId);
+        });
+
+        $query->when($educationalInstitutionId, function ($query) use ($educationalInstitutionId) {
+            $query->whereHas('student', fn($query) => $query->where('educational_institution_id', $educationalInstitutionId));
+        });
+
+        $query->when($registrationCategoryId, function ($query) use ($registrationCategoryId) {
+            $query->whereHas('student', fn($query) => $query->where('registration_category_id', $registrationCategoryId));
+        });
+
+        $query->when($registrationPathId, function ($query) use ($registrationPathId) {
+            $query->whereHas('student', fn($query) => $query->where('registration_path_id', $registrationPathId));
+        });
+
+        $query->when($registrationStatus, function ($query) use ($registrationStatus) {
+            $query->whereHas('student', fn($query) => $query->where('registration_status', $registrationStatus));
         });
 
         $query->when($status, function ($query) use ($status) {

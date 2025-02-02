@@ -91,13 +91,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating form-floating-outline mb-3 filter">
-                        <select name="registration_status" id="registration-status" class="form-select select2" data-allow-clear="true">
-                            <option value=""></option>
-                            @foreach(['belum_diterima', 'diterima', 'ditolak'] as $status)
-                                <option value="{{ $status }}">{{ ucfirst(str_replace('_', ' ', $status)) }}</option>
-                            @endforeach
-                        </select>
-                        <label for="registration-status">Status Registrasi</label>
+                        <select name="registration_path_id" id="select-registration-path" class="form-select select2" data-allow-clear="true"></select>
+                        <label for="select-registration-path">Jalur Pendaftaran</label>
                     </div>
                 </div>
             </div>
