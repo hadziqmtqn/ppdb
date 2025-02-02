@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Student;
 use Database\Seeders\Auth\AdminSeeder;
 use Database\Seeders\Auth\PermissionSeeder;
 use Database\Seeders\References\ClassLevelSeeder;
@@ -54,5 +55,9 @@ class DatabaseSeeder extends Seeder
             IncomeSeeder::class,
             MediaFileSeeder::class
         ]);
+
+        Student::factory()
+            ->count(100)
+            ->create();
     }
 }
