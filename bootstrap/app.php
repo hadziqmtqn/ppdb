@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AccountVerifiedMiddleware;
+use App\Http\Middleware\OnlyAdminMiddleware;
 use App\Http\Middleware\StudentMiddleware;
 use App\Http\Middleware\VerificationProcessMiddleware;
 use Illuminate\Foundation\Application;
@@ -23,7 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => RoleOrPermissionMiddleware::class,
             'account_verified' => AccountVerifiedMiddleware::class,
             'verification_process' => VerificationProcessMiddleware::class,
-            'student_access' => StudentMiddleware::class
+            'student_access' => StudentMiddleware::class,
+            'only_admin' => OnlyAdminMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

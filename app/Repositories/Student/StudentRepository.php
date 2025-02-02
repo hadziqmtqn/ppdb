@@ -84,4 +84,35 @@ class StudentRepository
             'Jalan' => optional($user->previousSchool)->street,
         ]);
     }
+
+    // TODO Stats
+    public function stats(): Collection
+    {
+        return collect([
+            'Total Siswa' => [
+                'total' => 0,
+                'icon' => 'account-multiple-outline'
+            ],
+            'Belum divalidasi' => [
+                'total' => 0,
+                'icon' => 'progress-alert'
+            ],
+            'Data Valid' => [
+                'total' => 0,
+                'icon' => 'check-decagram-outline'
+            ],
+            'Pendaftaran Diterima' => [
+                'total' => 0,
+                'icon' => 'check-all'
+            ],
+            'Belum Diterima' => [
+                'total' => 0,
+                'icon' => 'wallet-outline'
+            ],
+            'Registrasi Ditolak' => [
+                'total' => 0,
+                'icon' => 'alert-octagon-outline'
+            ]
+        ]);
+    }
 }

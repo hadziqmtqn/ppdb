@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('class_level_id');
             $table->string('whatsapp_number')->unique();
             $table->string('nisn')->nullable();
+            $table->enum('registration_validation', ['belum_divalidasi', 'valid', 'tidak_valid'])->default('belum_divalidasi');
             $table->enum('registration_status', ['belum_diterima', 'diterima', 'ditolak'])->default('belum_diterima');
             $table->timestamps();
 

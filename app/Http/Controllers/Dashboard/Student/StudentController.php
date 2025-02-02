@@ -49,8 +49,9 @@ class StudentController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Siswa';
+        $stats = $this->studentRepository->stats();
 
-        return \view('dashboard.student.student.index', compact('title'));
+        return \view('dashboard.student.student.index', compact('title', 'stats'));
     }
 
     public function datatable(FilterRequest $request): JsonResponse

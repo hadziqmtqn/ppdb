@@ -254,7 +254,7 @@ Route::middleware('auth')->group(function () {
 
         // TODO Student Registration
         Route::prefix('student')->group(function () {
-            Route::get('/', [StudentController::class, 'index'])->name('student.index');
+            Route::get('/', [StudentController::class, 'index'])->name('student.index')->middleware('only_admin');
             Route::post('/datatable', [StudentController::class, 'datatable']);
         });
 

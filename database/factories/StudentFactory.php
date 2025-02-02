@@ -35,7 +35,6 @@ class StudentFactory extends Factory
         return [
             'whatsapp_number' => $this->faker->regexify('08[2-9]{10}'),
             'nisn' => $this->faker->numerify('##########'),
-            'registration_status' => $this->faker->randomElement(['belum_diterima', 'diterima']),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

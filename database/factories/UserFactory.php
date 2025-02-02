@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 /**
  * @extends Factory<User>
@@ -41,5 +42,16 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            // Pastikan role 'user' sudah ada di database
+            $role = Role::firstOrCreate([
+                'name' => 'user'
+            ]);
+            $user->assignRole($role);
+        });
     }
 }

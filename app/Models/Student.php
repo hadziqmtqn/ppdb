@@ -26,6 +26,7 @@ class Student extends Model implements HasMedia
         'nisn',
         'class_level_id',
         'whatsapp_number',
+        'registration_validation',
         'registration_status'
     ];
 

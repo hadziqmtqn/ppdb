@@ -55,8 +55,8 @@ $(function () {
         },
         buttons: [
             {
-                text: '<i class="mdi mdi-plus me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Export</span>',
-                className: 'btn btn-primary waves-effect waves-light',
+                text: '<i class="mdi mdi-download me-1"></i>Export',
+                className: 'btn btn-primary btn-sm waves-effect waves-light',
                 attr: {
                     'id': 'export',
                 }
