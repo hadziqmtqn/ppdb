@@ -81,13 +81,24 @@ class StudentController extends Controller implements HasMiddleware
                     ->addColumn('registrationStatus', function ($row) {
                         $registrationStatus = optional($row->student)->registration_status;
 
-                        $badge = match ($registrationStatus) {
-                            'belum_diterima' => 'bg-warning',
-                            'diterima' => 'bg-primary',
-                            default => 'bg-danger',
+                        $badgeColor = match ($registrationStatus) {
+                            'belum_diterima' => 'bg-label-warning',
+                            'diterima' => 'bg-label-primary',
+                            default => 'bg-label-danger',
                         };
 
-                        return '<span class="badge rounded-pill '. $badge .'">'. strtoupper(str_replace('_', ' ', $registrationStatus)) .'</span>';
+                        return '<span class="badge rounded-pill '. $badgeColor .'">'. ucfirst(str_replace('_', ' ', $registrationStatus)) .'</span>';
+                    })
+                    ->addColumn('registrationValidation', function ($row) {
+                        $registrationValidation = optional($row->student)->registration_validation;
+
+                        $badgeColor = match ($registrationValidation) {
+                            'belum_divalidasi' => 'text-warning',
+                            'valid' => 'text-primary',
+                            default => 'text-danger',
+                        };
+
+                        return '<h6 class="mb-0 w-px-100 '. $badgeColor .'"><i class="mdi mdi-circle mdi-14px me-2"></i>'. ucfirst(str_replace('_', ' ', $registrationValidation)) .'</h6>';
                     })
                     ->addColumn('is_active', function ($row) {
                         return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
@@ -111,7 +122,7 @@ class StudentController extends Controller implements HasMiddleware
 
                         return $btn;
                     })
-                    ->rawColumns(['is_active', 'registrationStatus', 'action'])
+                    ->rawColumns(['is_active', 'registrationStatus', 'registrationValidation', 'action'])
                     ->make();
             }
         }catch (Exception $exception) {
@@ -161,7 +172,10 @@ class StudentController extends Controller implements HasMiddleware
         $previousSchools = $this->studentRepository->previousSchool($user);
         $mediaFiles = $this->studentRegistrationRepository->getFiles($user->student);
 
-        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl'));
+        // TODO Registration
+        $registrationValidation = $this->studentRegistrationRepository->registrationValidationStatus($user->student);
+
+        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl', 'registrationValidation'));
     }
 
     public function destroy(Student $student): JsonResponse

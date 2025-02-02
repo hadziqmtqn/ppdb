@@ -68,6 +68,7 @@
                     <th>Nama</th>
                     <th>Lembaga</th>
                     <th>Kategori Pendaftaran</th>
+                    <th>Status Validasi</th>
                     <th>Status</th>
                     <th>Opsi</th>
                 </tr>

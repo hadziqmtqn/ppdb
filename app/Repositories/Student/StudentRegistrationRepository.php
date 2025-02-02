@@ -89,4 +89,32 @@ class StudentRegistrationRepository
 
         return $file;
     }
+
+    public function registrationValidationStatus(Student $student): Collection
+    {
+        $statusMapping = [
+            'belum_divalidasi' => [
+                'icon' => 'alert-outline',
+                'color' => 'warning',
+                'text' => 'Data registrasi siswa belum divalidasi.'
+            ],
+            'valid' => [
+                'icon' => 'check-circle-outline',
+                'color' => 'success',
+                'text' => 'Data registrasi dan berkas pendukungnya telah dinyatakan valid.'
+            ],
+            'tidak_valid' => [
+                'icon' => 'alert-rhombus-outline',
+                'color' => 'danger',
+                'text' => 'Data registrasi tidak valid, harap periksa kembali!'
+            ]
+        ];
+
+        $validationStatus = $statusMapping[$student->registration_validation] ?? [
+            'icon' => 'alert-rhombus-outline',
+            'color' => 'danger'
+        ];
+
+        return collect($validationStatus);
+    }
 }

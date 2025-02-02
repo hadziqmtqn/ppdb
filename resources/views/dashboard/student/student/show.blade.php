@@ -10,6 +10,18 @@
         <div class="col-xl-4 col-lg-5 col-md-5">
             @include('dashboard.student.student.sidebar')
 
+            <div class="card mb-4 border-2 border-primary">
+                <div class="card-body">
+                    <div class="alert alert-outline-{{ $registrationValidation['color'] }} d-flex align-items-center" role="alert">
+                        <i class="mdi mdi-{{ $registrationValidation['icon'] }} me-2"></i>
+                        {{ $registrationValidation['text'] }}
+                    </div>
+                    <div class="d-grid w-100 mt-4">
+                        <button class="btn btn-secondary" data-bs-target="#validationModal" data-bs-toggle="modal">Ubah Status Validasi</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="card mb-4 bg-gradient-primary">
                 <div class="card-body">
                     <div class="row justify-content-between mb-3">

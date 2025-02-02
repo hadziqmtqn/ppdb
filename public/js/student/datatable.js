@@ -33,6 +33,7 @@ $(function () {
             {data: 'name', name: 'name'},
             {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'registrationCategory', name: 'registrationCategory'},
+            {data: 'registrationValidation', name: 'registrationValidation'},
             {data: 'registrationStatus', name: 'registrationStatus'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
