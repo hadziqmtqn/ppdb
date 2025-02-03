@@ -138,6 +138,7 @@ class StudentController extends Controller implements HasMiddleware
 
         $title = 'Siswa';
         $user->load([
+            'student.user:id,name',
             'student.educationalInstitution:id,name',
             'student.registrationCategory:id,name',
             'student.registrationPath:id,name',
@@ -174,8 +175,9 @@ class StudentController extends Controller implements HasMiddleware
 
         // TODO Registration
         $registrationValidation = $this->studentRegistrationRepository->registrationValidationStatus($user->student);
+        $registrationStatus = $this->studentRegistrationRepository->registrationStatus($user->student);
 
-        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl', 'registrationValidation'));
+        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl', 'registrationValidation', 'registrationStatus'));
     }
 
     public function destroy(Student $student): JsonResponse

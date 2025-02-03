@@ -117,4 +117,31 @@ class StudentRegistrationRepository
 
         return collect($validationStatus);
     }
+
+    public function registrationStatus(Student $student): Collection
+    {
+        $statusMapping = [
+            'belum_diterima' => [
+                'color' => 'warning',
+                'text' => auth()->user()->hasRole('user') ? 'Registrasi belum diterima, masih dalam tahap validasi.' : 'Registrasi belum diterima, harap data registrasi divalidasi terlebih dahulu.'
+            ],
+            'diterima' => [
+                'color' => 'primary',
+                'text' => auth()->user()->hasRole('user') ? 'Selamat, registrasi Anda telah diterima.' : 'Registrasi siswa ' . optional($student->user)->name . ' telah diterima.'
+            ],
+            'ditolak' => [
+                'color' => 'danger',
+                'text' => auth()->user()->hasRole('user') ? 'Maaf, registrasi Anda ditolak. Silahkan hubungi administrator untuk informasi lebih lanjut.' : 'Registrasi siswa ' . optional($student->user)->name . ' ditolak.'
+            ]
+        ];
+
+        $registrationStatus = $statusMapping[$student->registration_status] ?? [
+            'color' => 'secondary', // Warna abu-abu untuk status tidak valid
+            'text' => 'Status registrasi tidak valid atau belum diatur.' // Pesan yang lebih informatif
+        ];
+
+        $registrationStatus['status'] = $student->registration_status;
+
+        return collect($registrationStatus);
+    }
 }

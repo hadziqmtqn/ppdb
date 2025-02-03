@@ -11,31 +11,31 @@
             @include('dashboard.student.student.sidebar')
 
             <div class="card mb-4 border-2 border-primary">
-                <div class="card-body">
+                <div class="card-body pb-0">
                     <div class="alert alert-outline-{{ $registrationValidation['color'] }} d-flex align-items-center" role="alert">
                         <i class="mdi mdi-{{ $registrationValidation['icon'] }} me-2"></i>
                         {{ $registrationValidation['text'] }}
                     </div>
-                    <div class="d-grid w-100 mt-4">
-                        <button class="btn btn-secondary" data-bs-target="#validationModal" data-bs-toggle="modal">Ubah Status Validasi</button>
-                    </div>
+                    @if(!auth()->user()->hasRole('user'))
+                        <div class="d-grid w-100 mt-4 mb-3">
+                            <button class="btn btn-secondary" data-bs-target="#validationModal" data-bs-toggle="modal">Ubah Status Validasi</button>
+                        </div>
+                    @endif
                 </div>
             </div>
 
-            <div class="card mb-4 bg-gradient-primary">
+            <div class="card mb-4 bg-gradient-{{ $registrationStatus['color'] }}">
                 <div class="card-body">
                     <div class="row justify-content-between mb-3">
                         <div class="col-md-12 col-lg-7 col-xl-12 col-xxl-7 text-center text-lg-start text-xl-center text-xxl-start order-1 order-lg-0 order-xl-1 order-xxl-0">
-                            <h4 class="card-title text-white text-nowrap">Upgrade to premium</h4>
-                            <p class="card-text text-white">
-                                Upgrade customer to premium membership to access pro features.
-                            </p>
+                            <h4 class="card-title text-white text-nowrap">{{ ucfirst(str_replace('_', ' ', $registrationStatus['status'])) }}</h4>
+                            <p class="card-text text-white">{{ $registrationStatus['text'] }}</p>
                         </div>
                         <span class="col-md-12 col-lg-5 col-xl-12 col-xxl-5 text-center mx-auto mx-md-0 mb-2"><img src="{{ asset('materialize/assets/img/illustrations/rocket.png') }}" class="w-px-75 m-2" alt="3dRocket"></span>
                     </div>
-                    <button class="btn btn-white text-primary w-100 fw-medium shadow-sm waves-effect waves-light" data-bs-target="#upgradePlanModal" data-bs-toggle="modal">
-                        Upgrade to premium
-                    </button>
+                    @if(!auth()->user()->hasRole('user'))
+                        <button class="btn btn-white text-{{ $registrationStatus['color'] }} w-100 fw-medium shadow-sm waves-effect waves-light" data-bs-target="#registrationStatusModal" data-bs-toggle="modal">Ubah Status Registrasi</button>
+                    @endif
                 </div>
             </div>
         </div>
