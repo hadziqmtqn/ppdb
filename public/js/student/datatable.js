@@ -60,7 +60,7 @@ $(function () {
                 text: '<i class="mdi mdi-download me-1"></i>Export',
                 className: 'btn btn-primary btn-sm waves-effect waves-light',
                 attr: {
-                    'id': 'export',
+                    'id': 'exportExcelButton',
                 }
             }
         ],
@@ -157,4 +157,7 @@ $(function () {
             }
         });
     });
+
+    // export excel
+    exportExcelHandler();
 });

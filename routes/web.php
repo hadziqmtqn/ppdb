@@ -39,6 +39,7 @@ use App\Http\Controllers\Dashboard\Student\PreviousSchoolController;
 use App\Http\Controllers\Dashboard\Student\ResidenceController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
 use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
+use App\Http\Controllers\Dashboard\Student\StudentReportController;
 use App\Http\Controllers\Dashboard\Student\StudentSecurityController;
 use App\Http\Controllers\Dashboard\Student\StudentStatsController;
 use App\Http\Controllers\Dashboard\Student\ValidationController;
@@ -260,6 +261,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index')->middleware('only_admin');
             Route::post('/datatable', [StudentController::class, 'datatable']);
         });
+
+        Route::post('student-report-excel', [StudentReportController::class, 'excel']);
 
         Route::get('student-stats', [StudentStatsController::class, 'index']);
 

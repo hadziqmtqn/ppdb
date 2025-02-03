@@ -80,10 +80,11 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/educational-institution/select.js') }}" async></script>
-    <script src="{{ asset('js/registration-category/select.js') }}" async></script>
-    <script src="{{ asset('js/registration-path/select.js') }}" async></script>
-    <script src="{{ asset('js/school-year/select.js') }}" async></script>
-    <script src="{{ asset('js/student/datatable.js') }}" async></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/registration-category/select.js') }}"></script>
+    <script src="{{ asset('js/registration-path/select.js') }}"></script>
+    <script src="{{ asset('js/school-year/select.js') }}"></script>
+    <script src="{{ asset('js/student/datatable.js') }}"></script>
     <script src="{{ asset('js/student/student-stats.js') }}"></script>
+    <script defer src="{{ asset('js/student/student-report-excel.js') }}"></script>
 @endsection
