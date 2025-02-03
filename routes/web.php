@@ -268,7 +268,7 @@ Route::middleware('auth')->group(function () {
 
             Route::post('student-validation/{user:username}/store', [ValidationController::class, 'store']);
 
-            Route::post('acceptance-registration', [AcceptanceRegistrationController::class, 'store']);
+            Route::post('acceptance-registration/{user:username}/store', [AcceptanceRegistrationController::class, 'store']);
 
             Route::prefix('student-registration')->group(function () {
                 Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');

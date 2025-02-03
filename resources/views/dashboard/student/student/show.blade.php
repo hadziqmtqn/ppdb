@@ -223,5 +223,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/student/registration-validation.js') }}"></script>
+    <script src="{{ asset('js/student/registration-validation.js') }}" async></script>
+    <script src="{{ asset('js/student/acceptance-registration.js') }}" async></script>
 @endsection

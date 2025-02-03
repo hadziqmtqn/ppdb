@@ -18,13 +18,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
                             },
                         }
                     },
-                    /*educational_institution_id: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Kolom ini wajib diisi'
-                            },
-                        }
-                    },*/
                     category: {
                         validators: {
                             notEmpty: {
@@ -32,13 +25,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
                             },
                         }
                     },
-                    /*recipient: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Kolom ini wajib diisi'
-                            },
-                        }
-                    },*/
                     message: {
                         validators: {
                             notEmpty: {
