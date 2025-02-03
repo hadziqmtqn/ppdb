@@ -40,5 +40,19 @@
     "category": "ubah_email_kata_sandi",
     "recipient": "all",
     "message": "Halo {nama_pengguna},\n\nBaru-baru ini Anda telah mengubah kata sandi/email akun {nama_aplikasi} Anda. Berikut adalah detail perubahan tersebut:\n\n* Tanggal: {tanggal}\n* Waktu: {waktu}\n* Kata Sandi Baru: {kata_sandi_baru}\n* Email Baru: {email_baru}\n\nJika Anda tidak melakukan perubahan ini, harap segera laporkan kepada kami untuk membantu melindungi akun Anda.\n\nKeamanan akun Anda adalah prioritas kami.\n\nSalam hangat,\nTim {nama_aplikasi}"
+  },
+  {
+    "title": "Siswa dinyatakan DITERIMA",
+    "educational_institution_id": null,
+    "category": "pendaftaran_diterima",
+    "recipient": "user",
+    "message": "Assalamu`alaikum Wr. Wb.\n\nHalo {nama},\n\nSelamat datang di {lembaga}! Anda telah berhasil melewati tahap pendaftaran dan diterima sebagai siswa baru. Untuk informasi lebih lanjut mengenai jadwal pertemuan orang tua, daftar ulang, dan perlengkapan sekolah, silakan kunjungi {website}.\n\nKami tunggu kehadiran Anda!\n{lembaga}\n\n_*PESAN INI TIDAK UNTUK DIBALAS*_"
+  },
+  {
+    "title": "Registrasi Siswa tidak diterima",
+    "educational_institution_id": null,
+    "category": "pendaftaran_ditolak",
+    "recipient": "user",
+    "message": "Assalamu`alaikum Wr. Wb.\n\nHalo {nama},\n\nTerima kasih atas minat Anda untuk bergabung bersama kami di {lembaga}. Kami memahami betapa pentingnya keputusan ini bagi Anda, dan kami menghargai usaha serta waktu yang telah Anda curahkan untuk mendaftar.\n\nSetelah melalui proses seleksi yang cukup ketat, dengan berat hati kami belum dapat menerima Anda di tahun ajaran ini. Kami tahu ini mungkin bukan kabar yang Anda harapkan, namun kami ingin Anda tahu bahwa kami sangat menghargai ketertarikan Anda pada sekolah kami.\n\nKami berharap Anda tidak berkecil hati dan tetap semangat meraih impian Anda. Siapa tahu, di masa depan ada kesempatan lain untuk bergabung bersama {lembaga}.\n\nSalam hangat,\n{lembaga}\n\n_*PESAN INI TIDAK UNTUK DIBALAS*_"
   }
 ]

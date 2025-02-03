@@ -31,6 +31,7 @@ use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
+use App\Http\Controllers\Dashboard\Student\AcceptanceRegistrationController;
 use App\Http\Controllers\Dashboard\Student\FamilyController;
 use App\Http\Controllers\Dashboard\Student\FileUploadingController;
 use App\Http\Controllers\Dashboard\Student\PersonalDataController;
@@ -266,6 +267,8 @@ Route::middleware('auth')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
 
             Route::post('student-validation/{user:username}/store', [ValidationController::class, 'store']);
+
+            Route::post('acceptance-registration', [AcceptanceRegistrationController::class, 'store']);
 
             Route::prefix('student-registration')->group(function () {
                 Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');

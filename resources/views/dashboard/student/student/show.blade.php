@@ -34,7 +34,7 @@
                         <span class="col-md-12 col-lg-5 col-xl-12 col-xxl-5 text-center mx-auto mx-md-0 mb-2"><img src="{{ asset('materialize/assets/img/illustrations/rocket.png') }}" class="w-px-75 m-2" alt="3dRocket"></span>
                     </div>
                     @if(!auth()->user()->hasRole('user'))
-                        <button class="btn btn-white text-{{ $registrationStatus['color'] }} w-100 fw-medium shadow-sm waves-effect waves-light" data-bs-target="#registrationStatusModal" data-bs-toggle="modal">Ubah Status Registrasi</button>
+                        <button class="btn btn-white text-{{ $registrationStatus['color'] }} w-100 fw-medium shadow-sm waves-effect waves-light" data-bs-target="#acceptanceRegistrationModal" data-bs-toggle="modal">Ubah Status Registrasi</button>
                     @endif
                 </div>
             </div>
@@ -217,7 +217,8 @@
     </div>
 
     @if(!auth()->user()->hasRole('user'))
-        @include('dashboard.student.student.modal-registration-validation')
+        @include('dashboard.student.student.modal-validation')
+        @include('dashboard.student.student.modal-acceptance')
     @endif
 @endsection
 

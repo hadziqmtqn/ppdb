@@ -44,6 +44,6 @@ class AcceptanceRegistrationController extends Controller implements HasMiddlewa
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Data berhasil disimpan!', $student->registration_status, null, Response::HTTP_OK);
+        return $this->apiResponse('Data berhasil disimpan!', $student->registration_status, route('student.show', $user->username), Response::HTTP_OK);
     }
 }
