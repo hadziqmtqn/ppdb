@@ -92,7 +92,7 @@ class MessageTemplateController extends Controller implements HasMiddleware
                         return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-warning') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="' . route('message-template.show', $row->slug) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
+                        $btn = '<a href="' . route('message-template.show', $row->slug) . '" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-eye"></i></a> ';
                         $btn .= '<button href="javascript:void(0)" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
 
                         return $btn;

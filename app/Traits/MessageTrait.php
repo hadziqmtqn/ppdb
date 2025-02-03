@@ -12,10 +12,19 @@ trait MessageTrait
         return Application::firstOrFail();
     }
 
-    protected function message($category, $recipient): ?MessageTemplate
+    protected function message($category, $recipient, $educationalInstitutionId): ?MessageTemplate
     {
         return MessageTemplate::with('messageReceiver.user')
-            ->filterByCategory($category)
+            ->where(function ($query) use ($category, $educationalInstitutionId) {
+                $query->where(function ($query) use ($category) {
+                    $query->filterByCategory($category)
+                        ->whereNull('educational_institution_id');
+                })
+                    ->orWhere(function ($query) use ($category, $educationalInstitutionId) {
+                        $query->filterByCategory($category)
+                            ->educationalInstitutionId($educationalInstitutionId);
+                    });
+            })
             ->filterByRecipient($recipient)
             ->active()
             ->first();

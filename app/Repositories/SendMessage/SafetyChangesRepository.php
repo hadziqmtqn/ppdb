@@ -24,12 +24,12 @@ class SafetyChangesRepository
             "{email_baru}" => $data['newEmail']
         ];
 
-        if ($this->message('verifikasi_email', 'all')) {
+        if ($this->message('verifikasi_email', 'all', null)) {
             // notifikasi menggunakan email
             if ($this->app()->notification_method == 'email') {
                 Mail::to($data['oldEmail'])
                     ->send(new SafetyChangesMail([
-                        'message' => $this->replacePlaceholders($this->message('ubah_email_kata_sandi', 'all')->message, $placeholders)
+                        'message' => $this->replacePlaceholders($this->message('ubah_email_kata_sandi', 'all', null)->message, $placeholders)
                     ]));
             }
 
@@ -37,7 +37,7 @@ class SafetyChangesRepository
             if ($this->app()->notification_method == 'whatsapp') {
                 $this->sendWhatsappMessage([
                     'phone' => $data['whatsappNumber'],
-                    'message' => $this->replacePlaceholders($this->message('ubah_email_kata_sandi', 'all')->message, $placeholders)
+                    'message' => $this->replacePlaceholders($this->message('ubah_email_kata_sandi', 'all', null)->message, $placeholders)
                 ]);
             }
         }

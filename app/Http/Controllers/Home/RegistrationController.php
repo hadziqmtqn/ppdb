@@ -87,12 +87,14 @@ class RegistrationController extends Controller
 
             // TODO Send Message
             $this->registrationMessageRepository->sendMessage([
+                'educationalInstitutionId' => $student->educational_institution_id,
                 'educationalInstitution' => optional($student->educationalInstitution)->name,
                 'name' => $user->name,
                 'email' => $user->email,
                 'whatsappNumber' => $student->whatsapp_number,
                 'password' => $password,
-                'registrationPath' => optional($student->registrationPath)->name
+                'registrationPath' => optional($student->registrationPath)->name,
+                'major' => optional($student->major)->name
             ]);
 
             // TODO Send Account Verification

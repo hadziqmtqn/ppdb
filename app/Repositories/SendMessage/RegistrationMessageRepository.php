@@ -23,12 +23,13 @@ class RegistrationMessageRepository
             "{email}" => $data['email'],
             "{kata_sandi}" => $data['password'],
             "{tanggal_registrasi}" => Carbon::now()->isoFormat('DD MMM Y'),
-            "{jalur_pendaftaran}" => $data['registrationPath']
+            "{jalur_pendaftaran}" => $data['registrationPath'],
+            "{jurusan}" => !empty($data['major']) ? $data['major'] : null
         ];
 
         // TODO Base Message Template
-        $adminMessage = $this->message('registrasi', 'admin');
-        $userMessage = $this->message('registrasi', 'user');
+        $adminMessage = $this->message('registrasi', 'admin', $data['educationalInstitutionId']);
+        $userMessage = $this->message('registrasi', 'user', null);
 
         // TODO Admin Message
         if ($adminMessage) {

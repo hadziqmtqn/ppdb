@@ -21,12 +21,12 @@ class AccountVerificationRepository
             "{tautan}" => $link
         ];
 
-        if ($this->message('verifikasi_email', 'all')) {
+        if ($this->message('verifikasi_email', 'all', null)) {
             // notifikasi menggunakan email
             if ($this->app()->notification_method == 'email') {
                 Mail::to($email)
                     ->send(new AccountVerificationMail([
-                        'message' => $this->replacePlaceholders($this->message('verifikasi_email', 'all')->message, $placeholders)
+                        'message' => $this->replacePlaceholders($this->message('verifikasi_email', 'all', null)->message, $placeholders)
                     ]));
             }
 
@@ -34,7 +34,7 @@ class AccountVerificationRepository
             if ($this->app()->notification_method == 'whatsapp') {
                 $this->sendWhatsappMessage([
                     'phone' => $phone,
-                    'message' => $this->replacePlaceholders($this->message('verifikasi_email', 'all')->message, $placeholders)
+                    'message' => $this->replacePlaceholders($this->message('verifikasi_email', 'all', null)->message, $placeholders)
                 ]);
             }
         }
