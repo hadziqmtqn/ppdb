@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\ValidationRequest;
 use App\Models\User;
+use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -17,6 +18,13 @@ use Symfony\Component\HttpFoundation\Response;
 class ValidationController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected StudentRegistrationRepository $studentRegistrationRepository;
+
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
+    {
+        $this->studentRegistrationRepository = $studentRegistrationRepository;
+    }
 
     public static function middleware(): array
     {
@@ -31,6 +39,12 @@ class ValidationController extends Controller implements HasMiddleware
         Gate::authorize('store', $user);
 
         try {
+            $allCompetencies = $this->studentRegistrationRepository->allCompleted($user);
+
+            if (!$allCompetencies) {
+                return $this->apiResponse('Data Registrasi belum lengkap!!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
             $user->load('student');
             $student = $user->student;
 

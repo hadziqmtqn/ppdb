@@ -59,6 +59,15 @@ class StudentRegistrationRepository
         ]);
     }
 
+    public function allCompleted(User $user): bool
+    {
+        // Panggil method menus untuk mendapatkan koleksi menu
+        $menus = $this->menus($user);
+
+        // Cek apakah semua menu bernilai isCompleted == true
+        return $menus->every(fn($menu) => $menu['isCompleted']);
+    }
+
     public function getFiles(Student $student): array
     {
         $mediaFiles = $this->mediaFile->query()
