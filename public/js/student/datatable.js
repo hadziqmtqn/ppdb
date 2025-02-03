@@ -10,7 +10,7 @@ $(function () {
         serverSide: true,
         scrollX: true,
         scrollCollapse: true,
-        order: [[1, 'asc']],
+        order: [[2, 'asc']],
         ajax: {
             url: "/student/datatable",
             type: "POST",
@@ -29,13 +29,14 @@ $(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
             {data: 'registrationNumber', name: 'registrationNumber'},
             {data: 'name', name: 'name'},
             {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'registrationCategory', name: 'registrationCategory'},
-            {data: 'registrationValidation', name: 'registrationValidation'},
-            {data: 'registrationStatus', name: 'registrationStatus'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'allCompleted', name: 'allCompleted', orderable: false, searchable: false},
+            {data: 'registrationValidation', name: 'registrationValidation', orderable: false, searchable: false},
+            {data: 'registrationStatus', name: 'registrationStatus', orderable: false, searchable: false},
         ],
         dom:
             '<"row mx-1"' +
@@ -91,6 +92,15 @@ $(function () {
                     dataTable.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
                 });
         },
+    });
+
+    dataTable.on('draw.dt', function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                boundary: document.body
+            });
+        });
     });
 
     function reloadTable() {

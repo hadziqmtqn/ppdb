@@ -64,13 +64,14 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Opsi</th>
                     <th>No. Registrasi</th>
                     <th>Nama</th>
                     <th>Lembaga</th>
                     <th>Kategori Pendaftaran</th>
+                    <th>Lengkap</th>
                     <th>Status Validasi</th>
-                    <th>Status</th>
-                    <th>Opsi</th>
+                    <th>Status Registrasi</th>
                 </tr>
                 </thead>
             </table>

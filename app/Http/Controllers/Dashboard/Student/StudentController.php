@@ -100,8 +100,10 @@ class StudentController extends Controller implements HasMiddleware
 
                         return '<h6 class="mb-0 w-px-100 '. $badgeColor .'"><i class="mdi mdi-circle mdi-14px me-2"></i>'. ucfirst(str_replace('_', ' ', $registrationValidation)) .'</h6>';
                     })
-                    ->addColumn('is_active', function ($row) {
-                        return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
+                    ->addColumn('allCompleted', function ($row) {
+                        $allCompeletd = $this->studentRegistrationRepository->allCompleted(User::findOrFail($row->id));
+
+                        return '<div class="d-inline-flex" data-bs-toggle="tooltip" title="'. ($allCompeletd ? 'Lengkap' : 'Tidak Lengkap') .'"><span class="avatar avatar-sm"> <span class="avatar-initial rounded-circle bg-label-'. ($allCompeletd ? 'success' : 'danger') .'"><i class="mdi mdi-'. ($allCompeletd ? 'check' : 'alert-rhombus-outline') .'"></i></span></span></div>';
                     })
                     ->addColumn('action', function ($row) {
                         $auth = auth()->user();
@@ -122,7 +124,7 @@ class StudentController extends Controller implements HasMiddleware
 
                         return $btn;
                     })
-                    ->rawColumns(['is_active', 'registrationStatus', 'registrationValidation', 'action'])
+                    ->rawColumns(['allCompleted', 'registrationStatus', 'registrationValidation', 'action'])
                     ->make();
             }
         }catch (Exception $exception) {

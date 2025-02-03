@@ -5,12 +5,20 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use App\Repositories\Student\StudentRegistrationRepository;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class LoginController extends Controller
 {
+    protected StudentRegistrationRepository $studentRegistrationRepository;
+
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
+    {
+        $this->studentRegistrationRepository = $studentRegistrationRepository;
+    }
+
     public function index(): View
     {
         $title = 'Login';
@@ -32,14 +40,10 @@ class LoginController extends Controller
 
                 // jika user/siswa dan belum selesai tahap registrasi, alihkan ke halaman registrasi
                 if (auth()->user()->hasRole('user')) {
-                    $user = User::whereHas('student')
-                        ->whereHas('personalData')
-                        ->whereHas('family')
-                        ->whereHas('placeOfRecidence')
-                        ->whereHas('previousSchool')
-                        ->find(auth()->id());
+                    $user = User::find(auth()->id());
+                    $allCompleted = $this->studentRegistrationRepository->allCompleted($user);
 
-                    if (!$user) {
+                    if (!$allCompleted) {
                         return redirect()->route('student-registration.index', auth()->user()->username)
                             ->with('warning', 'Harap lengkapi data pendaftaran');
                     }

@@ -42,7 +42,7 @@ class ValidationController extends Controller implements HasMiddleware
             $allCompetencies = $this->studentRegistrationRepository->allCompleted($user);
 
             if (!$allCompetencies) {
-                return $this->apiResponse('Data Registrasi belum lengkap!!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+                return $this->apiResponse('Data Registrasi belum lengkap!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             $user->load('student');
