@@ -16,7 +16,7 @@
             <form id="formAuthentication" class="mb-3" action="{{ route('login.store') }}" method="POST">
                 @csrf
                 <div class="form-floating form-floating-outline mb-3">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Anda" autofocus />
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Anda" value="{{ old('email') }}" autofocus />
                     <label for="email">Email</label>
                 </div>
                 <div class="mb-3">
