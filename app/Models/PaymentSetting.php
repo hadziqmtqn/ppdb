@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class PaymentSetting extends Model
 {
     protected $fillable = [
         'slug',
+        'educational_institution_id',
         'payment_method',
     ];
 
@@ -26,5 +28,10 @@ class PaymentSetting extends Model
         static::creating(function (PaymentSetting $paymentSetting) {
             $paymentSetting->slug = Str::uuid()->toString();
         });
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
     }
 }

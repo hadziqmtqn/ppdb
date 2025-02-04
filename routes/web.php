@@ -266,7 +266,9 @@ Route::middleware('auth')->group(function () {
         // TODO Payment
         Route::prefix('payment-setting')->group(function () {
             Route::get('/', [PaymentSettingController::class, 'index'])->name('payment-setting.index');
-            Route::put('/{paymentSetting:slug}/update', [PaymentSettingController::class, 'update'])->name('payment-setting.update');
+            Route::post('/store', [PaymentSettingController::class, 'store']);
+            Route::post('/datatable', [PaymentSettingController::class, 'datatable']);
+            Route::put('/{paymentSetting:slug}/update', [PaymentSettingController::class, 'update']);
         });
 
         Route::prefix('payment-channel')->group(function () {

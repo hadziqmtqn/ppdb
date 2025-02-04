@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests\Payment\PaymentMethod;
 
+use App\Traits\ApiResponse;
+use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentSettingRequest extends FormRequest
 {
+    use ApiResponse, HandlesValidationFailure;
+
     public function rules(): array
     {
         return [

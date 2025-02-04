@@ -23,25 +23,26 @@
 
             <div class="card mb-3">
                 <h5 class="card-header">{{ $title }}</h5>
-                <form action="{{ route('payment-setting.update', $paymentSetting->slug) }}" method="post">
-                    @csrf
-                    @method('PUT')
-                    <div class="card-body">
-                        <div class="form-floating form-floating-outline mb-3">
-                            <select name="payment_method" id="payment_method" class="form-select select2">
-                                <option value=""></option>
-                                @foreach(['MANUAL_PAYMENT', 'PAYMENT_GATEWAY'] as $method)
-                                    <option value="{{ $method }}" {{ $paymentSetting->payment_method == $method ? 'selected' : '' }}>{{ str_replace('_', ' ', $method) }}</option>
-                                @endforeach
-                            </select>
-                            <label for="payment_method">Metode Pembayaran</label>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary waves-light waves-effect">Submit</button>
-                    </div>
-                </form>
+                <div class="card-datatable">
+                    <table class="table table-striped text-nowrap" id="datatable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lembaga</th>
+                            <th>Metode Pembayaran</th>
+                            <th>Opsi</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    @can('payment-setting-write')
+        @include('dashboard.payment.payment-setting.modal-edit')
+    @endcan
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/payment/payment-setting/datatable.js') }}"></script>
 @endsection

@@ -10,8 +10,15 @@ return new class extends Migration {
         Schema::create('payment_settings', function (Blueprint $table) {
             $table->id();
             $table->uuid('slug');
-            $table->enum('payment_method', ['MANUAL_PAYMENT', 'PAYMENT_GATEWAY'])->default('PAYMENT_GATEWAY');
+            $table->unsignedBigInteger('educational_institution_id');
+            $table->enum('payment_method', ['MANUAL_PAYMENT', 'PAYMENT_GATEWAY'])
+                ->default('PAYMENT_GATEWAY');
             $table->timestamps();
+
+            $table->foreign('educational_institution_id')
+                ->references('id')
+                ->on('educational_institutions')
+                ->restrictOnDelete();
         });
     }
 
