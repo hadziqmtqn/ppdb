@@ -26,8 +26,9 @@ class PaymentSettingController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Pembayaran';
+        $paymentSetting = PaymentSetting::firstOrFail();
 
-        return \view('dashboard.payment.payment-setting.index', compact('title'));
+        return \view('dashboard.payment.payment-setting.index', compact('title', 'paymentSetting'));
     }
 
     public function update(PaymentSettingRequest $request, PaymentSetting $paymentSetting)
