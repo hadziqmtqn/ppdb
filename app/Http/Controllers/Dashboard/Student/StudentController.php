@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\FilterRequest;
-use App\Models\Student;
 use App\Models\User;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
@@ -45,7 +44,7 @@ class StudentController extends Controller implements HasMiddleware
         return [
             new Middleware(PermissionMiddleware::using('student-read'), only: ['index', 'show']),
             new Middleware(PermissionMiddleware::using('student-write'), only: ['update']),
-            new Middleware(PermissionMiddleware::using('student-delete'), only: ['destroy']),
+            new Middleware(PermissionMiddleware::using('student-delete'), only: ['destroy', 'restore', 'permanentlyDelete']),
         ];
     }
 
@@ -117,7 +116,7 @@ class StudentController extends Controller implements HasMiddleware
                             }
                         }else {
                             if (!$auth->hasRole('user')) {
-                                $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
+                                $btn = '<button href="javascript:void(0)" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
                                 $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="force-delete btn btn-sm btn-danger"><i class="mdi mdi-trash-can-outline me-1"></i>Hapus Permanen</button>';
                             }
                         }
@@ -182,15 +181,49 @@ class StudentController extends Controller implements HasMiddleware
         return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl', 'registrationValidation', 'registrationStatus'));
     }
 
-    public function destroy(Student $student): JsonResponse
+    public function destroy(User $user): JsonResponse
     {
+        Gate::authorize('store', $user);
+
         try {
-            $student->delete();
+            $user->delete();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal dihapus!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
+    }
+
+    public function restore($username): JsonResponse
+    {
+        Gate::authorize('student-destroy', User::class);
+
+        try {
+            User::filterByUsername($username)
+                ->onlyTrashed()
+                ->restore();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dikembalikan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil dikembalikan!', null, null, Response::HTTP_OK);
+    }
+
+    public function permanentlyDelete($username): JsonResponse
+    {
+        Gate::authorize('student-destroy', User::class);
+
+        try {
+            User::filterByUsername($username)
+                ->onlyTrashed()
+                ->forceDelete();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dikembalikan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil dikembalikan!', null, null, Response::HTTP_OK);
     }
 }

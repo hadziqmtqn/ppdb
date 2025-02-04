@@ -120,9 +120,9 @@ $(function () {
         dataTable.ajax.reload();
     });
 
-    dataTable.off('click').on('click', '.delete', function () {
-        let slug = $(this).data('slug');
-        let url = '/student/' + slug + '/delete';
+    dataTable.off('click.delete').on('click', '.delete', function () {
+        let username = $(this).data('username');
+        let url = '/student/' + username + '/delete';
         let token = $('meta[name="csrf-token"]').attr('content');
 
         Swal.fire({
@@ -146,9 +146,111 @@ $(function () {
                     headers: {
                         'X-CSRF-TOKEN': token
                     }
-                }).then(function (response) {
+                }).then(async function (response) {
                     toastr.success(response.data.message);
                     reloadTable();
+                    await fetchData();
+                    unBlockUi();
+                }).catch(function (error) {
+                    unBlockUi();
+                    toastr.error(error.response.data.message);
+                });
+            }
+        });
+    });
+
+    dataTable.off('click.restore').on('click.restore', '.restore', function () {
+        let username = $(this).data('username');
+        let url = '/student/' + username + '/restore';
+        let token = $('meta[name="csrf-token"]').attr('content');
+
+        Swal.fire({
+            title: 'Peringatan!',
+            text: "Apakah Anda ingin mengembalikan data ini?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA!',
+            customClass: {
+                confirmButton: 'btn btn-warning me-3 waves-effect waves-light',
+                cancelButton: 'btn btn-label-secondary waves-effect'
+            },
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                blockUi();
+
+                axios.put(url, {
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(async function (response) {
+                    toastr.success(response.data.message);
+                    reloadTable();
+                    await fetchData();
+                    unBlockUi();
+                }).catch(function (error) {
+                    unBlockUi();
+                    toastr.error(error.response.data.message);
+                });
+            }
+        });
+    });
+
+    dataTable.off('click.force-delete').on('click.force-delete', '.force-delete', function () {
+        let username = $(this).data('username');
+        let url = '/student/' + username + '/permanently-delete';
+        let token = $('meta[name="csrf-token"]').attr('content');
+
+        Swal.fire({
+            title: 'Peringatan!',
+            text: "Data tidak bisa dikembalikan, termasuk data Registrasi Siswa yang berkaitan dengan data ini! Apakah Anda ingin menghapus permanen data ini?",
+            icon: 'warning',
+            input: 'password', // Menambahkan input password
+            inputAttributes: {
+                autocapitalize: 'off',
+                placeholder: 'Masukkan kata sandi Anda'
+            },
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA, HAPUS PERMANEN!',
+            customClass: {
+                confirmButton: 'btn btn-danger me-3 waves-effect waves-light',
+                cancelButton: 'btn btn-label-secondary waves-effect'
+            },
+            buttonsStyling: false,
+            reverseButtons: true,
+            preConfirm: (password) => {
+                if (!password) {
+                    Swal.showValidationMessage('Password wajib diisi!');
+                    return false;
+                }
+
+                return axios.post('/password-validation', { password: password }, {
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(response => {
+                    if (!response.data.success) {
+                        throw new Error('Password salah!');
+                    }
+                }).catch(error => {
+                    Swal.showValidationMessage(error.response.data.message || 'Terjadi kesalahan pada server.');
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                blockUi();
+
+                axios.delete(url, {
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(async function (response) {
+                    toastr.success(response.data.message);
+                    reloadTable();
+                    await fetchData();
                     unBlockUi();
                 }).catch(function (error) {
                     unBlockUi();

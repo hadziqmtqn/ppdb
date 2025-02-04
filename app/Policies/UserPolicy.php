@@ -22,4 +22,11 @@ class UserPolicy
 
         return true;
     }
+
+    public function studentDestroy(User $user, User $model): bool
+    {
+        if ($user->hasRole('admin')) return optional($user->admin)->educational_institution_id === optional($model->student)->educational_institution_id;
+
+        return true;
+    }
 }

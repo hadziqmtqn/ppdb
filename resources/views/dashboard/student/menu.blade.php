@@ -1,5 +1,12 @@
 <div class="card mb-3">
-    <h5 class="card-header">Menu</h5>
+    <div class="card-header header-elements">
+        <h5 class="me-2">Menu</h5>
+        <div class="card-header-elements ms-auto">
+            <a href="{{ route('student.show', $user->username) }}" class="btn btn-xs btn-primary waves-effect waves-light">
+                <span class="tf-icon mdi mdi-arrow-left me-1"></span>Detail
+            </a>
+        </div>
+    </div>
     <div class="card-body pt-0">
         <div class="demo-inline-spacing">
             <div class="list-group">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\OAuthController;
+use App\Http\Controllers\Auth\PasswordValidationController;
 use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\AccountVerificationController;
 use App\Http\Controllers\Dashboard\AdminController;
@@ -69,8 +70,11 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::middleware('account_verified')->group(function () {
+        // TODO Auth
         Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+        Route::post('password-validation', [PasswordValidationController::class, 'store']);
 
+        // TODO Dashboard
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
         });
@@ -268,6 +272,9 @@ Route::middleware('auth')->group(function () {
 
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
+            Route::delete('student/{user:username}/delete', [StudentController::class, 'destroy']);
+            Route::put('student/{user:username}/restore', [StudentController::class, 'restore']);
+            Route::delete('student/{user:username}/permanently-delete', [StudentController::class, 'permanentlyDelete']);
 
             Route::post('student-validation/{user:username}/store', [ValidationController::class, 'store']);
 

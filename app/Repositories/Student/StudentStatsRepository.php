@@ -79,6 +79,7 @@ class StudentStatsRepository
     private function totalStudent($request): int
     {
         return $this->student
+            ->whereHas('user')
             ->statsFilter($request)
             ->count();
     }
@@ -86,6 +87,7 @@ class StudentStatsRepository
     private function notYetValidated($request): int
     {
         return $this->student
+            ->whereHas('user')
             ->statsFilter($request)
             ->registrationValidation('belum_divalidasi')
             ->count();
@@ -94,6 +96,7 @@ class StudentStatsRepository
     private function validated($request): int
     {
         return $this->student
+            ->whereHas('user')
             ->statsFilter($request)
             ->registrationValidation('valid')
             ->count();
@@ -102,6 +105,7 @@ class StudentStatsRepository
     private function registrationReceived($request): int
     {
         return $this->student
+            ->whereHas('user')
             ->statsFilter($request)
             ->registrationStatus('diterima')
             ->count();
@@ -110,6 +114,7 @@ class StudentStatsRepository
     private function notYetReceived($request): int
     {
         return $this->student
+            ->whereHas('user')
             ->statsFilter($request)
             ->registrationStatus('belum_diterima')
             ->count();
@@ -118,6 +123,7 @@ class StudentStatsRepository
     private function registrationRejected($request): int
     {
         return $this->student
+            ->whereHas('user')
             ->statsFilter($request)
             ->registrationStatus('ditolak')
             ->count();

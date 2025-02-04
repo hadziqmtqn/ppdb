@@ -139,6 +139,7 @@ class User extends Authenticatable implements HasMedia
         $registrationStatus = $request['registration_status'];
         $status = $request['status'];
 
+        if ($status == 'deleted' && $status != 'active')
         $query->when(($role == 'admin'),
             // Admin: Filter berdasarkan educational institution
             fn($query) => $query->whereHas('student', fn($query) => $query->where('educational_institution_id', optional($auth->admin)->educational_institution_id)),

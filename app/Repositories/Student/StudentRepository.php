@@ -30,6 +30,7 @@ class StudentRepository
             'Nama Lengkap' => $user->name,
             'Tempat Lahir' => optional($user->personalData)->place_of_birth,
             'Tanggal Lahir' => $user->personalData ? Carbon::parse(optional($user->personalData)->date_of_birth)->isoFormat('DD MMMM Y') : null,
+            'Umur' => optional($user->personalData)->age(),
             'Jenis Kelamin' => optional($user->personalData)->gender,
             'Hubungan Keluarga' => optional($user->personalData)->family_relationship,
             'Agama' => optional($user->personalData)->religion,

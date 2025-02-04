@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class PersonalData extends Model
@@ -35,6 +36,11 @@ class PersonalData extends Model
         static::creating(function (PersonalData $personalData) {
             $personalData->slug = Str::uuid()->toString();
         });
+    }
+
+    public function age(): ?string
+    {
+        return $this->attributes['date_of_birth'] ? Carbon::parse($this->attributes['date_of_birth'])->age . ' Tahun' : null;
     }
 
     public function scopeUserId(Builder $query, $userId): Builder
