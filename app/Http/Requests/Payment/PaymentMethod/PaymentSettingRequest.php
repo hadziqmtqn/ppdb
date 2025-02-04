@@ -13,6 +13,7 @@ class PaymentSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id'],
             'payment_method' => ['required', 'in:"MANUAL_PAYMENT","PAYMENT_GATEWAY"'],
         ];
     }
@@ -25,6 +26,7 @@ class PaymentSettingRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'educational_institution_id' => 'lembaga',
             'payment_method' => 'metode pembayaran'
         ];
     }

@@ -56,7 +56,7 @@ class PaymentSettingController extends Controller implements HasMiddleware
                     ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
                     ->addColumn('payment_method', fn($row) => str_replace('_', ' ', $row->payment_method))
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-payment-method="'. $row->payment_method .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
+                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. $row->educational_institution_id .'" data-payment-method="'. $row->payment_method .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
                     })
                     ->rawColumns(['action'])
                     ->make();
@@ -66,6 +66,22 @@ class PaymentSettingController extends Controller implements HasMiddleware
         }
 
         return response()->json(true);
+    }
+
+    public function store(PaymentSettingRequest $request): JsonResponse
+    {
+        try {
+            $paymentSetting = PaymentSetting::educationalInstitutionId($request->input('educational_institution_id'))
+                ->firstOrFail();
+            $paymentSetting->educational_institution_id = $request->input('educational_institution_id');
+            $paymentSetting->payment_method = $request->input('payment_method');
+            $paymentSetting->save();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil disimpan!', null, null, Response::HTTP_OK);
     }
 
     public function update(PaymentSettingRequest $request, PaymentSetting $paymentSetting): JsonResponse

@@ -23,6 +23,25 @@ $(function () {
             {data: 'payment_method', name: 'payment_method'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
+        dom:
+            '<"row mx-2"' +
+            '<"col-md-2"<"me-3"l>>' +
+            '<"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0 gap-3"fB>>' +
+            '>t' +
+            '<"row mx-2"' +
+            '<"col-sm-12 col-md-6"i>' +
+            '<"col-sm-12 col-md-6"p>' +
+            '>',
+        buttons: [
+            {
+                text: '<i class="mdi mdi-plus me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Baru</span>',
+                className: 'btn btn-primary btn-sm waves-effect waves-light',
+                attr: {
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#modalCreate',
+                }
+            }
+        ],
     });
 
     function reloadTable() {
@@ -34,7 +53,10 @@ $(function () {
     $('#modalEdit').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget);
         const slug = button.data('slug');
+        const educationalInstitution = button.data('educational-institution');
         const paymentMethod = button.data('payment-method');
+
+        $('#editEducationalInstitution').val(educationalInstitution);
 
         // Pilih radio button sesuai nilai active
         if (paymentMethod === 'MANUAL_PAYMENT') {

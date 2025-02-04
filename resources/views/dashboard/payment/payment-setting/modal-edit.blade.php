@@ -8,6 +8,7 @@
                 </div>
                 <form id="formEdit" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
                     <div class="col-12 fv-plugins-icon-container">
+                        <input type="hidden" name="educational_institution_id" id="editEducationalInstitution">
                         <div class="mb-2">Metode Pembayaran</div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="payment_method" id="manual" value="MANUAL_PAYMENT">

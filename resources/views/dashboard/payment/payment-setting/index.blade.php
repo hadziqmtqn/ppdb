@@ -40,9 +40,12 @@
     </div>
     @can('payment-setting-write')
         @include('dashboard.payment.payment-setting.modal-edit')
+        @include('dashboard.payment.payment-setting.modal-create')
     @endcan
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/payment/payment-setting/datatable.js') }}"></script>
+    <script src="{{ asset('js/payment/payment-setting/create.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
 @endsection
