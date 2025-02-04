@@ -197,12 +197,14 @@ class StudentController extends Controller implements HasMiddleware
 
     public function restore($username): JsonResponse
     {
-        Gate::authorize('student-destroy', User::class);
+        $user = User::filterByUsername($username)
+            ->onlyTrashed()
+            ->firstOrFail();
+
+        Gate::authorize('student-destroy', $user);
 
         try {
-            User::filterByUsername($username)
-                ->onlyTrashed()
-                ->restore();
+            $user->restore();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal dikembalikan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -213,12 +215,14 @@ class StudentController extends Controller implements HasMiddleware
 
     public function permanentlyDelete($username): JsonResponse
     {
-        Gate::authorize('student-destroy', User::class);
+        $user = User::filterByUsername($username)
+            ->onlyTrashed()
+            ->firstOrFail();
+
+        Gate::authorize('student-destroy', $user);
 
         try {
-            User::filterByUsername($username)
-                ->onlyTrashed()
-                ->forceDelete();
+            $user->forceDelete();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal dikembalikan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);

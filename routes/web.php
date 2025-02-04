@@ -264,6 +264,8 @@ Route::middleware('auth')->group(function () {
         Route::prefix('student')->group(function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index')->middleware('only_admin');
             Route::post('/datatable', [StudentController::class, 'datatable']);
+            Route::put('/{username}/restore', [StudentController::class, 'restore']);
+            Route::delete('/{username}/permanently-delete', [StudentController::class, 'permanentlyDelete']);
         });
 
         Route::post('student-report-excel', [StudentReportController::class, 'excel']);
@@ -273,8 +275,6 @@ Route::middleware('auth')->group(function () {
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
             Route::delete('student/{user:username}/delete', [StudentController::class, 'destroy']);
-            Route::put('student/{username}/restore', [StudentController::class, 'restore']);
-            Route::delete('student/{username}/permanently-delete', [StudentController::class, 'permanentlyDelete']);
 
             Route::post('student-validation/{user:username}/store', [ValidationController::class, 'store']);
 
