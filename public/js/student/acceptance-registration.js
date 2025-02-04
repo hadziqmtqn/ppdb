@@ -74,53 +74,28 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             if (error.response.status === 422) {
                 const errors = error.response.data.message;
+
+                // Bersihkan pesan error lama sebelum menampilkan yang baru
+                let errorContainer = form.querySelector('.select-status-option-error');
+                if (errorContainer) {
+                    errorContainer.remove();
+                }
+
+                // Buat container untuk menampilkan pesan error di bawah .select-status-option
+                errorContainer = document.createElement('div');
+                errorContainer.classList.add('alert', 'alert-danger', 'mt-2', 'select-status-option-error');
+
+                let message = '';
                 for (const key in errors) {
-                    const input = form.querySelector(`[name="${key}"]`);
-                    if (input) {
-                        if (input.type === 'radio') {
-                            // Temukan semua radio button dengan name yang sama
-                            const radioGroup = form.querySelectorAll(`[name="${key}"]`);
-                            if (radioGroup.length) {
-                                // Tambahkan kelas is-invalid pada setiap radio button
-                                radioGroup.forEach(radio => radio.classList.add('is-invalid'));
+                    message += `<strong>${key.replace('_', ' ').toUpperCase()}:</strong> ${errors[key].join(', ')} <br>`;
+                }
 
-                                // Cek apakah sudah ada pesan error sebelumnya
-                                let errorMessage = form.querySelector(`#${key}-error`);
-                                if (!errorMessage) {
-                                    // Buat elemen error baru
-                                    errorMessage = document.createElement('div');
-                                    errorMessage.classList.add('invalid-feedback', 'd-block');
-                                    errorMessage.id = `${key}-error`;
-                                    errorMessage.innerHTML = errors[key].join('<br>');
+                errorContainer.innerHTML = message;
 
-                                    // Sisipkan error setelah grup radio terakhir
-                                    radioGroup[radioGroup.length - 1].parentNode.insertAdjacentElement('afterend', errorMessage);
-                                }
-                            }
-                        } else {
-                            // Tambahkan is-invalid untuk input biasa
-                            input.classList.add('is-invalid');
-
-                            // Buat error message element
-                            const errorMessage = document.createElement('div');
-                            errorMessage.classList.add('invalid-feedback');
-                            errorMessage.innerHTML = errors[key].join('<br>');
-
-                            if ($(input).hasClass('select2-hidden-accessible')) {
-                                const select2Container = $(input).next('.select2-container');
-                                if (select2Container.length) {
-                                    select2Container.addClass('is-invalid');
-                                    select2Container.after(errorMessage);
-                                }
-                            } else {
-                                if (input.parentNode.classList.contains('form-floating')) {
-                                    input.parentNode.appendChild(errorMessage);
-                                } else {
-                                    input.parentNode.insertBefore(errorMessage, input.nextSibling);
-                                }
-                            }
-                        }
-                    }
+                // Sisipkan errorContainer setelah .select-status-option
+                const selectStatusOption = form.querySelector('.select-status-option');
+                if (selectStatusOption) {
+                    selectStatusOption.insertAdjacentElement('afterend', errorContainer);
                 }
             } else {
                 toastr.error(error.response.data.message);

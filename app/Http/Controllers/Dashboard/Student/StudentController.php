@@ -43,8 +43,8 @@ class StudentController extends Controller implements HasMiddleware
 
         return [
             new Middleware(PermissionMiddleware::using('student-read'), only: ['index', 'show']),
-            new Middleware(PermissionMiddleware::using('student-write'), only: ['update']),
-            new Middleware(PermissionMiddleware::using('student-delete'), only: ['destroy', 'restore', 'permanentlyDelete']),
+            new Middleware(PermissionMiddleware::using('student-delete'), only: ['destroy']),
+            new Middleware('role:super-admin|admin', only: ['restore', 'permanentlyDelete', 'inactive'])
         ];
     }
 
@@ -179,6 +179,19 @@ class StudentController extends Controller implements HasMiddleware
         $registrationStatus = $this->studentRegistrationRepository->registrationStatus($user->student);
 
         return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl', 'registrationValidation', 'registrationStatus'));
+    }
+
+    public function inactive(User $user)
+    {
+        try {
+            $user->is_active = !$user->is_active;
+            $user->save();
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Data gagal disimpan!');
+        }
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
     public function destroy(User $user): JsonResponse

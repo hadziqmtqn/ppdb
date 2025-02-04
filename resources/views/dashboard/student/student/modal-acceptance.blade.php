@@ -12,7 +12,7 @@
                             <i class="mdi mdi-alert-outline me-2"></i>
                             <span class="text-dark">Sebelum mengubah status registrasi, pastikan data registrasi telah valid. <strong class="text-warning">Setiap perubahan akan mengirim pesan otomatis ke Siswa yang bersangkutan!</strong></span>
                         </div>
-                        <div class="row">
+                        <div class="row select-status-option">
                             @foreach(['belum_diterima' => 'warning', 'diterima' => 'primary', 'ditolak' => 'danger'] as $acceptance => $color)
                                 <div class="col-lg-4 col-md-12">
                                     <div class="list-group mb-2">

@@ -18,7 +18,7 @@
                     </div>
                     @if(!auth()->user()->hasRole('user'))
                         <div class="d-grid w-100 mt-4 mb-3">
-                            <button class="btn btn-secondary" data-bs-target="#validationModal" data-bs-toggle="modal">Ubah Status Validasi</button>
+                            <button type="button" class="btn btn-secondary" data-bs-target="#validationModal" data-bs-toggle="modal">Ubah Status Validasi</button>
                         </div>
                     @endif
                 </div>
@@ -34,7 +34,7 @@
                         <span class="col-md-12 col-lg-5 col-xl-12 col-xxl-5 text-center mx-auto mx-md-0 mb-2"><img src="{{ asset('materialize/assets/img/illustrations/rocket.png') }}" class="w-px-75 m-2" alt="3dRocket"></span>
                     </div>
                     @if(!auth()->user()->hasRole('user'))
-                        <button class="btn btn-white text-{{ $registrationStatus['color'] }} w-100 fw-medium shadow-sm waves-effect waves-light" data-bs-target="#acceptanceRegistrationModal" data-bs-toggle="modal">Ubah Status Registrasi</button>
+                        <button type="button" class="btn btn-white text-{{ $registrationStatus['color'] }} w-100 fw-medium shadow-sm waves-effect waves-light" data-bs-target="#acceptanceRegistrationModal" data-bs-toggle="modal">Ubah Status Registrasi</button>
                     @endif
                 </div>
             </div>
@@ -223,6 +223,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/student/registration-validation.js') }}" async></script>
-    <script src="{{ asset('js/student/acceptance-registration.js') }}" async></script>
+    <script src="{{ asset('js/student/registration-validation.js') }}"></script>
+    <script src="{{ asset('js/student/acceptance-registration.js') }}"></script>
+    <script src="{{ asset('js/student/inactive.js') }}"></script>
 @endsection

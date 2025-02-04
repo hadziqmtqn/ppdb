@@ -52,7 +52,11 @@
             </ul>
             @if(!auth()->user()->hasRole('user'))
                 <div class="d-flex justify-content-center">
-                    <a href="#" class="btn btn-outline-warning me-3 waves-effect waves-light" data-bs-target="#editUser" data-bs-toggle="modal">Edit Status Akun</a>
+                    <form action="{{ route('student.inactive', $user->username) }}" id="inactive-form-{{ $user->username }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <button type="button" class="btn btn-outline-warning me-3 waves-effect waves-light" onclick="confirmInactive('{{ $user->username }}')">Edit Status Akun</button>
+                    </form>
                 </div>
             @endif
         </div>

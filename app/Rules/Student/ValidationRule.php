@@ -11,7 +11,7 @@ class ValidationRule extends StudentRule
         $this->failIfNotFound($fail);
         $student = $this->getStudent();
 
-        if ($student) {
+        if ($student && $attribute == 'registration_validation') {
             if ($student->registration_status == 'diterima') $fail('Tidak bisa mengubah status jika Siswa telah dinyatakan DITERIMA.');
         }
     }

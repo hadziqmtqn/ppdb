@@ -12,7 +12,7 @@
                             <i class="mdi mdi-alert-outline me-2"></i>
                             Sebelum mengubah status validasi pendaftaran, pastikan biodata siswa dan berkas pendukungnya telah diperiksa dengan teliti.
                         </div>
-                        <div class="row">
+                        <div class="row select-valid-option">
                             @foreach(['belum_divalidasi', 'valid', 'tidak_valid'] as $statusValidation)
                                 <div class="col-lg-4 col-md-12">
                                     <div class="list-group mb-2">

@@ -274,6 +274,7 @@ Route::middleware('auth')->group(function () {
 
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
+            Route::put('student/{user:username}/inactive', [StudentController::class, 'inactive'])->name('student.inactive');
             Route::delete('student/{user:username}/delete', [StudentController::class, 'destroy']);
 
             Route::post('student-validation/{user:username}/store', [ValidationController::class, 'store']);
