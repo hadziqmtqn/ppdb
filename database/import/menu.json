@@ -38,6 +38,29 @@
     "sub_menu": []
   },
   {
+    "name": "Pembayaran",
+    "type": "main_menu",
+    "visibility": ["bank-account-read"],
+    "url": "#",
+    "icon": "credit-card-outline",
+    "sub_menu": [
+      {
+        "name": "Pengaturan",
+        "type": "sub_menu",
+        "visibility": ["bank-account-read"],
+        "url": "/bank-account",
+        "icon": "credit-card-settings-outline"
+      },
+      {
+        "name": "Transaksi",
+        "type": "sub_menu",
+        "visibility": ["transaction-read"],
+        "url": "/transaction",
+        "icon": "cash-fast"
+      }
+    ]
+  },
+  {
     "name": "Referensi",
     "type": "main_menu",
     "visibility": [

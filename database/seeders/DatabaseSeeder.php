@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Student;
 use Database\Seeders\Auth\AdminSeeder;
 use Database\Seeders\Auth\PermissionSeeder;
+use Database\Seeders\Payment\BankAccountSeeder;
 use Database\Seeders\References\ClassLevelSeeder;
 use Database\Seeders\References\DistanceToSchoolSeeder;
 use Database\Seeders\References\EducationalInstitutionSeeder;
@@ -53,7 +54,9 @@ class DatabaseSeeder extends Seeder
             ProfessionSeeder::class,
             EducationSeeder::class,
             IncomeSeeder::class,
-            MediaFileSeeder::class
+            MediaFileSeeder::class,
+            // TODO Payment
+            BankAccountSeeder::class
         ]);
 
         Student::factory()

@@ -80,3 +80,6 @@ media-file-delete
 file-uploading-read
 file-uploading-write
 file-uploading-delete
+bank-account-read
+bank-account-write
+bank-account-delete

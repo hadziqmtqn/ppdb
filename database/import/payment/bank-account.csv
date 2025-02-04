@@ -1,0 +1,19 @@
+name,code,is_active
+Bank Central Asia,BCA,true
+Bank Negara Indonesia,BNI,true
+Bank Syariah Indonesia,BSI,true
+Bank Rakyat Indonesia,BRI,true
+Bank Mandiri,MANDIRI,true
+Bank Permata,PERMATA,false
+Bank Sahabat Sampoerna,SAHABAT_SAMPOERNA,false
+Bank Neo Commerce,BNC,false
+Alfamart,ALFAMART,true
+Indomart,INDOMART,true
+OVO,OVO,true
+DANA,DANA,true
+Shoppe Pay,SHOPEEPAY,true
+Link Aja,LINKAJA,true
+Jenius Pay,JENIUSPAY,false
+Kreditvo,KREDIVO,false
+Akulaku,AKULAKU,false
+QRIS,QRIS,true
