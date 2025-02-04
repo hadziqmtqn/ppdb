@@ -273,8 +273,8 @@ Route::middleware('auth')->group(function () {
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
             Route::delete('student/{user:username}/delete', [StudentController::class, 'destroy']);
-            Route::put('student/{user:username}/restore', [StudentController::class, 'restore']);
-            Route::delete('student/{user:username}/permanently-delete', [StudentController::class, 'permanentlyDelete']);
+            Route::put('student/{username}/restore', [StudentController::class, 'restore']);
+            Route::delete('student/{username}/permanently-delete', [StudentController::class, 'permanentlyDelete']);
 
             Route::post('student-validation/{user:username}/store', [ValidationController::class, 'store']);
 

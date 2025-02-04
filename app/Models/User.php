@@ -55,7 +55,7 @@ class User extends Authenticatable implements HasMedia
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'deleted_at' => 'datetime',
+            'deleted_at' => 'timestamp',
             'is_active' => 'boolean',
         ];
     }
@@ -139,49 +139,50 @@ class User extends Authenticatable implements HasMedia
         $registrationStatus = $request['registration_status'];
         $status = $request['status'];
 
-        if ($status == 'deleted' && $status != 'active')
-        $query->when(($role == 'admin'),
-            // Admin: Filter berdasarkan educational institution
-            fn($query) => $query->whereHas('student', fn($query) => $query->where('educational_institution_id', optional($auth->admin)->educational_institution_id)),
-            // Bukan admin: Cek apakah user atau super-admin
-            fn($query) => $query->when(($role == 'user'),
-                // User: Filter berdasarkan ID user
-                fn($query) => $query->where('id', $auth->id),
-                // Super-admin: Semua student
-                fn($query) => $query->whereHas('student')
-            )
-        );
+        $query->when((($status == 'deleted') && ($status != 'active')), function ($query) {
+            $query->onlyTrashed()
+                ->whereHas('student');
+        }, function ($query) use ($role, $schoolYearId, $educationalInstitutionId, $registrationCategoryId, $registrationPathId, $auth, $registrationStatus, $status) {
+            $query->when(($role == 'admin'),
+                // Admin: Filter berdasarkan educational institution
+                fn($query) => $query->whereHas('student', fn($query) => $query->where('educational_institution_id', optional($auth->admin)->educational_institution_id)),
+                // Bukan admin: Cek apakah user atau super-admin
+                fn($query) => $query->when(($role == 'user'),
+                    // User: Filter berdasarkan ID user
+                    fn($query) => $query->where('id', $auth->id),
+                    // Super-admin: Semua student
+                    fn($query) => $query->whereHas('student')
+                )
+            );
 
-        $query->whereHas('student', function ($query) use ($schoolYearId) {
-            $query->where('school_year_id', $schoolYearId);
-        });
+            $query->whereHas('student', function ($query) use ($schoolYearId) {
+                $query->where('school_year_id', $schoolYearId);
+            });
 
-        $query->when($educationalInstitutionId, function ($query) use ($educationalInstitutionId) {
-            $query->whereHas('student', fn($query) => $query->where('educational_institution_id', $educationalInstitutionId));
-        });
+            $query->when($educationalInstitutionId, function ($query) use ($educationalInstitutionId) {
+                $query->whereHas('student', fn($query) => $query->where('educational_institution_id', $educationalInstitutionId));
+            });
 
-        $query->when($registrationCategoryId, function ($query) use ($registrationCategoryId) {
-            $query->whereHas('student', fn($query) => $query->where('registration_category_id', $registrationCategoryId));
-        });
+            $query->when($registrationCategoryId, function ($query) use ($registrationCategoryId) {
+                $query->whereHas('student', fn($query) => $query->where('registration_category_id', $registrationCategoryId));
+            });
 
-        $query->when($registrationPathId, function ($query) use ($registrationPathId) {
-            $query->whereHas('student', fn($query) => $query->where('registration_path_id', $registrationPathId));
-        });
+            $query->when($registrationPathId, function ($query) use ($registrationPathId) {
+                $query->whereHas('student', fn($query) => $query->where('registration_path_id', $registrationPathId));
+            });
 
-        $query->when($registrationStatus, function ($query) use ($registrationStatus) {
-            $query->whereHas('student', fn($query) => $query->where('registration_status', $registrationStatus));
-        });
+            $query->when($registrationStatus, function ($query) use ($registrationStatus) {
+                $query->whereHas('student', fn($query) => $query->where('registration_status', $registrationStatus));
+            });
 
-        $query->when($status, function ($query) use ($status) {
-            $query->when($status == 'active', function ($query) use ($status) {
-                $query->where('is_active', true);
-            })
-                ->when($status == 'inactive', function ($query) use ($status) {
-                    $query->where('is_active', false);
+            $query->when($status, function ($query) use ($status) {
+                $query->when($status == 'active', function ($query) use ($status) {
+                    $query->where('is_active', true);
                 })
-                ->when($status == 'deleted', function ($query) {
-                    $query->onlyTrashed();
-                });
+                    ->when($status == 'inactive', function ($query) use ($status) {
+                        $query->where('is_active', false);
+                    });
+            });
         });
 
         return $query;
