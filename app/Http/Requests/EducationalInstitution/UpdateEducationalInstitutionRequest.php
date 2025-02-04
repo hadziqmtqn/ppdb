@@ -20,8 +20,9 @@ class UpdateEducationalInstitutionRequest extends FormRequest
             'street' => ['nullable'],
             'postal_code' => ['nullable', 'integer', 'digits:5'],
             'profile' => ['nullable'],
-            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:700'],
             'is_active' => ['required', 'boolean'],
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:700'],
+            'letterhead' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:500']
         ];
     }
 
@@ -42,6 +43,7 @@ class UpdateEducationalInstitutionRequest extends FormRequest
             'street' => 'alamat',
             'postal_code' => 'kode pos',
             'is_active' => 'status aktif',
+            'letterhead' => 'kop surat'
         ];
     }
 }

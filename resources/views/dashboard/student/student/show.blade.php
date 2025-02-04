@@ -207,6 +207,12 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                <tr>
+                                    <td>Biodata Pendaftaran</td>
+                                    <td style="text-align: end">
+                                        <a href="{{ route('student-report-pdf-user:username', $user->username) }}" class="btn btn-xs btn-outline-dark" target="_blank"><i class="mdi mdi-file-link-outline me-1"></i>Lihat</a>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

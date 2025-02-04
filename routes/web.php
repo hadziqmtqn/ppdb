@@ -269,6 +269,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::post('student-report-excel', [StudentReportController::class, 'excel']);
+        Route::get('student-report-pdf/{user:username}', [StudentReportController::class, 'pdf'])->name('student-report-pdf-user:username');
 
         Route::get('student-stats', [StudentStatsController::class, 'index']);
 

@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "ext-curl": "*",
+        "barryvdh/laravel-dompdf": "^3.1",
         "laravel-lang/locales": "^2.9",
         "laravel/framework": "^11.31",
         "laravel/socialite": "^5.16",

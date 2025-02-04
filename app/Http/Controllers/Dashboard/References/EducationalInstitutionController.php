@@ -136,6 +136,14 @@ class EducationalInstitutionController extends Controller implements HasMiddlewa
 
                 $educationalInstitution->addMediaFromRequest('logo')->toMediaCollection('logo');
             }
+
+            if ($request->hasFile('letterhead') && $request->file('letterhead')->isValid()) {
+                if ($educationalInstitution->hasMedia('letterhead')) {
+                    $educationalInstitution->clearMediaCollection('letterhead');
+                }
+
+                $educationalInstitution->addMediaFromRequest('letterhead')->toMediaCollection('letterhead');
+            }
         }catch (Exception $exception){
             Log::error($exception->getMessage());
             return redirect()->back()->with('error', 'Terjadi Kesalahan');

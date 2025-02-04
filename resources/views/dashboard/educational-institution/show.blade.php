@@ -94,12 +94,6 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating form-floating-outline mb-3">
-                            <input type="file" name="logo" class="form-control" id="logo" accept=".jpg,,jpeg,.png">
-                            <label for="logo">Logo</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="mb-1">Status</div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="is_active" id="active" value="1" @checked(($educationalInstitution->is_active == 1))>
@@ -108,6 +102,26 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="is_active" id="not_active" value="0" @checked(($educationalInstitution->is_active == 0))>
                             <label class="form-check-label" for="not_active">Tidak Aktif</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider">
+                    <div class="divider-text">Asset</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="file" name="logo" class="form-control" id="logo" accept=".jpg,,jpeg,.png">
+                            <label for="logo">Logo</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="file" name="letterhead" class="form-control" id="letterhead" accept=".jpg,,jpeg,.png">
+                            <label for="letterhead">Kop Surat</label>
+                            @if($educationalInstitution->hasMedia('letterhead'))
+                                <a href="{{ url($educationalInstitution->getFirstTemporaryUrl(Carbon\Carbon::now()->addMinutes(10), 'letterhead')) }}" target="_blank" class="btn btn-xs btn-secondary">Lihat Kop Surat</a>
+                            @endif
                         </div>
                     </div>
                 </div>
