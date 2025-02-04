@@ -40,15 +40,21 @@
   {
     "name": "Pembayaran",
     "type": "main_menu",
-    "visibility": ["bank-account-read"],
+    "visibility": [
+      "bank-account-read",
+      "payment-setting-read"
+    ],
     "url": "#",
     "icon": "credit-card-outline",
     "sub_menu": [
       {
         "name": "Pengaturan",
         "type": "sub_menu",
-        "visibility": ["bank-account-read"],
-        "url": "/bank-account",
+        "visibility": [
+          "bank-account-read",
+          "payment-setting-read"
+        ],
+        "url": "/payment-setting",
         "icon": "credit-card-settings-outline"
       },
       {

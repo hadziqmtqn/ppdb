@@ -9,6 +9,9 @@ use App\Http\Controllers\Dashboard\AccountVerificationController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
+use App\Http\Controllers\Dashboard\Payment\BankAccountController;
+use App\Http\Controllers\Dashboard\Payment\PaymentChannelController;
+use App\Http\Controllers\Dashboard\Payment\PaymentSettingController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
 use App\Http\Controllers\Dashboard\References\DetailMediaFileController;
 use App\Http\Controllers\Dashboard\References\DistanceToSchoolController;
@@ -258,6 +261,24 @@ Route::middleware('auth')->group(function () {
             Route::get('/{detailMediaFile:slug}', [DetailMediaFileController::class, 'show'])->name('detail-media-file.show');
             Route::put('/{detailMediaFile:slug}/update', [DetailMediaFileController::class, 'update']);
             Route::delete('/{detailMediaFile:slug}/delete', [DetailMediaFileController::class, 'destroy']);
+        });
+
+        // TODO Payment
+        Route::prefix('payment-setting')->group(function () {
+            Route::get('/', [PaymentSettingController::class, 'index'])->name('payment-setting.index');
+            Route::put('/{paymentSetting:slug}/update', [PaymentSettingController::class, 'update'])->name('payment-setting.update');
+        });
+
+        Route::prefix('payment-channel')->group(function () {
+            Route::get('/', [PaymentChannelController::class, 'index'])->name('payment-channel.index');
+            Route::post('/datatable', [PaymentChannelController::class, 'datatable']);
+            Route::put('/{paymentChannel:slug}/update', [PaymentChannelController::class, 'update']);
+        });
+
+        Route::prefix('bank-account')->group(function () {
+            Route::get('/', [BankAccountController::class, 'index'])->name('bank-account.index');
+            Route::post('/datatable', [BankAccountController::class, 'datatable']);
+            Route::put('/{bankAccount:slug}/update', [BankAccountController::class, 'update']);
         });
 
         // TODO Student Registration

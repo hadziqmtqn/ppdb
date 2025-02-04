@@ -6,6 +6,8 @@ use App\Models\Student;
 use Database\Seeders\Auth\AdminSeeder;
 use Database\Seeders\Auth\PermissionSeeder;
 use Database\Seeders\Payment\BankAccountSeeder;
+use Database\Seeders\Payment\PaymentChannelSeeder;
+use Database\Seeders\Payment\PaymentSettingSeeder;
 use Database\Seeders\References\ClassLevelSeeder;
 use Database\Seeders\References\DistanceToSchoolSeeder;
 use Database\Seeders\References\EducationalInstitutionSeeder;
@@ -56,6 +58,8 @@ class DatabaseSeeder extends Seeder
             IncomeSeeder::class,
             MediaFileSeeder::class,
             // TODO Payment
+            PaymentSettingSeeder::class,
+            PaymentChannelSeeder::class,
             BankAccountSeeder::class
         ]);
 

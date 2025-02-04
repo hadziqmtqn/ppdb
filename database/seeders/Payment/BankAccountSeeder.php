@@ -3,6 +3,7 @@
 namespace Database\Seeders\Payment;
 
 use App\Models\BankAccount;
+use App\Models\PaymentChannel;
 use Illuminate\Database\Seeder;
 use League\Csv\Exception;
 use League\Csv\Reader;
@@ -20,10 +21,13 @@ class BankAccountSeeder extends Seeder
             ->setHeaderOffset(0);
 
         foreach ($rows as $row) {
+            $paymentChannel = PaymentChannel::findByCode($row['payment_channel_code']);
+
             $bankAccount = new BankAccount();
-            $bankAccount->name = $row['name'];
-            $bankAccount->code = $row['code'];
-            $bankAccount->is_active = $row['is_active'] === 'true' ?? false;
+            $bankAccount->payment_channel_id = $paymentChannel->id;
+            $bankAccount->account_name = $row['account_name'];
+            $bankAccount->account_number = $row['account_number'];
+            $bankAccount->educational_institution_id = $row['educational_institution_id'];
             $bankAccount->save();
         }
     }
