@@ -26,9 +26,11 @@ class CurrentBillController extends Controller
 
         $title = 'Tagihan Saat Ini';
         $user->load('student.educationalInstitution:id,name', 'student.schoolYear:id,first_year,last_year');
-        $currentBills = $this->currentBillRepository->getRegistrationFee($user)
+        $registrationFees = $this->currentBillRepository->getRegistrationFee($user)
             ->get();
+        $numberOfBill = $registrationFees->count();
+        $totalBilling = $registrationFees->sum('amount');
 
-        return \view('dashboard.student.payment.current-bill.index', compact('title', 'user', 'currentBills'));
+        return \view('dashboard.student.payment.current-bill.index', compact('title', 'user', 'registrationFees', 'numberOfBill', 'totalBilling'));
     }
 }

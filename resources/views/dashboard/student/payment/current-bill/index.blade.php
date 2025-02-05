@@ -24,39 +24,42 @@
                                         <i class="mdi mdi-check-circle-outline mdi-24px"></i>
                                     </div>
                                     <div class="flex-grow-1">
-                                        <div class="fw-medium">Available Offers</div>
+                                        <div class="fw-medium">Keterangan</div>
                                         <ul class="list-unstyled mb-0">
-                                            <li>- 10% Instant Discount on Bank of America Corp Bank Debit and Credit cards</li>
-                                            <li>- 25% Cashback Voucher of up to $60 on first ever PayPal transaction. TCA</li>
+                                            <li>- Jenis tagihan <strong>sekali bayar</strong> dibayar secara kontan</li>
+                                            <li>- Jenis tagihan <strong>kredit</strong> pembayaran dapat dicicil</li>
                                         </ul>
                                     </div>
                                 </div>
                                 <button type="button" class="btn-close btn-pinned" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
 
-                            <h5>Tagihan Anda saat ini ({{ $currentBills->count() }} Item)</h5>
+                            <h5>Tagihan Anda saat ini ({{ $numberOfBill }} Item)</h5>
                             <ul class="list-group mb-3">
-                                @foreach($currentBills as $currentBill)
+                                @foreach($registrationFees as $registrationFee)
                                     <li class="list-group-item p-4">
                                         <div class="d-flex gap-3">
                                             <div class="flex-grow-1">
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <h6 class="me-3">
-                                                            <span class="text-heading">{{ $currentBill->name }}</span>
+                                                            <span class="text-heading">{{ $registrationFee->name }}</span>
                                                         </h6>
                                                         <div class="mb-1 d-flex flex-wrap">
-                                                            <span class="badge {{ $currentBill->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $currentBill->type_of_payment)) }}</span>
+                                                            <span class="badge {{ $registrationFee->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $registrationFee->type_of_payment)) }}</span>
                                                         </div>
+                                                        @if($registrationFee->type_of_payment == 'kredit')
+                                                            <input type="number" class="form-control form-control-sm w-px-100 mt-4" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}">
+                                                        @endif
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="text-md-end">
-                                                            <div class="my-2 mt-md-4 mb-md-2">
-                                                                <span class="text-body">Rp. {{ number_format($currentBill->amount,0,',','.') }}</span>
+                                                            <div class="my-2 mt-md-4 mb-md-5">
+                                                                <span class="text-body">Rp. {{ number_format($registrationFee->amount,0,',','.') }}</span>
                                                             </div>
                                                             <div class="d-block">
-                                                                <input type="checkbox" name="registration_fee_id[]" value="{{ $currentBill->amount }}" class="btn-check" id="checkBill-{{ $currentBill->id }}">
-                                                                <label class="btn btn-sm btn-outline-primary waves-effect waves-light" for="checkBill-{{ $currentBill->id }}">Pilih Tagihan</label>
+                                                                <input type="checkbox" name="registration_fee_id[]" value="{{ $registrationFee->amount }}" class="btn-check" id="checkBill-{{ $registrationFee->id }}">
+                                                                <label class="btn btn-sm btn-outline-primary waves-effect waves-light" for="checkBill-{{ $registrationFee->id }}">Pilih Tagihan</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -71,7 +74,6 @@
                         <!-- Cart right -->
                         <div class="col-xl-4">
                             <div class="border rounded p-3 mb-3">
-                                <!-- Offer -->
                                 <h6>Offer</h6>
                                 <div class="row g-3 mb-3">
                                     <div class="col-sm-8 col-xxl-8 col-xl-12">
@@ -84,36 +86,21 @@
                                     </div>
                                 </div>
 
-                                <!-- Gift wrap -->
-                                <div class="bg-lighter rounded p-3">
-                                    <h6>Buying gift for a loved one?</h6>
-                                    <p>Gift wrap and personalized message on card, Only for $2.</p>
-                                    <a href="javascript:void(0)" class="fw-medium">Add a gift wrap</a>
-                                </div>
-                                <hr class="mx-n3">
-
-                                <!-- Price Details -->
-                                <h6 class="mb-4">Price Details</h6>
+                                <h6 class="mb-4">Rincian</h6>
                                 <dl class="row mb-0">
-                                    <dt class="col-6 fw-normal text-heading">Bag Total</dt>
-                                    <dd class="col-6 text-end">$1198.00</dd>
+                                    <dt class="col-6 fw-normal text-heading">Total Tagihan</dt>
+                                    <dd class="col-6 text-end">Rp. {{ number_format($totalBilling, 0,',','.') }}</dd>
 
-                                    <dt class="col-6 fw-normal text-heading">Coupon Discount</dt>
-                                    <dd class="col-6 text-primary text-end fw-medium">Apply Coupon</dd>
+                                    <dt class="col-6 fw-normal text-heading">DP</dt>
+                                    <dd class="col-6 text-end">0</dd>
 
-                                    <dt class="col-6 fw-normal text-heading">Order Total</dt>
-                                    <dd class="col-6 text-end">$1198.00</dd>
-
-                                    <dt class="col-6 fw-normal text-heading">Delivery Charges</dt>
-                                    <dd class="col-6 text-end">
-                                        <s class="text-muted">$5.00</s>
-                                        <span class="badge bg-label-success rounded-pill">Free</span>
-                                    </dd>
+                                    <dt class="col-6 fw-normal text-heading">Sisa Tagihan</dt>
+                                    <dd class="col-6 text-end">0</dd>
                                 </dl>
                                 <hr class="mx-n3 my-3">
                                 <dl class="row mb-0 h6">
-                                    <dt class="col-6 mb-0">Total</dt>
-                                    <dd class="col-6 text-end mb-0">$1198.00</dd>
+                                    <dt class="col-6 mb-0">Total akan dibayar</dt>
+                                    <dd class="col-6 text-end mb-0">0</dd>
                                 </dl>
                             </div>
                             <div class="d-grid">
