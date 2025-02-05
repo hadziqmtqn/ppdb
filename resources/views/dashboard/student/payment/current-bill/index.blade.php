@@ -34,75 +34,37 @@
                                 <button type="button" class="btn-close btn-pinned" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
 
-                            <h5>My Shopping Bag (2 Items)</h5>
+                            <h5>Tagihan Anda saat ini ({{ $currentBills->count() }} Item)</h5>
                             <ul class="list-group mb-3">
-                                <li class="list-group-item p-4">
-                                    <div class="d-flex gap-3">
-                                        <div class="flex-shrink-0">
-                                            <img src="#" alt="google home" class="w-px-100">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <h6 class="me-3">
-                                                        <a href="javascript:void(0)" class="text-heading">Google - Google Home - White</a>
-                                                    </h6>
-                                                    <div class="mb-1 d-flex flex-wrap">
-                                                        <span class="me-1">Sold by:</span>
-                                                        <a href="javascript:void(0)" class="me-1">Google</a>
-                                                        <span class="badge bg-label-success rounded-pill">In Stock</span>
-                                                    </div>
-
-                                                    <input type="number" class="form-control form-control-sm w-px-100 mt-4" value="1" min="1" max="5">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="text-md-end">
-                                                        <button type="button" class="btn-close btn-pinned" aria-label="Close"></button>
-                                                        <div class="my-2 mt-md-4 mb-md-5">
-                                                            <span class="text-primary">$299/</span><span class="text-body">$359</span>
+                                @foreach($currentBills as $currentBill)
+                                    <li class="list-group-item p-4">
+                                        <div class="d-flex gap-3">
+                                            <div class="flex-grow-1">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h6 class="me-3">
+                                                            <span class="text-heading">{{ $currentBill->name }}</span>
+                                                        </h6>
+                                                        <div class="mb-1 d-flex flex-wrap">
+                                                            <span class="badge {{ $currentBill->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $currentBill->type_of_payment)) }}</span>
                                                         </div>
-                                                        <button type="button" class="btn btn-sm btn-outline-primary mt-3 waves-effect">
-                                                            Move to wishlist
-                                                        </button>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="text-md-end">
+                                                            <div class="my-2 mt-md-4 mb-md-2">
+                                                                <span class="text-body">Rp. {{ number_format($currentBill->amount,0,',','.') }}</span>
+                                                            </div>
+                                                            <div class="d-block">
+                                                                <input type="checkbox" name="registration_fee_id[]" value="{{ $currentBill->amount }}" class="btn-check" id="checkBill-{{ $currentBill->id }}">
+                                                                <label class="btn btn-sm btn-outline-primary waves-effect waves-light" for="checkBill-{{ $currentBill->id }}">Pilih Tagihan</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item p-4">
-                                    <div class="d-flex gap-3">
-                                        <div class="flex-shrink-0">
-                                            <img src="#" alt="google home" class="w-px-100">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <h6 class="me-3">
-                                                        <a href="javascript:void(0)" class="text-heading">Apple iPhone 11 (64GB, Black)</a>
-                                                    </h6>
-                                                    <div class="mb-1 d-flex flex-wrap">
-                                                        <span class="me-1">Sold by:</span>
-                                                        <a href="javascript:void(0)" class="me-1">Apple</a>
-                                                        <span class="badge bg-label-success rounded-pill">In Stock</span>
-                                                    </div>
-                                                    <input type="number" class="form-control form-control-sm w-px-100 mt-4" value="1" min="1" max="5">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="text-md-end">
-                                                        <button type="button" class="btn-close btn-pinned" aria-label="Close"></button>
-                                                        <div class="my-2 mt-md-4 mb-md-5">
-                                                            <span class="text-primary">$899/</span><span class="text-body">$999</span>
-                                                        </div>
-                                                        <button type="button" class="btn btn-sm btn-outline-primary mt-3 waves-effect">
-                                                            Move to wishlist
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
 
@@ -155,80 +117,12 @@
                                 </dl>
                             </div>
                             <div class="d-grid">
-                                <button class="btn btn-primary btn-next waves-effect waves-light">Place Order</button>
+                                <button type="button" class="btn btn-primary btn-next waves-effect waves-light" id="pay-now">Bayar Sekarang</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-lg-8">
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title m-0">Tagihan Saat ini ({{ $currentBills->count() }} Item)</h5>
-                </div>
-                <div class="card-datatable table-responsive">
-                    <table class="table text-nowrap" id="currentBillTable">
-                        <thead class="table-light">
-                        <tr>
-                            <th>#</th>
-                            <th class="w-50">Nama</th>
-                            <th class="w-50">Jenis Tagihan</th>
-                            <th>Jumlah</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($currentBills as $currentBill)
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="registration_fee_id[]" class="form-check-input" id="registrationFee-{{ $currentBill->id }}" value="{{ $currentBill->amount }}">
-                                </td>
-                                <td>{{ $currentBill->name }}</td>
-                                <td>{{ ucfirst(str_replace('_', ' ', $currentBill->type_of_payment)) }}</td>
-                                <td>Rp. {{ number_format($currentBill->amount,0,',','.') }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-end align-items-center m-3 p-1">
-                        <div class="order-calculations">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="w-px-100 text-heading">Subtotal:</span>
-                                <h6 class="mb-0">Rp. {{ number_format($currentBills->sum('amount'),0,',','.') }}</h6>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <h6 class="w-px-100 mb-0">Total:</h6>
-                                <h6 class="mb-0">Rp. {{ number_format($currentBills->sum('amount'),0,',','.') }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h6 class="card-title mb-4">Detail Siswa</h6>
-                    <div class="d-flex justify-content-start align-items-center mb-4">
-                        <div class="avatar me-2 pe-1">
-                            <img src="{{ url('https://ui-avatars.com/api/?name='. $user->name .'&color=7F9CF5&background=EBF4FF') }}" alt="Avatar" class="rounded-circle">
-                        </div>
-                        <div class="d-flex flex-column">
-                            <a href="{{ route('student.show', $user->username) }}">
-                                <h6 class="mb-1">{{ $user->name }}</h6>
-                            </a>
-                            <small>No. Reg: {{ optional($user->student)->registration_number }}</small>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <h6 class="mb-2">Data Registrasi</h6>
-                    </div>
-                    <p class="mb-1">Lembaga: {{ optional(optional($user->student)->educationalInstitution)->name }}</p>
-                    <p class="mb-0">TA: {{ optional(optional($user->student)->schoolYear)->first_year . '/' . optional(optional($user->student)->schoolYear)->last_year }}</p>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
