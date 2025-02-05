@@ -9,14 +9,31 @@
                 <form id="formEdit" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" onsubmit="return false">
                     <div class="col-12 fv-plugins-icon-container">
                         <input type="hidden" name="educational_institution_id" id="editEducationalInstitution">
-                        <div class="mb-2">Metode Pembayaran</div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="payment_channel_id" id="editPaymentChannel" class="form-select select2">
+                                <option value=""></option>
+                                @foreach($paymentChannels as $paymentChannel)
+                                    <option value="{{ $paymentChannel->id }}">{{ $paymentChannel->name }}</option>
+                                @endforeach
+                            </select>
+                            <label for="editPaymentChannel">Saluran Pembayaran</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="account_number" id="editAccountNumber" class="form-control" placeholder="Nomor Rekening">
+                            <label for="editAccountNumber">Nomor Rekening</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="account_name" id="editAccountName" class="form-control" placeholder="Nama Pemilik">
+                            <label for="editAccountName">Nama Pemilik</label>
+                        </div>
+                        <div class="mb-2">Status</div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="payment_method" id="manual" value="MANUAL_PAYMENT">
-                            <label class="form-check-label" for="manual">Manual Payment</label>
+                            <input class="form-check-input" type="radio" name="is_active" id="active" value="1">
+                            <label class="form-check-label" for="active">Aktif</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="payment_method" id="gateway" value="PAYMENT_GATEWAY">
-                            <label class="form-check-label" for="gateway">Payment Gateway</label>
+                            <input class="form-check-input" type="radio" name="is_active" id="not_active" value="0">
+                            <label class="form-check-label" for="not_active">Tidak Aktif</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">

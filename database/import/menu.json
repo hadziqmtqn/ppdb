@@ -48,7 +48,7 @@
     "icon": "credit-card-outline",
     "sub_menu": [
       {
-        "name": "Pengaturan",
+        "name": "Pengaturan Pembayaran",
         "type": "sub_menu",
         "visibility": [
           "bank-account-read",

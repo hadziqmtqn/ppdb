@@ -13,7 +13,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('bank-account.index') }}" class="nav-link" {{ url()->current() == route('bank-account.index') ? 'active' : '' }}>
+            <a href="{{ route('bank-account.index') }}" class="nav-link {{ url()->current() == route('bank-account.index') ? 'active' : '' }}">
                 <i class="mdi mdi-bank-outline me-1"></i>
                 <span class="align-middle">Rekening Bank</span>
             </a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payment\BankAccount\BankAccountRequest;
 use App\Models\BankAccount;
+use App\Models\PaymentChannel;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -33,8 +34,11 @@ class BankAccountController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Pembayaran';
+        $paymentChannels = PaymentChannel::active()
+            ->select(['id', 'name'])
+            ->get();
 
-        return \view('dashboard.payment.bank-account.index', compact('title'));
+        return \view('dashboard.payment.bank-account.index', compact('title', 'paymentChannels'));
     }
 
     public function datatable(Request $request): JsonResponse

@@ -57,9 +57,16 @@ $(function () {
         const button = $(event.relatedTarget);
         const slug = button.data('slug');
         const educationalInstitution = button.data('educational-institution');
+        const paymentChannelId = button.data('payment-channel-id');
+        const accountName = button.data('account-name');
+        const accountNumber = button.data('account-number');
         const active = button.data('active');
 
         $('#editEducationalInstitution').val(educationalInstitution);
+        $('#editAccountNumber').val(accountNumber);
+        $('#editAccountName').val(accountName);
+
+        $('#editPaymentChannel').val(paymentChannelId).trigger('change');
 
         // Pilih radio button sesuai nilai active
         if (active === 1) {
