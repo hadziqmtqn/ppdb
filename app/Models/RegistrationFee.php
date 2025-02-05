@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class RegistrationFee extends Model
@@ -47,11 +48,31 @@ class RegistrationFee extends Model
         return $this->belongsTo(SchoolYear::class);
     }
 
+    public function paymentTransaction(): HasOne
+    {
+        return $this->hasOne(PaymentTransaction::class, 'registration_fee_id');
+    }
+
     // TODO Scope
     public function scopeFilterByEducationalInstitution(Builder $query): Builder
     {
         $auth = auth()->user();
 
         return $query->when(!$auth->hasRole('super-admin'), fn($query) => $query->where('educational_institution_id'), optional(optional($auth)->admin)->educational_institution_id);
+    }
+
+    public function scopeEducationalInstitutionId(Builder $query, $eductionalInstitutionId): Builder
+    {
+        return $query->where('educational_institution_id', $eductionalInstitutionId);
+    }
+
+    public function scopeSchoolYearId(Builder $query, $schoolYearId): Builder
+    {
+        return $query->where('school_year_id', $schoolYearId);
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

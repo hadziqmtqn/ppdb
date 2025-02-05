@@ -24,6 +24,7 @@ use App\Repositories\SendMessage\AcceptanceRegistrationRepository;
 use App\Repositories\SendMessage\AccountVerificationRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use App\Repositories\SendMessage\SafetyChangesRepository;
+use App\Repositories\Student\Payment\CurrentBillRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
 use App\Repositories\Student\StudentStatsRepository;
@@ -57,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(MediaFileRepository::class, MediaFileRepository::class);
         $this->app->singleton(StudentRepository::class, StudentRepository::class);
         $this->app->singleton(StudentStatsRepository::class, StudentStatsRepository::class);
+        $this->app->singleton(CurrentBillRepository::class, CurrentBillRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);
