@@ -57,14 +57,37 @@ class RegistrationFeeController extends Controller implements HasMiddleware
                     })
                     ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
                     ->addColumn('schoolYear', fn($row) => optional($row->schoolYear)->first_year . '/' . optional($row->schoolYear)->last_year)
+                    ->addColumn('type_of_payment', function ($row) {
+                        $typeOfPayment = $row->type_of_payment;
+
+                        $badgeColor = match ($typeOfPayment) {
+                            'sekali_bayar' => 'text-primary',
+                            'kredit' => 'text-warning',
+                            default => 'text-secondary',
+                        };
+
+                        return '<h6 class="mb-0 w-px-100 '. $badgeColor .'"><i class="mdi mdi-circle mdi-14px me-2"></i>'. ucfirst(str_replace('_', ' ', $typeOfPayment)) .'</h6>';
+                    })
+                    ->addColumn('registration_status', function ($row) {
+                        $registrationStatus = $row->registration_status;
+
+                        $badgeColor = match ($registrationStatus) {
+                            'siswa_belum_diterima' => 'text-primary',
+                            'siswa_diterima' => 'text-warning',
+                            default => 'text-secondary',
+                        };
+
+                        return '<h6 class="mb-0 w-px-100 '. $badgeColor .'"><i class="mdi mdi-circle mdi-14px me-2"></i>'. ucfirst(str_replace('_', ' ', $registrationStatus)) .'</h6>';
+                    })
+                    ->addColumn('amount', fn($row) => 'Rp ' . number_format($row->amount,0,',','.'))
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
-                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
+                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" data-type-of-payment="'. $row->type_of_payment .'" data-registration-status="'. $row->registration_status .'" data-amount="'. number_format($row->amount) .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
                         $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
 
                         return $btn;
                     })
-                    ->rawColumns(['is_active', 'action'])
+                    ->rawColumns(['is_active', 'type_of_payment', 'registration_status', 'action'])
                     ->make();
             }
         }catch (Exception $exception) {
