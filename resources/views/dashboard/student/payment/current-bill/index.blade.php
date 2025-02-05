@@ -46,7 +46,7 @@
                                                             <span class="badge {{ $registrationFee->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $registrationFee->type_of_payment)) }}</span>
                                                         </div>
                                                         @if($registrationFee->type_of_payment == 'kredit')
-                                                            <input type="number" class="form-control form-control-sm w-px-150 mt-4 input-amount-of-bill" value="0" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}" style="display: none;">
+                                                            <input type="number" class="form-control form-control-sm w-px-150 mt-4 input-amount-of-bill" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}" style="display: none;">
                                                         @endif
                                                     </div>
                                                     <div class="col-md-4">
@@ -91,8 +91,8 @@
                                     <dt class="col-6 fw-normal text-heading">DP</dt>
                                     <dd class="col-6 text-end" id="dp">Rp. 0</dd>
 
-                                    <dt class="col-6 fw-normal text-heading" id="restBill">Sisa Tagihan</dt>
-                                    <dd class="col-6 text-end">Rp. 0</dd>
+                                    <dt class="col-6 fw-normal text-heading">Sisa Tagihan</dt>
+                                    <dd class="col-6 text-end" id="restBill">Rp. 0</dd>
                                 </dl>
                                 <hr class="mx-n3 my-3">
                                 <dl class="row mb-0 h6">
