@@ -14,6 +14,7 @@ class StudentRepository
         return collect([
             'Lembaga' => optional(optional($user->student)->educationalInstitution)->name,
             'No. Registrasi' => optional($user->student)->registration_number,
+            'Tahun Ajaran' => optional(optional($user->student)->schoolYear)->first_year . '/' . optional(optional($user->student)->schoolYear)->last_year,
             'Kategori' => optional(optional($user->student)->registrationCategory)->name,
             'Jalur Pendaftaran' => optional(optional($user->student)->registrationPath)->name,
             'Jurusan' => optional(optional($user->student)->major)->name,
