@@ -46,7 +46,7 @@
                                                             <span class="badge {{ $registrationFee->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $registrationFee->type_of_payment)) }}</span>
                                                         </div>
                                                         @if($registrationFee->type_of_payment == 'kredit')
-                                                            <input type="number" class="form-control form-control-sm w-px-100 mt-4" id="inputAmountOfBill" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}">
+                                                            <input type="number" class="form-control form-control-sm w-px-150 mt-4 input-amount-of-bill" value="0" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}" style="display: none;">
                                                         @endif
                                                     </div>
                                                     <div class="col-md-4">
@@ -112,5 +112,5 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/student/payment/current-bill.js') }}"></script>
 @endsection
