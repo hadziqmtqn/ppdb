@@ -74,7 +74,7 @@
                         <!-- Cart right -->
                         <div class="col-xl-4">
                             <div class="border rounded p-3 mb-3">
-                                <h6>Offer</h6>
+                                <h6>Metode Pembayaran</h6>
                                 <div class="row g-3 mb-3">
                                     <div class="col-sm-8 col-xxl-8 col-xl-12">
                                         <input type="text" class="form-control" placeholder="Enter Promo Code" aria-label="Enter Promo Code">
@@ -92,15 +92,15 @@
                                     <dd class="col-6 text-end">Rp. {{ number_format($totalBilling, 0,',','.') }}</dd>
 
                                     <dt class="col-6 fw-normal text-heading">DP</dt>
-                                    <dd class="col-6 text-end">0</dd>
+                                    <dd class="col-6 text-end">Rp. 0</dd>
 
                                     <dt class="col-6 fw-normal text-heading">Sisa Tagihan</dt>
-                                    <dd class="col-6 text-end">0</dd>
+                                    <dd class="col-6 text-end">Rp. 0</dd>
                                 </dl>
                                 <hr class="mx-n3 my-3">
                                 <dl class="row mb-0 h6">
                                     <dt class="col-6 mb-0">Total akan dibayar</dt>
-                                    <dd class="col-6 text-end mb-0">0</dd>
+                                    <dd class="col-6 text-end mb-0">Rp. 0</dd>
                                 </dl>
                             </div>
                             <div class="d-grid">
