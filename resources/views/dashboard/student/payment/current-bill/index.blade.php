@@ -8,16 +8,13 @@
         </div>
         <a href="{{ route('student.show', $user->username) }}" class="btn btn-outline-primary waves-effect">Detail</a>
     </div>
-    <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mt-2">
-
+    <div class="bs-stepper mt-2">
         <div class="bs-stepper-content rounded-0">
-            <form id="wizard-checkout-form" onsubmit="return false">
-                <!-- Cart -->
+            <form id="registration-fee-form" onsubmit="return false">
                 <div id="checkout-cart" class="content fv-plugins-bootstrap5 fv-plugins-framework active dstepper-block">
                     <div class="row">
                         <!-- Cart left -->
                         <div class="col-xl-8 mb-3 mb-xl-0">
-                            <!-- Offer alert -->
                             <div class="alert alert-success mb-4" role="alert">
                                 <div class="d-flex gap-3">
                                     <div class="flex-shrink-0">
@@ -49,7 +46,7 @@
                                                             <span class="badge {{ $registrationFee->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $registrationFee->type_of_payment)) }}</span>
                                                         </div>
                                                         @if($registrationFee->type_of_payment == 'kredit')
-                                                            <input type="number" class="form-control form-control-sm w-px-100 mt-4" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}">
+                                                            <input type="number" class="form-control form-control-sm w-px-100 mt-4" id="inputAmountOfBill" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}">
                                                         @endif
                                                     </div>
                                                     <div class="col-md-4">
@@ -89,18 +86,18 @@
                                 <h6 class="mb-4">Rincian</h6>
                                 <dl class="row mb-0">
                                     <dt class="col-6 fw-normal text-heading">Total Tagihan</dt>
-                                    <dd class="col-6 text-end">Rp. {{ number_format($totalBilling, 0,',','.') }}</dd>
+                                    <dd class="col-6 text-end" id="totalBilling">Rp. {{ number_format($totalBilling, 0,',','.') }}</dd>
 
                                     <dt class="col-6 fw-normal text-heading">DP</dt>
-                                    <dd class="col-6 text-end">Rp. 0</dd>
+                                    <dd class="col-6 text-end" id="dp">Rp. 0</dd>
 
-                                    <dt class="col-6 fw-normal text-heading">Sisa Tagihan</dt>
+                                    <dt class="col-6 fw-normal text-heading" id="restBill">Sisa Tagihan</dt>
                                     <dd class="col-6 text-end">Rp. 0</dd>
                                 </dl>
                                 <hr class="mx-n3 my-3">
                                 <dl class="row mb-0 h6">
                                     <dt class="col-6 mb-0">Total akan dibayar</dt>
-                                    <dd class="col-6 text-end mb-0">Rp. 0</dd>
+                                    <dd class="col-6 text-end mb-0" id="totalWillBePaid">Rp. 0</dd>
                                 </dl>
                             </div>
                             <div class="d-grid">
