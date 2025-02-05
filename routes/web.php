@@ -290,8 +290,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RegistrationFeeController::class, 'index'])->name('registration-fee.index');
             Route::post('/datatable', [RegistrationFeeController::class, 'datatable']);
             Route::post('/store', [RegistrationFeeController::class, 'store']);
-            Route::put('/{bankAccount:slug}/update', [RegistrationFeeController::class, 'update']);
-            Route::delete('/{bankAccount:slug}/delete', [RegistrationFeeController::class, 'destroy']);
+            Route::put('/{registrationFee:slug}/update', [RegistrationFeeController::class, 'update']);
+            Route::delete('/{registrationFee:slug}/delete', [RegistrationFeeController::class, 'destroy']);
         });
 
         // TODO Student Registration

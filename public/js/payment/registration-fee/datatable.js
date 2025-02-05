@@ -91,6 +91,9 @@ $(function () {
                 element.remove();
             });
 
+            const amountInput = document.getElementById('editAmount');
+            amountInput.value = amountInput.value.replace(/,/g, '');
+
             // menggunakan axios
             axios.put(`/registration-fee/${slug}/update`, $('#formEdit').serialize())
                 .then(response => {
