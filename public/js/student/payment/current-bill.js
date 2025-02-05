@@ -44,6 +44,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.querySelectorAll('.input-amount-of-bill').forEach((inputAmount) => {
-        inputAmount.addEventListener("input", updateTotal);
+        inputAmount.addEventListener("input", function () {
+            const min = parseFloat(inputAmount.min);
+            const max = parseFloat(inputAmount.max);
+            let value = parseFloat(inputAmount.value);
+
+            if (value < min) {
+                value = min;
+            } else if (value > max) {
+                value = max;
+            }
+
+            inputAmount.value = value;
+            updateTotal();
+        });
     });
 });
