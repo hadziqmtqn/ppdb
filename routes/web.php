@@ -39,6 +39,7 @@ use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
 use App\Http\Controllers\Dashboard\Student\AcceptanceRegistrationController;
 use App\Http\Controllers\Dashboard\Student\FamilyController;
 use App\Http\Controllers\Dashboard\Student\FileUploadingController;
+use App\Http\Controllers\Dashboard\Student\Payment\CurrentBillController;
 use App\Http\Controllers\Dashboard\Student\PersonalDataController;
 use App\Http\Controllers\Dashboard\Student\PreviousSchoolController;
 use App\Http\Controllers\Dashboard\Student\ResidenceController;
@@ -350,6 +351,10 @@ Route::middleware('auth')->group(function () {
             Route::prefix('student-security')->group(function () {
                 Route::get('/{user:username}/security', [StudentSecurityController::class, 'index'])->name('student-security.index');
                 Route::put('/{user:username}/store', [StudentSecurityController::class, 'store']);
+            });
+
+            Route::prefix('current-bill')->group(function () {
+                Route::get('/{user:username}', [CurrentBillController::class, 'index'])->name('current-bill.index');
             });
         });
 

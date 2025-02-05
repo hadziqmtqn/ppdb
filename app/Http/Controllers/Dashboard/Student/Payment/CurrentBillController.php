@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Dashboard\Student\Payment;
 
 use App\Http\Controllers\Controller;
-use App\Models\RegistrationFee;
 use App\Models\User;
 use App\Repositories\Student\Payment\CurrentBillRepository;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -38,7 +38,7 @@ class CurrentBillController extends Controller
         return \view('dashboard.student.payment.current-bill.index', compact('title', 'user', 'totalAmount'));
     }
 
-    public function datatable(Request $request, User $user): \Illuminate\Http\JsonResponse
+    public function datatable(Request $request, User $user): JsonResponse
     {
         Gate::authorize('view-student', $user);
 
@@ -48,7 +48,7 @@ class CurrentBillController extends Controller
             if ($request->ajax()) {
                 $data = $this->currentBillRepository->getRegistrationFee($user);
 
-                return DataTables::of($data)
+                return DataTables::eloquent($data)
                     ->addIndexColumn()
                     ->filter(function ($instance) use ($request) {
                         $search = $request->get('search');

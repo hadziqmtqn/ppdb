@@ -14,6 +14,27 @@
                         <div data-i18n="Siswa">Siswa</div>
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0)" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons mdi mdi-cash-fast"></i>
+                        <div data-i18n="Pembayaran">Pembayaran</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="javascript:void(0)" class="menu-link">
+                                <i class="menu-icon tf-icons mdi mdi-cash-sync"></i>
+                                <div data-i18n="Histori Transaksi">Histori Transaksi</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ route('current-bill.index', auth()->user()->username) }}" class="menu-link">
+                                <i class="menu-icon tf-icons mdi mdi-cash-plus"></i>
+                                <div data-i18n="Tagihan Saat Ini">Tagihan Saat Ini</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             @else
                 @foreach($listMenus as $listMenu)
                     @if($listMenu) <!-- Pastikan menu tidak null -->
@@ -27,7 +48,7 @@
                             ->isNotEmpty();
                     @endphp
                     <li class="menu-item {{ $isActive || $isActiveTitle ? 'active' : '' }}">
-                        <a href="{{ $listMenu['url'] }}" class="menu-link {{ $listMenu['type'] == 'main_menu' && count($listMenu['subMenus']) > 0 ? 'menu-toggle' : '' }}">
+                        <a href="{{ $listMenu['url'] != '#' ? $listMenu['url'] : 'javascript:void(0)' }}" class="menu-link {{ $listMenu['type'] == 'main_menu' && count($listMenu['subMenus']) > 0 ? 'menu-toggle' : '' }}">
                             <i class="menu-icon tf-icons mdi mdi-{{ $listMenu['icon'] }}"></i>
                             <div data-i18n="{{ $listMenu['name'] }}">{{ $listMenu['name'] }}</div>
                         </a>

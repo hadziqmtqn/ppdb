@@ -14,11 +14,7 @@ class CurrentBillRepository
         $this->registrationFee = $registrationFee;
     }
 
-    /**
-     * @param User $user
-     * @return RegistrationFee
-     */
-    public function getRegistrationFee(User $user): RegistrationFee
+    public function getRegistrationFee(User $user)
     {
         return $this->registrationFee
             ->educationalInstitutionId(optional($user->student)->educational_institution_id)
@@ -31,8 +27,16 @@ class CurrentBillRepository
                             $query->where('user_id', $user->id);
                         });
                 })
-                    ->when($user->student->registration_status == 'diterima', function ($query) {
-                        $query->where('registration_status', 'siswa_diterima');
+                    ->when(optional($user->student)->registration_status == 'diterima', function ($query) {
+                        $query->orWhere(function ($query) {
+                            $query->where('registration_status', 'siswa_diterima')
+                                ->where(function ($query) {
+                                    $query->whereDoesntHave('paymentTransaction')
+                                        ->orWhereHas('paymentTransaction', function ($query) {
+                                            $query->where('paid_rest', '!=', 0);
+                                        });
+                                });
+                        });
                     });
             });
     }
