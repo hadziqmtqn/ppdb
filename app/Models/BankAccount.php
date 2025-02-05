@@ -32,6 +32,22 @@ class BankAccount extends Model
         static::creating(function (BankAccount $bankAccount) {
             $bankAccount->slug = Str::uuid()->toString();
         });
+
+        static::created(function (BankAccount $bankAccount) {
+            if ($bankAccount->is_active) {
+                self::where('id', '!=', $bankAccount->id)
+                    ->where('payment_channel_id', $bankAccount->payment_channel_id)
+                    ->update(['is_active' => false]);
+            }
+        });
+
+        static::updated(function (BankAccount $bankAccount) {
+            if ($bankAccount->is_active) {
+                self::where('id', '!=', $bankAccount->id)
+                    ->where('payment_channel_id', $bankAccount->payment_channel_id)
+                    ->update(['is_active' => false]);
+            }
+        });
     }
 
     public function educationalInstitution(): BelongsTo

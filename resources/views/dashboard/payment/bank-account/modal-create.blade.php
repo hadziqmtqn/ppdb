@@ -12,14 +12,31 @@
                             <select name="educational_institution_id" id="select-educational-institution" class="form-select select2"></select>
                             <label for="select-educational-institution">Lembaga</label>
                         </div>
-                        <div class="mb-2">Metode Pembayaran</div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="payment_channel_id" id="paymentChannel" class="form-select select2">
+                                <option value=""></option>
+                                @foreach($paymentChannels as $paymentChannel)
+                                    <option value="{{ $paymentChannel->id }}">{{ $paymentChannel->name }}</option>
+                                @endforeach
+                            </select>
+                            <label for="paymentChannel">Saluran Pembayaran</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="account_number" id="accountNumber" class="form-control" placeholder="Nomor Rekening">
+                            <label for="accountNumber">Nomor Rekening</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="account_name" id="accountName" class="form-control" placeholder="Nama Pemilik">
+                            <label for="accountName">Nama Pemilik</label>
+                        </div>
+                        <div class="mb-2">Status</div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="payment_method" id="manual_payment" value="MANUAL_PAYMENT">
-                            <label class="form-check-label" for="manual_payment">Manual Payment</label>
+                            <input class="form-check-input" type="radio" name="is_active" id="createActive" value="1">
+                            <label class="form-check-label" for="createActive">Aktif</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="payment_method" id="payment_gateway" value="PAYMENT_GATEWAY">
-                            <label class="form-check-label" for="payment_gateway">Payment Gateway</label>
+                            <input class="form-check-input" type="radio" name="is_active" id="createNotActive" value="0">
+                            <label class="form-check-label" for="createNotActive">Tidak Aktif</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">

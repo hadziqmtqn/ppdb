@@ -28,6 +28,7 @@ class BankAccountController extends Controller implements HasMiddleware
         return [
             new Middleware(PermissionMiddleware::using('bank-account-read'), only: ['index', 'datatable']),
             new Middleware(PermissionMiddleware::using('bank-account-write'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('bank-account-delete'), only: ['destroy']),
         ];
     }
 
@@ -76,6 +77,24 @@ class BankAccountController extends Controller implements HasMiddleware
         return response()->json(true);
     }
 
+    public function store(BankAccountRequest $request): \Symfony\Component\HttpFoundation\JsonResponse
+    {
+        try {
+            $bankAccount = new BankAccount();
+            $bankAccount->educational_institution_id = $request->input('educational_institution_id');
+            $bankAccount->payment_channel_id = $request->input('payment_channel_id');
+            $bankAccount->account_name = $request->input('account_name');
+            $bankAccount->account_number = $request->input('account_number');
+            $bankAccount->is_active = $request->input('is_active');
+            $bankAccount->save();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil disimpan!', $bankAccount, null, Response::HTTP_OK);
+    }
+
     public function update(BankAccountRequest $request, BankAccount $bankAccount): \Symfony\Component\HttpFoundation\JsonResponse
     {
         try {
@@ -84,6 +103,18 @@ class BankAccountController extends Controller implements HasMiddleware
             $bankAccount->account_number = $request->input('account_number');
             $bankAccount->is_active = $request->input('is_active');
             $bankAccount->save();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil disimpan!', $bankAccount, null, Response::HTTP_OK);
+    }
+
+    public function destroy(BankAccount $bankAccount): \Symfony\Component\HttpFoundation\JsonResponse
+    {
+        try {
+            $bankAccount->delete();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);

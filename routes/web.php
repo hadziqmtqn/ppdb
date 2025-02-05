@@ -280,7 +280,9 @@ Route::middleware('auth')->group(function () {
         Route::prefix('bank-account')->group(function () {
             Route::get('/', [BankAccountController::class, 'index'])->name('bank-account.index');
             Route::post('/datatable', [BankAccountController::class, 'datatable']);
+            Route::post('/store', [BankAccountController::class, 'store']);
             Route::put('/{bankAccount:slug}/update', [BankAccountController::class, 'update']);
+            Route::delete('/{bankAccount:slug}/delete', [BankAccountController::class, 'destroy']);
         });
 
         // TODO Student Registration
