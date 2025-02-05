@@ -18,13 +18,13 @@
                 @foreach($listMenus as $listMenu)
                     @if($listMenu) <!-- Pastikan menu tidak null -->
                     @php
-                        $isActive = $listMenu['url'] == url()->current() || collect($listMenu['subMenus'])->contains(function ($subMenu) {
-                            return $subMenu['url'] == url()->current();
-                        });
+                        $isActive = $listMenu['url'] == url()->current() || collect($listMenu['subMenus'])
+                            ->filter(fn($subMenu) => $subMenu['url'] == url()->current())
+                            ->isNotEmpty();
 
-                        $isActiveTitle = $listMenu['name'] == $title || collect($listMenu['subMenus'])->contains(function ($subMenu) use ($title) {
-                            return $subMenu['name'] == $title;
-                        });
+                        $isActiveTitle = $listMenu['name'] == $title || collect($listMenu['subMenus'])
+                            ->filter(fn($subMenu) => $subMenu['name'] == $title)
+                            ->isNotEmpty();
                     @endphp
                     <li class="menu-item {{ $isActive || $isActiveTitle ? 'active' : '' }}">
                         <a href="{{ $listMenu['url'] }}" class="menu-link {{ $listMenu['type'] == 'main_menu' && count($listMenu['subMenus']) > 0 ? 'menu-toggle' : '' }}">

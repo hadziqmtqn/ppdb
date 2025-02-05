@@ -22,7 +22,7 @@
             </div>
 
             <div class="card mb-3">
-                <h5 class="card-header">{{ $title }}</h5>
+                <h5 class="card-header">Saluran Pembayaran</h5>
                 <div class="card-datatable">
                     <table class="table table-striped text-nowrap" id="datatable">
                         <thead>

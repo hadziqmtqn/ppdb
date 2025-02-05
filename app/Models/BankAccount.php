@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class BankAccount extends Model
@@ -31,5 +32,15 @@ class BankAccount extends Model
         static::creating(function (BankAccount $bankAccount) {
             $bankAccount->slug = Str::uuid()->toString();
         });
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
+    }
+
+    public function paymentChannel(): BelongsTo
+    {
+        return $this->belongsTo(PaymentChannel::class);
     }
 }

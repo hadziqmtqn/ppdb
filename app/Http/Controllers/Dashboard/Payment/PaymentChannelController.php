@@ -31,7 +31,7 @@ class PaymentChannelController extends Controller implements HasMiddleware
 
     public function index(): View
     {
-        $title = 'Saluran Pembayaran';
+        $title = 'Pengaturan Pembayaran';
 
         return \view('dashboard.payment.payment-channel.index', compact('title'));
     }

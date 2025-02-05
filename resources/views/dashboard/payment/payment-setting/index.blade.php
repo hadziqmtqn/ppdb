@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <h5 class="mb-0">
-                        <span class="align-middle">Pengaturan Pembayaran</span>
+                        <span class="align-middle">{{ $title }}</span>
                     </h5>
                     <small>Metode pembayaran pendaftaran siswa</small>
                 </div>

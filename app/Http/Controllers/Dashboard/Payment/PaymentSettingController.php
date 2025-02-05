@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Payment;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Payment\PaymentMethod\PaymentSettingRequest;
+use App\Http\Requests\Payment\PaymentSetting\PaymentSettingRequest;
 use App\Models\PaymentSetting;
 use App\Traits\ApiResponse;
 use Exception;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payment\BankAccount\BankAccountRequest;
 use App\Models\BankAccount;
 use App\Traits\ApiResponse;
 use Exception;
@@ -31,7 +32,7 @@ class BankAccountController extends Controller implements HasMiddleware
 
     public function index(): View
     {
-        $title = 'Rekening Bank';
+        $title = 'Pengaturan Pembayaran';
 
         return \view('dashboard.payment.bank-account.index', compact('title'));
     }
@@ -40,7 +41,8 @@ class BankAccountController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = BankAccount::query();
+                $data = BankAccount::query()
+                    ->with('educationalInstitution:id,name', 'paymentChannel:id,name');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -48,13 +50,19 @@ class BankAccountController extends Controller implements HasMiddleware
                         $search = $request->get('search');
 
                         $instance->when($search, function ($query) use ($search) {
-                            $query->whereAny(['name'], 'LIKE', '%' . $search . '%');
+                            $query->whereAny(['account_name'], 'LIKE', '%' . $search . '%');
                         });
                     })
-                    ->addColumn('is_active', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="is-active btn btn-sm '. ($row->is_active ? 'btn-primary' : 'btn-danger').'"><i class="mdi mdi-pencil"></i></button>';
+                    ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
+                    ->addColumn('paymentChannel', fn($row) => optional($row->paymentChannel)->name)
+                    ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
+                    ->addColumn('action', function ($row) {
+                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-account-name="'. $row->account_name .'" data-account-number="'. $row->account_number .'" data-payment-channel-id="'. $row->payment_channel_id .'" data-educational-institution="'. $row->educational_institution_id .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
+                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+
+                        return $btn;
                     })
-                    ->rawColumns(['is_active'])
+                    ->rawColumns(['is_active', 'action'])
                     ->make();
             }
         }catch (Exception $exception) {
@@ -64,10 +72,13 @@ class BankAccountController extends Controller implements HasMiddleware
         return response()->json(true);
     }
 
-    public function update(BankAccount $bankAccount): \Symfony\Component\HttpFoundation\JsonResponse
+    public function update(BankAccountRequest $request, BankAccount $bankAccount): \Symfony\Component\HttpFoundation\JsonResponse
     {
         try {
-            $bankAccount->is_active = !$bankAccount->is_active;
+            $bankAccount->payment_channel_id = $request->input('payment_channel_id');
+            $bankAccount->account_name = $request->input('account_name');
+            $bankAccount->account_number = $request->input('account_number');
+            $bankAccount->is_active = $request->input('is_active');
             $bankAccount->save();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());

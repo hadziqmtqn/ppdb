@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Payment\PaymentMethod;
+namespace App\Http\Requests\Payment\PaymentSetting;
 
 use App\Traits\ApiResponse;
 use App\Traits\HandlesValidationFailure;
