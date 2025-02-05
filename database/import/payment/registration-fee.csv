@@ -1,0 +1,7 @@
+educational_institution_id,type_of_payment,name,registration_status,amount
+1,sekali_bayar,Biaya Registrasi,siswa_belum_diterima,100000
+1,kredit,Seragam,siswa_diterima,400000
+2,sekali_bayar,Biaya Registrasi,siswa_belum_diterima,150000
+2,kredit,Seragam,siswa_diterima,600000
+3,sekali_bayar,Biaya Registrasi,siswa_belum_diterima,200000
+3,kredit,Seragam,siswa_diterima,800000

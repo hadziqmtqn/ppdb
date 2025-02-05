@@ -58,10 +58,17 @@
         "icon": "credit-card-settings-outline"
       },
       {
-        "name": "Transaksi",
+        "name": "Biaya Pendaftaran",
         "type": "sub_menu",
-        "visibility": ["transaction-read"],
-        "url": "/transaction",
+        "visibility": ["registration-fee-read"],
+        "url": "/registration-fee",
+        "icon": "cash"
+      },
+      {
+        "name": "Transaksi Pembayaran",
+        "type": "sub_menu",
+        "visibility": ["payment-transaction-read"],
+        "url": "/payment-transaction",
         "icon": "cash-fast"
       }
     ]

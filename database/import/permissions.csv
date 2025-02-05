@@ -87,3 +87,6 @@ payment-channel-write
 bank-account-read
 bank-account-write
 bank-account-delete
+registration-fee-read
+registration-fee-write
+registration-fee-delete
