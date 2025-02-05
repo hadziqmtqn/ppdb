@@ -6,19 +6,18 @@ use App\Traits\ApiResponse;
 use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegistrationFeeRequest extends FormRequest
+class UpdateRegistrationFeeRequest extends FormRequest
 {
     use ApiResponse, HandlesValidationFailure;
 
     public function rules(): array
     {
         return [
-            'educational_institution_id' => ['required', 'integer', 'exists:educational_institutions,id'],
-            'school_year_id' => ['required', 'integer', 'exists:school_years,id'],
             'type_of_payment' => ['required', 'in:"sekali_bayar","kredit"'],
             'registration_status' => ['required', 'in:"siswa_belum_diterima","siswa_diterima"'],
             'name' => ['required'],
             'amount' => ['required', 'numeric'],
+            'is_active' => ['required', 'boolean']
         ];
     }
 
@@ -30,12 +29,11 @@ class RegistrationFeeRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'educational_institution_id' => 'lembage',
-            'school_year_id' => 'tahun ajaran',
             'type_of_payment' => 'jenis pembayaran',
             'registration_status' => 'status registrasi',
             'name' => 'nama',
             'amount' => 'jumlah',
+            'is_active' => 'status aktif'
         ];
     }
 }

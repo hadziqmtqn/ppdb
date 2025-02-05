@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\Payment\BankAccountController;
 use App\Http\Controllers\Dashboard\Payment\PaymentChannelController;
 use App\Http\Controllers\Dashboard\Payment\PaymentSettingController;
+use App\Http\Controllers\Dashboard\Payment\RegistrationFeeController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
 use App\Http\Controllers\Dashboard\References\DetailMediaFileController;
 use App\Http\Controllers\Dashboard\References\DistanceToSchoolController;
@@ -283,6 +284,14 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [BankAccountController::class, 'store']);
             Route::put('/{bankAccount:slug}/update', [BankAccountController::class, 'update']);
             Route::delete('/{bankAccount:slug}/delete', [BankAccountController::class, 'destroy']);
+        });
+
+        Route::prefix('registration-fee')->group(function () {
+            Route::get('/', [RegistrationFeeController::class, 'index'])->name('registration-fee.index');
+            Route::post('/datatable', [RegistrationFeeController::class, 'datatable']);
+            Route::post('/store', [RegistrationFeeController::class, 'store']);
+            Route::put('/{bankAccount:slug}/update', [RegistrationFeeController::class, 'update']);
+            Route::delete('/{bankAccount:slug}/delete', [RegistrationFeeController::class, 'destroy']);
         });
 
         // TODO Student Registration
