@@ -62,6 +62,7 @@ class Major extends Model
         return $this->belongsTo(EducationalInstitution::class);
     }
 
+    // TODO Scope
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
@@ -70,5 +71,12 @@ class Major extends Model
     public function scopeEducationalInstitutionId(Builder $query, $educationalInstitutionId): Builder
     {
         return $query->where('educational_institution_id', $educationalInstitutionId);
+    }
+
+    public function scopeFilterByEducationalInstitution(Builder $query): Builder
+    {
+        $auth = auth()->user();
+
+        return $query->when(!$auth->hasRole('super-admin'), fn($query) => $query->where('educational_institution_id'), optional(optional($auth)->admin)->educational_institution_id);
     }
 }

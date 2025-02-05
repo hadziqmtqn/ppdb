@@ -35,7 +35,8 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = RegistrationSchedule::query()
-                    ->with('educationalInstitution:id,name', 'schoolYear:id,first_year,last_year');
+                    ->with('educationalInstitution:id,name', 'schoolYear:id,first_year,last_year')
+                    ->filterByEducationalInstitution();
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

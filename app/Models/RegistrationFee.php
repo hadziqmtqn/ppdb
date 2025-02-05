@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -44,5 +45,13 @@ class RegistrationFee extends Model
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class);
+    }
+
+    // TODO Scope
+    public function scopeFilterByEducationalInstitution(Builder $query): Builder
+    {
+        $auth = auth()->user();
+
+        return $query->when(!$auth->hasRole('super-admin'), fn($query) => $query->where('educational_institution_id'), optional(optional($auth)->admin)->educational_institution_id);
     }
 }

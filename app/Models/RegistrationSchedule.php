@@ -47,11 +47,19 @@ class RegistrationSchedule extends Model
         return $this->belongsTo(EducationalInstitution::class);
     }
 
+    // TODO Scope
     public function scopeFilterData(Builder $query, $filter): Builder
     {
         return $query->where([
             'educational_institution_id' => $filter['educational_institution_id'],
             'school_year_id' => $filter['school_year_id']
         ]);
+    }
+
+    public function scopeFilterByEducationalInstitution(Builder $query): Builder
+    {
+        $auth = auth()->user();
+
+        return $query->when(!$auth->hasRole('super-admin'), fn($query) => $query->where('educational_institution_id'), optional(optional($auth)->admin)->educational_institution_id);
     }
 }

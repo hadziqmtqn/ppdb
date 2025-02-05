@@ -75,7 +75,8 @@ class MessageTemplateController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = MessageTemplate::query()
-                    ->with('educationalInstitution:id,name');
+                    ->with('educationalInstitution:id,name')
+                    ->filterByEducationalInstitution();
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

@@ -19,9 +19,13 @@ document.addEventListener('DOMContentLoaded', function() {
             element.remove();
         });
 
+        const amountInput = document.getElementById('amount');
+        amountInput.value = amountInput.value.replace(/,/g, '');
+
         const formData = new FormData(form);
+
         try {
-            const response = await axios.post('/class-level/store', formData);
+            const response = await axios.post('/registration-fee/store', formData);
             if (response.data.type === 'success') {
                 toastr.success(response.data.message);
                 unBlockUi();

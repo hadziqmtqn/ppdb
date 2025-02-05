@@ -62,6 +62,12 @@ class MessageTemplate extends Model
         return $this->belongsTo(EducationalInstitution::class);
     }
 
+    public function messageReceiver(): HasOne
+    {
+        return $this->hasOne(MessageReceiver::class, 'message_template_id');
+    }
+
+    // TODO Scope
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
@@ -82,8 +88,10 @@ class MessageTemplate extends Model
         return $query->where('recipient', $recipient);
     }
 
-    public function messageReceiver(): HasOne
+    public function scopeFilterByEducationalInstitution(Builder $query): Builder
     {
-        return $this->hasOne(MessageReceiver::class, 'message_template_id');
+        $auth = auth()->user();
+
+        return $query->when(!$auth->hasRole('super-admin'), fn($query) => $query->where('educational_institution_id'), optional(optional($auth)->admin)->educational_institution_id);
     }
 }

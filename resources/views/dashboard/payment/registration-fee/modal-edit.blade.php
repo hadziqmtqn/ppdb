@@ -26,13 +26,9 @@
                             </select>
                             <label for="editRegistrationStatus">Status Registrasi</label>
                         </div>
-                        <div class="input-group input-group-merge mb-3">
-                            <span class="input-group-text">Rp</span>
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" name="amount" class="form-control numeral-mask" id="editAmount" placeholder="Jumlah">
-                                <label for="editAmount">Jumlah</label>
-                            </div>
-                            <span class="input-group-text">.00</span>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="amount" class="form-control numeral-mask" id="editAmount" placeholder="Jumlah">
+                            <label for="editAmount">Jumlah</label>
                         </div>
                         <div class="mb-2">Status</div>
                         <div class="form-check form-check-inline">

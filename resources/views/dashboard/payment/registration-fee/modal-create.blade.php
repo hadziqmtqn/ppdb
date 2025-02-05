@@ -13,12 +13,34 @@
                             <label for="select-educational-institution">Lembaga</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <select name="registration_category_id" id="select-registration-category" class="form-select select2"></select>
-                            <label for="select-registration-category">Kategori Pendaftaran</label>
+                            <select name="school_year_id" id="select-school-year" class="form-select select2">
+                                <option value="{{ $getSchoolYearActive['id'] }}" selected>{{ $getSchoolYearActive['year'] }}</option>
+                            </select>
+                            <label for="select-school-year">Tahun Ajaran</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" name="name" id="name" class="form-control" placeholder="Nama">
                             <label for="name">Nama</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="type_of_payment" class="form-select select2" id="typeOfPayment">
+                                <option value=""></option>
+                                <option value="sekali_bayar">Sekali Bayar</option>
+                                <option value="kredit">Kredit</option>
+                            </select>
+                            <label for="typeOfPayment">Jenis Pembayaran</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="registration_status" class="form-select select2" id="registrationStatus">
+                                <option value=""></option>
+                                <option value="siswa_belum_diterima">Siswa Belum Diterima</option>
+                                <option value="siswa_diterima">Siswa Diterima</option>
+                            </select>
+                            <label for="registrationStatus">Status Registrasi</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="amount" class="form-control numeral-mask" id="amount" placeholder="Jumlah">
+                            <label for="amount">Jumlah</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">

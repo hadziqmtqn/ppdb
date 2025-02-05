@@ -10,7 +10,7 @@
         phoneMask = document.querySelector('.phone-number-mask'),
         dateMask = document.querySelector('.date-mask'),
         timeMask = document.querySelector('.time-mask'),
-        numeralMask = document.querySelector('.numeral-mask'),
+        numeralMask = $('.numeral-mask'),
         blockMask = document.querySelector('.block-mask'),
         uppercaseMask = document.querySelector('.uppercase-mask'),
         delimiterMask = document.querySelector('.delimiter-mask'),
@@ -94,10 +94,12 @@
     }
 
     //Numeral
-    if (numeralMask) {
-        new Cleave(numeralMask, {
-            numeral: true,
-            numeralThousandsGroupStyle: 'thousand'
+    if (numeralMask.length) {
+        numeralMask.each(function () {
+            new Cleave(this, {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand'
+            });
         });
     }
 

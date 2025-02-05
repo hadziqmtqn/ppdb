@@ -37,7 +37,7 @@ class SchoolYearRepository
         return $this->apiResponse('Get data success', $schoolYears->map(function (SchoolYear $schoolYear) {
             return collect([
                 'id' => $schoolYear->id,
-                'year' => $schoolYear->first_year . '-' . $schoolYear->last_year
+                'year' => $schoolYear->first_year . '/' . $schoolYear->last_year
             ]);
         }), null, Response::HTTP_OK);
     }
