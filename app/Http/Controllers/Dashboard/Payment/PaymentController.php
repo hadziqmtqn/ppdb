@@ -79,10 +79,10 @@ class PaymentController extends Controller
         } catch (Exception $exception) {
             DB::rollBack();
             Log::error($exception->getMessage());
-            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->apiResponse('Tagihan gagal dibuat!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Create invoice success', [
+        return $this->apiResponse('Tagihan berhasil dibuat', [
             'checkout_link' => $payment->checkout_link,
         ], null, Response::HTTP_OK);
     }
