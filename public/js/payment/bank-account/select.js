@@ -20,12 +20,27 @@ $(document).ready(function () {
                     results: $.map(data.data, function(item) {
                         return {
                             text: item.paymentChannel,
-                            id: item.id
+                            id: item.id,
+                            accountName: item.accountName,
+                            accountNumber: item.accountNumber
                         }
                     })
                 };
             },
             cache: true
         }
+    }).on('select2:select', function (e) {
+        const data = e.params.data;
+        const destinationBank = $('#destinationBank'),
+            accountNumber = $('#accountNumber'),
+            accountName = $('#accountName');
+
+        if (destinationBank.length === 0 || accountNumber.length === 0 || accountName.length === 0) {
+            return;
+        }
+
+        destinationBank.text(data.text);
+        accountNumber.text(data.accountNumber);
+        accountName.text(data.accountName);
     });
 });
