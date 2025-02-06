@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payment\PaymentTransaction\PaymentRequest;
 use App\Models\Payment;
+use App\Models\PaymentChannel;
 use App\Models\PaymentTransaction;
 use App\Models\RegistrationFee;
 use App\Models\User;
@@ -67,6 +68,9 @@ class PaymentController extends Controller
                 'payer_email' => $user->email,
                 'description' => 'Pembayaran registrasi siswa baru',
                 'invoice_duration' => 172800,
+                'payment_methods' => PaymentChannel::active()
+                    ->pluck('code')
+                    ->toArray()
             ]);
 
             $apiInstance = new InvoiceApi();
@@ -82,8 +86,6 @@ class PaymentController extends Controller
             return $this->apiResponse('Tagihan gagal dibuat!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Tagihan berhasil dibuat', [
-            'checkout_link' => $payment->checkout_link,
-        ], null, Response::HTTP_OK);
+        return $this->apiResponse('Tagihan berhasil dibuat', null, null, Response::HTTP_OK);
     }
 }
