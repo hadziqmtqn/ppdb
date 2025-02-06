@@ -107,7 +107,7 @@
                                 <dd class="col-6 h6 text-end mb-0">Rp. {{ number_format($payment->amount,0,',','.') }}</dd>
                             </dl>
                             <hr class="mx-n3 mt-1">
-                            <div id="countdownContainer" data-status="{{ $payment->status }}">
+                            <div id="countdownContainer">
                                 <div class="bg-lighter rounded p-3">
                                     <h6>Harap lakukan pembayaran sebelum</h6>
                                     <div class="text-center fs-big text-danger">{{ Carbon\Carbon::parse($payment->expires_at)->isoFormat('llll') }}</div>

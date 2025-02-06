@@ -44,7 +44,7 @@ class PaymentTransactionController extends Controller
         try {
             return $this->apiResponse('Get data success', [
                 'status' => $payment->status,
-                'paymentMethod' => str_replace('_', ' ', $payment->payment_method),
+                'paymentMethod' => $payment->payment_method ? str_replace('_', ' ', $payment->payment_method) : null,
                 'paymentChannel' => $payment->payment_channel
             ], null, Response::HTTP_OK);
         } catch (Exception $exception) {

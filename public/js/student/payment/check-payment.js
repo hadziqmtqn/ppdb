@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const checkoutLink = document.getElementById('checkoutLink');
                     if (status === 'PAID') {
                         clearInterval(paymentStatusInterval);
+
                         const buttonElement = document.createElement('button');
                         buttonElement.type = 'button';
                         buttonElement.className = 'btn btn-primary w-100';
@@ -28,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         buttonElement.disabled = true;
                         buttonElement.textContent = 'Bayar Sekarang';
                         checkoutLink.replaceWith(buttonElement);
+
+                        const countdownContainer = document.getElementById('countdownContainer');
+                        countdownContainer.innerHTML = '<div class="bg-lighter rounded p-3"><h6 class="text-center">Terima kasih tagihan telah berhasil dibayar</h6></div>';
                     }
                 }
             })
