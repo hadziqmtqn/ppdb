@@ -15,26 +15,19 @@ class PaymentRequest extends FormRequest
     use ApiResponse;
 
     protected CurrentBillRepository $currentBillRepository;
-    //protected mixed $username;
 
     public function __construct(CurrentBillRepository $currentBillRepository)
     {
         parent::__construct();
         $this->currentBillRepository = $currentBillRepository;
-        //$this->username = $this->route('user')->username;
     }
 
     public function rules(): array
     {
         return [
             'pay_method' => ['required', 'in:MANUAL_PAYMENT,PAYMENT_GATEWAY'],
-            'registration_fee_id' => ['required', 'array'],
-            'registration_fee_id.*' => [
-                'required',
-                'integer',
-                'exists:registration_fees,id',
-                new RegistrationFeeRule($this->route('user')->username, $this->currentBillRepository),
-            ],
+            'registration_fee_id' => ['required', 'array', new RegistrationFeeRule($this->route('user')->username, $this->currentBillRepository),],
+            'registration_fee_id.*' => ['required', 'integer', 'exists:registration_fees,id'],
             'paid_amount' => ['required', 'array'],
             'paid_amount.*' => ['required', 'numeric'],
             'bank_account_id' => ['required_if:pay_method,MANUAL_PAYMENT', 'nullable', 'integer', 'exists:bank_accounts,id'],

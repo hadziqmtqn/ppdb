@@ -56,7 +56,6 @@ class RegistrationFeeRule implements ValidationRule
         // Ambil semua ID biaya pendaftaran yang valid
         $validFeeIds = $currentBills->pluck('id')->toArray();
 
-        dd($validFeeIds, $value);
         // Pastikan nilai yang dikirim adalah array
         if (!is_array($value)) {
             $value = [$value]; // Konversi ke array jika hanya satu nilai
@@ -72,7 +71,7 @@ class RegistrationFeeRule implements ValidationRule
         $mandatoryFees = $currentBills->where('registration_status', 'siswa_belum_diterima')->pluck('id')->toArray();
 
         if (!empty($mandatoryFees) && empty(array_intersect($mandatoryFees, $value))) {
-            $fail('Biaya registrasi wajib dibayar.');
+            $fail('Tagihan biaya registrasi wajib dipilih.');
         }
     }
 }
