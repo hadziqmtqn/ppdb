@@ -14,7 +14,7 @@
                         <div data-i18n="Siswa">Siswa</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ $title == 'Tagihan Saat Ini' || $title == 'Transaksi Pembayaran' ? 'active' : '' }}">
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons mdi mdi-cash-fast"></i>
                         <div data-i18n="Pembayaran">Pembayaran</div>
@@ -27,7 +27,7 @@
                                 <div data-i18n="Histori Transaksi">Histori Transaksi</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <li class="menu-item {{ $title == 'Tagihan Saat Ini' || $title == 'Transaksi Pembayaran' ? 'active' : '' }}">
                             <a href="{{ route('current-bill.index', auth()->user()->username) }}" class="menu-link">
                                 <i class="menu-icon tf-icons mdi mdi-cash-plus"></i>
                                 <div data-i18n="Tagihan Saat Ini">Tagihan Saat Ini</div>

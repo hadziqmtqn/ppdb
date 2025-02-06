@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\XenditService;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -64,17 +65,20 @@ class PaymentController extends Controller
 
             $amount = array_sum($totalNominal);
 
+            // TODO Xendit Payment Method
             $generateInvoice = $this->xenditService->createInvoice([
                 'paymentCode' => $payment->code,
                 'amount' => $amount,
                 'payerEmail' => $user->email,
                 'description' => 'Pembayaran registrasi siswa baru',
-                'invoiceDuration' => 172800
+                'invoiceDuration' => 86400
             ]);
 
             $payment->amount = $generateInvoice['amount'];
             $payment->checkout_link = $generateInvoice['invoice_url'];
             $payment->status = $generateInvoice['status'];
+            $payment->expires_at = Carbon::parse($generateInvoice['expiry_date'])
+                ->timezone('Asia/Jakarta');
             $payment->save();
             DB::commit();
         } catch (Exception $exception) {

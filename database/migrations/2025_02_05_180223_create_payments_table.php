@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('payment_method')->nullable();
             $table->string('payment_channel')->nullable();
             $table->unsignedBigInteger('bank_account_id')->nullable();
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')

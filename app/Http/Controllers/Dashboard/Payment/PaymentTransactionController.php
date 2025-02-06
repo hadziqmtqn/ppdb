@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Dashboard\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Models\Payment;
 use App\Models\PaymentTransaction;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class PaymentTransactionController extends Controller
 {
@@ -13,45 +15,13 @@ class PaymentTransactionController extends Controller
         return PaymentTransaction::all();
     }
 
-    public function store(Request $request)
+    public function show(Payment $payment): View
     {
-        $data = $request->validate([
-            'slug' => ['required'],
-            'user_id' => ['required', 'integer'],
-            'registration_fee_id' => ['required', 'integer'],
-            'amount' => ['required', 'numeric'],
-            'paid_amount' => ['required', 'numeric'],
-            'paid_rest' => ['required', 'numeric'],
-        ]);
+        $payment->load('user.student.educationalInstitution:id,name', 'user:id,name,username', 'paymentTransactions');
+        Gate::authorize('view', $payment);
 
-        return PaymentTransaction::create($data);
-    }
+        $title = 'Transaksi Pembayaran';
 
-    public function show(PaymentTransaction $paymentTransaction)
-    {
-        return $paymentTransaction;
-    }
-
-    public function update(Request $request, PaymentTransaction $paymentTransaction)
-    {
-        $data = $request->validate([
-            'slug' => ['required'],
-            'user_id' => ['required', 'integer'],
-            'registration_fee_id' => ['required', 'integer'],
-            'amount' => ['required', 'numeric'],
-            'paid_amount' => ['required', 'numeric'],
-            'paid_rest' => ['required', 'numeric'],
-        ]);
-
-        $paymentTransaction->update($data);
-
-        return $paymentTransaction;
-    }
-
-    public function destroy(PaymentTransaction $paymentTransaction)
-    {
-        $paymentTransaction->delete();
-
-        return response()->json();
+        return \view('dashboard.payment.payment-transaction.show', compact('title', 'payment'));
     }
 }

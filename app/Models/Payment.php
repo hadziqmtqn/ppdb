@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Payment extends Model
@@ -18,12 +20,14 @@ class Payment extends Model
         'payment_method',
         'payment_channel',
         'bank_account_id',
+        'expires_at'
     ];
 
     protected function casts(): array
     {
         return [
             'slug' => 'string',
+            'expires_at' => 'timestamp'
         ];
     }
 
@@ -36,5 +40,15 @@ class Payment extends Model
             $payment->serial_number = self::max('serial_number') + 1;
             $payment->code = 'INV' . Str::padLeft($payment->serial_number, 4, '0');
         });
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function paymentTransactions(): HasMany
+    {
+        return $this->hasMany(PaymentTransaction::class, 'payment_id');
     }
 }

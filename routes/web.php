@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\Payment\BankAccountController;
 use App\Http\Controllers\Dashboard\Payment\PaymentChannelController;
 use App\Http\Controllers\Dashboard\Payment\PaymentController;
 use App\Http\Controllers\Dashboard\Payment\PaymentSettingController;
+use App\Http\Controllers\Dashboard\Payment\PaymentTransactionController;
 use App\Http\Controllers\Dashboard\Payment\RegistrationFeeController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
 use App\Http\Controllers\Dashboard\References\DetailMediaFileController;
@@ -296,6 +297,10 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{registrationFee:slug}/delete', [RegistrationFeeController::class, 'destroy']);
         });
 
+        Route::prefix('payment-transaction')->group(function () {
+            Route::get('/{payment:slug}', [PaymentTransactionController::class, 'show']);
+        });
+
         // TODO Student Registration
         Route::prefix('student')->group(function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index')->middleware('only_admin');
@@ -358,9 +363,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{user:username}', [CurrentBillController::class, 'index'])->name('current-bill.index');
             });
 
-            Route::prefix('payment')->group(function () {
-                Route::post('/{user:username}/store', [PaymentController::class, 'store']);
-            });
+            Route::post('payment/{user:username}/store', [PaymentController::class, 'store']);
         });
 
         // TODO Select Routes

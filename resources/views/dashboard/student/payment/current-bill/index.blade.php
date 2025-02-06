@@ -11,7 +11,7 @@
     <div class="bs-stepper mt-2">
         <div class="bs-stepper-content rounded-0">
             <form id="registration-fee-form" onsubmit="return false">
-                <div id="checkout-cart" class="content fv-plugins-bootstrap5 fv-plugins-framework active dstepper-block">
+                <div class="content fv-plugins-bootstrap5 fv-plugins-framework active dstepper-block">
                     <div class="row">
                         <!-- Cart left -->
                         <div class="col-xl-8 mb-3 mb-xl-0">
