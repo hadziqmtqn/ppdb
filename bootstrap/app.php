@@ -27,6 +27,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'student_access' => StudentMiddleware::class,
             'only_admin' => OnlyAdminMiddleware::class
         ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'payment-webhook'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

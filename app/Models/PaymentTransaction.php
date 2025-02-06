@@ -39,6 +39,11 @@ class PaymentTransaction extends Model
         return $this->belongsTo(Payment::class);
     }
 
+    public function registrationFee(): BelongsTo
+    {
+        return $this->belongsTo(RegistrationFee::class);
+    }
+
     // TODO Scope
     public function scopeRegistrationFeeId(Builder $query, $registrationFeeId): Builder
     {

@@ -390,3 +390,6 @@ Route::get('select-registration-category', [RegistrationCategoryController::clas
 Route::get('select-class-level', [ClassLevelController::class, 'select']);
 Route::get('select-registration-path', [RegistrationPathController::class, 'select']);
 Route::get('select-major', [MajorController::class, 'select']);
+
+// TODO Xendit Webhook
+Route::post('payment-webhook', [PaymentController::class, 'handleWebhook']);

@@ -21,12 +21,10 @@
                                             <div class="row">
                                                 <div class="col-md-8 pt-2">
                                                     <a href="javascript:void(0)" class="text-heading mt-1">
-                                                        <h6>Google - Google Home - White</h6>
+                                                        <h6>{{ optional($paymentTransaction->registrationFee)->name }}</h6>
                                                     </a>
                                                     <div class="mb-1 d-flex flex-wrap">
-                                                        <span class="me-1">Sold by:</span>
-                                                        <a href="javascript:void(0)" class="me-1">Google</a>
-                                                        <span class="badge bg-label-success rounded-pill">In Stock</span>
+                                                        <span class="badge {{ optional($paymentTransaction->registrationFee)->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', optional($paymentTransaction->registrationFee)->type_of_payment)) }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">

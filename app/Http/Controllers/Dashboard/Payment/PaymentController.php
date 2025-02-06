@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\XenditService;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -99,5 +100,24 @@ class PaymentController extends Controller
         }
 
         return $this->apiResponse('Tagihan berhasil dibuat', null, route('payment-transaction.show', $payment->slug), Response::HTTP_OK);
+    }
+
+    public function handleWebhook(Request $request): JsonResponse
+    {
+        try {
+            $data = $request->all();
+
+            $payment = Payment::where('code', $data['external_id'])
+                ->firstOrFail();
+            $payment->status = $data['status'];
+            $payment->payment_method = $data['payment_method'];
+            $payment->payment_channel = $data['payment_channel'];
+            $payment->save();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Webhook received', $payment->code, null, Response::HTTP_OK);
     }
 }
