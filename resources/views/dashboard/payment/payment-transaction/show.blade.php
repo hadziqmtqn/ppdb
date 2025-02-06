@@ -17,7 +17,7 @@
                                 <button type="button" class="btn btn-outline-{{ $payment->status == 'PENDING' ? 'warning' : ($payment->status == 'PAID' ? 'success' : 'danger') }}" style="cursor: default" id="paymentStatus">{{ $payment->status }}</button>
                             </div>
                             <div>
-                                <h4 class="fw-medium">#{{ $payment->code }}</h4>
+                                <h4 class="fw-medium" id="paymentSlug" data-slug="{{ $payment->slug }}">#{{ $payment->code }}</h4>
                                 <div class="mb-1">
                                     <span>Tgl. dibuat:</span>
                                     <span>{{ \Carbon\Carbon::parse($payment->created_at)->isoFormat('DD MMM Y') }}</span>
@@ -126,4 +126,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/student/payment/check-payment.js') }}"></script>
 @endsection
