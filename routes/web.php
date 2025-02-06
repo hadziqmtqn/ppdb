@@ -299,6 +299,7 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('payment-transaction')->group(function () {
             Route::get('/{payment:slug}', [PaymentTransactionController::class, 'show'])->name('payment-transaction.show');
+            Route::get('/{payment:slug}/check-payment', [PaymentTransactionController::class, 'checkPayment']);
         });
 
         // TODO Student Registration

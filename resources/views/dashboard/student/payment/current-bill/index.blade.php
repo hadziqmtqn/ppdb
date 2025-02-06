@@ -122,7 +122,7 @@
                                 </dl>
                             </div>
                             <div class="d-grid">
-                                <button type="button" class="btn btn-primary waves-effect waves-light" id="pay-now" data-username="{{ $user->username }}">Bayar Tagihan</button>
+                                <button type="button" class="btn btn-primary waves-effect waves-light" id="pay-now" data-username="{{ $user->username }}">Buat Tagihan</button>
                             </div>
                         </div>
                     </div>

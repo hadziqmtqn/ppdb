@@ -46,18 +46,22 @@
                                         <h6 class="d-flex align-items-center gap-2">
                                             <i class="mdi mdi-cash-marker"></i> Metode Pembayaran
                                         </h6>
-                                        <span class="fw-medium text-body">{{ str_replace('_', ' ', $payment->payment_method) }}</span>
+                                        <span class="fw-medium text-body" id="paymenyMethod">{{ str_replace('_', ' ', $payment->payment_method) }}</span>
                                         <div class="text-body mb-0 mt-3">
                                             <table>
                                                 <tbody>
                                                 <tr>
                                                     <td class="pe-3 fw-medium">Bank:</td>
-                                                    <td>{{ $payment->payment_method == 'MANUAL_PAYMENT' ? optional(optional($payment->bankAccount)->paymentChannel)->code : $payment->payment_channel }}</td>
+                                                    <td id="paymentChannel">{{ $payment->payment_method == 'MANUAL_PAYMENT' ? optional(optional($payment->bankAccount)->paymentChannel)->code : $payment->payment_channel }}</td>
                                                 </tr>
                                                 @if($payment->payment_method == 'MANUAL_PAYMENT')
                                                     <tr>
-                                                        <td class="pe-3 fw-medium">Country:</td>
-                                                        <td>United States</td>
+                                                        <td class="pe-3 fw-medium">No. Rek:</td>
+                                                        <td>{{ optional($payment->bankAccount)->account_number }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="pe-3 fw-medium">A/N:</td>
+                                                        <td>{{ optional($payment->bankAccount)->account_name }}</td>
                                                     </tr>
                                                 @endif
                                                 </tbody>
@@ -97,7 +101,7 @@
                     </div>
                     <!-- Confirmation total -->
                     <div class="col-xl-4">
-                        <div class="border rounded p-3">
+                        <div class="border rounded p-3 mb-3">
                             <dl class="row mb-3">
                                 <dt class="col-6 h6 mb-0">Total tagihan</dt>
                                 <dd class="col-6 h6 text-end mb-0">Rp. {{ number_format($payment->amount,0,',','.') }}</dd>
@@ -106,16 +110,16 @@
                             <div id="countdownContainer" data-status="{{ $payment->status }}">
                                 <div class="bg-lighter rounded p-3">
                                     <h6>Harap lakukan pembayaran sebelum</h6>
-                                    <div class="text-center fs-large text-danger" id="countdown">01:58:00:00</div>
+                                    <div class="text-center fs-big text-danger">{{ Carbon\Carbon::parse($payment->expires_at)->isoFormat('llll') }}</div>
                                 </div>
                             </div>
                         </div>
                         @if($payment->payment_method == 'MANUAL_PAYMENT')
-                            <form action="#" id="formPaymentConfirm" class="mt-3">
-                                <button type="submit" class="btn btn-primary w-100">Konfirmasi Pembayaran</button>
+                            <form action="#" id="formPaymentConfirm">
+                                <button type="submit" class="btn btn-primary w-100" id="btn-bill-confirm">Konfirmasi Pembayaran</button>
                             </form>
                         @else
-
+                            <a href="{{ url($payment->checkout_link) }}" class="btn btn-primary w-100" target="_blank" id="checkoutLink">Bayar Sekarang</a>
                         @endif
                     </div>
                 </div>

@@ -5,11 +5,18 @@ namespace App\Http\Controllers\Dashboard\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use App\Models\PaymentTransaction;
+use App\Traits\ApiResponse;
+use Exception;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class PaymentTransactionController extends Controller
 {
+    use ApiResponse;
+
     public function index()
     {
         return PaymentTransaction::all();
@@ -28,5 +35,21 @@ class PaymentTransactionController extends Controller
         $title = 'Transaksi Pembayaran';
 
         return \view('dashboard.payment.payment-transaction.show', compact('title', 'payment'));
+    }
+
+    public function checkPayment(Payment $payment): JsonResponse
+    {
+        Gate::authorize('view', $payment);
+
+        try {
+            return $this->apiResponse('Get data success', [
+                'status' => $payment->status,
+                'paymentMethod' => str_replace('_', ' ', $payment->payment_method),
+                'paymentChannel' => $payment->payment_channel
+            ], null, Response::HTTP_OK);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
