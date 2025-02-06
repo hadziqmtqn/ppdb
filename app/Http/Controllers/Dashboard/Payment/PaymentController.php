@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Dashboard\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payment\PaymentTransaction\PaymentRequest;
 use App\Models\Payment;
-use App\Models\PaymentChannel;
 use App\Models\PaymentTransaction;
 use App\Models\RegistrationFee;
 use App\Models\User;
+use App\Services\XenditService;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -16,17 +16,19 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Xendit\Configuration;
-use Xendit\Invoice\CreateInvoiceRequest;
-use Xendit\Invoice\InvoiceApi;
 
 class PaymentController extends Controller
 {
     use ApiResponse;
 
-    public function __construct()
+    protected XenditService $xenditService;
+
+    /**
+     * @param XenditService $xenditService
+     */
+    public function __construct(XenditService $xenditService)
     {
-        Configuration::setXenditKey(config('xendit.api_key'));
+        $this->xenditService = $xenditService;
     }
 
     public function store(PaymentRequest $request, User $user): JsonResponse
@@ -62,22 +64,17 @@ class PaymentController extends Controller
 
             $amount = array_sum($totalNominal);
 
-            $createInvoice = new CreateInvoiceRequest([
-                'external_id' => $payment->code,
+            $generateInvoice = $this->xenditService->createInvoice([
+                'paymentCode' => $payment->code,
                 'amount' => $amount,
-                'payer_email' => $user->email,
+                'payerEmail' => $user->email,
                 'description' => 'Pembayaran registrasi siswa baru',
-                'invoice_duration' => 172800,
-                'payment_methods' => PaymentChannel::active()
-                    ->pluck('code')
-                    ->toArray()
+                'invoiceDuration' => 172800
             ]);
 
-            $apiInstance = new InvoiceApi();
-            $generateInvoice = $apiInstance->createInvoice($createInvoice);
-
+            $payment->amount = $generateInvoice['amount'];
             $payment->checkout_link = $generateInvoice['invoice_url'];
-            $payment->amount = $amount;
+            $payment->status = $generateInvoice['status'];
             $payment->save();
             DB::commit();
         } catch (Exception $exception) {
