@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\Payment\BankAccountController;
 use App\Http\Controllers\Dashboard\Payment\PaymentChannelController;
+use App\Http\Controllers\Dashboard\Payment\PaymentController;
 use App\Http\Controllers\Dashboard\Payment\PaymentSettingController;
 use App\Http\Controllers\Dashboard\Payment\RegistrationFeeController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
@@ -355,6 +356,10 @@ Route::middleware('auth')->group(function () {
 
             Route::prefix('current-bill')->group(function () {
                 Route::get('/{user:username}', [CurrentBillController::class, 'index'])->name('current-bill.index');
+            });
+
+            Route::prefix('payment')->group(function () {
+                Route::post('/{user:username}/store', [PaymentController::class, 'store']);
             });
         });
 

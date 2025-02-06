@@ -74,7 +74,7 @@
                         <div class="col-xl-4">
                             <div class="border rounded p-3 mb-3">
                                 <h6>Metode Pembayaran</h6>
-                                <input type="hidden" name="payment_method" value="{{ $paymentSetting->payment_method }}" id="paymentMethod">
+                                <input type="hidden" name="pay_method" value="{{ $paymentSetting->payment_method }}" id="paymentMethod">
                                 @if($paymentSetting->payment_method == 'MANUAL_PAYMENT')
                                     <div class="form-floating form-floating-outline mb-3">
                                         <select name="bank_account_id" id="select-bank-account" class="form-select select2" data-educational-institution="{{ optional($user->student)->educational_institution_id }}"></select>
