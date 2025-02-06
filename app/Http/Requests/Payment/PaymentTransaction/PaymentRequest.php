@@ -39,6 +39,13 @@ class PaymentRequest extends FormRequest
         return true;
     }
 
+    public function messages(): array
+    {
+        return [
+            'bank_account_id.required_if' => ':attribute wajib diisi'
+        ];
+    }
+
     public function attributes(): array
     {
         return [

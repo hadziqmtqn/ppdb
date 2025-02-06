@@ -31,6 +31,10 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.data.type === 'success') {
                 toastr.success(response.data.message);
                 unBlockUi();
+
+                if (response.data.redirect) {
+                    window.location.href = response.data.redirect;
+                }
             }
         } catch (error) {
             if (error.response.status === 422) {

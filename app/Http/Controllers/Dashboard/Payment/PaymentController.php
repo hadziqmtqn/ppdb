@@ -66,19 +66,30 @@ class PaymentController extends Controller
             $amount = array_sum($totalNominal);
 
             // TODO Xendit Payment Method
-            $generateInvoice = $this->xenditService->createInvoice([
-                'paymentCode' => $payment->code,
-                'amount' => $amount,
-                'payerEmail' => $user->email,
-                'description' => 'Pembayaran registrasi siswa baru',
-                'invoiceDuration' => 86400
-            ]);
+            if ($request->input('pay_method') == 'PAYMENT_GATEWAY') {
+                $generateInvoice = $this->xenditService->createInvoice([
+                    'paymentCode' => $payment->code,
+                    'amount' => $amount,
+                    'payerEmail' => $user->email,
+                    'description' => 'Pembayaran registrasi siswa baru',
+                    'invoiceDuration' => 86400
+                ]);
 
-            $payment->amount = $generateInvoice['amount'];
-            $payment->checkout_link = $generateInvoice['invoice_url'];
-            $payment->status = $generateInvoice['status'];
-            $payment->expires_at = Carbon::parse($generateInvoice['expiry_date'])
-                ->timezone('Asia/Jakarta');
+                $invoiceAmount = $generateInvoice['amount'];
+                $expiryDate = Carbon::parse($generateInvoice['expiry_date'])
+                    ->timezone('Asia/Jakarta');
+
+                $payment->checkout_link = $generateInvoice['invoice_url'];
+                $payment->status = $generateInvoice['status'];
+            }else {
+                // TODO Manual Payment
+                $invoiceAmount = $amount;
+                $expiryDate = Carbon::now()->addDay();
+                $payment->payment_method = $request->input('pay_method');
+            }
+
+            $payment->amount = $invoiceAmount;
+            $payment->expires_at = $expiryDate;
             $payment->save();
             DB::commit();
         } catch (Exception $exception) {
@@ -87,6 +98,6 @@ class PaymentController extends Controller
             return $this->apiResponse('Tagihan gagal dibuat!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Tagihan berhasil dibuat', null, null, Response::HTTP_OK);
+        return $this->apiResponse('Tagihan berhasil dibuat', null, route('payment-transaction.show', $payment->slug), Response::HTTP_OK);
     }
 }
