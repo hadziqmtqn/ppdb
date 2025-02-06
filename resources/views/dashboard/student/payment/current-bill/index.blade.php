@@ -46,7 +46,9 @@
                                                             <span class="badge {{ $registrationFee->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $registrationFee->type_of_payment)) }}</span>
                                                         </div>
                                                         @if($registrationFee->type_of_payment == 'kredit')
-                                                            <input type="number" class="form-control form-control-sm w-px-150 mt-4 input-amount-of-bill" name="paid_amount[]" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}" style="display: none;">
+                                                            <input type="number" class="form-control form-control-sm w-px-150 mt-4 input-amount-of-bill" name="paid_amount[]" id="paidAmount-{{ $registrationFee->id }}" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}" style="display: none;">
+                                                        @else
+                                                            <input type="hidden" name="paid_amount[]" id="paidAmount-{{ $registrationFee->id }}" value="{{ $registrationFee->amount }}">
                                                         @endif
                                                     </div>
                                                     <div class="col-md-4">
@@ -55,7 +57,7 @@
                                                                 <span class="text-body">Rp. {{ number_format($registrationFee->amount,0,',','.') }}</span>
                                                             </div>
                                                             <div class="d-block">
-                                                                <input type="checkbox" name="registration_fee_id[]" value="{{ $registrationFee->id }}" class="btn-check" id="checkBill-{{ $registrationFee->id }}">
+                                                                <input type="checkbox" name="registration_fee_id[]" value="{{ $registrationFee->id }}" data-amount="{{ $registrationFee->amount }}" class="btn-check" id="checkBill-{{ $registrationFee->id }}">
                                                                 <label class="btn btn-sm btn-outline-primary waves-effect waves-light" for="checkBill-{{ $registrationFee->id }}">Pilih Tagihan</label>
                                                             </div>
                                                         </div>

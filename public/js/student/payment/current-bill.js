@@ -11,26 +11,32 @@ document.addEventListener("DOMContentLoaded", function () {
         checkboxes.forEach((checkbox) => {
             const listItem = checkbox.closest('li');
             const amountInput = listItem.querySelector('.input-amount-of-bill');
+            const label = listItem.querySelector('label[for="' + checkbox.id + '"]');
+            const amountValue = parseFloat(checkbox.dataset.amount);
 
             if (checkbox.checked) {
                 if (amountInput) {
                     amountInput.style.display = 'block';
-                    const amountValue = parseFloat(amountInput.value);
-                    dp += amountValue;
+                    dp += parseFloat(amountInput.value);
                 } else {
-                    const amountValue = parseFloat(checkbox.value);
                     dp += amountValue;
                 }
+                label.classList.remove('btn-outline-primary');
+                label.classList.add('btn-primary');
+                label.textContent = 'Tagihan Dipilih';
             } else {
                 if (amountInput) {
                     amountInput.style.display = 'none';
                 }
+                label.classList.remove('btn-primary');
+                label.classList.add('btn-outline-primary');
+                label.textContent = 'Pilih Tagihan';
+            }
+
+            if (checkbox.checked) {
+                total += amountValue;
             }
         });
-
-        total = Array.from(checkboxes).reduce((acc, checkbox) => {
-            return acc + parseFloat(checkbox.value);
-        }, 0);
 
         const restBill = total - dp;
 
