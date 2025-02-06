@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class PaymentTransaction extends Model
 {
     protected $fillable = [
         'slug',
-        'user_id',
+        'payment_id',
         'registration_fee_id',
         'amount',
         'paid_amount',
@@ -30,5 +32,16 @@ class PaymentTransaction extends Model
         static::creating(function (PaymentTransaction $paymentTransaction) {
             $paymentTransaction->slug = Str::uuid()->toString();
         });
+    }
+
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
+    // TODO Scope
+    public function scopeRegistrationFeeId(Builder $query, $registrationFeeId): Builder
+    {
+        return $query->where('registration_fee_id', $registrationFeeId);
     }
 }

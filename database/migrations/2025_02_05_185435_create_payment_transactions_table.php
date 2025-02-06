@@ -10,21 +10,22 @@ return new class extends Migration {
         Schema::create('payment_transactions', function (Blueprint $table) {
             $table->id();
             $table->uuid('slug')->unique();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('registration_fee_id');
-            $table->decimal('amount', 20, 0);
-            $table->decimal('paid_amount', 20, 0);
-            $table->decimal('paid_rest', 20, 0);
+            $table->decimal('amount', 20, 0)->default(0);
+            $table->decimal('paid_amount', 20, 0)->default(0);
+            $table->decimal('paid_rest', 20, 0)->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('payment_id')
                 ->references('id')
-                ->on('users')
+                ->on('payments')
                 ->cascadeOnDelete();
+
             $table->foreign('registration_fee_id')
                 ->references('id')
                 ->on('registration_fees')
-                ->cascadeOnDelete();
+                ->restrictOnDelete();
         });
     }
 

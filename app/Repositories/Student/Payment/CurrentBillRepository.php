@@ -24,7 +24,9 @@ class CurrentBillRepository
                 $query->where(function ($query) use ($user) {
                     $query->where('registration_status', 'siswa_belum_diterima')
                         ->whereDoesntHave('paymentTransaction', function ($query) use ($user) {
-                            $query->where('user_id', $user->id);
+                            $query->whereHas('payment', function ($query) use ($user) {
+                                $query->where('user_id', $user->id);
+                            });
                         });
                 })
                     ->when(optional($user->student)->registration_status == 'diterima', function ($query) {

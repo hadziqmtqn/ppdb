@@ -12,19 +12,20 @@ return new class extends Migration {
             $table->uuid('slug')->unique();
             $table->integer('serial_number')->unique();
             $table->string('code')->unique();
-            $table->unsignedBigInteger('payment_transaction_id');
-            $table->decimal('amount');
-            $table->string('link_checkout')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->decimal('amount', 20, 0)->default(0);
+            $table->string('checkout_link')->nullable();
             $table->string('status');
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();
             $table->string('payment_channel')->nullable();
             $table->unsignedBigInteger('bank_account_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('payment_transaction_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('payment_transactions')
+                ->on('users')
                 ->cascadeOnDelete();
+
             $table->foreign('bank_account_id')
                 ->references('id')
                 ->on('bank_accounts')
