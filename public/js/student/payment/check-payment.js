@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         buttonElement.className = 'btn btn-primary w-100';
                         buttonElement.id = 'checkoutLink';
                         buttonElement.disabled = true;
-                        buttonElement.textContent = 'Bayar Sekarang';
+                        buttonElement.textContent = 'Pembayaran Sukses';
                         checkoutLink.replaceWith(buttonElement);
 
                         const countdownContainer = document.getElementById('countdownContainer');
