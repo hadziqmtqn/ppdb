@@ -17,7 +17,12 @@ class PaymentTransactionController extends Controller
 
     public function show(Payment $payment): View
     {
-        $payment->load('user.student.educationalInstitution:id,name', 'user:id,name,username', 'paymentTransactions.registrationFee:id,name,type_of_payment');
+        $payment->load([
+            'user.student.educationalInstitution:id,name',
+            'user:id,name,username',
+            'paymentTransactions.registrationFee:id,name,type_of_payment',
+            'bankAccount.paymentChannel'
+        ]);
         Gate::authorize('view', $payment);
 
         $title = 'Transaksi Pembayaran';

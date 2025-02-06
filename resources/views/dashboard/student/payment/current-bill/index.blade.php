@@ -3,10 +3,9 @@
     <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-sm-between mb-4 text-center text-sm-start gap-2">
         <div class="mb-2 mb-sm-0">
-            <h4 class="mb-1">Nama: {{ $user->name }}</h4>
+            <a href="{{ route('student.show', $user->username) }}" class="h4 mb-1 text-primary" target="_blank">Nama: {{ $user->name }}</a>
             <p class="mb-0">Lembaga: {{ optional(optional($user->student)->educationalInstitution)->name }} / {{ optional($user->student)->registration_number }}</p>
         </div>
-        <a href="{{ route('student.show', $user->username) }}" class="btn btn-outline-primary waves-effect">Detail</a>
     </div>
     <div class="bs-stepper mt-2">
         <div class="bs-stepper-content rounded-0">

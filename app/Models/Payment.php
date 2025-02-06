@@ -55,4 +55,9 @@ class Payment extends Model implements HasMedia
     {
         return $this->hasMany(PaymentTransaction::class, 'payment_id');
     }
+
+    public function bankAccount(): BelongsTo
+    {
+        return $this->belongsTo(BankAccount::class);
+    }
 }

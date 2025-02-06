@@ -87,6 +87,7 @@ class PaymentController extends Controller
                 $invoiceAmount = $amount;
                 $expiryDate = Carbon::now()->addDay();
                 $payment->payment_method = $request->input('pay_method');
+                $payment->bank_account_id = $request->input('bank_account_id');
             }
 
             $payment->amount = $invoiceAmount;
