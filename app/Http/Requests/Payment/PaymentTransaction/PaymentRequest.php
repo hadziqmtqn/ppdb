@@ -21,7 +21,6 @@ class PaymentRequest extends FormRequest
             'paid_amount' => ['required', 'array'],
             'paid_amount.*' => ['required', 'numeric'],
             'bank_account_id' => ['required_if:pay_method,MANUAL_PAYMENT', 'nullable', 'integer', 'exists:bank_accounts,id'],
-            'payment_channel' => ['required_if:pay_method,PAYMENT_GATEWAY', 'nullable'],
         ];
     }
 
@@ -38,8 +37,7 @@ class PaymentRequest extends FormRequest
             'registration_fee_id.*' => 'biaya pendaftaran',
             'paid_amount' => 'jumlah bayar',
             'paid_amount.*' => 'jumlah bayar',
-            'bank_account_id' => 'rekening bank tujuan',
-            'payment_channel' => 'saluran pembayaran',
+            'bank_account_id' => 'rekening bank tujuan'
         ];
     }
 

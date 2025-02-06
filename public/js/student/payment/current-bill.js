@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const checkboxes = document.querySelectorAll('input[name="registration_fee_id[]"]');
+    const checkboxes = document.querySelectorAll('input[name^="registration_fee_id"]');
     const totalWillBePaid = document.getElementById("totalWillBePaid");
     const dpElement = document.getElementById("dp");
     const restBillElement = document.getElementById("restBill");

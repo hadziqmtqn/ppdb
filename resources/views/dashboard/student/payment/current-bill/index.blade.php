@@ -46,9 +46,9 @@
                                                             <span class="badge {{ $registrationFee->type_of_payment == 'sekali_bayar' ? 'bg-label-success' : 'bg-label-warning' }} rounded-pill">{{ ucfirst(str_replace('_',' ', $registrationFee->type_of_payment)) }}</span>
                                                         </div>
                                                         @if($registrationFee->type_of_payment == 'kredit')
-                                                            <input type="number" class="form-control form-control-sm w-px-150 mt-4 input-amount-of-bill" name="paid_amount[]" id="paidAmount-{{ $registrationFee->id }}" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}" style="display: none;">
+                                                            <input type="number" class="form-control form-control-sm w-px-150 mt-4 input-amount-of-bill" name="paid_amount[{{ $registrationFee->id }}]" id="paidAmount-{{ $registrationFee->id }}" value="{{ $registrationFee->amount }}" min="{{ $registrationFee->amount / 2 }}" max="{{ $registrationFee->amount }}" style="display: none;">
                                                         @else
-                                                            <input type="hidden" name="paid_amount[]" id="paidAmount-{{ $registrationFee->id }}" value="{{ $registrationFee->amount }}">
+                                                            <input type="hidden" name="paid_amount[{{ $registrationFee->id }}]" id="paidAmount-{{ $registrationFee->id }}" value="{{ $registrationFee->amount }}">
                                                         @endif
                                                     </div>
                                                     <div class="col-md-4">
@@ -57,7 +57,7 @@
                                                                 <span class="text-body">Rp. {{ number_format($registrationFee->amount,0,',','.') }}</span>
                                                             </div>
                                                             <div class="d-block">
-                                                                <input type="checkbox" name="registration_fee_id[]" value="{{ $registrationFee->id }}" data-amount="{{ $registrationFee->amount }}" class="btn-check" id="checkBill-{{ $registrationFee->id }}">
+                                                                <input type="checkbox" name="registration_fee_id[{{ $registrationFee->id }}]" value="{{ $registrationFee->id }}" data-amount="{{ $registrationFee->amount }}" class="btn-check" id="checkBill-{{ $registrationFee->id }}">
                                                                 <label class="btn btn-sm btn-outline-primary waves-effect waves-light" for="checkBill-{{ $registrationFee->id }}">Pilih Tagihan</label>
                                                             </div>
                                                         </div>
@@ -100,7 +100,7 @@
                                         </div>
                                     </div>
                                 @else
-                                    Payment gateway
+                                    <span class="badge bg-secondary">{{ str_replace('_', ' ', $paymentSetting->payment_method) }}</span>
                                 @endif
 
                                 <hr class="mx-n3">
@@ -122,7 +122,7 @@
                                 </dl>
                             </div>
                             <div class="d-grid">
-                                <button type="button" class="btn btn-primary btn-next waves-effect waves-light" id="pay-now">Bayar Sekarang</button>
+                                <button type="button" class="btn btn-primary btn-next waves-effect waves-light" id="pay-now" data-username="{{ $user->username }}">Bayar Sekarang</button>
                             </div>
                         </div>
                     </div>
@@ -136,4 +136,5 @@
     <script src="{{ asset('js/student/payment/current-bill.js') }}"></script>
     <script src="{{ asset('js/payment/bank-account/select.js') }}"></script>
     <script src="{{ asset('materialize/assets/js/extended-ui-misc-clipboardjs.js') }}"></script>
+    <script src="{{ asset('js/student/payment/payment.js') }}"></script>
 @endsection
