@@ -367,6 +367,7 @@ Route::middleware('auth')->group(function () {
         Route::get('select-message-template', [MessageTemplateController::class, 'select']);
         Route::get('select-message-user', [MessageTemplateController::class, 'selectUser']);
         Route::get('select-media-file', [MediaFileController::class, 'select']);
+        Route::get('select-bank-account', [BankAccountController::class, 'select']);
     });
 
     Route::prefix('account-verification')->group(function () {

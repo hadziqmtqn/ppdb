@@ -74,17 +74,36 @@
                         <div class="col-xl-4">
                             <div class="border rounded p-3 mb-3">
                                 <h6>Metode Pembayaran</h6>
-                                <div class="row g-3 mb-3">
-                                    <div class="col-sm-8 col-xxl-8 col-xl-12">
-                                        <input type="text" class="form-control" placeholder="Enter Promo Code" aria-label="Enter Promo Code">
+                                <input type="hidden" name="payment_method" value="{{ $paymentSetting->payment_method }}" id="paymentMethod">
+                                @if($paymentSetting->payment_method == 'MANUAL_PAYMENT')
+                                    <div class="form-floating form-floating-outline mb-3">
+                                        <select name="bank_account_id" id="select-bank-account" class="form-select select2" data-educational-institution="{{ optional($user->student)->educational_institution_id }}"></select>
+                                        <label for="select-bank-account">Rekening Bank</label>
                                     </div>
-                                    <div class="col-4 col-xxl-4 col-xl-12">
-                                        <div class="d-grid">
-                                            <button type="button" class="btn btn-outline-primary waves-effect">Apply</button>
+
+                                    <div class="bg-lighter rounded p-3">
+                                        <h6>Rincian Bank Tujuan</h6>
+                                        <div class="mb-3">
+                                            <h6 class="mb-1 text-primary">Bank tujuan</h6>
+                                            <div id="destinationBank">-</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <h6 class="mb-1 text-primary">No. Rekening</h6>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="me-2 fw-medium" id="accountNumber">-</span>
+                                                <span class="clipboard-btn text-light cursor-pointer" data-clipboard-action="copy" data-clipboard-target="#accountNumber"><i class="mdi mdi-content-copy" data-bs-toggle="tooltip" title="Salin"></i></span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1 text-primary">Atas nama</h6>
+                                            <div id="accountName">-</div>
                                         </div>
                                     </div>
-                                </div>
+                                @else
+                                    Payment gateway
+                                @endif
 
+                                <hr class="mx-n3">
                                 <h6 class="mb-4">Rincian</h6>
                                 <dl class="row mb-0">
                                     <dt class="col-6 fw-normal text-heading">Total Tagihan</dt>
@@ -115,4 +134,6 @@
 
 @section('scripts')
     <script src="{{ asset('js/student/payment/current-bill.js') }}"></script>
+    <script src="{{ asset('js/payment/bank-account/select.js') }}"></script>
+    <script src="{{ asset('materialize/assets/js/extended-ui-misc-clipboardjs.js') }}"></script>
 @endsection

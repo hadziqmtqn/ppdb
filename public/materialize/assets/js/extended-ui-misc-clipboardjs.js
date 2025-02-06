@@ -10,8 +10,8 @@
     clipboardList.map(function (clipboardEl) {
       const clipboard = new ClipboardJS(clipboardEl);
       clipboard.on('success', function (e) {
-        if (e.action == 'copy') {
-          toastr['success']('', 'Copied to Clipboard!!');
+        if (e.action === 'copy') {
+          toastr['success']('', 'Berhasil disalin!!');
         }
       });
     });

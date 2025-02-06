@@ -14,6 +14,7 @@ use App\Repositories\MenuRepository;
 use App\Repositories\MessageTemplateRepository;
 use App\Repositories\ModelRepository;
 use App\Repositories\MyAccountRepository;
+use App\Repositories\Payment\BankAccountRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RegistrationCategoryRepository;
 use App\Repositories\RegistrationPathRepository;
@@ -59,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(StudentRepository::class, StudentRepository::class);
         $this->app->singleton(StudentStatsRepository::class, StudentStatsRepository::class);
         $this->app->singleton(CurrentBillRepository::class, CurrentBillRepository::class);
+        $this->app->singleton(BankAccountRepository::class, BankAccountRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);

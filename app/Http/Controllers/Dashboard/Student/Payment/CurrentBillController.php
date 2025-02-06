@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Student\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentSetting;
 use App\Models\User;
 use App\Repositories\Student\Payment\CurrentBillRepository;
 use Illuminate\Support\Facades\Gate;
@@ -31,6 +32,10 @@ class CurrentBillController extends Controller
         $numberOfBill = $registrationFees->count();
         $totalBilling = $registrationFees->sum('amount');
 
-        return \view('dashboard.student.payment.current-bill.index', compact('title', 'user', 'registrationFees', 'numberOfBill', 'totalBilling'));
+        // TODO Payment Setting
+        $paymentSetting = PaymentSetting::educationalInstitutionId(optional($user->student)->educational_institution_id)
+            ->firstOrFail();
+
+        return \view('dashboard.student.payment.current-bill.index', compact('title', 'user', 'registrationFees', 'numberOfBill', 'totalBilling', 'paymentSetting'));
     }
 }

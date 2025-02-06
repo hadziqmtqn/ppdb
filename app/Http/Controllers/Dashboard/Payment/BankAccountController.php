@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Payment\BankAccount\BankAccountRequest;
 use App\Models\BankAccount;
 use App\Models\PaymentChannel;
+use App\Repositories\Payment\BankAccountRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -21,6 +22,16 @@ use Yajra\DataTables\Facades\DataTables;
 class BankAccountController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected BankAccountRepository $bankAccountRepository;
+
+    /**
+     * @param BankAccountRepository $bankAccountRepository
+     */
+    public function __construct(BankAccountRepository $bankAccountRepository)
+    {
+        $this->bankAccountRepository = $bankAccountRepository;
+    }
 
     public static function middleware(): array
     {
@@ -122,5 +133,11 @@ class BankAccountController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil disimpan!', $bankAccount, null, Response::HTTP_OK);
+    }
+
+    // TODO Select
+    public function select(Request $request)
+    {
+        return $this->bankAccountRepository->getByEducationalInstitutions($request);
     }
 }

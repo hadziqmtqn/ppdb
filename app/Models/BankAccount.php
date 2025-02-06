@@ -68,4 +68,23 @@ class BankAccount extends Model
 
         return $query->when(!$auth->hasRole('super-admin'), fn($query) => $query->where('educational_institution_id'), optional(optional($auth)->admin)->educational_institution_id);
     }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeEducationalInstitutionId(Builder $query, $educationalInstitutionId): Builder
+    {
+        return $query->where('educational_institution_id', $educationalInstitutionId);
+    }
+
+    public function scopeSearch(Builder $query, $request): Builder
+    {
+        $search = $request['search'] ?? null;
+
+        return $query->when($search, function ($query) use ($search) {
+            $query->where('account_name', 'like', '%' . $search . '%');
+        });
+    }
 }
