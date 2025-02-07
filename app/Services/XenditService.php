@@ -26,7 +26,6 @@ class XenditService
             'amount' => $request['amount'],
             'payer_email' => $request['payerEmail'],
             'description' => $request['description'],
-            'invoice_duration' => $request['invoiceDuration'],
             'payment_methods' => PaymentChannel::active()
                 ->pluck('code')
                 ->toArray()

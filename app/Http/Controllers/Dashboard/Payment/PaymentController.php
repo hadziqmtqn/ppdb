@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Xendit\XenditSdkException;
 
 class PaymentController extends Controller
 {
@@ -72,41 +73,12 @@ class PaymentController extends Controller
 
             $amount = array_sum($totalNominal);
 
-            // TODO Xendit Payment Method
             if ($request->input('pay_method') == 'PAYMENT_GATEWAY') {
-                $generateInvoice = $this->xenditService->createInvoice([
-                    'paymentCode' => $payment->code,
-                    'amount' => $amount,
-                    'payerEmail' => $user->email,
-                    'description' => 'Pembayaran registrasi siswa baru',
-                    'invoiceDuration' => 86400
-                ]);
-
-                $invoiceAmount = $generateInvoice['amount'];
-                $expiryDate = Carbon::parse($generateInvoice['expiry_date'])
-                    ->timezone('Asia/Jakarta');
-
-                $payment->checkout_link = $generateInvoice['invoice_url'];
-                $payment->status = $generateInvoice['status'];
-            }else {
-                // TODO Manual Payment
-                $invoiceAmount = $amount;
-                $expiryDate = Carbon::now()->addDay();
-                $payment->payment_method = $request->input('pay_method');
-                $payment->bank_account_id = $request->input('bank_account_id');
-
-                $this->sendNotification([
-                    'name' => $user->name,
-                    'educationalInstitution' => optional(optional($user->student)->educationalInstitution)->name,
-                    'invoiceNumber' => $payment->code,
-                    'paymentDeadline' => Carbon::parse($expiryDate)->isoFormat('DD MMM Y H:i'),
-                    'paymentInstruction' => "\n\n-"
-                ]);
+                $this->updateWithXendit($payment, $amount);
+            } else {
+                $this->updateWithManual($payment, $amount);
             }
 
-            $payment->amount = $invoiceAmount;
-            $payment->expires_at = $expiryDate;
-            $payment->save();
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
@@ -115,6 +87,51 @@ class PaymentController extends Controller
         }
 
         return $this->apiResponse('Tagihan berhasil dibuat', null, route('payment-transaction.show', $payment->slug), Response::HTTP_OK);
+    }
+
+    /**
+     * @throws XenditSdkException
+     */
+    private function updateWithXendit(Payment $payment, $amount)
+    {
+        $payment->load('user.student.educationalInstitution');
+
+        $generateInvoice = $this->xenditService->createInvoice([
+            'paymentCode' => $payment->code,
+            'amount' => $amount,
+            'payerEmail' => optional($payment->user)->email,
+            'description' => 'Pembayaran registrasi siswa baru a/n ' . optional($payment->user)->name,
+        ]);
+
+        $expiryDate = Carbon::parse($generateInvoice['expiry_date'])
+            ->timezone('Asia/Jakarta');
+
+        $payment->checkout_link = $generateInvoice['invoice_url'];
+        $payment->status = $generateInvoice['status'];
+        $payment->amount = $amount;
+        $payment->expires_at = $expiryDate;
+        $payment->save();
+    }
+
+    private function updateWithManual(Payment $payment, $amount)
+    {
+        $payment->load('user.student.educationalInstitution');
+
+        $expiryDate = Carbon::now()->addDay();
+        $payment->payment_method = request()->input('pay_method');
+        $payment->bank_account_id = request()->input('bank_account_id');
+        $payment->amount = $amount;
+        $payment->expires_at = $expiryDate;
+        $payment->save();
+
+        // TODO Send Notification
+        $this->sendNotification([
+            'name' => optional($payment->user)->name,
+            'educationalInstitution' => optional(optional(optional($payment->user)->student)->educationalInstitution)->name,
+            'invoiceNumber' => $payment->code,
+            'paymentDeadline' => Carbon::parse($expiryDate)->isoFormat('DD MMM Y H:i'),
+            'paymentInstruction' => "\n\n-Transafer ke Bank: "
+        ]);
     }
 
     public function handleWebhook(Request $request): JsonResponse
