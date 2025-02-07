@@ -31,7 +31,8 @@ class PaymentTransactionController extends Controller
         try {
             if ($request->ajax()) {
                 $data = Payment::query()
-                    ->with('user:id,name', 'user.student:id,user_id,educational_institution_id', 'user.student.educationalInstitution:id,name');
+                    ->with('user:id,name', 'user.student:id,user_id,educational_institution_id', 'user.student.educationalInstitution:id,name')
+                    ->filterByEducationalInstitution();
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

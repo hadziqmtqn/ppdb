@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -61,5 +62,22 @@ class Payment extends Model implements HasMedia
     public function bankAccount(): BelongsTo
     {
         return $this->belongsTo(BankAccount::class);
+    }
+
+    public function scopeFilterByEducationalInstitution(Builder $query): Builder
+    {
+        $auth = auth()->user();
+
+        $query->when($auth->hasRole('user'), function ($query) use ($auth) {
+            $query->where('user_id', $auth->id);
+        });
+
+        $query->when($auth->hasRole('admin'), function ($query) use ($auth) {
+            $query->whereHas('user.student', function ($query) use ($auth) {
+                $query->where('educational_institution_id', optional($auth->admin)->educational_institution_id);
+            });
+        });
+
+        return $query;
     }
 }
