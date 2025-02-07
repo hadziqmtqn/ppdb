@@ -12,7 +12,6 @@ use App\Repositories\SendMessage\PaymentBillRepository;
 use App\Services\XenditService;
 use App\Traits\ApiResponse;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -111,18 +110,7 @@ class PaymentController extends Controller
         $payment->amount = $amount;
         $payment->expires_at = $expiryDate;
         $payment->save();
-    }
-
-    private function updateWithManual(Payment $payment, $amount)
-    {
-        $payment->load('user.student.educationalInstitution');
-
-        $expiryDate = Carbon::now()->addDay();
-        $payment->payment_method = request()->input('pay_method');
-        $payment->bank_account_id = request()->input('bank_account_id');
-        $payment->amount = $amount;
-        $payment->expires_at = $expiryDate;
-        $payment->save();
+        $payment->refresh();
 
         // TODO Send Notification
         $this->sendNotification([
@@ -130,27 +118,38 @@ class PaymentController extends Controller
             'educationalInstitution' => optional(optional(optional($payment->user)->student)->educationalInstitution)->name,
             'invoiceNumber' => $payment->code,
             'paymentDeadline' => Carbon::parse($expiryDate)->isoFormat('DD MMM Y H:i'),
-            'paymentInstruction' => "\n\n-Transafer ke Bank: "
+            'paymentInstruction' => 'Klik link berikut ini: ' . $payment->checkout_link,
+            'email' => optional($payment->user)->email,
+            'phone' => optional(optional($payment->user)->student)->whatsapp_number
         ]);
     }
 
-    public function handleWebhook(Request $request): JsonResponse
+    private function updateWithManual(Payment $payment, $amount)
     {
-        try {
-            $data = $request->all();
+        $payment->load('user.student.educationalInstitution', 'bankAccount.paymentChannel');
 
-            $payment = Payment::where('code', $data['external_id'])
-                ->firstOrFail();
-            $payment->status = $data['status'];
-            $payment->payment_method = $data['payment_method'];
-            $payment->payment_channel = $data['payment_channel'];
-            $payment->save();
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage());
-            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        $expiryDate = Carbon::now()->addDay();
+        $payment->payment_method = request()->input('pay_method');
+        $payment->bank_account_id = request()->input('bank_account_id');
+        $payment->amount = $amount;
+        $payment->expires_at = $expiryDate;
+        $payment->save();
+        $payment->refresh();
 
-        return $this->apiResponse('Webhook received', $payment->code, null, Response::HTTP_OK);
+        $bankAccount = optional(optional($payment->bankAccount)->paymentChannel)->code;
+        $accountNumber = optional($payment->bankAccount)->account_number;
+        $accountName = optional($payment->bankAccount)->account_name;
+
+        // TODO Send Notification
+        $this->sendNotification([
+            'name' => optional($payment->user)->name,
+            'educationalInstitution' => optional(optional(optional($payment->user)->student)->educationalInstitution)->name,
+            'invoiceNumber' => $payment->code,
+            'paymentDeadline' => Carbon::parse($expiryDate)->isoFormat('DD MMM Y H:i'),
+            'paymentInstruction' => "\n\n-Transafer ke Bank: " . $bankAccount . "\nNo. Rek.: " . $accountNumber . "\nAtas Nama: " . $accountName,
+            'email' => optional($payment->user)->email,
+            'phone' => optional(optional($payment->user)->student)->whatsapp_number
+        ]);
     }
 
     private function sendNotification(array $data)

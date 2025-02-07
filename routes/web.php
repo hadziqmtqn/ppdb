@@ -15,6 +15,7 @@ use App\Http\Controllers\Dashboard\Payment\PaymentController;
 use App\Http\Controllers\Dashboard\Payment\PaymentSettingController;
 use App\Http\Controllers\Dashboard\Payment\PaymentTransactionController;
 use App\Http\Controllers\Dashboard\Payment\RegistrationFeeController;
+use App\Http\Controllers\Dashboard\Payment\WebhookController;
 use App\Http\Controllers\Dashboard\References\ClassLevelController;
 use App\Http\Controllers\Dashboard\References\DetailMediaFileController;
 use App\Http\Controllers\Dashboard\References\DistanceToSchoolController;
@@ -393,4 +394,4 @@ Route::get('select-registration-path', [RegistrationPathController::class, 'sele
 Route::get('select-major', [MajorController::class, 'select']);
 
 // TODO Xendit Webhook
-Route::post('payment-webhook', [PaymentController::class, 'handleWebhook']);
+Route::post('payment-webhook', [WebhookController::class, 'handleWebhook']);
