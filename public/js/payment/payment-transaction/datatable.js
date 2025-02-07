@@ -22,6 +22,7 @@ $(function () {
             {data: 'user', name: 'user'},
             {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'code', name: 'code'},
+            {data: 'amount', name: 'amount'},
             {data: 'created_at', name: 'created_at'},
             {data: 'status', name: 'status', orderable: false, searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},

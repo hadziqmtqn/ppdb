@@ -11,6 +11,7 @@
                     <th>Nama Siswa</th>
                     <th>Lembaga</th>
                     <th>No. Tagihan</th>
+                    <th>Total</th>
                     <th>Tgl. Transaksi</th>
                     <th>Status</th>
                     <th>Opsi</th>

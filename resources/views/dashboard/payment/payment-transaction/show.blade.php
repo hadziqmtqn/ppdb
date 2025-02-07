@@ -115,7 +115,11 @@
                             </div>
                         </div>
                         @if($payment->payment_method == 'MANUAL_PAYMENT')
-                            <form action="#" id="formPaymentConfirm">
+                            <form onsubmit="return false" id="formPaymentConfirm" data-slug="{{ $payment->slug }}">
+                                <div class="form-floating form-floating-outline mb-3">
+                                    <input type="file" name="file" id="file" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
+                                    <label for="file">Upload bukti pembayaran</label>
+                                </div>
                                 <button type="submit" class="btn btn-primary w-100" id="btn-bill-confirm">Konfirmasi Pembayaran</button>
                             </form>
                         @else
@@ -130,4 +134,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/student/payment/check-payment.js') }}"></script>
+    <script src="{{ asset('js/student/payment/confirm.js') }}"></script>
 @endsection

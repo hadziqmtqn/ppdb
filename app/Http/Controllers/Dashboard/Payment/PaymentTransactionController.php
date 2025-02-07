@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Dashboard\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payment\PaymentConfirmationRequest;
 use App\Models\Payment;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -47,6 +49,7 @@ class PaymentTransactionController extends Controller
                     })
                     ->addColumn('educationalInstitution', fn($row) => optional(optional(optional($row->user)->student)->educationalInstitution)->name)
                     ->addColumn('user', fn($row) => optional($row->user)->name)
+                    ->addColumn('amount', fn($row) => 'Rp. ' . number_format($row->amount,0,',','.'))
                     ->addColumn('created_at', fn($row) => Carbon::parse($row->created_at)->isoFormat('DD MMM Y'))
                     ->addColumn('status', function ($row) {
                         $status = $row->status;
@@ -93,6 +96,34 @@ class PaymentTransactionController extends Controller
         return \view('dashboard.payment.payment-transaction.show', compact('title', 'payment'));
     }
 
+    public function confirm(PaymentConfirmationRequest $request, Payment $payment): JsonResponse
+    {
+        Gate::authorize('store', $payment);
+
+        try {
+            DB::beginTransaction();
+            $payment->status = 'PROSES_VALIDASI';
+            $payment->save();
+
+            if ($request->hasFile('file') && $request->file('file')->isValid()) {
+                if ($payment->hasMedia('proof_of_payment')) {
+                    $payment->clearMediaCollection('proof_of_payment');
+                }
+
+                $payment->addMediaFromRequest('file')
+                    ->toMediaCollection('proof_of_payment');
+            }
+
+            DB::commit();
+        } catch (Exception $exception) {
+            DB::rollBack();
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Data berhasil disimpan!', null, route('payment-transaction.show', $payment->slug), Response::HTTP_OK);
+    }
+
     public function checkPayment(Payment $payment): JsonResponse
     {
         Gate::authorize('view', $payment);
@@ -101,7 +132,7 @@ class PaymentTransactionController extends Controller
             return $this->apiResponse('Get data success', [
                 'status' => $payment->status,
                 'paymentMethod' => $payment->payment_method ? str_replace('_', ' ', $payment->payment_method) : null,
-                'paymentChannel' => $payment->payment_channel
+                'paymentChannel' => $payment->payment_method == 'MANUAL_PAYMENT' ? optional(optional($payment->bankAccount)->paymentChannel)->code : $payment->payment_channel
             ], null, Response::HTTP_OK);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());

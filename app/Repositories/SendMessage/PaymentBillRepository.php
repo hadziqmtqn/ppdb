@@ -17,7 +17,7 @@ class PaymentBillRepository
         $placeholders = [
             "{nama}" => $data['name'],
             "{lembaga}" => $data['educationalInstitution'],
-            "{nomor_tagihan}" => $data['invoinceNumber'],
+            "{nomor_tagihan}" => $data['invoiceNumber'],
             "{batas_waktu_pembayaran}" => $data['paymentDeadline'],
             "{instruksi_pembayaran}" => $data['paymentInstruction']
         ];
