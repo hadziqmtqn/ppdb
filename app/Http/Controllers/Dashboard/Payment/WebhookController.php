@@ -8,6 +8,7 @@ use App\Repositories\SendMessage\PaymentCallbackRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +38,7 @@ class WebhookController extends Controller
             $payment->status = $data['status'];
             $payment->payment_method = $data['payment_method'];
             $payment->payment_channel = $data['payment_channel'];
-            $payment->paid_at = $data['paid_at'];
+            $payment->paid_at = Carbon::parse($data['paid_at'])->timezone('Asia/Jakarta');
             $payment->save();
             $payment->refresh();
 

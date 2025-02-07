@@ -21,7 +21,8 @@ class PaymentCallbackRepository
             "{nama}" => optional($payment->user)->name,
             "{lembaga}" => optional(optional(optional($payment->user)->student)->educationalInstitution)->name,
             "{nomor_tagihan}" => $payment->code,
-            "{tanggal_pembayaran}" => Carbon::parse($payment->paid_at)->timezone('Asia/Jakarta')->isoFormat('DD MMM Y H:i'),
+            "{jumlah_pembayaran}" => 'Rp. ' . number_format($payment->amount,0,',','.'),
+            "{tanggal_pembayaran}" => Carbon::parse($payment->paid_at)->timezone('Asia/Jakarta')->isoFormat('DD MMM Y HH:mm'),
             "{metode_pembayaran}" => $payment->payment_method
         ];
 

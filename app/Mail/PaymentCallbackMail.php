@@ -14,7 +14,7 @@ class PaymentCallbackMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected mixed $data;
+    public mixed $data;
 
     public function __construct($data)
     {
