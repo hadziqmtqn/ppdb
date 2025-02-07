@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use App\Repositories\SendMessage\PaymentCallbackRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,6 +15,16 @@ use Symfony\Component\HttpFoundation\Response;
 class WebhookController extends Controller
 {
     use ApiResponse;
+
+    protected PaymentCallbackRepository $paymentCallbackRepository;
+
+    /**
+     * @param PaymentCallbackRepository $paymentCallbackRepository
+     */
+    public function __construct(PaymentCallbackRepository $paymentCallbackRepository)
+    {
+        $this->paymentCallbackRepository = $paymentCallbackRepository;
+    }
 
     public function handleWebhook(Request $request): JsonResponse
     {
@@ -32,5 +43,10 @@ class WebhookController extends Controller
         }
 
         return $this->apiResponse('Webhook received', $payment->code, null, Response::HTTP_OK);
+    }
+
+    private function success()
+    {
+
     }
 }
