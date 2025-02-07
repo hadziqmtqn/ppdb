@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
     const formPaymentConfirm = document.getElementById('formPaymentConfirm');
+    const btnBillConfirm = document.getElementById('btn-bill-confirm');
     const slug = formPaymentConfirm.dataset.slug;
 
-    if (!formPaymentConfirm) {
+    if (!formPaymentConfirm || !btnBillConfirm) {
         return;
     }
 
-    formPaymentConfirm.addEventListener('submit', function(event) {
+    btnBillConfirm.addEventListener('click', function(event) {
         event.preventDefault();
         blockUi();
         toastrOption();

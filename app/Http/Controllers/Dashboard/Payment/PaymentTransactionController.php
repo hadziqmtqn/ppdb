@@ -96,9 +96,11 @@ class PaymentTransactionController extends Controller
         return \view('dashboard.payment.payment-transaction.show', compact('title', 'payment'));
     }
 
-    public function confirm(PaymentConfirmationRequest $request, Payment $payment): JsonResponse
+    public function confirm(PaymentConfirmationRequest $request, Payment $payment)
     {
         Gate::authorize('store', $payment);
+
+        if ($payment->status == 'PAID') return redirect()->back()->with('warning', 'Tidak bisa diubah, jika sudah valid.');
 
         try {
             DB::beginTransaction();
@@ -118,10 +120,10 @@ class PaymentTransactionController extends Controller
         } catch (Exception $exception) {
             DB::rollBack();
             Log::error($exception->getMessage());
-            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return redirect()->back()->with('error', 'Data gagal disimpan!');
         }
 
-        return $this->apiResponse('Data berhasil disimpan!', null, route('payment-transaction.show', $payment->slug), Response::HTTP_OK);
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
     public function checkPayment(Payment $payment): JsonResponse
@@ -130,7 +132,7 @@ class PaymentTransactionController extends Controller
 
         try {
             return $this->apiResponse('Get data success', [
-                'status' => $payment->status,
+                'status' => str_replace('_', ' ', $payment->status),
                 'paymentMethod' => $payment->payment_method ? str_replace('_', ' ', $payment->payment_method) : null,
                 'paymentChannel' => $payment->payment_method == 'MANUAL_PAYMENT' ? optional(optional($payment->bankAccount)->paymentChannel)->code : $payment->payment_channel
             ], null, Response::HTTP_OK);

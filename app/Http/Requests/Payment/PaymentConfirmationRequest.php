@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PaymentConfirmationRequest extends FormRequest
 {
-    use ApiResponse;
-
     public function rules(): array
     {
         return [
@@ -22,10 +20,5 @@ class PaymentConfirmationRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException($this->apiResponse($validator->errors()->first(), null, null, Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

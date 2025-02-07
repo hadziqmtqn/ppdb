@@ -14,7 +14,7 @@
                     <div class="col-xl-8 mb-3 mb-xl-0">
                         <div class="d-flex justify-content-between flex-xl-row flex-md-column flex-sm-row flex-column mb-3">
                             <div class="mb-xl-0 pb-3">
-                                <button type="button" class="btn btn-outline-{{ $payment->status == 'PENDING' ? 'warning' : ($payment->status == 'PAID' ? 'success' : 'danger') }}" style="cursor: default" id="paymentStatus">{{ $payment->status }}</button>
+                                <button type="button" class="btn btn-outline-{{ $payment->status == 'PENDING' ? 'warning' : ($payment->status == 'PAID' ? 'success' : 'danger') }}" style="cursor: default" id="paymentStatus">{{ str_replace('_', ' ', $payment->status) }}</button>
                             </div>
                             <div>
                                 <h4 class="fw-medium" id="paymentSlug" data-slug="{{ $payment->slug }}">#{{ $payment->code }}</h4>
@@ -71,7 +71,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <ul class="list-group">
+                        <ul class="list-group mb-3">
                             @foreach($payment->paymentTransactions as $paymentTransaction)
                                 <li class="list-group-item">
                                     <div class="d-flex gap-3">
@@ -98,6 +98,15 @@
                                 </li>
                             @endforeach
                         </ul>
+
+                        @if($payment->payment_method == 'MANUAL_PAYMENT' && $payment->hasMedia('proof_of_payment'))
+                            <div class="list-group">
+                                <a href="{{ url($payment->getFirstTemporaryUrl(\Carbon\Carbon::now()->addMinutes(10), 'proof_of_payment')) }}" target="_blank" class="list-group-item d-flex justify-content-between">
+                                    <span class="text-primary"><span class="mdi mdi-file-document-outline me-1"></span>Lihat bukti pembayaran</span>
+                                    <i class="mdi mdi-chevron-right lh-sm scaleX-n1-rtl"></i>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                     <!-- Confirmation total -->
                     <div class="col-xl-4">
@@ -115,12 +124,21 @@
                             </div>
                         </div>
                         @if($payment->payment_method == 'MANUAL_PAYMENT')
-                            <form onsubmit="return false" id="formPaymentConfirm" data-slug="{{ $payment->slug }}">
+                            <form action="{{ route('payment-transaction.confirm', $payment->slug) }}" id="formPaymentConfirm" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="alert alert-warning" role="alert">
+                                    <ul class="ps-3 mb-0">
+                                        <li>File yang diizinkan berupa gambar (jpg/jpeg/png) atau pdf</li>
+                                        <li>File berukuran maksimal 2MB</li>
+                                    </ul>
+                                </div>
                                 <div class="form-floating form-floating-outline mb-3">
-                                    <input type="file" name="file" id="file" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
+                                    <input type="file" name="file" id="file" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
                                     <label for="file">Upload bukti pembayaran</label>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100" id="btn-bill-confirm">Konfirmasi Pembayaran</button>
+                                @include('layouts.session')
+                                <button type="submit" class="btn btn-primary w-100" id="btn-bill-confirm" {{ $payment->status == 'PAID' ? 'disabled' : '' }}>Konfirmasi Pembayaran</button>
                             </form>
                         @else
                             <a href="{{ url($payment->checkout_link) }}" class="btn btn-primary w-100" target="_blank" id="checkoutLink">Bayar Sekarang</a>
@@ -134,5 +152,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/student/payment/check-payment.js') }}"></script>
-    <script src="{{ asset('js/student/payment/confirm.js') }}"></script>
+    {{--<script src="{{ asset('js/student/payment/confirm.js') }}"></script>--}}
 @endsection
