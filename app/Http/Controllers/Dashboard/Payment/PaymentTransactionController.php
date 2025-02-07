@@ -4,22 +4,77 @@ namespace App\Http\Controllers\Dashboard\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
-use App\Models\PaymentTransaction;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentTransactionController extends Controller
 {
     use ApiResponse;
 
-    public function index()
+    public function index(): View
     {
-        return PaymentTransaction::all();
+        $title = 'Transaksi Pembayaran';
+
+        return \view('dashboard.payment.payment-transaction.index', compact('title'));
+    }
+
+    public function datatable(Request $request): \Illuminate\Http\JsonResponse
+    {
+        try {
+            if ($request->ajax()) {
+                $data = Payment::query()
+                    ->with('user:id,name', 'user.student:id,user_id,educational_institution_id', 'user.student.educationalInstitution:id,name');
+
+                return DataTables::eloquent($data)
+                    ->addIndexColumn()
+                    ->filter(function ($instance) use ($request) {
+                        $search = $request->get('search');
+
+                        $instance->when($search, function ($query) use ($search) {
+                            $query->whereHas('user', function ($query) use ($search) {
+                                $query->whereAny(['name'], 'LIKE', '%' . $search . '%');
+                            });
+                        });
+                    })
+                    ->addColumn('educationalInstitution', fn($row) => optional(optional(optional($row->user)->student)->educationalInstitution)->name)
+                    ->addColumn('user', fn($row) => optional($row->user)->name)
+                    ->addColumn('created_at', fn($row) => Carbon::parse($row->created_at)->isoFormat('DD MMM Y'))
+                    ->addColumn('status', function ($row) {
+                        $status = $row->status;
+
+                        $badgeColor = match ($status) {
+                            'PENDING' => 'bg-label-warning',
+                            'PAID' => 'bg-label-primary',
+                            'CANCEL' => 'bg-label-danger',
+                            default => 'bg-label-secondary',
+                        };
+
+                        return '<span class="badge rounded-pill '. $badgeColor .'">'. $status .'</span>';
+                    })
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="'. route('payment-transaction.show', $row->slug) .'" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
+                        if (!auth()->user()->hasRole('user')) {
+                            $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        }
+
+                        return $btn;
+                    })
+                    ->rawColumns(['action', 'status'])
+                    ->make();
+            }
+        }catch (Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+
+        return response()->json(true);
     }
 
     public function show(Payment $payment): View

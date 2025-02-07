@@ -21,13 +21,13 @@
                     </a>
 
                     <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="javascript:void(0)" class="menu-link">
+                        <li class="menu-item {{ $title == 'Transaksi Pembayaran' ? 'active' : '' }}">
+                            <a href="{{ route('payment-transaction.index') }}" class="menu-link">
                                 <i class="menu-icon tf-icons mdi mdi-cash-sync"></i>
                                 <div data-i18n="Histori Transaksi">Histori Transaksi</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ $title == 'Tagihan Saat Ini' || $title == 'Transaksi Pembayaran' ? 'active' : '' }}">
+                        <li class="menu-item {{ $title == 'Tagihan Saat Ini' ? 'active' : '' }}">
                             <a href="{{ route('current-bill.index', auth()->user()->username) }}" class="menu-link">
                                 <i class="menu-icon tf-icons mdi mdi-cash-plus"></i>
                                 <div data-i18n="Tagihan Saat Ini">Tagihan Saat Ini</div>
