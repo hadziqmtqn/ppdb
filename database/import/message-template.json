@@ -61,5 +61,12 @@
     "category": "tagihan_pembayaran",
     "recipient": "user",
     "message": "Assalamu`ailaikum Wr. Wb.\n\nHalo {nama}!\n\nTerima kasih sudah melakukan pemesanan di {lembaga}. Berikut ini rincian tagihan Anda:\n\n* Nomor Tagihan: {nomor_tagihan}\n* Tanggal Pembuatan: {tanggal_pembuatan}\n* Jumlah Tagihan: {jumlah_tagihan}\n* Batas Waktu Pembayaran: {batas_waktu_pembayaran}\n\nUntuk melakukan pembayaran, silakan ikuti instruksi berikut:\n\n{instruksi_pembayaran}\n\nTerima kasih!\n{lembaga}\n\n_*PESAN INI TIDAK UNTUK DIBALAS*_"
+  },
+  {
+    "title": "Pembayaran sukses",
+    "educational_institution_id": null,
+    "category": "pembayaran_sukses",
+    "recipient": "user",
+    "message": "Assalamu`alaikum Wr. Wb.\n\nHalo {nama}!\n\nTerima kasih atas pembayaran Anda! Pembayaran sebesar {jumlah_pembayaran} untuk tagihan {nomor_tagihan} telah berhasil kami terima.\n\nBerikut ini detail pembayaran Anda:\n\n* Nomor Tagihan: {nomor_tagihan}\n* Tanggal Pembayaran: {tanggal_pembayaran}\n* Metode Pembayaran: {metode_pembayaran}\n* Status Pembayaran: Lunas\n\nTerima kasih sudah melakukan pembayaran tepat waktu. Jika ada pertanyaan atau bantuan lebih lanjut, jangan ragu untuk menghubungi kami.\n\n{lembaga}\n\n_*PESAN INI TIDAK UNTUK DIBALAS*_"
   }
 ]

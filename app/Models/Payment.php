@@ -24,14 +24,16 @@ class Payment extends Model implements HasMedia
         'payment_method',
         'payment_channel',
         'bank_account_id',
-        'expires_at'
+        'expires_at',
+        'paid_at'
     ];
 
     protected function casts(): array
     {
         return [
             'slug' => 'string',
-            'expires_at' => 'timestamp'
+            'expires_at' => 'timestamp',
+            'paid_at' => 'timestamp'
         ];
     }
 
