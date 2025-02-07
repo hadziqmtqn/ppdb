@@ -54,5 +54,12 @@
     "category": "pendaftaran_ditolak",
     "recipient": "user",
     "message": "Assalamu`alaikum Wr. Wb.\n\nHalo {nama},\n\nTerima kasih atas minat Anda untuk bergabung bersama kami di {lembaga}. Kami memahami betapa pentingnya keputusan ini bagi Anda, dan kami menghargai usaha serta waktu yang telah Anda curahkan untuk mendaftar.\n\nSetelah melalui proses seleksi yang cukup ketat, dengan berat hati kami belum dapat menerima Anda di tahun ajaran ini. Kami tahu ini mungkin bukan kabar yang Anda harapkan, namun kami ingin Anda tahu bahwa kami sangat menghargai ketertarikan Anda pada sekolah kami.\n\nKami berharap Anda tidak berkecil hati dan tetap semangat meraih impian Anda. Siapa tahu, di masa depan ada kesempatan lain untuk bergabung bersama {lembaga}.\n\nSalam hangat,\n{lembaga}\n\n_*PESAN INI TIDAK UNTUK DIBALAS*_"
+  },
+  {
+    "title": "Tagihan Pembayaran",
+    "educational_institution_id": null,
+    "category": "tagihan_pembayaran",
+    "recipient": "user",
+    "message": "Assalamu`ailaikum Wr. Wb.\n\nHalo {nama}!\n\nTerima kasih sudah melakukan pemesanan di {lembaga}. Berikut ini rincian tagihan Anda:\n\n* Nomor Tagihan: {nomor_tagihan}\n* Tanggal Pembuatan: {tanggal_pembuatan}\n* Jumlah Tagihan: {jumlah_tagihan}\n* Batas Waktu Pembayaran: {batas_waktu_pembayaran}\n\nUntuk melakukan pembayaran, silakan ikuti instruksi berikut:\n\n{instruksi_pembayaran}\n\nTerima kasih!\n{lembaga}\n\n_*PESAN INI TIDAK UNTUK DIBALAS*_"
   }
 ]

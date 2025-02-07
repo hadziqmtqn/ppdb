@@ -33,18 +33,23 @@ trait SendWhatsappMessage
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
             curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
+
+            Log::info('WABLAS Response: ' . $response);
         }
 
         // TODO WANESIA
         if ($whatsappApi->provider == 'WANESIA') {
-            (new Client())->sendAsync(new Request('POST', $whatsappApi->domain), [
+            $response = (new Client())->sendAsync(new Request('POST', $whatsappApi->domain), [
                 'form_params' => [
                     'token' => $whatsappApi->api_key,
                     'number' => $textMessage['phone'],
                     'message' => $textMessage['message'],
                 ]
             ])->wait();
+
+            Log::info('WANESIA Response: ' . $response->getBody());
         }
     }
 }

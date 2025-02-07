@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\PaymentTransaction;
 use App\Models\RegistrationFee;
 use App\Models\User;
+use App\Repositories\SendMessage\PaymentBillRepository;
 use App\Services\XenditService;
 use App\Traits\ApiResponse;
 use Exception;
@@ -24,13 +25,16 @@ class PaymentController extends Controller
     use ApiResponse;
 
     protected XenditService $xenditService;
+    protected PaymentBillRepository $paymentBillRepository;
 
     /**
      * @param XenditService $xenditService
+     * @param PaymentBillRepository $paymentBillRepository
      */
-    public function __construct(XenditService $xenditService)
+    public function __construct(XenditService $xenditService, PaymentBillRepository $paymentBillRepository)
     {
         $this->xenditService = $xenditService;
+        $this->paymentBillRepository = $paymentBillRepository;
     }
 
     public function store(PaymentRequest $request, User $user): JsonResponse
@@ -38,6 +42,8 @@ class PaymentController extends Controller
         Gate::authorize('store', $user);
 
         try {
+            $user->load('student.educationalInstitution');
+
             $registrationFeeIds = $request->input('registration_fee_id', []);
             $paidAmounts = $request->input('paid_amount', []);
 
@@ -88,6 +94,14 @@ class PaymentController extends Controller
                 $expiryDate = Carbon::now()->addDay();
                 $payment->payment_method = $request->input('pay_method');
                 $payment->bank_account_id = $request->input('bank_account_id');
+
+                $this->sendNotification([
+                    'name' => $user->name,
+                    'educationalInstitution' => optional(optional($user->student)->educationalInstitution)->name,
+                    'invoiceNumber' => $payment->code,
+                    'paymentDeadline' => Carbon::parse($expiryDate)->isoFormat('DD MMM Y H:i'),
+                    'paymentInstruction' => "\n\n-"
+                ]);
             }
 
             $payment->amount = $invoiceAmount;
@@ -120,5 +134,10 @@ class PaymentController extends Controller
         }
 
         return $this->apiResponse('Webhook received', $payment->code, null, Response::HTTP_OK);
+    }
+
+    private function sendNotification(array $data)
+    {
+        $this->paymentBillRepository->sendMessage($data);
     }
 }

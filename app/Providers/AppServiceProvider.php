@@ -23,6 +23,7 @@ use App\Repositories\SaveNewAccountRepository;
 use App\Repositories\SchoolYearRepository;
 use App\Repositories\SendMessage\AcceptanceRegistrationRepository;
 use App\Repositories\SendMessage\AccountVerificationRepository;
+use App\Repositories\SendMessage\PaymentBillRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use App\Repositories\SendMessage\SafetyChangesRepository;
 use App\Repositories\Student\Payment\CurrentBillRepository;
@@ -67,6 +68,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(RegistrationMessageRepository::class, RegistrationMessageRepository::class);
         $this->app->singleton(SafetyChangesRepository::class, SafetyChangesRepository::class);
         $this->app->singleton(AcceptanceRegistrationRepository::class, AcceptanceRegistrationRepository::class);
+        $this->app->singleton(PaymentBillRepository::class, PaymentBillRepository::class);
 
         // TODO Policy
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);
