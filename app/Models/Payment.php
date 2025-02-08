@@ -29,6 +29,10 @@ class Payment extends Model implements HasMedia
         'paid_at'
     ];
 
+    protected $hidden = [
+        'checkout_link'
+    ];
+
     protected function casts(): array
     {
         return [

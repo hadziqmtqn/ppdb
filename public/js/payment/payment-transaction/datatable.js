@@ -1,5 +1,7 @@
 $(function () {
     const table = '#datatable';
+    const educationalInstitution = $('#select-educational-institution, #select-educational-institution-0');
+    const status = $('#select-status');
 
     const dataTable = $(table).DataTable({
         processing: true,
@@ -15,6 +17,8 @@ $(function () {
             },
             data: function (d) {
                 d.search = $(table + '_filter ' + 'input[type="search"]').val();
+                d.educational_institution_id = educationalInstitution.val();
+                d.status = status.val();
             }
         },
         columns: [
@@ -34,6 +38,16 @@ $(function () {
         dataTable.ajax.reload();
         dataTable.page(currentPage).draw('page');
     }
+
+    $('.filter').on('change', function () {
+        console.log(educationalInstitution.val());
+        dataTable.ajax.params({
+            educational_institution_id: educationalInstitution.val(),
+            status: status.val()
+        });
+
+        dataTable.ajax.reload();
+    });
 
     dataTable.off('click').on('click', '.delete', function () {
         let slug = $(this).data('slug');

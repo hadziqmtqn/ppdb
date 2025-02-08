@@ -33,19 +33,34 @@ class PaymentTransactionController extends Controller
         try {
             if ($request->ajax()) {
                 $data = Payment::query()
-                    ->with('user:id,name', 'user.student:id,user_id,educational_institution_id', 'user.student.educationalInstitution:id,name')
+                    ->with([
+                        'user:id,name',
+                        'user.student:id,user_id,educational_institution_id',
+                        'user.student.educationalInstitution:id,name'
+                    ])
+                    ->whereHas('user', fn($query) => $query->whereNull('deleted_at'))
                     ->filterByEducationalInstitution();
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
                     ->filter(function ($instance) use ($request) {
                         $search = $request->get('search');
+                        $status = $request->get('status');
+                        $educationalInstitutionId = $request->get('educational_institution_id');
 
                         $instance->when($search, function ($query) use ($search) {
                             $query->whereHas('user', function ($query) use ($search) {
                                 $query->whereAny(['name'], 'LIKE', '%' . $search . '%');
                             });
-                        });
+                        })
+                            ->when($status, function ($query) use ($status) {
+                                $query->whereIn('status', $status);
+                            })
+                            ->when($educationalInstitutionId, function ($query) use ($educationalInstitutionId) {
+                                $query->whereHas('user.student', function ($query) use ($educationalInstitutionId) {
+                                    $query->where('educational_institution_id', $educationalInstitutionId);
+                                });
+                            });
                     })
                     ->addColumn('educationalInstitution', fn($row) => optional(optional(optional($row->user)->student)->educationalInstitution)->name)
                     ->addColumn('user', fn($row) => optional($row->user)->name)
@@ -61,11 +76,11 @@ class PaymentTransactionController extends Controller
                             default => 'bg-label-secondary',
                         };
 
-                        return '<span class="badge rounded-pill '. $badgeColor .'">'. $status .'</span>';
+                        return '<span class="badge rounded-pill '. $badgeColor .'">'. str_replace('_', ' ', $status) .'</span>';
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="'. route('payment-transaction.show', $row->slug) .'" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
-                        if (!auth()->user()->hasRole('user')) {
+                        if (!auth()->user()->hasRole('user') && ($row->status != 'PAID')) {
                             $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
                         }
 
