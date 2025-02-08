@@ -51,7 +51,7 @@ class StudentReportController extends Controller implements HasMiddleware
             $educationalInstitutionName = optional($educationalInstitution)->name ?? ' Semua Lembaga ';
             $registrationAccepted = !$request->input('registration_status') ? ' Semua Status ' : ' Siswa ' . ucfirst(str_replace('_', ' ', $request->input('registration_status')));
 
-            return Excel::download(new StudentReportExcel($request), 'Daftar PPDB ' . $educationalInstitutionName . $registrationAccepted . ' TA. ' . $schoolYear->first_year . '-' . $schoolYear->last_year . '.xlsx');
+            return Excel::download(new StudentReportExcel($request), 'Daftar PPDB ' . $educationalInstitutionName . $registrationAccepted . ' TA-' . $schoolYear->first_year . '-' . $schoolYear->last_year . '.xlsx');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Laporan gagal diunduh!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);

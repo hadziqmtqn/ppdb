@@ -2,15 +2,23 @@
 
 namespace App\Exports\Student;
 
+use App\Exports\TextValueBinder;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
+class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings, WithEvents
 {
     use Exportable;
 
@@ -46,7 +54,8 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
             'family.guardianEducation:id,name',
             'family.guardianProfession:id,name',
             'family.guardianIncome:id,nominal',
-            'residence',
+            'residence.distanceToSchool:id,name',
+            'residence.transportation:id,name',
             'previousSchool',
         ])
             ->filterStudentDatatable($this->request)
@@ -88,6 +97,22 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
                     optional(optional($user->family)->guardianEducation)->name, // 'Pendidikan Wali',
                     optional(optional($user->family)->guardianProfession)->name, // 'Pekerjaan Wali',
                     optional(optional($user->family)->guardianIncome)->nominal, // 'Penghasilan Wali',
+                    optional($user->residence)->province, // 'Provinsi',
+                    optional($user->residence)->city, // 'Kota/Kab.',
+                    optional($user->residence)->district, // 'Kec.',
+                    optional($user->residence)->village, // 'Desa/Kel.',
+                    optional($user->residence)->street, // 'Jalan',
+                    optional($user->residence)->postal_code, // 'Kode Pos',
+                    optional(optional($user->residence)->distanceToSchool)->name, // 'Jarak ke Sekolah',
+                    optional(optional($user->residence)->transportation)->name, // transportasi
+                    // previous school
+                    optional($user->previousSchool)->school_name, // 'Nama Asal Sekolah',
+                    optional($user->previousSchool)->status, // 'Status',
+                    optional($user->previousSchool)->province, // 'Provinsi',
+                    optional($user->previousSchool)->city, // 'Kota/Kab.',
+                    optional($user->previousSchool)->district, // 'Kec.',
+                    optional($user->previousSchool)->village, // 'Desa/Kel.',
+                    optional($user->previousSchool)->street, // 'Jalan',
                 ]);
             });
     }
@@ -95,8 +120,28 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
     public function headings(): array
     {
         // TODO: Implement headings() method.
-        return [
+        $row1 = [
+            // registration
             'No',
+            'Registrasi',
+            ...array_fill(0, 8, ''),
+            // personal data
+            'Data Pribadi',
+            ...array_fill(0, 6, ''),
+            // family
+            'Keluarga',
+            ...array_fill(0, 13, ''),
+            // residence
+            'Tempat Tinggal',
+            ...array_fill(0, 7, ''),
+            // previous school
+            'Asal Sekolah',
+            ...array_fill(0, 6, '')
+        ];
+
+        $row2 = [
+            // registration
+            '',
             'No. Registrasi',
             'Nama Lengkap',
             'Lembaga',
@@ -106,6 +151,7 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
             'Jurusan',
             'NISN',
             'No. Whatsapp',
+            // personal data
             'Tempat Lahir',
             'Tanggal Lahir',
             'Jenis Kelamin',
@@ -113,6 +159,7 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
             'Jumlah Saudara',
             'Hubungan Keluarga',
             'Agama',
+            // family
             'NIK',
             'No. KK',
             'Nama Ayah Kandung',
@@ -127,6 +174,64 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
             'Pendidikan Wali',
             'Pekerjaan Wali',
             'Penghasilan Wali',
+            // residence
+            'Provinsi',
+            'Kota/Kab.',
+            'Kec.',
+            'Desa/Kel.',
+            'Jalan',
+            'Kode Pos',
+            'Jarak ke Sekolah',
+            'Transportasi',
+            // previous school
+            'Nama Asal Sekolah',
+            'Status',
+            'Provinsi',
+            'Kota/Kab.',
+            'Kec.',
+            'Desa/Kel.',
+            'Jalan',
+        ];
+
+        return array_merge([$row1, $row2]);
+    }
+
+    public function registerEvents(): array
+    {
+        Cell::setValueBinder(new TextValueBinder());
+
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet->getDelegate();
+                $lastColumnIndex = $sheet->getHighestColumn();
+                $lastColumn = Coordinate::columnIndexFromString($lastColumnIndex);
+                $lastColumnToAdd = Coordinate::stringFromColumnIndex($lastColumn );
+                $totalRows = $sheet->getHighestRow();
+                $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial');
+                $sheet->getParent()->getDefaultStyle()->getAlignment()
+                    ->setVertical(Alignment::VERTICAL_CENTER);
+
+                $sheet->getStyle('A1:' . $lastColumnToAdd . '1')->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A1:' . $lastColumnToAdd . '1')
+                    ->getFont()
+                    ->setBold(true);
+
+                // merge title
+                foreach ([
+                     'A1:A2', 'B1:J1', 'K1:Q1',
+                     'R1:AE1', 'AF1:AM1', 'AN1:AT1'
+                         ] as $range) {
+                    $sheet->mergeCells($range);
+                }
+
+                // background header
+                $sheet->getStyle('A1:' . $lastColumnIndex . '2')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('86D293');
+                // border header
+                $sheet->getStyle('A1:' . $lastColumnIndex . $totalRows)->getBorders()->getAllBorders()->setBorderStyle('thin');
+                // semua baris menggunakan format "text" secara default
+                $sheet->getStyle('A1:' . $lastColumnIndex . $totalRows)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_TEXT);
+            }
         ];
     }
 }
