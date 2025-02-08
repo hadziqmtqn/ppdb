@@ -18,6 +18,8 @@ class PaymentBillRepository
             "{nama}" => $data['name'],
             "{lembaga}" => $data['educationalInstitution'],
             "{nomor_tagihan}" => $data['invoiceNumber'],
+            "{jumlah_tagihan}" => $data['amount'],
+            "{tanggal_pembuatan}" => $data['createdAt'],
             "{batas_waktu_pembayaran}" => $data['paymentDeadline'],
             "{instruksi_pembayaran}" => $data['paymentInstruction']
         ];

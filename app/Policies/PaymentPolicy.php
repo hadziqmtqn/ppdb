@@ -32,4 +32,13 @@ class PaymentPolicy
 
         return true;
     }
+
+    public function destroy(User $user, Payment $payment): bool
+    {
+        if ($user->hasRole('user')) return false;
+
+        if ($user->hasRole('admin')) return optional($user->admin)->educational_institution_id === optional(optional($payment->user)->student)->educational_institution_id;
+
+        return true;
+    }
 }

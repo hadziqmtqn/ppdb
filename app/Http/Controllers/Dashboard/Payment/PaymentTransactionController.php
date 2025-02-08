@@ -172,4 +172,22 @@ class PaymentTransactionController extends Controller
             return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function destroy(Payment $payment): JsonResponse
+    {
+        Gate::authorize('destroy', $payment);
+
+        try {
+            if ($payment->hasMedia('proof_of_payment')) {
+                $payment->clearMediaCollection('proof_of_payment');
+            }
+
+            $payment->delete();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Delete data success', null, null, Response::HTTP_OK);
+    }
 }

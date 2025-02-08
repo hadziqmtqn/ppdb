@@ -113,14 +113,9 @@ class PaymentController extends Controller
         $payment->refresh();
 
         // TODO Send Notification
-        $this->sendNotification([
-            'name' => optional($payment->user)->name,
-            'educationalInstitution' => optional(optional(optional($payment->user)->student)->educationalInstitution)->name,
-            'invoiceNumber' => $payment->code,
-            'paymentDeadline' => Carbon::parse($expiryDate)->isoFormat('DD MMM Y H:i'),
-            'paymentInstruction' => 'Klik link berikut ini: ' . $payment->checkout_link,
-            'email' => optional($payment->user)->email,
-            'phone' => optional(optional($payment->user)->student)->whatsapp_number
+        $this->sendNotification($payment, [
+            'amount' => $amount,
+            'expiryDate' => $expiryDate
         ]);
     }
 
@@ -136,24 +131,29 @@ class PaymentController extends Controller
         $payment->save();
         $payment->refresh();
 
+        // TODO Send Notification
+        $this->sendNotification($payment, [
+            'amount' => $amount,
+            'expiryDate' => $expiryDate
+        ]);
+    }
+
+    private function sendNotification(Payment $payment, array $data)
+    {
         $bankAccount = optional(optional($payment->bankAccount)->paymentChannel)->code;
         $accountNumber = optional($payment->bankAccount)->account_number;
         $accountName = optional($payment->bankAccount)->account_name;
 
-        // TODO Send Notification
-        $this->sendNotification([
+        $this->paymentBillRepository->sendMessage([
             'name' => optional($payment->user)->name,
             'educationalInstitution' => optional(optional(optional($payment->user)->student)->educationalInstitution)->name,
             'invoiceNumber' => $payment->code,
-            'paymentDeadline' => Carbon::parse($expiryDate)->isoFormat('DD MMM Y H:i'),
-            'paymentInstruction' => "\n\n-Transafer ke Bank: " . $bankAccount . "\nNo. Rek.: " . $accountNumber . "\nAtas Nama: " . $accountName,
+            'amount' => 'Rp. ' . number_format($data['amount'],0,',','.'),
+            'createdAt' => Carbon::parse($payment->created_at)->isoFormat('DD MMM Y HH:mm'),
+            'paymentDeadline' => Carbon::parse($data['expiryDate'])->isoFormat('DD MMM Y HH:mm'),
+            'paymentInstruction' => $payment->checkout_link ? 'Klik link berikut ini: ' . $payment->checkout_link : "\n\n- Transafer ke Bank: " . $bankAccount . "\n- No. Rek.: " . $accountNumber . "\n- Atas Nama: " . $accountName,
             'email' => optional($payment->user)->email,
             'phone' => optional(optional($payment->user)->student)->whatsapp_number
         ]);
-    }
-
-    private function sendNotification(array $data)
-    {
-        $this->paymentBillRepository->sendMessage($data);
     }
 }
