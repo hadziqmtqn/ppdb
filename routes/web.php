@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('application')->group(function () {
             Route::get('/', [ApplicationController::class, 'index'])->name('application.index');
             Route::post('/', [ApplicationController::class, 'store'])->name('application.store');
+            Route::get('/{application:slug}', [ApplicationController::class, 'assets'])->name('application.assets');
         });
 
         Route::prefix('educational-level')->group(function () {

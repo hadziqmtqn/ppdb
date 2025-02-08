@@ -21,6 +21,7 @@ class ApplicationRepository
             ->firstOrFail();
 
         return collect([
+            'slug' => $application->slug,
             'name' => $application->name,
             'description' => $application->description,
             'website' => $application->website,

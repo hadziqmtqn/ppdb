@@ -18,8 +18,8 @@ class ApplicationController extends Controller implements HasMiddleware
     {
         // TODO: Implement middleware() method.
         return [
-            new Middleware(PermissionMiddleware::using('application-read'), only: ['index']),
-            new Middleware(PermissionMiddleware::using('application-write'), only: ['store']),
+            new Middleware(PermissionMiddleware::using('application-read'), only: ['index', 'assets']),
+            new Middleware(PermissionMiddleware::using('application-write'), only: ['store', 'saveMedia']),
         ];
     }
 
@@ -55,5 +55,12 @@ class ApplicationController extends Controller implements HasMiddleware
         }
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
+    }
+
+    public function assets(Application $application): View
+    {
+        $title = 'Aplikasi';
+
+        return \view('dashboard.application.assets', compact('title', 'application'));
     }
 }
