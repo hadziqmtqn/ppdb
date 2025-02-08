@@ -40,7 +40,8 @@ class PaymentTransactionController extends Controller
                         'user.student.educationalInstitution:id,name'
                     ])
                     ->whereHas('user', fn($query) => $query->whereNull('deleted_at'))
-                    ->filterByEducationalInstitution();
+                    ->filterByEducationalInstitution()
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

@@ -3,6 +3,7 @@
 namespace App\Exports\Student;
 
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -36,11 +37,20 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
             'student.registrationPath',
             'student.schoolYear',
             'personalData',
-            'family',
+            'family.fatherEducation:id,name',
+            'family.fatherProfession:id,name',
+            'family.fatherIncome:id,nominal',
+            'family.motherEducation:id,name',
+            'family.motherProfession:id,name',
+            'family.motherIncome:id,nominal',
+            'family.guardianEducation:id,name',
+            'family.guardianProfession:id,name',
+            'family.guardianIncome:id,nominal',
             'residence',
-            'previousSchool'
+            'previousSchool',
         ])
             ->filterStudentDatatable($this->request)
+            ->orderBy('name')
             ->get()
             ->map(function (User $user) {
                 static $no = 0;
@@ -54,6 +64,30 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
                     optional(optional($user->student)->registrationCategory)->name, // kategori
                     optional(optional($user->student)->classLevel)->name, // kelas
                     optional(optional($user->student)->registrationPath)->name, // jalur pendaftaran
+                    optional(optional($user->student)->major)->name, // jurusan
+                    optional($user->student)->nisn, // nisn
+                    optional($user->student)->whatsapp_number, // 'No. Whatsapp',
+                    optional($user->personalData)->place_of_birth, //'Tempat Lahir',
+                    optional($user->personalData)->date_of_birth ? Carbon::parse($user->personalData->date_of_birth)->isoFormat('DD MMMM Y') : null, // 'Tanggal Lahir',
+                    optional($user->personalData)->gender, // 'Jenis Kelamin',
+                    optional($user->personalData)->child_to, // 'Anak Ke',
+                    optional($user->personalData)->number_of_brothers, // 'Jumlah Saudara'
+                    optional($user->personalData)->family_relationship, // 'Hubungan Keluarga',
+                    optional($user->personalData)->religion, // 'Agama',
+                    optional($user->family)->national_identification_number, // 'NIK',
+                    optional($user->family)->family_card_number, // 'No. KK',
+                    optional($user->family)->father_name, // 'Nama Ayah Kandung',
+                    optional(optional($user->family)->fatherEducation)->name, // 'Pendidikan Ayah',
+                    optional(optional($user->family)->fatherProfession)->name, // 'Pekerjaan Ayah',
+                    optional(optional($user->family)->fatherIncome)->nominal, // 'Penghasilan Ayah',
+                    optional($user->family)->mother_name, // 'Nama Ibu Kandung',
+                    optional(optional($user->family)->motherEducation)->name, // 'Pendidikan Ibu',
+                    optional(optional($user->family)->motherProfession)->name, // 'Pekerjaan Ibu',
+                    optional(optional($user->family)->motherIncome)->nominal, // 'Penghasilan Ibu',
+                    optional($user->family)->guardian_name, // 'Nama Wali Kandung',
+                    optional(optional($user->family)->guardianEducation)->name, // 'Pendidikan Wali',
+                    optional(optional($user->family)->guardianProfession)->name, // 'Pekerjaan Wali',
+                    optional(optional($user->family)->guardianIncome)->nominal, // 'Penghasilan Wali',
                 ]);
             });
     }
@@ -76,7 +110,23 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
             'Tanggal Lahir',
             'Jenis Kelamin',
             'Anak Ke',
-            'Jumlah Saudara'
+            'Jumlah Saudara',
+            'Hubungan Keluarga',
+            'Agama',
+            'NIK',
+            'No. KK',
+            'Nama Ayah Kandung',
+            'Pendidikan Ayah',
+            'Pekerjaan Ayah',
+            'Penghasilan Ayah',
+            'Nama Ibu Kandung',
+            'Pendidikan Ibu',
+            'Pekerjaan Ibu',
+            'Penghasilan Ibu',
+            'Nama Wali Kandung',
+            'Pendidikan Wali',
+            'Pekerjaan Wali',
+            'Penghasilan Wali',
         ];
     }
 }
