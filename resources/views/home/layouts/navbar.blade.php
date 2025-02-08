@@ -1,4 +1,4 @@
-<nav class="layout-navbar container shadow-none py-0">
+<nav class="layout-navbar-full container shadow-none py-0">
     <div class="navbar navbar-expand-lg landing-navbar border-top-0 px-3 px-md-4">
         <!-- Menu logo wrapper: Start -->
         <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
@@ -11,7 +11,6 @@
                 <span class="app-brand-logo demo">
                     <img src="{{ $application['logo'] }}" alt="logo" style="width: 40px">
                 </span>
-                <span class="app-brand-text demo menu-text fw-bold ms-2 ps-1">{{ $application['name'] }}</span>
             </a>
         </div>
         <!-- Menu logo wrapper: End -->
@@ -22,7 +21,7 @@
             </button>
             <ul class="navbar-nav me-auto p-3 p-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link fw-medium" aria-current="page" href="{{ url('/#landingHero') }}">Home</a>
+                    <a class="nav-link fw-medium" aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
             </ul>
         </div>

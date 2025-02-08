@@ -52,12 +52,11 @@ use App\Http\Controllers\Dashboard\Student\StudentReportController;
 use App\Http\Controllers\Dashboard\Student\StudentSecurityController;
 use App\Http\Controllers\Dashboard\Student\StudentStatsController;
 use App\Http\Controllers\Dashboard\Student\ValidationController;
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::prefix('login')->group(function () {

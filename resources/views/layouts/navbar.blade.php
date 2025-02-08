@@ -5,7 +5,6 @@
                 <span class="app-brand-logo demo">
                     <img src="{{ $application['logo'] }}" alt="logo" style="width: 40px">
                 </span>
-                <span class="app-brand-text demo menu-text fw-bold">{{ $application['name'] }}</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">

@@ -21,8 +21,6 @@
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/@form-validation/form-validation.css') }}" />
 <!-- Page CSS -->
 
-{{--<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-payment.css') }}" />--}}
-
 <!-- Helpers -->
 <script src="{{ asset('materialize/assets/vendor/js/helpers.js') }}"></script>
 <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
