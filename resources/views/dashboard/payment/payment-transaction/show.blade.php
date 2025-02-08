@@ -118,30 +118,60 @@
                             <hr class="mx-n3 mt-1">
                             <div id="countdownContainer">
                                 <div class="bg-lighter rounded p-3">
-                                    <h6>Harap lakukan pembayaran sebelum</h6>
-                                    <div class="text-center fs-big text-danger">{{ Carbon\Carbon::parse($payment->expires_at)->isoFormat('llll') }}</div>
+                                    @if(($payment->status == 'PENDING'))
+                                        <h6>Harap lakukan pembayaran sebelum</h6>
+                                        <div class="text-center fs-big text-danger">{{ Carbon\Carbon::parse($payment->expires_at)->isoFormat('llll') }}</div>
+                                    @else
+                                        <h6 class="text-center mb-0">Terima kasih tagihan telah berhasil dibayar</h6>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+                        {{--TODO manual payment--}}
                         @if($payment->payment_method == 'MANUAL_PAYMENT')
-                            <form action="{{ route('payment-transaction.confirm', $payment->slug) }}" id="formPaymentConfirm" method="post" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-                                <div class="alert alert-warning" role="alert">
-                                    <ul class="ps-3 mb-0">
-                                        <li>File yang diizinkan berupa gambar (jpg/jpeg/png) atau pdf</li>
-                                        <li>File berukuran maksimal 2MB</li>
-                                    </ul>
-                                </div>
-                                <div class="form-floating form-floating-outline mb-3">
-                                    <input type="file" name="file" id="file" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
-                                    <label for="file">Upload bukti pembayaran</label>
-                                </div>
-                                @include('layouts.session')
-                                <button type="submit" class="btn btn-primary w-100" id="btn-bill-confirm" {{ $payment->status == 'PAID' ? 'disabled' : '' }}>Konfirmasi Pembayaran</button>
-                            </form>
+                            {{--TODO for user--}}
+                            @if(auth()->user()->hasRole('user'))
+                                <form action="{{ route('payment-transaction.confirm', $payment->slug) }}" id="formPaymentConfirm" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="alert alert-warning" role="alert">
+                                        <ul class="ps-3 mb-0">
+                                            <li>File yang diizinkan berupa gambar (jpg/jpeg/png) atau pdf</li>
+                                            <li>File berukuran maksimal 2MB</li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-floating form-floating-outline mb-3">
+                                        <input type="file" name="file" id="file" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <label for="file">Upload bukti pembayaran</label>
+                                    </div>
+                                    @include('layouts.session')
+                                    <button type="submit" class="btn btn-primary w-100" id="btn-bill-confirm" {{ $payment->status == 'PAID' ? 'disabled' : '' }}>Konfirmasi Pembayaran</button>
+                                </form>
+                            @else
+                                {{--TODO untuk admin--}}
+                                <form onsubmit="return false" id="paymentValidationForm" data-slug="{{ $payment->slug }}">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <div class="row select-valid-option">
+                                        @foreach(['PAID','CANCEL'] as $paymentStatus)
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="list-group mb-2">
+                                                    <label class="list-group-item cursor-pointer">
+                                                        <span class="form-check mb-0"><input class="form-check-input me-1" type="radio" id="{{ $paymentStatus }}" name="status" value="{{ $paymentStatus }}" {{ $payment->status == $paymentStatus ? 'checked' : '' }}>{{ $paymentStatus }}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <button type="button" id="btn-submit-validation" class="btn btn-primary waves-light waves-effect w-100">Validasi Pembayaran</button>
+                                </form>
+                            @endif
                         @else
-                            <a href="{{ url($payment->checkout_link) }}" class="btn btn-primary w-100" target="_blank" id="checkoutLink">Bayar Sekarang</a>
+                            {{--TODO payment gateway--}}
+                            @if($payment->status == 'PENDING')
+                                <a href="{{ url($payment->checkout_link) }}" class="btn btn-primary w-100" target="_blank" id="checkoutLink">Bayar Sekarang</a>
+                            @else
+                                <button type="button" class="btn btn-primary w-100" disabled id="checkoutLink">Bayar Sekarang</button>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -152,5 +182,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/student/payment/check-payment.js') }}"></script>
-    {{--<script src="{{ asset('js/student/payment/confirm.js') }}"></script>--}}
+    <script src="{{ asset('js/student/payment/validation.js') }}"></script>
 @endsection

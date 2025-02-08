@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('paymentChannel').textContent = paymentChannel;
 
                     const checkoutLink = document.getElementById('checkoutLink');
-                    if (status === 'PAID') {
+                    if (status !== 'PENDING') {
                         clearInterval(paymentStatusInterval);
 
                         const buttonElement = document.createElement('button');
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         checkoutLink.replaceWith(buttonElement);
 
                         const countdownContainer = document.getElementById('countdownContainer');
-                        countdownContainer.innerHTML = '<div class="bg-lighter rounded p-3"><h6 class="text-center">Terima kasih tagihan telah berhasil dibayar</h6></div>';
+                        countdownContainer.innerHTML = '<div class="bg-lighter rounded p-3"><h6 class="text-center mb-0">Terima kasih tagihan telah berhasil dibayar</h6></div>';
                     }
                 }
             })

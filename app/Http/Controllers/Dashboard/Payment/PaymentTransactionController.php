@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payment\PaymentConfirmationRequest;
+use App\Http\Requests\Payment\PaymentTransaction\PaymentValidationRequest;
 use App\Models\Payment;
 use App\Traits\ApiResponse;
 use Exception;
@@ -139,6 +140,21 @@ class PaymentTransactionController extends Controller
         }
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
+    }
+
+    public function paymentValidation(PaymentValidationRequest $request, Payment $payment): JsonResponse
+    {
+        Gate::authorize('validation', $payment);
+
+        try {
+            $payment->status = $request->input('status');
+            $payment->save();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Update data success', null, route('payment-transaction.show', $payment->slug), Response::HTTP_OK);
     }
 
     public function checkPayment(Payment $payment): JsonResponse

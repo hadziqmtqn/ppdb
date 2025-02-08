@@ -304,6 +304,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{payment:slug}', [PaymentTransactionController::class, 'show'])->name('payment-transaction.show');
             Route::put('/{payment:slug}/confirmation', [PaymentTransactionController::class, 'confirm'])->name('payment-transaction.confirm');
             Route::get('/{payment:slug}/check-payment', [PaymentTransactionController::class, 'checkPayment']);
+            Route::put('/{payment:slug}/validation', [PaymentTransactionController::class, 'paymentValidation']);
         });
 
         // TODO Student Registration
