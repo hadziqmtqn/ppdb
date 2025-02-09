@@ -29,7 +29,7 @@ if (typeof TemplateCustomizer !== 'undefined') {
     themesPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
     displayCustomizer: true,
     // defaultTextDir: 'rtl'
-    defaultStyle: 'system',
+    defaultStyle: 'light',
     controls: ['rtl', 'style']
   });
 }

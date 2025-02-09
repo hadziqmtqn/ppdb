@@ -85,8 +85,8 @@ class ApplicationController extends Controller implements HasMiddleware
 
             foreach ($files as $collectionKey => $file) {
                 if ($file->isValid()) {
-                    if ($collectionKey === 'login' && $application->hasMedia('login')) {
-                        $application->clearMediaCollection('login');
+                    if ($collectionKey !== 'carousel' && $application->hasMedia('carousel')) {
+                        $application->clearMediaCollection('carousel');
                     }
 
                     $application->addMedia($file)

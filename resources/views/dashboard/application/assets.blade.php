@@ -11,7 +11,7 @@
             @foreach($getAssets as $getAsset)
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title mb-3">{{ ucfirst($getAsset['asset']) }} Asset</h5>
+                        <h5 class="card-title mb-3">{{ ucwords(str_replace('_', ' ', $getAsset['asset'])) }} Asset</h5>
                         <div class="alert alert-outline-warning mb-4" role="alert">
                             <div class="d-flex gap-3">
                                 <div class="flex-shrink-0">

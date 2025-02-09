@@ -11,7 +11,7 @@ class ApplicationSeeder extends Seeder
     {
         $application = new Application();
         $application->name = 'PPDB Online';
-        $application->description = 'Aplikasi Pendaftaran Peserta Didik Baru';
+        $application->description = 'Penerimaan Peserta Didik Baru Online Secara Mandiri Oleh Satuan Pendidikan';
         $application->website = 'https://ppdb.bkn.my.id';
         $application->main_website = 'https://bkn.my.id';
         $application->register_verification = true;

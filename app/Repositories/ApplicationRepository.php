@@ -33,17 +33,30 @@ class ApplicationRepository
             'registerVerification' => $application->register_verification,
             'notificationMethod' => $application->notification_method,
             'logo' => $application->hasMedia('logo') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(5),'logo') : asset('assets/sekolah.png'),
+            'loginAssets' => $application->hasMedia('login') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'login') : asset('materialize/assets/img/illustrations/auth-login-illustration-light.png'),
+            'frontHeaderAssets' => $application->hasMedia('front_header') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'front_header') : asset('assets/Frame 1.png'),
+            'carouselAssets' => $application->getMedia('carousel')->map(function (Media $media) {
+                return [
+                    'fileUrl' => $media->getTemporaryUrl(Carbon::now()->addDay())
+                ];
+            })
         ]);
     }
 
-    public function getAssets(Application $application): Collection
+    private function collections(): Collection
     {
-        $collection = collect();
-        foreach (collect([
+        return collect([
             [
                 'name' => 'login',
                 'note' => [
                     '- Ukuran maksimal 1MB'
+                ]
+            ],
+            [
+                'name' => 'front_header',
+                'note' => [
+                    '- Ukuran maksimal 1MB',
+                    '- Letak dihalaman beranda teratas'
                 ]
             ],
             [
@@ -53,7 +66,13 @@ class ApplicationRepository
                     '- File disarankan berdimensi 1000x500 px'
                 ]
             ]
-        ]) as $asset) {
+        ]);
+    }
+
+    public function getAssets(Application $application): Collection
+    {
+        $collection = collect();
+        foreach ($this->collections() as $asset) {
             $collection[] = collect([
                 'asset' => $asset['name'],
                 'notes' => $asset['note'],
@@ -61,7 +80,7 @@ class ApplicationRepository
                     return [
                         'fileId' => $media->id,
                         'fileName' => $media->file_name,
-                        'fileUrl' => $media->getTemporaryUrl(Carbon::now()->addDay()),
+                        'fileUrl' => $media->getTemporaryUrl(Carbon::now()->addHour()),
                         'fileSize' => $this->formatSizeUnits($media->size)
                     ];
                 })

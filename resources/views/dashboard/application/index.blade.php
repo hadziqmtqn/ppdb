@@ -22,12 +22,6 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating form-floating-outline mb-3">
-                                    <input type="text" name="description" id="description" class="form-control" placeholder="Deskripsi" value="{{ $application['description'] }}">
-                                    <label for="description">Deskripsi</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating form-floating-outline mb-3">
                                     <input type="url" name="website" id="website" class="form-control" placeholder="Website" value="{{ $application['website'] }}">
                                     <label for="website">Website</label>
                                 </div>
@@ -62,6 +56,12 @@
                                 <div class="form-floating form-floating-outline mb-3">
                                     <input type="file" name="logo" id="logo" class="form-control" accept=".jpg,.jpeg,.png">
                                     <label for="logo">Logo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating form-floating-outline mb-3">
+                                    <textarea name="description" id="description" class="form-control textarea-autosize" placeholder="Deskripsi">{{ $application['description'] }}</textarea>
+                                    <label for="description">Deskripsi</label>
                                 </div>
                             </div>
                         </div>
