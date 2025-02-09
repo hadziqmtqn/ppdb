@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Application\ApplicationRequest;
+use App\Http\Requests\Application\AssetsRequest;
 use App\Models\Application;
+use App\Repositories\ApplicationRepository;
 use Exception;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -14,6 +16,16 @@ use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class ApplicationController extends Controller implements HasMiddleware
 {
+    protected ApplicationRepository $applicationRepository;
+
+    /**
+     * @param ApplicationRepository $applicationRepository
+     */
+    public function __construct(ApplicationRepository $applicationRepository)
+    {
+        $this->applicationRepository = $applicationRepository;
+    }
+
     public static function middleware(): array
     {
         // TODO: Implement middleware() method.
@@ -60,7 +72,31 @@ class ApplicationController extends Controller implements HasMiddleware
     public function assets(Application $application): View
     {
         $title = 'Aplikasi';
+        $getAssets = $this->applicationRepository->getAssets();
 
-        return \view('dashboard.application.assets', compact('title', 'application'));
+        return \view('dashboard.application.assets', compact('title', 'application', 'getAssets'));
+    }
+
+    public function saveAssets(AssetsRequest $request, Application $application)
+    {
+        try {
+            $files = $request->file('file', []);
+
+            foreach ($files as $collectionKey => $file) {
+                if ($file->isValid()) {
+                    if ($collectionKey === 'login' && $application->hasMedia('login')) {
+                        $application->clearMediaCollection('login');
+                    }
+
+                    $application->addMedia($file)
+                        ->toMediaCollection($collectionKey);
+                }
+            }
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Data gagal disimpan!');
+        }
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 }

@@ -8,65 +8,43 @@
         </div>
 
         <div class="col-lg-9 col-md-8 col-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">Customer</h5>
-                    <div class="card shadow-none mb-4 border-0">
-                        <div class="table-responsive border rounded">
-                            <table class="table">
-                                <thead class="table-light">
-                                <tr>
-                                    <th class="text-nowrap w-50">Type</th>
-                                    <th class="text-nowrap text-center w-25">Email</th>
-                                    <th class="text-nowrap text-center w-25">App</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="text-nowrap text-heading">New customer sign up</td>
-                                    <td>
-                                        <div class="form-check mb-0 d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" id="defaultCheck_cust_1" checked="">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check mb-0 d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" id="defaultCheck_cust_2" checked="">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-nowrap text-heading">Customer account password reset</td>
-                                    <td>
-                                        <div class="form-check mb-0 d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" id="defaultCheck_cust_4" checked="">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check mb-0 d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" id="defaultCheck_cust_5" checked="">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-transparent">
-                                    <td class="text-nowrap text-heading">Customer account invite</td>
-                                    <td>
-                                        <div class="form-check mb-0 d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" id="defaultCheck_cust_7">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check mb-0 d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" id="defaultCheck_cust_8">
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+            @foreach($getAssets as $getAsset)
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">{{ ucfirst($getAsset) }} Asset</h5>
+                        <div class="mb-3">
+                            <form action="{{ route('application.save-assets', $application['slug']) }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="input-group">
+                                    <input type="file" class="form-control" name="file[{{ $getAsset }}]" id="inputAssets-{{ $getAsset }}" aria-describedby="inputAsets" aria-label="Upload" accept=".jpg,.jpeg,.png">
+                                    <button class="btn btn-outline-primary waves-effect" type="submit">Submit</button>
+                                </div>
+                                @include('layouts.session')
+                            </form>
+                        </div>
+                        <div class="card shadow-none border-0">
+                            <div class="table-responsive border rounded">
+                                <table class="table">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th class="text-nowrap w-50">Nama File</th>
+                                        <th class="text-nowrap text-center w-25">Ukuran</th>
+                                        <th class="text-nowrap text-center w-25">Opsi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-nowrap text-heading">New customer sign up</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection

@@ -113,6 +113,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [ApplicationController::class, 'index'])->name('application.index');
             Route::post('/', [ApplicationController::class, 'store'])->name('application.store');
             Route::get('/{application:slug}', [ApplicationController::class, 'assets'])->name('application.assets');
+            Route::post('/{application:slug}/save-assets', [ApplicationController::class, 'saveAssets'])->name('application.save-assets');
         });
 
         Route::prefix('educational-level')->group(function () {

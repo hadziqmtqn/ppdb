@@ -31,4 +31,12 @@ class ApplicationRepository
             'logo' => $application->hasMedia('logo') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(5),'logo') : asset('assets/sekolah.png'),
         ]);
     }
+
+    public function getAssets(): Collection
+    {
+        return collect([
+            'login',
+            'carousel'
+        ]);
+    }
 }
