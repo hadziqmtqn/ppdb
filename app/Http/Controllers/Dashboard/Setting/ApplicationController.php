@@ -72,7 +72,7 @@ class ApplicationController extends Controller implements HasMiddleware
     public function assets(Application $application): View
     {
         $title = 'Aplikasi';
-        $getAssets = $this->applicationRepository->getAssets();
+        $getAssets = $this->applicationRepository->getAssets($application);
 
         return \view('dashboard.application.assets', compact('title', 'application', 'getAssets'));
     }

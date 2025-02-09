@@ -3,11 +3,15 @@
 namespace App\Repositories;
 
 use App\Models\Application;
+use App\Traits\FormatsFileSize;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ApplicationRepository
 {
+    use FormatsFileSize;
+
     protected Application $application;
 
     public function __construct(Application $application)
@@ -32,11 +36,37 @@ class ApplicationRepository
         ]);
     }
 
-    public function getAssets(): Collection
+    public function getAssets(Application $application): Collection
     {
-        return collect([
-            'login',
-            'carousel'
-        ]);
+        $collection = collect();
+        foreach (collect([
+            [
+                'name' => 'login',
+                'note' => [
+                    '- Ukuran maksimal 1MB'
+                ]
+            ],
+            [
+                'name' => 'carousel',
+                'note' => [
+                    '- Ukuran maksimal 1Mb',
+                    '- File disarankan berdimensi 1000x500 px'
+                ]
+            ]
+        ]) as $asset) {
+            $collection[] = collect([
+                'asset' => $asset['name'],
+                'notes' => $asset['note'],
+                'media' => $application->getMedia($asset['name'])->map(function (Media $media) {
+                    return [
+                        'fileName' => $media->file_name,
+                        'fileUrl' => $media->getTemporaryUrl(Carbon::now()->addDay()),
+                        'fileSize' => $this->formatSizeUnits($media->size)
+                    ];
+                })
+            ]);
+        }
+
+        return $collection;
     }
 }
