@@ -8,6 +8,7 @@ use App\Http\Requests\Application\AssetsRequest;
 use App\Models\Application;
 use App\Repositories\ApplicationRepository;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
@@ -31,7 +32,7 @@ class ApplicationController extends Controller implements HasMiddleware
         // TODO: Implement middleware() method.
         return [
             new Middleware(PermissionMiddleware::using('application-read'), only: ['index', 'assets']),
-            new Middleware(PermissionMiddleware::using('application-write'), only: ['store', 'saveMedia']),
+            new Middleware(PermissionMiddleware::using('application-write'), only: ['store', 'saveAssets', 'deleteAssets']),
         ];
     }
 
@@ -94,9 +95,30 @@ class ApplicationController extends Controller implements HasMiddleware
             }
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return redirect()->back()->with('error', 'Data gagal disimpan!');
+            return redirect()->back()->with('error', 'Media gagal diupload!');
         }
 
-        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+        return redirect()->back()->with('success', 'Media berhasil diupload!');
+    }
+
+    public function deleteAssets(Request $request, Application $application)
+    {
+        try {
+            $collections = $request->input('collection', []);
+
+            foreach ($collections as $fileId => $collection) {
+                $mediaItem = $application->getMedia($collection)->where('id', $fileId)
+                    ->first();
+
+                if ($mediaItem) {
+                    $mediaItem->delete();
+                }
+            }
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Media gagal dihapus!');
+        }
+
+        return redirect()->back()->with('success', 'Media berhasil dihapus!');
     }
 }

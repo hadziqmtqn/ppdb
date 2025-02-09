@@ -59,6 +59,7 @@ class ApplicationRepository
                 'notes' => $asset['note'],
                 'media' => $application->getMedia($asset['name'])->map(function (Media $media) {
                     return [
+                        'fileId' => $media->id,
                         'fileName' => $media->file_name,
                         'fileUrl' => $media->getTemporaryUrl(Carbon::now()->addDay()),
                         'fileSize' => $this->formatSizeUnits($media->size)

@@ -55,7 +55,13 @@
                                             <td class="text-nowrap text-heading">{{ $asset['fileName'] }}</td>
                                             <td>{{ $asset['fileSize'] }}</td>
                                             <td>
-                                                <a href="{{ $asset['fileUrl'] }}" class="btn btn-sm btn-outline-dark" target="_blank">Lihat</a>
+                                                <form action="{{ route('application.delete-assets', $application['slug']) }}" method="post" class="delete-form">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="collection[{{ $asset['fileId'] }}]" value="{{ $getAsset['asset'] }}">
+                                                    <a href="{{ $asset['fileUrl'] }}" class="btn btn-sm btn-outline-dark" target="_blank">Lihat</a>
+                                                    <button type="button" class="btn btn-sm btn-danger btn-delete">Hapus</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -68,4 +74,8 @@
             @endforeach
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/application/delete-assets.js') }}"></script>
 @endsection
