@@ -34,30 +34,37 @@ class WebhookController extends Controller
 
             $payment = Payment::with('user.student.educationalInstitution:id,name')
                 ->where('code', $data['external_id'])
-                ->firstOrFail();
-            $payment->status = $data['status'];
-            $payment->payment_method = $data['payment_method'];
-            $payment->payment_channel = $data['payment_channel'];
-            $payment->paid_at = Carbon::parse($data['paid_at'])->timezone('Asia/Jakarta');
-            $payment->save();
-            $payment->refresh();
+                ->first();
 
-            // TODO Send Message
-            switch ($payment->status) {
-                case 'PAID':
-                    $this->paymentCallbackRepository->success($payment);
-                    break;
-                case 'CANCEL':
-                    $this->paymentCallbackRepository->cancel($payment);
-                    break;
-                default:
-                    Log::info('Xendit response: ', $data);
+            if ($payment) {
+                $payment->status = $data['status'];
+                $payment->payment_method = !empty($data['payment_method']) ? $data['payment_method'] : null;
+                $payment->payment_channel = !empty($data['payment_channel']) ? $data['payment_channel'] : null;
+                $payment->paid_at = !empty($data['paid_at']) ? Carbon::parse($data['paid_at'])->timezone('Asia/Jakarta') : null;
+                $payment->save();
+                $payment->refresh();
+
+                // TODO Send Message
+                switch ($payment->status) {
+                    case 'PAID':
+                        $this->paymentCallbackRepository->success($payment);
+                        break;
+                    case 'CANCEL':
+                        $this->paymentCallbackRepository->cancel($payment);
+                        break;
+                    default:
+                        Log::info('Xendit response: ', $data);
+                }
+
+                return $this->apiResponse('Webhook received', $payment->code, null, Response::HTTP_OK);
             }
+
+            Log::warning('Invoice not found: ' . $data['external_id'] . '. All Logs Webhook: ' . json_encode($data));
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Webhook received', $payment->code, null, Response::HTTP_OK);
+        return $this->apiResponse('Invoice not found: ' . $data['external_id'], null, null, Response::HTTP_BAD_REQUEST);
     }
 }
