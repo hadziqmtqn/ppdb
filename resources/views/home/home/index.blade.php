@@ -16,6 +16,7 @@
                             @foreach($educationalLevels as $educationalLevel)
                                 {{ $educationalLevel->name . ($loop->last ? '' : ',') }}
                             @endforeach
+                            TA. {{ $getSchoolYearActive['year'] }}
                         </h4>
                         <a href="{{ route('registration.index') }}" class="btn btn-primary">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                     </div>

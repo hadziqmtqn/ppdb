@@ -48,4 +48,11 @@ class EducationalLevelRepository
             ]);
         }), null, Response::HTTP_OK);
     }
+
+    // TODO Educational Institution
+    public function getLevel(): Collection
+    {
+        return $this->educationalLevel->whereHas('educationalInstitutions')
+            ->get();
+    }
 }

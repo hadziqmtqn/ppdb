@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class EducationalLevel extends Model
@@ -30,5 +31,10 @@ class EducationalLevel extends Model
     public static function getIdByCode($code): ?int
     {
         return self::query()->where('code', $code)->first()->id;
+    }
+
+    public function educationalInstitutions(): HasMany
+    {
+        return $this->hasMany(EducationalInstitution::class, 'educational_level_id');
     }
 }

@@ -21,7 +21,7 @@ class HomeController extends Controller
     public function index(): View
     {
         $title = 'Beranda';
-        $educationalLevels = $this->educationalLevelRepository->getEducationalLevels();
+        $educationalLevels = $this->educationalLevelRepository->getLevel();
 
         return \view('home.home.index', compact('title', 'educationalLevels'));
     }
