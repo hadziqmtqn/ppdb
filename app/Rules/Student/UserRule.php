@@ -18,6 +18,7 @@ abstract class UserRule implements ValidationRule
     protected function getUser(): ?User
     {
         return User::with('student')
+            ->whereHas('student')
             ->filterByUsername($this->username)
             ->first();
     }

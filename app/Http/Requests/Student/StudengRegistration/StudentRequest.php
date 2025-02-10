@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Student\StudengRegistration;
 
 use App\Rules\Student\StudentRegistration\NisnRule;
+use App\Rules\Student\StudentRegistration\RegistrationCategoryRule;
 use App\Rules\Student\StudentRegistration\WhatsappNumberRule;
 use App\Traits\ApiResponse;
 use App\Traits\HandlesValidationFailure;
@@ -15,7 +16,7 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'registration_category_id' => ['required', 'integer', 'exists:registration_categories,id'],
+            'registration_category_id' => ['required', 'integer', 'exists:registration_categories,id', new RegistrationCategoryRule($this->route('user')->username)],
             'has_registration_path' => ['required', 'in:YES,NO'],
             'registration_path_id' => ['required_if:has_registration_path,YES', 'nullable', 'integer', 'exists:registration_paths,id'],
             'class_level_id' => ['required', 'integer', 'exists:class_levels,id'],

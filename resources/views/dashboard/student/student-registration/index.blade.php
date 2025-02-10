@@ -14,23 +14,24 @@
                 <h5 class="card-header">Pendaftaran</h5>
                 <form id="form" onsubmit="return false" data-username="{{ $user->username }}">
                     <div class="card-body">
+                        {{--hiddent items--}}
                         <input type="hidden" value="{{ optional($user->student)->educational_institution_id }}" id="select-educational-institution">
                         <input type="hidden" name="has_registration_path" value="{{ optional(optional($user->student)->educationalInstitution)->registrationPaths->isNotEmpty() ? 'YES' : 'NO' }}">
                         <input type="hidden" name="has_major" value="{{ optional(optional($user->student)->educationalInstitution)->majors->isNotEmpty() ? 'YES' : 'NO' }}">
                         <input type="hidden" name="nisn_is_required" value="{{ optional(optional(optional($user->student)->educationalInstitution)->educationalLevel)->code != 'SD' ? 'YES' : 'NO' }}">
+                        <input type="hidden" name="registration_category_id" value="{{ optional($user->student)->registration_category_id }}" id="select-registration-category">
+                        {{--hiddent items--}}
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control" id="educationalInstitution" value="{{ optional(optional($user->student)->educationalInstitution)->name }}" readonly>
+                            <input type="text" class="form-control" id="educationalInstitution" value="{{ optional(optional($user->student)->educationalInstitution)->name }}" disabled>
                             <label for="educationalInstitution">Lembaga</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control" id="registrationNumber" value="{{ optional($user->student)->registration_number }}" readonly>
+                            <input type="text" class="form-control" id="registrationNumber" value="{{ optional($user->student)->registration_number }}" disabled>
                             <label for="registrationNumber">No. Pendaftaran</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <select name="registration_category_id" class="form-select select2" id="select-registration-category">
-                                <option value="{{ optional($user->student)->registration_category_id }}" selected>{{ optional(optional($user->student)->registrationCategory)->name }}</option>
-                            </select>
-                            <label for="select-registration-category">Kategori Pendaftaran</label>
+                            <input type="text" class="form-control" value="{{ optional(optional($user->student)->registrationCategory)->name }}" id="registration-category" disabled>
+                            <label for="registration-category">Kategori Pendaftaran</label>
                         </div>
                         @if(optional(optional($user->student)->educationalInstitution)->registrationPaths->isNotEmpty())
                             <div class="form-floating form-floating-outline mb-3">
@@ -79,7 +80,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/registration-category/select.js') }}"></script>
+    {{--<script src="{{ asset('js/registration-category/select.js') }}"></script>--}}
     <script src="{{ asset('js/registration-path/select.js') }}"></script>
     <script src="{{ asset('js/class-level/select.js') }}"></script>
     <script src="{{ asset('js/major/select.js') }}"></script>

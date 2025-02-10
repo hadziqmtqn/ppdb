@@ -19,6 +19,7 @@
                         <div class="form-floating form-floating-outline mb-3">
                             <select name="registration_category_id" class="form-select select2" id="select-registration-category"></select>
                             <label for="select-registration-category">Kategori Pendaftaran</label>
+                            <small class="fst-italic"><i class="mdi mdi-information text-warning me-1"></i>Tidak dapat diubah kembali setelah registrasi</small>
                         </div>
                         <div id="registrationPathsContainer">
                             <div id="showRegistrationPaths">
