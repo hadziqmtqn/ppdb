@@ -43,6 +43,25 @@ class Student extends Model implements HasMedia
             ])->max('serial_number') + 1;
             $student->registration_number = optional(optional($student->educationalInstitution)->educationalLevel)->code . str_replace('20', '', optional($student->schoolYear)->first_year . optional($student->schoolYear)->last_year) . Str::padLeft($student->serial_number, 4, '0');
         });
+
+        static::created(function (Student $student) {
+            $totalStudents = self::where([
+                'educational_institution_id' => $student->educational_institution_id,
+                'school_year_id' => $student->school_year_id
+            ])
+                ->count();
+
+            $registrationSchedule = RegistrationSchedule::where([
+                'educational_institution_id' => $student->educational_institution_id,
+                'school_year_id' => $student->school_year_id
+            ])
+                ->first();
+
+            if ($registrationSchedule) {
+                $registrationSchedule->remaining_quota = $registrationSchedule->quota - $totalStudents;
+                $registrationSchedule->save();
+            }
+        });
     }
 
     public function user(): BelongsTo

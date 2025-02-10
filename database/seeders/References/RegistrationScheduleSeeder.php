@@ -21,8 +21,8 @@ class RegistrationScheduleSeeder extends Seeder
             $registrationSchedule->educational_institution_id = $educationalInstitution->id;
             $registrationSchedule->school_year_id = $schoolYearActive->id;
             $registrationSchedule->start_date = '2025-01-01';
-            $registrationSchedule->end_date = '2025-04-10';
-            $registrationSchedule->quota = 100;
+            $registrationSchedule->end_date = '2025-12-10';
+            $registrationSchedule->quota = 200;
             $registrationSchedule->save();
         }
     }

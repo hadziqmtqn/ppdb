@@ -23,6 +23,10 @@
                             <input type="date" name="end_date" class="form-control" id="editEndDate" placeholder="Tanggal Berakhir">
                             <label for="editEndDate">Tanggal Berakhir</label>
                         </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="number" name="quota" class="form-control" id="editQuota" placeholder="Kuota">
+                            <label for="editQuota">Kuota</label>
+                        </div>
                     </div>
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light" id="btn-edit-registration-schedule">Submit</button>

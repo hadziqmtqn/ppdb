@@ -10,7 +10,13 @@
                 <div class="row align-items-center gy-5 gy-lg-0">
                     <div class="col-lg-6 text-center text-lg-start">
                         <h6 class="h1 text-primary fw-bold mb-1">{{ $application['name'] }}</h6>
-                        <h4 class="fw-medium mb-4">{{ $application['description'] }}</h4>
+                        <h4 class="fw-medium mb-2">{{ $application['description'] }}</h4>
+                        <h4 class="fw-medium mb-4">
+                            Jenjang
+                            @foreach($educationalLevels as $educationalLevel)
+                                {{ $educationalLevel->name . ($loop->last ? '' : ',') }}
+                            @endforeach
+                        </h4>
                         <a href="{{ route('registration.index') }}" class="btn btn-primary">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                     </div>
                     <div class="col-lg-6 pt-lg-5">

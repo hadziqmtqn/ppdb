@@ -19,6 +19,7 @@ class RegistrationScheduleRequest extends FormRequest
             'school_year_id' => ['required', 'integer', 'exists:school_years,id', new SchoolYearRule($this->input('educational_institution_id'), $this->input('school_year_id'))],
             'start_date' => ['required', 'date', 'date_format:Y-m-d', 'before:end_date', 'after:today'],
             'end_date' => ['required', 'date', 'date_format:Y-m-d', 'after:start_date'],
+            'quota' => ['required', 'integer']
         ];
     }
 
@@ -41,6 +42,7 @@ class RegistrationScheduleRequest extends FormRequest
             'school_year_id' => 'tahun ajaran',
             'start_date' => 'tanggal mulai',
             'end_date' => 'tanggal berakhir',
+            'quota' => 'kuota'
         ];
     }
 }

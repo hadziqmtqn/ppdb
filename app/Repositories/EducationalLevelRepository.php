@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\EducationalLevel;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,14 +21,21 @@ class EducationalLevelRepository
         $this->educationalLevel = $educationalLevel;
     }
 
+    public function getEducationalLevels($request = null): Collection
+    {
+        $search = $request['search'] ?? null;
+
+        return $this->educationalLevel
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->get();
+    }
+
     public function select($request): JsonResponse
     {
         try {
-            $educationalLevels = $this->educationalLevel
-                ->when($request['search'], function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request['search'] . '%');
-                })
-                ->get();
+            $educationalLevels = $this->getEducationalLevels($request);
         }catch (Exception $exception){
             Log::error($exception->getMessage());
             return $this->apiResponse('Internal Server Error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);

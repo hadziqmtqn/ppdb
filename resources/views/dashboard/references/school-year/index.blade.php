@@ -26,6 +26,8 @@
                     <th>Lembaga</th>
                     <th>Tahun Ajaran</th>
                     <th>Tanggal</th>
+                    <th>Kuota</th>
+                    <th>Sisa Kuota</th>
                     <th>Status</th>
                     <th>Opsi</th>
                 </tr>
@@ -45,8 +47,9 @@
 @section('scripts')
     <script src="{{ asset('js/school-year/datatable.js') }}"></script>
     <script src="{{ asset('js/school-year/validation.js') }}"></script>
+    <script src="{{ asset('js/school-year/select.js') }}"></script>
+
     <script src="{{ asset('js/registration-schedule/datatable.js') }}"></script>
     <script src="{{ asset('js/registration-schedule/create.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
-    <script src="{{ asset('js/school-year/select.js') }}"></script>
 @endsection

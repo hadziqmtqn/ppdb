@@ -62,4 +62,9 @@ class RegistrationSchedule extends Model
 
         return $query->when(!$auth->hasRole('super-admin'), fn($query) => $query->where('educational_institution_id'), optional(optional($auth)->admin)->educational_institution_id);
     }
+
+    public function scopeFilterBySlug(Builder $query, $slug): Builder
+    {
+        return $query->where('slug', $slug);
+    }
 }

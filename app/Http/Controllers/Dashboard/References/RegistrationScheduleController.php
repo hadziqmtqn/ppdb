@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationSchedule\RegistrationScheduleRequest;
 use App\Http\Requests\RegistrationSchedule\UpdateRegistrationScheduleRequest;
 use App\Models\RegistrationSchedule;
+use App\Models\Student;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -69,7 +70,7 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
                         return $data;
                     })
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. optional($row->educationalInstitution)->name .'" data-school-year="'. optional($row->schoolYear)->first_year . '-' . optional($row->schoolYear)->last_year .'" data-start-date="'. date('Y-m-d', strtotime($row->start_date)) .'" data-end-date="'. date('Y-m-d', strtotime($row->end_date)) .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditRegistrationSchedule"><i class="mdi mdi-pencil"></i></button>';
+                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. optional($row->educationalInstitution)->name .'" data-school-year="'. optional($row->schoolYear)->first_year . '-' . optional($row->schoolYear)->last_year .'" data-start-date="'. date('Y-m-d', strtotime($row->start_date)) .'" data-end-date="'. date('Y-m-d', strtotime($row->end_date)) .'" data-quota="'. $row->quota .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditRegistrationSchedule"><i class="mdi mdi-pencil"></i></button>';
                     })
                     ->rawColumns(['action', 'status'])
                     ->make();
@@ -84,16 +85,12 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
     public function store(RegistrationScheduleRequest $request): JsonResponse
     {
         try {
-            $registrationSchedule = RegistrationSchedule::query()
-                ->filterData([
-                    'educational_institution_id' => $request->input('educational_institution_id'),
-                    'school_year_id' => $request->input('school_year_id')
-                ])
-                ->firstOrNew();
+            $registrationSchedule = new RegistrationSchedule();
             $registrationSchedule->educational_institution_id = $request->input('educational_institution_id');
             $registrationSchedule->school_year_id = $request->input('school_year_id');
             $registrationSchedule->start_date = $request->input('start_date');
             $registrationSchedule->end_date = $request->input('end_date');
+            $registrationSchedule->quota = $request->input('quota');
             $registrationSchedule->save();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -108,6 +105,15 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
         try {
             $registrationSchedule->start_date = $request->input('start_date');
             $registrationSchedule->end_date = $request->input('end_date');
+            $registrationSchedule->quota = $request->input('quota');
+
+            $totalStudents = Student::where([
+                'educational_institution_id' => $registrationSchedule->educational_institution_id,
+                'school_year_id' => $registrationSchedule->school_year_id
+            ])
+                ->count();
+
+            $registrationSchedule->remaining_quota = ($registrationSchedule->quota - $totalStudents);
             $registrationSchedule->save();
         }catch (Exception $exception) {
             Log::error($exception->getMessage());

@@ -22,6 +22,8 @@ $(function () {
             {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'schoolYear', name: 'schoolYear'},
             {data: 'date', name: 'date'},
+            {data: 'quota', name: 'quota'},
+            {data: 'remaining_quota', name: 'remaining_quota'},
             {data: 'status', name: 'status', orderable: false, searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
@@ -59,12 +61,14 @@ $(function () {
         const schoolYear = button.data('school-year');
         const startDate = button.data('start-date');
         const endDate = button.data('end-date');
+        const quota = button.data('quota');
 
         // Isi nilai modal
         $('#educationalInstitution').text(educationalInstitution);
         $('#schoolYear').text(schoolYear);
         $('#editStartDate').val(startDate);
         $('#editEndDate').val(endDate);
+        $('#editQuota').val(quota);
 
         // Atur event handler untuk tombol "Simpan"
         $('#btn-edit-registration-schedule').off('click').on('click', function() {

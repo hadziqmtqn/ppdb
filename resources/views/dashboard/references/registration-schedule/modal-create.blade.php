@@ -24,6 +24,10 @@
                             <input type="text" name="end_date" class="form-control bs-datepicker" id="end_date" placeholder="Tanggal Berakhir" readonly>
                             <label for="end_date">Tanggal Berakhir</label>
                         </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="number" name="quota" class="form-control" id="quota" placeholder="Kuota">
+                            <label for="quota">Kuota</label>
+                        </div>
                     </div>
                     <div class="col-12 text-center">
                         <button type="button" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light" id="btn-submit-registration-schedule">Submit</button>
