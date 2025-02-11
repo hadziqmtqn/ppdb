@@ -73,9 +73,6 @@
                         <p class="mb-4 text-white">Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta Tahun Pelajaran secara online dan realtime.</p>
                         <a href="{{ route('registration.index') }}" class="btn btn-primary">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                     </div>
-                    {{--<div class="col-lg-6 pt-lg-5">
-                        <img src="{{ url($application['frontHeaderAssets']) }}" alt="cta dashboard" class="img-fluid" />
-                    </div>--}}
                 </div>
             </div>
         </section>
