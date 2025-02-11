@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->uuid('slug');
             $table->string('name');
+            $table->string('foundation');
             $table->string('description')->nullable();
             $table->string('website')->nullable();
             $table->string('main_website')->nullable();

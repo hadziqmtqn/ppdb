@@ -10,7 +10,7 @@ class AssetsRequest extends FormRequest
     {
         return [
             'file' => ['required', 'array'],
-            'file.*' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'file.*' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:500'],
         ];
     }
 

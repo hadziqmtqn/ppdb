@@ -48,6 +48,7 @@ class ApplicationController extends Controller implements HasMiddleware
         try {
             $application = Application::firstOrNew();
             $application->name = $request->input('name');
+            $application->foundation = $request->input('foundation');
             $application->description = $request->input('description');
             $application->website = $request->input('website');
             $application->main_website = $request->input('main_website');

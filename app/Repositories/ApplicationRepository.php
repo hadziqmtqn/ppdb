@@ -27,6 +27,7 @@ class ApplicationRepository
         return collect([
             'slug' => $application->slug,
             'name' => $application->name,
+            'foundation' => $application->foundation,
             'description' => $application->description,
             'website' => $application->website,
             'mainWebsite' => $application->main_website,
@@ -34,7 +35,7 @@ class ApplicationRepository
             'notificationMethod' => $application->notification_method,
             'logo' => $application->hasMedia('logo') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(5),'logo') : asset('assets/sekolah.png'),
             'loginAssets' => $application->hasMedia('login') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'login') : asset('materialize/assets/img/illustrations/auth-login-illustration-light.png'),
-            'frontHeaderAssets' => $application->hasMedia('front_header') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'front_header') : asset('assets/Frame 1.png'),
+            'frontHeaderAssets' => $application->hasMedia('front_header') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'front_header') : asset('assets/jane.jpg'),
             'carouselAssets' => $application->getMedia('carousel')->map(function (Media $media) {
                 return [
                     'fileUrl' => $media->getTemporaryUrl(Carbon::now()->addDay())
@@ -49,20 +50,20 @@ class ApplicationRepository
             [
                 'name' => 'login',
                 'note' => [
-                    '- Ukuran maksimal 1MB'
+                    '- Ukuran maksimal 500KB'
                 ]
             ],
             [
                 'name' => 'front_header',
                 'note' => [
-                    '- Ukuran maksimal 1MB',
-                    '- Letak dihalaman beranda teratas'
+                    '- Ukuran maksimal 500KB',
+                    '- Background halaman beranda teratas'
                 ]
             ],
             [
                 'name' => 'carousel',
                 'note' => [
-                    '- Ukuran maksimal 1Mb',
+                    '- Ukuran maksimal 500KB',
                     '- File disarankan berdimensi 1000x500 px'
                 ]
             ]

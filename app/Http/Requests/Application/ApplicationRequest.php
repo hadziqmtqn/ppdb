@@ -10,6 +10,7 @@ class ApplicationRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'foundation' => ['required'],
             'description' => ['nullable'],
             'website' => ['nullable', 'url'],
             'main_website' => ['nullable', 'url'],
@@ -28,6 +29,7 @@ class ApplicationRequest extends FormRequest
     {
         return [
             'name' => 'nama',
+            'foundation' => 'nama yayasan',
             'description' => 'deskripsi',
             'website' => 'website',
             'main_website' => 'website utama',

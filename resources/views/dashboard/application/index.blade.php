@@ -22,6 +22,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating form-floating-outline mb-3">
+                                    <input type="text" name="foundation" id="foundation" class="form-control" placeholder="Nama Yayasan" value="{{ $application['foundation'] }}">
+                                    <label for="foundation">Nama Yayasan</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline mb-3">
                                     <input type="url" name="website" id="website" class="form-control" placeholder="Website" value="{{ $application['website'] }}">
                                     <label for="website">Website</label>
                                 </div>

@@ -2,45 +2,20 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-pricing.css') }}" />
     <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/ui-carousel.css') }}" />
-    <style>
-        #header {
-            position: relative;
-            background-image: url('{{ asset('assets/jane.jpg') }}');
-            background-attachment: fixed;
-            background-position: bottom;
-            object-fit: cover;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        #header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(12, 75, 191, 0.5);
-            z-index: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('content')
     <div data-bs-spy="scroll" class="scrollspy-example">
         <section id="header" class="section-py border border-0 landing-cta p-lg-0 pb-0 position-relative">
+            <img src="{{ $application['frontHeaderAssets'] }}" class="position-absolute bottom-0 end-0 scaleX-n1-rtl h-100 w-100 z-n1" alt="cta image" style="object-fit: cover">
             <div class="container" style="padding-top: 5rem; position: relative; z-index: 2">
                 <div class="row align-items-center gy-5 gy-lg-0" style="padding-bottom: 15rem; padding-top: 10rem">
                     <div class="col-lg-12 text-center text-lg-center">
-                        <h6 class="h1 text-white fw-bold mb-1">Penerimaan Peserta Didik Baru</h6>
-                        <h4 class="h1 fw-bold fw-medium mb-2 text-white">
-                            Jenjang
-                            @foreach($educationalLevels as $educationalLevel)
-                                {{ $educationalLevel->name . ($loop->last ? '' : ',') }}
-                            @endforeach
-                        </h4>
-                        <h5 class="h1 fw-bold fw-medium mb-2 text-white">Tahun Ajaran {{ $getSchoolYearActive['year'] }}</h5>
-                        <p class="mb-4 text-white">Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta<br/>Tahun Pelajaran secara online dan realtime.</p>
-                        <a href="{{ route('registration.index') }}" class="btn btn-primary">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
+                        <h6 class="h2 text-white fw-bold mb-1">{{ $application['name'] }}</h6>
+                        <h4 class="h1 fw-bold fw-medium mb-2 text-white">{{ $application['foundation'] }}</h4>
+                        <h5 class="h2 fw-bold fw-medium mb-2 text-white">Tahun Ajaran {{ $getSchoolYearActive['year'] }}</h5>
+                        <p class="mb-4 text-white">{!! $application['description'] !!}</p>
+                        <a href="{{ route('registration.index') }}" class="btn btn-warning text-dark">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                     </div>
                 </div>
             </div>
