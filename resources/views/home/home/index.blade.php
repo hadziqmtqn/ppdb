@@ -21,13 +21,14 @@
             </div>
         </section>
 
-        <section id="features" class="section-py landing-features" style="padding-top: 10rem; padding-bottom: 10rem">
+        <section id="features" class="section-py landing-features" style="padding-top: 10rem; padding-bottom: 5rem">
             <div class="container">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2" />
                     <span class="text-uppercase">Kuota Pendaftaran</span>
                 </h6>
-                <div class="nav-align-top mb-4">
+                <h3 class="text-center mb-3 mb-md-5">Peserta Didik Baru <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
+                <div class="nav-align-top mb-4 pt-lg-4">
                     <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
                         @foreach($quotas as $key => $quota)
                             <li class="nav-item" role="presentation">
@@ -73,6 +74,80 @@
             </div>
         </section>
 
+        <section class="section-py landing-hero position-relative" style="padding-top: 5rem; padding-bottom: 3rem">
+            <div class="container" style="padding-bottom: 6rem; padding-top: 2rem">
+                <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
+                    <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
+                    <span class="text-uppercase">Jadwal Pendaftaran</span>
+                </h6>
+                <h3 class="text-center mb-3 mb-md-5">Peserta Didik Baru <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
+                <div class="row align-items-center gy-5 gy-lg-0">
+                    <div class="col-lg-6 text-center text-lg-start">
+                        <div class="card shadow-none border-2 border-primary">
+                            <div class="card-body">
+                                <h4 class="mb-2 pb-1">Upcoming Webinar</h4>
+                                <p>Next Generation Frontend Architecture Using Layout Engine And React Native Web.</p>
+                                <div class="row mb-3 g-3">
+                                    <div class="col-6">
+                                        <div class="d-flex">
+                                            <div class="avatar flex-shrink-0 me-2">
+                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-calendar-alert mdi-24px"></i></span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
+                                                <small>Date</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex">
+                                            <div class="avatar flex-shrink-0 me-2">
+                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-clock-time-four-outline mdi-24px"></i></span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 text-nowrap">32 minutes</h6>
+                                                <small>Duration</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4 class="mb-2 pb-1">Upcoming Webinar</h4>
+                                <p>Next Generation Frontend Architecture Using Layout Engine And React Native Web.</p>
+                                <div class="row mb-3 g-3">
+                                    <div class="col-6">
+                                        <div class="d-flex">
+                                            <div class="avatar flex-shrink-0 me-2">
+                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-calendar-alert mdi-24px"></i></span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
+                                                <small>Date</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex">
+                                            <div class="avatar flex-shrink-0 me-2">
+                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-clock-time-four-outline mdi-24px"></i></span>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0 text-nowrap">32 minutes</h6>
+                                                <small>Duration</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 pt-lg-4 text-center">
+                        <img src="{{ asset('assets/Frame 1.png') }}" alt="cta dashboard" class="img-fluid w-75" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="pricing-free-trial bg-label-primary">
             <div class="container">
                 <div class="position-relative">
@@ -91,7 +166,7 @@
             </div>
         </section>
 
-        <section class="section-py bg-body">
+        <section class="section-py">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 text-center">
