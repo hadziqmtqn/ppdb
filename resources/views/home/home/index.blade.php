@@ -43,23 +43,42 @@
                         @foreach($quotas as $key => $quota)
                             <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="navs-pills-justified-{{ $key }}" role="tabpanel">
                                 <div class="row gy-4">
-                                    @foreach($quota['data'] as $date)
+                                    @foreach($quota['data'] as $data)
                                         <div class="col-lg-4 col-sm-6">
-                                            <div class="card">
+                                            {{--<div class="card">
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-center flex-wrap gap-2">
                                                         <div class="avatar me-3">
-                                                            <div class="avatar-initial bg-label-primary rounded">
-                                                                <i class="mdi mdi-account-outline mdi-24px"> </i>
+                                                            <div class="avatar-initial bg-label-{{ $data['color'] }} rounded">
+                                                                <i class="mdi mdi-{{ $data['icon'] }} mdi-24px"> </i>
                                                             </div>
                                                         </div>
                                                         <div class="card-info">
                                                             <div class="d-flex align-items-center">
-                                                                <h4 class="mb-0">8,458</h4>
-                                                                <i class="mdi mdi-chevron-down text-danger mdi-24px"></i>
-                                                                <small class="text-danger">8.10%</small>
+                                                                <h4 class="mb-0">{{ $data['value'] }}</h4>
                                                             </div>
-                                                            <small>New Customers</small>
+                                                            <small>{{ $data['label'] }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>--}}
+                                            <div class="card">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="card-body">
+                                                            <div class="card-info">
+                                                                <h5 class="text-nowrap pt-2">Ratings</h5>
+
+                                                            </div>
+                                                            <div class="d-flex align-items-end">
+                                                                <h4 class="mb-0 me-2">8.14k</h4>
+                                                                <small class="text-success">+15.6%</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 text-end d-flex align-items-end">
+                                                        <div class="card-body pb-0 pt-3">
+                                                            <img src="{{ asset('materialize/assets/img/illustrations/card-ratings-illustration.png') }}" alt="Ratings" class="img-fluid" width="80">
                                                         </div>
                                                     </div>
                                                 </div>

@@ -28,19 +28,22 @@ class HomeRepository
             ->map(function (EducationalInstitution $educationalInstitution) {
                 $fields = [
                     'quota' => [
-                        'icon' => 'icon-quota',
-                        'label' => 'Quota',
-                        'description' => 'Total quota available'
+                        'icon' => 'ticket-percent-outline',
+                        'color' => 'primary',
+                        'label' => 'Kuota',
+                        'description' => 'Jumlah kuota pendaftaran yang disediakan'
                     ],
                     'totalStudents' => [
-                        'icon' => 'icon-students',
-                        'label' => 'Total Students',
-                        'description' => 'Total number of students registered'
+                        'icon' => 'account-multiple',
+                        'color' => 'success',
+                        'label' => 'Jumlah Pendaftar',
+                        'description' => 'Total calon siswa baru terdaftar'
                     ],
                     'remainingQuota' => [
-                        'icon' => 'icon-remaining',
-                        'label' => 'Remaining Quota',
-                        'description' => 'Quota remaining for registration'
+                        'icon' => 'at',
+                        'color' => 'warning',
+                        'label' => 'Sisa Kuota',
+                        'description' => 'Sisa kuota pendaftaran saat ini'
                     ]
                 ];
                 $data = [];
@@ -51,6 +54,7 @@ class HomeRepository
                             $data['quota'] = [
                                 'value' => optional($educationalInstitution->registrationScheduleActive)->quota,
                                 'icon' => $attributes['icon'],
+                                'color' => $attributes['color'],
                                 'label' => $attributes['label'],
                                 'description' => $attributes['description']
                             ];
@@ -59,6 +63,7 @@ class HomeRepository
                             $data['totalStudents'] = [
                                 'value' => (optional($educationalInstitution->registrationScheduleActive)->quota ?? 0) - (optional($educationalInstitution->registrationScheduleActive)->remaining_quota ?? 0),
                                 'icon' => $attributes['icon'],
+                                'color' => $attributes['color'],
                                 'label' => $attributes['label'],
                                 'description' => $attributes['description']
                             ];
@@ -67,6 +72,7 @@ class HomeRepository
                             $data['remainingQuota'] = [
                                 'value' => optional($educationalInstitution->registrationScheduleActive)->remaining_quota,
                                 'icon' => $attributes['icon'],
+                                'color' => $attributes['color'],
                                 'label' => $attributes['label'],
                                 'description' => $attributes['description']
                             ];
