@@ -8,69 +8,38 @@
             background-image: url('{{ asset('assets/jane.jpg') }}');
             background-attachment: fixed;
             background-position: bottom;
-            /*background-color: #0a6aa1;*/
             object-fit: cover;
+            width: 100vw;
+            height: 100vh;
         }
 
-        /*#header::before {
+        #header::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(33, 120, 188, 0.48); !* Adjust the rgba value for the desired color and transparency *!
+            background: rgba(12, 75, 191, 0.5);
             z-index: 1;
-        }*/
-
-        /*.text-white * {
-            color: white !important;
-        }*/
+        }
     </style>
 @endsection
 @section('content')
     <div data-bs-spy="scroll" class="scrollspy-example">
-        {{--<div id="carouselAssets" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                @if(count($application['carouselAssets']) > 0)
-                    @foreach($application['carouselAssets'] as $carouselAsset)
-                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                            <img class="d-block w-100" src="{{ url($carouselAsset['fileUrl']) }}" style="max-height: 500px; object-fit: cover" alt="First slide" />
-                        </div>
-                    @endforeach
-                @else
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="{{ asset('assets/slide-1.png') }}" style="max-height: 500px; object-fit: cover" alt="First slide" />
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{{ asset('assets/slide-2.png') }}" style="max-height: 500px; object-fit: cover" alt="Second slide" />
-                    </div>
-                @endif
-            </div>
-            <a class="carousel-control-prev" href="#carouselAssets" role="button" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselAssets" role="button" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </a>
-        </div>--}}
-
         <section id="header" class="section-py border border-0 landing-cta p-lg-0 pb-0 position-relative">
-            {{--<img src="{{ asset('assets/jane.jpg') }}" class="position-absolute bottom-0 end-0 scaleX-n1-rtl w-100 z-n1" alt="cta image">--}}
-            <div class="container" style="padding-top: 2rem">
+            <div class="container" style="padding-top: 5rem; position: relative; z-index: 2">
                 <div class="row align-items-center gy-5 gy-lg-0" style="padding-bottom: 15rem; padding-top: 10rem">
                     <div class="col-lg-12 text-center text-lg-center">
                         <h6 class="h1 text-white fw-bold mb-1">Penerimaan Peserta Didik Baru</h6>
-                        <h4 class="fw-medium mb-2 text-white">
+                        <h4 class="h1 fw-bold fw-medium mb-2 text-white">
                             Jenjang
                             @foreach($educationalLevels as $educationalLevel)
                                 {{ $educationalLevel->name . ($loop->last ? '' : ',') }}
                             @endforeach
                         </h4>
-                        <h5 class="fw-medium mb-2 text-white">Tahun Ajaran {{ $getSchoolYearActive['year'] }}</h5>
-                        <p class="mb-4 text-white">Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta Tahun Pelajaran secara online dan realtime.</p>
+                        <h5 class="h1 fw-bold fw-medium mb-2 text-white">Tahun Ajaran {{ $getSchoolYearActive['year'] }}</h5>
+                        <p class="mb-4 text-white">Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta<br/>Tahun Pelajaran secara online dan realtime.</p>
                         <a href="{{ route('registration.index') }}" class="btn btn-primary">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                     </div>
                 </div>
