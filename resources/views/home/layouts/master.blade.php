@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-wide" dir="ltr" data-theme="theme-default" data-assets-path="/materialize/assets/" data-template="front-pages">
+<html lang="en" class="light-style layout-wide" dir="ltr" data-theme="theme-default" data-assets-path="/materialize/assets/" data-template="front-pages">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
