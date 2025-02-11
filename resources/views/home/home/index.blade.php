@@ -2,6 +2,31 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-pricing.css') }}" />
     <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/ui-carousel.css') }}" />
+    <style>
+        #header {
+            position: relative;
+            background-image: url('{{ asset('assets/jane.jpg') }}');
+            background-attachment: fixed;
+            background-position: bottom;
+            /*background-color: #0a6aa1;*/
+            object-fit: cover;
+        }
+
+        /*#header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(33, 120, 188, 0.48); !* Adjust the rgba value for the desired color and transparency *!
+            z-index: 1;
+        }*/
+
+        /*.text-white * {
+            color: white !important;
+        }*/
+    </style>
 @endsection
 @section('content')
     <div data-bs-spy="scroll" class="scrollspy-example">
@@ -32,20 +57,20 @@
             </a>
         </div>--}}
 
-        <section id="header" class="section-py border border-2 landing-cta p-lg-0 pb-0 position-relative">
-            <img src="{{ asset('materialize/assets/img/front-pages/backgrounds/cta-bg.png') }}" class="position-absolute bottom-0 end-0 scaleX-n1-rtl h-100 w-100 z-n1" alt="cta image">
-            <div class="container" style="padding-bottom: 6rem; padding-top: 2rem">
-                <div class="row align-items-center gy-5 gy-lg-0" style="padding-bottom: 10rem; padding-top: 10rem">
+        <section id="header" class="section-py border border-0 landing-cta p-lg-0 pb-0 position-relative">
+            {{--<img src="{{ asset('assets/jane.jpg') }}" class="position-absolute bottom-0 end-0 scaleX-n1-rtl w-100 z-n1" alt="cta image">--}}
+            <div class="container" style="padding-top: 2rem">
+                <div class="row align-items-center gy-5 gy-lg-0" style="padding-bottom: 15rem; padding-top: 10rem">
                     <div class="col-lg-12 text-center text-lg-center">
-                        <h6 class="h1 text-primary fw-bold mb-1">Penerimaan Peserta Didik Baru</h6>
-                        <h4 class="fw-medium mb-2">
+                        <h6 class="h1 text-white fw-bold mb-1">Penerimaan Peserta Didik Baru</h6>
+                        <h4 class="fw-medium mb-2 text-white">
                             Jenjang
                             @foreach($educationalLevels as $educationalLevel)
                                 {{ $educationalLevel->name . ($loop->last ? '' : ',') }}
                             @endforeach
                         </h4>
-                        <h5 class="fw-medium mb-2">Tahun Ajaran {{ $getSchoolYearActive['year'] }}</h5>
-                        <p class="mb-4">Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta Tahun Pelajaran secara online dan realtime.</p>
+                        <h5 class="fw-medium mb-2 text-white">Tahun Ajaran {{ $getSchoolYearActive['year'] }}</h5>
+                        <p class="mb-4 text-white">Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta Tahun Pelajaran secara online dan realtime.</p>
                         <a href="{{ route('registration.index') }}" class="btn btn-primary">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                     </div>
                     {{--<div class="col-lg-6 pt-lg-5">
