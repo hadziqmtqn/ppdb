@@ -8,6 +8,7 @@ use App\Repositories\ApplicationRepository;
 use App\Repositories\ClassLevelRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
+use App\Repositories\HomeRepository;
 use App\Repositories\MajorRepository;
 use App\Repositories\MediaFileRepository;
 use App\Repositories\MenuRepository;
@@ -18,6 +19,7 @@ use App\Repositories\Payment\BankAccountRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RegistrationCategoryRepository;
 use App\Repositories\RegistrationPathRepository;
+use App\Repositories\RegistrationScheduleRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\SaveNewAccountRepository;
 use App\Repositories\SchoolYearRepository;
@@ -63,6 +65,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(StudentStatsRepository::class, StudentStatsRepository::class);
         $this->app->singleton(CurrentBillRepository::class, CurrentBillRepository::class);
         $this->app->singleton(BankAccountRepository::class, BankAccountRepository::class);
+        $this->app->singleton(HomeRepository::class, HomeRepository::class);
+        $this->app->singleton(RegistrationScheduleRepository::class, RegistrationScheduleRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);

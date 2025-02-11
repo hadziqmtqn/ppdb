@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\FilterRequest;
+use App\Models\RegistrationSchedule;
 use App\Models\User;
+use App\Repositories\RegistrationScheduleRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
 use App\Repositories\Student\StudentStatsRepository;
@@ -14,6 +16,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -29,12 +32,14 @@ class StudentController extends Controller implements HasMiddleware
     protected StudentRepository $studentRepository;
     protected StudentRegistrationRepository $studentRegistrationRepository;
     protected StudentStatsRepository $studentStatsRepository;
+    protected RegistrationScheduleRepository $registrationScheduleRepository;
 
-    public function __construct(StudentRepository $studentRepository, StudentRegistrationRepository $studentRegistrationRepository, StudentStatsRepository $studentStatsRepository)
+    public function __construct(StudentRepository $studentRepository, StudentRegistrationRepository $studentRegistrationRepository, StudentStatsRepository $studentStatsRepository, RegistrationScheduleRepository $registrationScheduleRepository)
     {
         $this->studentRepository = $studentRepository;
         $this->studentRegistrationRepository = $studentRegistrationRepository;
         $this->studentStatsRepository = $studentStatsRepository;
+        $this->registrationScheduleRepository = $registrationScheduleRepository;
     }
 
     public static function middleware(): array
@@ -228,15 +233,30 @@ class StudentController extends Controller implements HasMiddleware
 
     public function permanentlyDelete($username): JsonResponse
     {
-        $user = User::filterByUsername($username)
+        $user = User::with('student')
+            ->whereHas('student')
+            ->filterByUsername($username)
             ->onlyTrashed()
             ->firstOrFail();
 
         Gate::authorize('student-destroy', $user);
 
         try {
+            DB::beginTransaction();
+            // TODO sync quota
+            $registrationSchedule = RegistrationSchedule::filterData([
+                'educational_institution_id' => optional($user->student)->educational_institution_id,
+                'school_year_id' => optional($user->student)->school_year_id
+            ])
+                ->firstOrFail();
+
+            $this->registrationScheduleRepository->syncQuota($registrationSchedule);
+
+            // TODO force delete
             $user->forceDelete();
+            DB::commit();
         }catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal dikembalikan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }

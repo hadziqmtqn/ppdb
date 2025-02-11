@@ -29,6 +29,53 @@
 
         <section id="features" class="section-py landing-features" style="padding-top: 10rem">
             <div class="container">
+                <div class="nav-align-top mb-4">
+                    <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                        @foreach($quotas as $key => $quota)
+                            <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link {{ $loop->first ? 'active' : '' }} waves-effect waves-light" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-{{ $key }}" aria-controls="navs-pills-justified-{{ $key }}" aria-selected="true">
+                                    <i class="tf-icons mdi mdi-office-building-outline me-1"></i> {{ $quota['name'] }}
+                                </button>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="tab-content p-0 shadow-none">
+                        @foreach($quotas as $key => $quota)
+                            <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="navs-pills-justified-{{ $key }}" role="tabpanel">
+                                <div class="row gy-4">
+                                    @foreach($quota['data'] as $date)
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center flex-wrap gap-2">
+                                                        <div class="avatar me-3">
+                                                            <div class="avatar-initial bg-label-primary rounded">
+                                                                <i class="mdi mdi-account-outline mdi-24px"> </i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-info">
+                                                            <div class="d-flex align-items-center">
+                                                                <h4 class="mb-0">8,458</h4>
+                                                                <i class="mdi mdi-chevron-down text-danger mdi-24px"></i>
+                                                                <small class="text-danger">8.10%</small>
+                                                            </div>
+                                                            <small>New Customers</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section-py landing-features" style="padding-top: 10rem">
+            <div class="container">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2" />
                     <span class="text-uppercase">Useful features</span>

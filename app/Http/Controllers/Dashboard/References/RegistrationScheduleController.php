@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationSchedule\RegistrationScheduleRequest;
 use App\Http\Requests\RegistrationSchedule\UpdateRegistrationScheduleRequest;
 use App\Models\RegistrationSchedule;
-use App\Models\Student;
+use App\Repositories\RegistrationScheduleRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -22,6 +22,16 @@ use Yajra\DataTables\Facades\DataTables;
 class RegistrationScheduleController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected RegistrationScheduleRepository $registrationScheduleRepository;
+
+    /**
+     * @param RegistrationScheduleRepository $registrationScheduleRepository
+     */
+    public function __construct(RegistrationScheduleRepository $registrationScheduleRepository)
+    {
+        $this->registrationScheduleRepository = $registrationScheduleRepository;
+    }
 
     public static function middleware(): array
     {
@@ -106,15 +116,10 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
             $registrationSchedule->start_date = $request->input('start_date');
             $registrationSchedule->end_date = $request->input('end_date');
             $registrationSchedule->quota = $request->input('quota');
-
-            $totalStudents = Student::where([
-                'educational_institution_id' => $registrationSchedule->educational_institution_id,
-                'school_year_id' => $registrationSchedule->school_year_id
-            ])
-                ->count();
-
-            $registrationSchedule->remaining_quota = ($registrationSchedule->quota - $totalStudents);
             $registrationSchedule->save();
+
+            // TODO sync quota
+            $this->registrationScheduleRepository->syncQuota($registrationSchedule);
         }catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
