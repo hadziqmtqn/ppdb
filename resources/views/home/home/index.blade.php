@@ -29,6 +29,10 @@
 
         <section id="features" class="section-py landing-features" style="padding-top: 10rem">
             <div class="container">
+                <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
+                    <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2" />
+                    <span class="text-uppercase">Kuota Pendaftaran</span>
+                </h6>
                 <div class="nav-align-top mb-4">
                     <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
                         @foreach($quotas as $key => $quota)
@@ -45,40 +49,22 @@
                                 <div class="row gy-4">
                                     @foreach($quota['data'] as $data)
                                         <div class="col-lg-4 col-sm-6">
-                                            {{--<div class="card">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center flex-wrap gap-2">
-                                                        <div class="avatar me-3">
-                                                            <div class="avatar-initial bg-label-{{ $data['color'] }} rounded">
-                                                                <i class="mdi mdi-{{ $data['icon'] }} mdi-24px"> </i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-info">
-                                                            <div class="d-flex align-items-center">
-                                                                <h4 class="mb-0">{{ $data['value'] }}</h4>
-                                                            </div>
-                                                            <small>{{ $data['label'] }}</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>--}}
                                             <div class="card">
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="card-body">
                                                             <div class="card-info">
-                                                                <h5 class="text-nowrap pt-2">Ratings</h5>
-
+                                                                <h5 class="text-nowrap pt-2"><span data-bs-toggle="tooltip" title="{{ $data['description'] }}">{{ $data['label'] }}</span></h5>
                                                             </div>
                                                             <div class="d-flex align-items-end">
-                                                                <h4 class="mb-0 me-2">8.14k</h4>
-                                                                <small class="text-success">+15.6%</small>
+                                                                <h4 class="mb-0 me-2">{{ $data['value'] }}</h4>
+                                                                <small class="text-success">Siswa</small>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-6 text-end d-flex align-items-end">
                                                         <div class="card-body pb-0 pt-3">
-                                                            <img src="{{ asset('materialize/assets/img/illustrations/card-ratings-illustration.png') }}" alt="Ratings" class="img-fluid" width="80">
+                                                            <img src="{{ $data['asset'] }}" alt="Ratings" class="img-fluid" width="80">
                                                         </div>
                                                     </div>
                                                 </div>

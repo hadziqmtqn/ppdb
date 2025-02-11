@@ -31,19 +31,22 @@ class HomeRepository
                         'icon' => 'ticket-percent-outline',
                         'color' => 'primary',
                         'label' => 'Kuota',
-                        'description' => 'Jumlah kuota pendaftaran yang disediakan'
+                        'description' => 'Kuota pendaftaran yang disediakan',
+                        'asset' => asset('assets/object-2.svg')
                     ],
                     'totalStudents' => [
                         'icon' => 'account-multiple',
                         'color' => 'success',
                         'label' => 'Jumlah Pendaftar',
-                        'description' => 'Total calon siswa baru terdaftar'
+                        'description' => 'Total calon siswa baru terdaftar',
+                        'asset' => asset('assets/object-1.svg')
                     ],
                     'remainingQuota' => [
                         'icon' => 'at',
                         'color' => 'warning',
                         'label' => 'Sisa Kuota',
-                        'description' => 'Sisa kuota pendaftaran saat ini'
+                        'description' => 'Sisa kuota pendaftaran saat ini',
+                        'asset' => asset('assets/object-3.svg')
                     ]
                 ];
                 $data = [];
@@ -56,7 +59,8 @@ class HomeRepository
                                 'icon' => $attributes['icon'],
                                 'color' => $attributes['color'],
                                 'label' => $attributes['label'],
-                                'description' => $attributes['description']
+                                'description' => $attributes['description'],
+                                'asset' => $attributes['asset']
                             ];
                             break;
                         case 'totalStudents':
@@ -65,7 +69,8 @@ class HomeRepository
                                 'icon' => $attributes['icon'],
                                 'color' => $attributes['color'],
                                 'label' => $attributes['label'],
-                                'description' => $attributes['description']
+                                'description' => $attributes['description'],
+                                'asset' => $attributes['asset']
                             ];
                             break;
                         case 'remainingQuota':
@@ -74,7 +79,8 @@ class HomeRepository
                                 'icon' => $attributes['icon'],
                                 'color' => $attributes['color'],
                                 'label' => $attributes['label'],
-                                'description' => $attributes['description']
+                                'description' => $attributes['description'],
+                                'asset' => $attributes['asset']
                             ];
                             break;
                     }
