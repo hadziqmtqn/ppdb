@@ -93,3 +93,6 @@ registration-fee-delete
 payment-transaction-read
 payment-transaction-write
 payment-transaction-delete
+registration-step-read
+registration-step-write
+registration-step-delete

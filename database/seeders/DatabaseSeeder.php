@@ -26,6 +26,7 @@ use Database\Seeders\References\TransportationSeeder;
 use Database\Seeders\Setting\EmailConfigSeeder;
 use Database\Seeders\Setting\MenuSeeder;
 use Database\Seeders\Setting\MessageTemplateSeeder;
+use Database\Seeders\Setting\RegistrationStepSeeder;
 use Database\Seeders\Setting\WhatsappConfigSeeder;
 use Illuminate\Database\Seeder;
 
@@ -62,7 +63,9 @@ class DatabaseSeeder extends Seeder
             PaymentSettingSeeder::class,
             PaymentChannelSeeder::class,
             BankAccountSeeder::class,
-            RegistrationFeeSeeder::class
+            RegistrationFeeSeeder::class,
+            //
+            RegistrationStepSeeder::class
         ]);
 
         Student::factory()

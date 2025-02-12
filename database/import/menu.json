@@ -178,7 +178,8 @@
       "application-read",
       "whatapp-config-read",
       "email-config-read",
-      "message-template-read"
+      "message-template-read",
+      "registration-step-read"
     ],
     "url": "#",
     "icon": "cog-outline",
@@ -210,6 +211,13 @@
         "visibility": ["application-read"],
         "url": "/application",
         "icon": "apps"
+      },
+      {
+        "name": "Langkah Pendaftaran",
+        "type": "sub_menu",
+        "visibility": ["registration-step-read"],
+        "url": "/registration-step",
+        "icon": "target"
       },
       {
         "name": "Konfig. Whatsapp",
