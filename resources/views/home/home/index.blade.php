@@ -74,7 +74,7 @@
             </div>
         </section>
 
-        <section class="section-py landing-hero position-relative" style="padding-top: 5rem; padding-bottom: 3rem">
+        <section class="section-py position-relative" style="padding-top: 5rem; padding-bottom: 3rem">
             <div class="container" style="padding-bottom: 6rem; padding-top: 2rem">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
@@ -126,6 +126,39 @@
             </div>
         </section>
 
+        <section class="section-py pb-0 position-relative" style="padding-top: 5rem">
+            <div class="container">
+                <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
+                    <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
+                    <span class="text-uppercase">Prosedur Pendaftaran</span>
+                </h6>
+                <h3 class="text-center mb-3 mb-md-5">4 Langkah mudah memulai pendaftaran <span class="fw-bold text-primary">Siswa Baru</span> di website ini</h3>
+            </div>
+        </section>
+
+        <section class="section-py position-relative" style="padding-bottom: 3rem">
+            <div class="container">
+                <div class="row align-items-center gy-5 gy-lg-0">
+                    <div class="col-lg-6 text-center">
+                        <img src="{{ url('https://ppdb.pendidikan.gunungkidulkab.go.id/public-image/file-1717818297960-step-one.png') }}" alt="cta dashboard" class="img-fluid w-75" />
+                    </div>
+                    <div class="col-lg-6 pt-lg-4 ps-4 pe-4 ps-lg-5 pe-lg-5">
+                        <div class="d-flex gap-3">
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-warning rounded-circle" style="padding: 40px">
+                                    <i class="mdi mdi-numeric-1 mdi-48px"></i>
+                                </div>
+                            </div>
+                            <div class="card-info pt-4 ps-4 ps-lg-1" style="z-index: 1">
+                                <h2 class="mb-0 fw-bold">Klik Registrasi Akun</h2>
+                                <p>Klik button “Registrasi Akun” apabila belum pernah bersekolah atau sekolah di Luar Daerah.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="pricing-free-trial bg-label-primary">
             <div class="container">
                 <div class="position-relative">
@@ -168,4 +201,5 @@
     <script src="{{ asset('materialize/assets/js/front-main.js') }}"></script>
     <script src="{{ asset('materialize/assets/js/front-page-landing.js') }}"></script>
     <script src="{{ asset('materialize/assets/js/ui-carousel.js') }}"></script>
+    <script src="{{ asset('materialize/assets/js/extended-ui-timeline.js') }}"></script>
 @endsection

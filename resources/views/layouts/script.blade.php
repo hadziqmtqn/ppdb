@@ -40,6 +40,7 @@
 <script src="{{ asset('materialize/assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/jquery-sticky/jquery-sticky.js') }}"></script>
+<script src="{{ asset('materialize/assets/vendor/libs/animate-on-scroll/animate-on-scroll.js') }}"></script>
 <!-- Main JS -->
 <script src="{{ asset('materialize/assets/js/main.js') }}"></script>
 

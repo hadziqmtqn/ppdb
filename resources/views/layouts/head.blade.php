@@ -42,6 +42,7 @@
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}" />
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/animate-on-scroll/animate-on-scroll.css') }}" />
 <!-- Page CSS -->
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/page-profile.css') }}" />
 
