@@ -27,7 +27,8 @@ class HomeController extends Controller
         $title = 'Beranda';
         $educationalLevels = $this->educationalLevelRepository->getLevel();
         $quotas = $this->homeRepository->quotas();
+        $schedules = $this->homeRepository->getSchedule();
 
-        return \view('home.home.index', compact('title', 'educationalLevels', 'quotas'));
+        return \view('home.home.index', compact('title', 'educationalLevels', 'quotas', 'schedules'));
     }
 }

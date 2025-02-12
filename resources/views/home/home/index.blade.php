@@ -27,7 +27,7 @@
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2" />
                     <span class="text-uppercase">Kuota Pendaftaran</span>
                 </h6>
-                <h3 class="text-center mb-3 mb-md-5">Peserta Didik Baru <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
+                <h3 class="text-center mb-3 mb-md-5">{{ $application['name'] }} <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
                 <div class="nav-align-top mb-4 pt-lg-4">
                     <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
                         @foreach($quotas as $key => $quota)
@@ -80,69 +80,47 @@
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
                     <span class="text-uppercase">Jadwal Pendaftaran</span>
                 </h6>
-                <h3 class="text-center mb-3 mb-md-5">Peserta Didik Baru <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
+                <h3 class="text-center mb-3 mb-md-5">{{ $application['name'] }} <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
                 <div class="row align-items-center gy-5 gy-lg-0">
                     <div class="col-lg-6 text-center text-lg-start">
                         <div class="card shadow-none border-2 border-primary">
                             <div class="card-body">
-                                <h4 class="mb-2 pb-1">Upcoming Webinar</h4>
-                                <p>Next Generation Frontend Architecture Using Layout Engine And React Native Web.</p>
-                                <div class="row mb-3 g-3">
-                                    <div class="col-6">
-                                        <div class="d-flex">
-                                            <div class="avatar flex-shrink-0 me-2">
-                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-calendar-alert mdi-24px"></i></span>
+                                @foreach($schedules as $schedule)
+                                    <h4 class="mb-2 pb-1">{{ $schedule['name'] }}</h4>
+                                    <p>Agenda {{ $application['name'] }}</p>
+                                    <div class="row mb-3 g-3">
+                                        <div class="col-6">
+                                            <div class="d-flex">
+                                                <div class="avatar flex-shrink-0 me-2">
+                                                    <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-calendar-month-outline mdi-24px"></i></span>
+                                                </div>
+                                                <div>
+                                                    <small>Dari Tgl.</small>
+                                                    <h6 class="mb-0 text-nowrap {{ $schedule['hasEnded'] ? 'text-danger' : '' }}">{{ $schedule['hasEnded'] ? 'Telah berakhir' : $schedule['startDate'] }}</h6>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
-                                                <small>Date</small>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="d-flex">
+                                                <div class="avatar flex-shrink-0 me-2">
+                                                    <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-clock-time-four-outline mdi-24px"></i></span>
+                                                </div>
+                                                <div>
+                                                    <small>Sampai Tgl.</small>
+                                                    <h6 class="mb-0 text-nowrap {{ $schedule['hasEnded'] ? 'text-danger' : '' }}">{{ $schedule['hasEnded'] ? 'Telah berakhir' : $schedule['endDate'] }}</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="d-flex">
-                                            <div class="avatar flex-shrink-0 me-2">
-                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-clock-time-four-outline mdi-24px"></i></span>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-0 text-nowrap">32 minutes</h6>
-                                                <small>Duration</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <h4 class="mb-2 pb-1">Upcoming Webinar</h4>
-                                <p>Next Generation Frontend Architecture Using Layout Engine And React Native Web.</p>
-                                <div class="row mb-3 g-3">
-                                    <div class="col-6">
-                                        <div class="d-flex">
-                                            <div class="avatar flex-shrink-0 me-2">
-                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-calendar-alert mdi-24px"></i></span>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
-                                                <small>Date</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="d-flex">
-                                            <div class="avatar flex-shrink-0 me-2">
-                                                <span class="avatar-initial rounded bg-label-primary"><i class="mdi mdi-clock-time-four-outline mdi-24px"></i></span>
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-0 text-nowrap">32 minutes</h6>
-                                                <small>Duration</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    @if(!$loop->last)
+                                        <hr>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 pt-lg-4 text-center">
-                        <img src="{{ asset('assets/Frame 1.png') }}" alt="cta dashboard" class="img-fluid w-75" />
+                        <img src="{{ asset('assets/g10.svg') }}" alt="cta dashboard" class="img-fluid" />
                     </div>
                 </div>
             </div>

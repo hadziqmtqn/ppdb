@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\EducationalInstitution;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class HomeRepository
@@ -89,6 +90,24 @@ class HomeRepository
                 return collect([
                     'name' => $educationalInstitution->name,
                     'data' => $data
+                ]);
+            });
+    }
+
+    public function getSchedule(): Collection
+    {
+        return $this->educationalInstitution
+            ->with('registrationScheduleActive')
+            ->active()
+            ->get()
+            ->map(function (EducationalInstitution $educationalInstitution) {
+                $registrationSchedule = optional($educationalInstitution)->registrationScheduleActive;
+
+                return collect([
+                    'name' => $educationalInstitution->name,
+                    'startDate' => $registrationSchedule->start_date ? Carbon::parse($registrationSchedule->start_date)->isoFormat('DD MMM Y') : null,
+                    'endDate' => $registrationSchedule->end_date ? Carbon::parse($registrationSchedule->end_date)->isoFormat('DD MMM Y') : null,
+                    'hasEnded' => $registrationSchedule && (date('Y-m-d') >= date('Y-m-d', strtotime($registrationSchedule->end_date))) ?? false,
                 ]);
             });
     }
