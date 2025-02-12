@@ -158,6 +158,30 @@
                 </div>
             </div>
         </section>
+        <section class="section-py position-relative" style="padding-bottom: 3rem">
+            <div class="container">
+                <div class="row align-items-center gy-5 gy-lg-0">
+                    {{--setiap data genap tambah class order-md-0 order-lg-1--}}
+                    <div class="col-lg-6 text-center order-md-0 order-lg-1">
+                        <img src="{{ url('https://ppdb.pendidikan.gunungkidulkab.go.id/public-image/file-1717818297960-step-one.png') }}" alt="cta dashboard" class="img-fluid w-75" />
+                    </div>
+                    {{--setiap data genap tambah class order-md-1 order-lg-0--}}
+                    <div class="col-lg-6 pt-lg-4 ps-4 pe-4 ps-lg-5 pe-lg-5 order-md-1 order-lg-0">
+                        <div class="d-flex gap-3">
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-warning rounded-circle" style="padding: 40px">
+                                    <i class="mdi mdi-numeric-1 mdi-48px"></i>
+                                </div>
+                            </div>
+                            <div class="card-info pt-4 ps-4 ps-lg-1" style="z-index: 1">
+                                <h2 class="mb-0 fw-bold">Klik Registrasi Akun</h2>
+                                <p>Klik button “Registrasi Akun” apabila belum pernah bersekolah atau sekolah di Luar Daerah.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="pricing-free-trial bg-label-primary">
             <div class="container">
