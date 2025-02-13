@@ -58,7 +58,7 @@ class RegistrationStepController extends Controller implements HasMiddleware
                     })
                     ->addColumn('description', fn($row) => Str::limit(strip_tags($row->description), 70))
                     ->addColumn('is_active', function ($row) {
-                        return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-warning') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
+                        return '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>';
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="' . route('registration-step.show', $row->slug) . '" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil-outline"></i></a> ';

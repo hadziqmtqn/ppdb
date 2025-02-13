@@ -1,5 +1,5 @@
 ﻿serial_number;title;description
-1;Klik Daftar Sekarang;"Klik tombol ""Daftar Sekarang"" berwarna kuning dan isi data dengan valid."
-2;Validasi akun;Pastikan Email aktif dan No. Whatsapp dapat sedang aktif, sistem akan mengirim link konfirmasi.
-3;Lengkapi pengkinian data;"Kamu akan diarahkan kehalaman ""Siswa"" untuk melengkapi formulir pengkinian data."
-4;Melunasi biaya registrasi;Pembayaran registrasi siswa baru dapat dilakukan dengan pembayaran manual atau payment gateway.
+1;Klik Daftar Sekarang;"<p>Klik tombol ""<a href=""/register"" rel=""noopener noreferrer"" target=""_blank"">Daftar Sekarang</a>"" berwarna kuning dan isi data dengan valid.</p>"
+2;Validasi akun;<p>Pastikan Email aktif dan No. Whatsapp dapat sedang aktif, sistem akan mengirim link konfirmasi.</p>
+3;Lengkapi pengkinian data;"<p>Kamu akan diarahkan kehalaman ""Siswa"" untuk melengkapi formulir pengkinian data.</p>"
+4;Melunasi biaya registrasi;<p>Pembayaran registrasi siswa baru dapat dilakukan dengan pembayaran manual atau payment gateway.</p>

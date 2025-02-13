@@ -123,7 +123,6 @@ class HomeRepository
     {
         return $this->registrationStep
             ->active()
-            ->select(['serial_number', 'title', 'description'])
             ->orderBy('serial_number')
             ->get()
             ->map(function (RegistrationStep $registrationStep) {
@@ -139,7 +138,7 @@ class HomeRepository
                     'serialNumber' => $registrationStep->serial_number,
                     'title' => $registrationStep->title,
                     'description' => $registrationStep->description,
-                    'image' => $registrationStep->hasMedia('steps') ? $registrationStep->getFirstTemporaryUrl(Carbon::now()->addMinutes(20), 'steps') : $defaultImages[$registrationStep->serial_number] ?? null,
+                    'image' => $registrationStep->hasMedia('steps') ? $registrationStep->getFirstTemporaryUrl(Carbon::now()->addMinutes(20), 'steps') : ($defaultImages[$registrationStep->serial_number] ?? null),
                     // Determine classPosition based on serial_number
                     'classPosition' => $registrationStep->serial_number % 2 == 0 ? [
                         'imageClass' => 'order-md-0 order-lg-1',

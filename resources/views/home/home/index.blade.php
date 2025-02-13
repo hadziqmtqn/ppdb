@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="card-info pt-4 ps-4 ps-lg-1" style="z-index: 1">
                                     <h2 class="mb-0 fw-bold">{{ $registrationStep['title'] }}</h2>
-                                    <p>{!! $registrationStep['description'] !!}</p>
+                                    <div>{!! $registrationStep['description'] !!}</div>
                                 </div>
                             </div>
                         </div>
