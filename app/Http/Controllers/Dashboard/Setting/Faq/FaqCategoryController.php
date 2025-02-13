@@ -42,7 +42,8 @@ class FaqCategoryController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = FaqCategory::query();
+                $data = FaqCategory::query()
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

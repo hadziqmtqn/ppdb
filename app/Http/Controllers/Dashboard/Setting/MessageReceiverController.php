@@ -35,7 +35,8 @@ class MessageReceiverController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = MessageReceiver::query()
-                    ->with('messageTemplate.educationalInstitution:id,name', 'user:id,name,email', 'user.admin');
+                    ->with('messageTemplate.educationalInstitution:id,name', 'user:id,name,email', 'user.admin')
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

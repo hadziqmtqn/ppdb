@@ -43,6 +43,9 @@
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/animate-on-scroll/animate-on-scroll.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/quill/typography.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/quill/katex.css') }}" />
+<link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/quill/editor.css') }}" />
 <!-- Page CSS -->
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/page-profile.css') }}" />
 

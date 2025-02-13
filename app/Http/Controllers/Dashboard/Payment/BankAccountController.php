@@ -59,7 +59,8 @@ class BankAccountController extends Controller implements HasMiddleware
             if ($request->ajax()) {
                 $data = BankAccount::query()
                     ->with('educationalInstitution:id,name', 'paymentChannel:id,name')
-                    ->filterByEducationalInstitution();
+                    ->filterByEducationalInstitution()
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

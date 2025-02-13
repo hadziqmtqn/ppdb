@@ -62,7 +62,8 @@ class MediaFileController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = MediaFile::query()
-                    ->with('detailMediaFiles.educationalInstitution:id,name', 'detailMediaFiles.registrationPath:id,name');
+                    ->with('detailMediaFiles.educationalInstitution:id,name', 'detailMediaFiles.registrationPath:id,name')
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

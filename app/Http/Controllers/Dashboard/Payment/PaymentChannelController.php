@@ -40,7 +40,8 @@ class PaymentChannelController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = PaymentChannel::query();
+                $data = PaymentChannel::query()
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

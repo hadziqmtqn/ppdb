@@ -48,4 +48,6 @@
 @section('scripts')
     <script src="{{ asset('js/faq/faq/datatable.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/faq/faq/validation.js') }}"></script>
+    <script src="{{ asset('materialize/js/quill-editor.js') }}"></script>
 @endsection

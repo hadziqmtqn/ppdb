@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class FaqController extends Controller implements HasMiddleware
@@ -51,7 +52,8 @@ class FaqController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = Faq::query()
-                    ->with('educationalInstitution:id,name', 'faqCategory:id,name');
+                    ->with('educationalInstitution:id,name', 'faqCategory:id,name')
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
@@ -66,7 +68,7 @@ class FaqController extends Controller implements HasMiddleware
                     ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name ?? 'Umum')
                     ->addColumn('description', fn($row) => Str::limit(strip_tags($row->description), 80))
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="'. route('faq.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></a> ';
+                        $btn = '<a href="'. route('faq.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
                         $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
 
                         return $btn;
@@ -83,25 +85,55 @@ class FaqController extends Controller implements HasMiddleware
 
     public function store(FaqRequest $request)
     {
-        return Faq::create($request->validated());
+        try {
+            $faq = new Faq();
+            $faq->faq_category_id = $request->input('faq_category_id');
+            $faq->educational_institution_id = $request->input('educational_institution_id');
+            $faq->title = $request->input('title');
+            $faq->description = $request->input('description');
+            $faq->save();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Data gagal disimpan!');
+        }
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
-    public function show(Faq $faq)
+    public function show(Faq $faq): View
     {
-        return $faq;
+        $title = 'FAQ';
+        $faq->load('faqCategory:id,name', 'educationalInstitution:id,name');
+        $faqCategories = $this->getFaqCategories();
+
+        return \view('dashboard.settings.faq.faq.show', compact('title', 'faq', 'faqCategories'));
     }
 
     public function update(FaqRequest $request, Faq $faq)
     {
-        $faq->update($request->validated());
+        try {
+            $faq->faq_category_id = $request->input('faq_category_id');
+            $faq->educational_institution_id = $request->input('educational_institution_id');
+            $faq->title = $request->input('title');
+            $faq->description = $request->input('description');
+            $faq->save();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return redirect()->back()->with('error', 'Data gagal disimpan!');
+        }
 
-        return $faq;
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
     public function destroy(Faq $faq): JsonResponse
     {
-        $faq->delete();
+        try {
+            $faq->delete();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Data gagal dihapus!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
-        return response()->json();
+        return $this->apiResponse('Data berhasil dihapus', null, null, Response::HTTP_OK);
     }
 }

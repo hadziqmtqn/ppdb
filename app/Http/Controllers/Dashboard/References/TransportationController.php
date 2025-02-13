@@ -44,7 +44,8 @@ class TransportationController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = Transportation::query()
-                    ->withCount('placeOfRecidences');
+                    ->withCount('placeOfRecidences')
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

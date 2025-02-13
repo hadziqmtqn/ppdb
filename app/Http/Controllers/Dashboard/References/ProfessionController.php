@@ -44,7 +44,8 @@ class ProfessionController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = Profession::query()
-                    ->withCount('fatherProfessions', 'motherProfessions', 'guardianProfessions');
+                    ->withCount('fatherProfessions', 'motherProfessions', 'guardianProfessions')
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

@@ -48,7 +48,8 @@ class EducationalInstitutionController extends Controller implements HasMiddlewa
         try {
             if ($request->ajax()) {
                 $data = EducationalInstitution::query()
-                    ->with('educationalLevel:id,name');
+                    ->with('educationalLevel:id,name')
+                    ->orderBy('educational_level_id');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

@@ -43,7 +43,8 @@ class DistanceToSchoolController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $data = DistanceToSchool::query();
+                $data = DistanceToSchool::query()
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

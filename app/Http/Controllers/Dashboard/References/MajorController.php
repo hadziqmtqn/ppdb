@@ -54,7 +54,8 @@ class MajorController extends Controller implements HasMiddleware
             if ($request->ajax()) {
                 $data = Major::query()
                     ->with('educationalInstitution:id,name')
-                    ->filterByEducationalInstitution();
+                    ->filterByEducationalInstitution()
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

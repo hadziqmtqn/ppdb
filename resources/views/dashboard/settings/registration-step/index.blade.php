@@ -1,12 +1,4 @@
 @extends('layouts.master')
-
-@section('styles')
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/quill/typography.css') }}" />
-    <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/quill/katex.css') }}" />
-    <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/libs/quill/editor.css') }}" />
-@endsection
-
 @section('content')
     <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
     <div class="card mb-3">
@@ -32,10 +24,5 @@
 
 @section('scripts')
     <script src="{{ asset('js/registration-step/datatable.js') }}"></script>
-    <!-- Vendors JS -->
-    <script src="{{ asset('materialize/assets/vendor/libs/quill/katex.js') }}"></script>
-    <script src="{{ asset('materialize/assets/vendor/libs/quill/quill.js') }}"></script>
-
-    {{--page js--}}
     <script src="{{ asset('materialize/js/quill-editor.js') }}"></script>
 @endsection

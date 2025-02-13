@@ -52,7 +52,8 @@ class RegistrationCategoryController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = RegistrationCategory::query()
-                    ->withCount('classLevels');
+                    ->withCount('classLevels')
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

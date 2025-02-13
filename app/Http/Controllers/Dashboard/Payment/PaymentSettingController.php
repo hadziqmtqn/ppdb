@@ -42,7 +42,8 @@ class PaymentSettingController extends Controller implements HasMiddleware
         try {
             if ($request->ajax()) {
                 $data = PaymentSetting::query()
-                    ->with('educationalInstitution:id,name');
+                    ->with('educationalInstitution:id,name')
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

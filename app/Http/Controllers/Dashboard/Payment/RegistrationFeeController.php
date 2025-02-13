@@ -45,7 +45,8 @@ class RegistrationFeeController extends Controller implements HasMiddleware
             if ($request->ajax()) {
                 $data = RegistrationFee::query()
                     ->with('educationalInstitution:id,name', 'schoolYear:id,first_year,last_year')
-                    ->filterByEducationalInstitution();
+                    ->filterByEducationalInstitution()
+                    ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()
