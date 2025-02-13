@@ -50,10 +50,24 @@
     ]
   },
   {
-    "name": "Jadwal / Timeline SPMB"
+    "name": "Jadwal / Timeline SPMB",
+    "faqs": [
+      {
+        "educational_institution_id": null,
+        "title": "Jadwal/Timeline SPMB",
+        "description": "<p>Berikut merupakan jadwal pelaksanaan SPMB untuk Jenjang SD Nusantara, SMP Nusantara, dan SMA Nusantara:</p><ul><li>Pendaftaran dan Submit Dokumen Persyaratan: 01 Januari - 31 November 2025</li><li>Pengumuman Hasil: 10 Desember 2025</li><li>Daftar Ulang: 15-21 Desember 2025</li></ul><p>Informasi mengenai jadwal pelaksanaan SPMB dapat diakses juga melalui infografis pada tautan berikut; <a href=\"#\" rel=\"noopener noreferrer\" target=\"_blank\">Klik disini</a>!</p>"
+      }
+    ]
   },
   {
-    "name": "Cara Pendaftaran SPMB"
+    "name": "Cara Pendaftaran SPMB",
+    "faqs": [
+      {
+        "educational_institution_id": null,
+        "title": "Cara pendaftaran SPMB",
+        "description": "<p>Proses pendaftaran SPMB untuk jenjang SD Nusantara, SMP Nusantara, dan SMA Nusantara, dapat diakses secara website <a href=\"https:://ppdb.bkn.my.id\" rel=\"noopener noreferrer\" target=\"_blank\">https:://ppdb.bkn.my.id</a>.&nbsp;</p><p>Selain itu, pendaftaran SPMB juga dapat dilakukan secara langsung dengan mengunjungi sekolah tujuan dengan membawa dan melengkapi semua berkas dokumen persyaratan SPMB untuk didaftarkan secara manual oleh panitia sekolah.</p>"
+      }
+    ]
   },
   {
     "name": "Jalur Prestasi",
@@ -72,10 +86,37 @@
         "educational_institution_id": null,
         "title": "Apakah sertifikat saya perlu dilegalisir?",
         "description": "<p>Sertifikat wajib dilegalisir, lalu salinan sertifikat penghargaan kejuaraan yang telah dilegalisir sesuai ketentuan dan diverifikasi panitia tingkat satuan pendidikan, beserta piagam asli dipindai (scan), serta diunggah (upload) ke website SPMB dengan foto kegiatan lomba.</p>"
+      },
+      {
+        "educational_institution_id": null,
+        "title": "Bagaimana apabila kejuaraan diselenggarakan secara daring dan tidak memiliki surat keterangan dari instansi terkait?",
+        "description": "<p>Wajib mengunggah (upload) alamat <em>website</em> atau tangkapan layar (<em>screenshot</em>) yang memuat informasi pendaftaran atau informasi kejuaraan atau informasi lain yang relevan secara daring tersebut pada saat mengunggah persyaratan.</p>"
+      },
+      {
+        "educational_institution_id": 3,
+        "title": "Apakah sertifikat kejuaraan yang didapatkan di SD dapat digunakan?",
+        "description": "<p>Tidak. Kejuaraan yang diakui adalah kejuaraan yang diperoleh selama menjadi peserta didik SMP/MTs atau sederajat.</p>"
+      },
+      {
+        "educational_institution_id": 3,
+        "title": "Apa saja kejuaraan yang bisa digunakan untuk mendaftar SPMB jalur ini?",
+        "description": "<p>Prestasi kejuaraan yang dapat digunakan adalah hasil perlombaan atau penghargaan kejuaraan di bidang akademik maupun non-akademik pada tingkat internasional, Asia, nasional, provinsi, atau Kabupaten/Kota.</p><p>Piagam atau sertifikat yang berlaku untuk syarat pendaftaran terdiri dari perlombaan yang diselenggarakan oleh Kementerian Pendidikan Kebudayaan Riset dan Teknologi diantaranya adalah:</p><ul><li>Olimpiade Sains Nasional (OSN)</li><li>Olimpiade Olahraga Peserta didik Nasional (O2SN)</li><li>Festival dan Lomba Seni Peserta didik Nasional (FLS2N)</li><li>Lomba Cipta Seni Pelajar Nasional (LCSPN)</li><li>Kuis Kihajar (Kita Harus Belajar)</li><li>Lomba Motivasi Belajar Mandiri (Lomojari)</li><li>Lomba Karya Jurnalistik Peserta didik Nasional (LKJS)</li><li>Lomba Cipta Puisi, Cipta Lagu, atau Melukis.</li></ul>"
+      },
+      {
+        "educational_institution_id": 2,
+        "title": "Apa saja kejuaraan yang bisa digunakan untuk mendaftar SPMB jalur ini?",
+        "description": "<p>Prestasi kejuaraan yang dapat digunakan adalah hasil perlombaan atau penghargaan kejuaraan di bidang akademik maupun non-akademik pada tingkat internasional, Asia, nasional, provinsi, atau Kabupaten/Kota.</p><p>Piagam atau sertifikat yang berlaku untuk syarat pendaftaran terdiri dari perlombaan yang diselenggarakan oleh Kementerian Pendidikan Kebudayaan Riset dan Teknologi diantaranya adalah:</p><ul><li>Olimpiade Sains Nasional (OSN)</li><li>Olimpiade Olahraga Peserta didik Nasional (O2SN)</li><li>Festival dan Lomba Seni Peserta didik Nasional (FLS2N)</li><li>Lomba Cipta Seni Pelajar Nasional (LCSPN)</li><li>Kuis Kihajar (Kita Harus Belajar)</li><li>Lomba Motivasi Belajar Mandiri (Lomojari)</li><li>Lomba Karya Jurnalistik Peserta didik Nasional (LKJS)</li><li>Lomba Cipta Puisi, Cipta Lagu, atau Melukis.</li></ul>"
       }
     ]
   },
   {
-    "name": "Pilih Jurusan"
+    "name": "Pilih Jurusan",
+    "faqs": [
+      {
+        "educational_institution_id": 3,
+        "title": "Apa saja jurusan yang dapat dipilih?",
+        "description": "<p>Jurusan yang dapat dipilih diantaranya:</p><ul><li>MIPA (Matematika dan Ilmu Pengetahuan Alam)</li><li>IPS (Ilmu Pengetahuan Sosial)</li><li>Bahasa (Arab dan Inggris)</li></ul>"
+      }
+    ]
   }
 ]
