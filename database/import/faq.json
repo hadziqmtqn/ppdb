@@ -56,7 +56,24 @@
     "name": "Cara Pendaftaran SPMB"
   },
   {
-    "name": "Jalur Prestasi"
+    "name": "Jalur Prestasi",
+    "faqs": [
+      {
+        "educational_institution_id": null,
+        "title": "Bukti prestasi akademik/non-akademik diperoleh dari mana yang diakui oleh SPMB?",
+        "description": "<p>Bukti atas prestasi akademik atau non-akademik diperoleh dari kompetisi yang diselenggarakan oleh:</p><ol><li>Pemerintah Pusat;</li><li>Pemerintah Daerah;</li><li>Badan Usaha Milik Negara (BUMN);</li><li>Badan Usaha Milik Daerah (BUMD); dan/atau</li><li>Lembaga lainnya.</li></ol>"
+      },
+      {
+        "educational_institution_id": null,
+        "title": "Prestasi kejuaraan apa saja yang bisa digunakan untuk jalur prestasi?",
+        "description": "<ol><li>Prestasi kejuaraan berdasarkan hasil perlombaan atau penghargaan kejuaraan di bidang akademik maupun non-akademik pada tingkat internasional, Asia, tingkat nasional, tingkat provinsi, atau tingkat kabupaten/kota</li><li>Prestasi dari perlombaan atau kejuaraan merupakan prestasi bakat istimewa berdasarkan capaian kejuaraan dalam berbagai bidang terutama kejuaraan yang diselenggarakan oleh Kementerian Pendidikan Kebudayaan Riset dan Teknologi atau Kementerian Agama, Badan Usaha Milik Negara (BUMN) atau Badan Usaha Milik Daerah (BUMD)</li></ol>"
+      },
+      {
+        "educational_institution_id": null,
+        "title": "Apakah sertifikat saya perlu dilegalisir?",
+        "description": "<p>Sertifikat wajib dilegalisir, lalu salinan sertifikat penghargaan kejuaraan yang telah dilegalisir sesuai ketentuan dan diverifikasi panitia tingkat satuan pendidikan, beserta piagam asli dipindai (scan), serta diunggah (upload) ke website SPMB dengan foto kegiatan lomba.</p>"
+      }
+    ]
   },
   {
     "name": "Pilih Jurusan"
