@@ -1,6 +1,6 @@
 @extends('home.layouts.master')
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-pricing.css') }}" />
+    <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-landing.css') }}" />
     <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/ui-carousel.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
@@ -137,7 +137,7 @@
         </section>
 
         @foreach($registrationSteps as $registrationStep)
-            <section class="section-py bg-body position-relative" style="padding-bottom: 3rem">
+            <section class="section-py bg-body position-relative" style="padding-bottom: {{ $loop->last ? '10rem' : '3rem' }};">
                 <div class="container">
                     <div class="row align-items-center gy-5 gy-lg-0">
                         {{--setiap data genap tambah class order-md-0 order-lg-1--}}
@@ -163,20 +163,13 @@
             </section>
         @endforeach
 
-        <section class="pricing-free-trial bg-label-primary">
+        <section class="section-py position-relative bg-label-primary" style="padding-top: 10rem; padding-bottom: 10rem">
             <div class="container">
-                <div class="position-relative">
-                    <div class="d-flex justify-content-between flex-column-reverse flex-lg-row align-items-center py-5">
-                        <div class="text-center text-lg-start">
-                            <h3 class="text-primary mb-1">Still not convinced? Start with a 14-day FREE trial!</h3>
-                            <p class="text-body mb-1">You will get full access to with all the features for 14 days.</p>
-                            <a href="#" class="btn btn-primary mt-4 waves-effect waves-light">Start 14-day free trial</a>
-                        </div>
-                        <!-- image -->
-                        <div class="text-center">
-                            <img src="{{ asset('materialize/assets/img/illustrations/pricing-illustration.png') }}" alt="Pricing Illustration Image" class="img-fluid mb-3 mb-lg-0">
-                        </div>
-                    </div>
+                <div class="text-center text-center">
+                    <h3 class="badge rounded-pill rounded-start-bottom bg-secondary" style="font-size: 14pt">MULAI SEKARANG</h3>
+                    <h2 class="text-primary mb-1">Ayo daftar sekarang juga!</h2>
+                    <p class="text-body mb-1">Kamu bisa mengikuti prosedur yang telah dijelaskan langkah dibawah ini.</p>
+                    <a href="{{ route('registration.index') }}" class="btn btn-primary mt-4 waves-effect waves-light">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                 </div>
             </div>
         </section>
