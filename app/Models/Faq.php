@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Faq extends Model
@@ -29,5 +30,15 @@ class Faq extends Model
         static::creating(function (Faq $faq) {
             $faq->slug = Str::uuid()->toString();
         });
+    }
+
+    public function faqCategory(): BelongsTo
+    {
+        return $this->belongsTo(FaqCategory::class);
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
     }
 }

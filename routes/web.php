@@ -294,6 +294,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [FaqController::class, 'index'])->name('faq.index');
             Route::post('/store', [FaqController::class, 'store'])->name('faq.store');
             Route::post('/datatable', [FaqController::class, 'datatable']);
+            Route::get('/{faq:slug}/show', [FaqController::class, 'show'])->name('faq.show');
             Route::put('/{faq:slug}/update', [FaqController::class, 'update']);
             Route::delete('/{faq:slug}/delete', [FaqController::class, 'destroy']);
         });
