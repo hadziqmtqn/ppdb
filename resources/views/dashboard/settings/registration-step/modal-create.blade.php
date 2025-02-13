@@ -18,7 +18,7 @@
                             <label for="title">Judul</label>
                         </div>
                         <label for="description">Deskripsi</label>
-                        <div class="mb-3 quill-editor"></div>
+                        <div class="mb-3 quill-editor">{{ old('description') }}</div>
                         <textarea name="description" id="description" class="d-none" placeholder="Deskripsi">{{ old('description') }}</textarea>
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="file" name="image" id="image" class="form-control" accept=".jpg,.jpeg,.png">
