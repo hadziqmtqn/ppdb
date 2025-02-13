@@ -179,7 +179,8 @@
       "whatapp-config-read",
       "email-config-read",
       "message-template-read",
-      "registration-step-read"
+      "registration-step-read",
+      "faq-read"
     ],
     "url": "#",
     "icon": "cog-outline",
@@ -218,6 +219,13 @@
         "visibility": ["registration-step-read"],
         "url": "/registration-step",
         "icon": "target"
+      },
+      {
+        "name": "FAQ",
+        "type": "sub_menu",
+        "visibility": ["faq-read"],
+        "url": "/faq",
+        "icon": "information-outline"
       },
       {
         "name": "Konfig. Whatsapp",
