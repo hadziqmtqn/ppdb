@@ -33,6 +33,8 @@ use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\References\TransportationController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
+use App\Http\Controllers\Dashboard\Setting\Faq\FaqCategoryController;
+use App\Http\Controllers\Dashboard\Setting\Faq\FaqController;
 use App\Http\Controllers\Dashboard\Setting\MenuController;
 use App\Http\Controllers\Dashboard\Setting\MessageReceiverController;
 use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
@@ -278,6 +280,22 @@ Route::middleware('auth')->group(function () {
             Route::get('/{registrationStep:slug}', [RegistrationStepController::class, 'show'])->name('registration-step.show');
             Route::put('/{registrationStep:slug}/update', [RegistrationStepController::class, 'update'])->name('registration-step.update');
             Route::delete('/{registrationStep:slug}/delete', [RegistrationStepController::class, 'destroy']);
+        });
+
+        Route::prefix('faq-category')->group(function () {
+            Route::get('/', [FaqCategoryController::class, 'index'])->name('faq-category.index');
+            Route::post('/store', [FaqCategoryController::class, 'store']);
+            Route::post('/datatable', [FaqCategoryController::class, 'datatable']);
+            Route::put('/{faqCategory:slug}/update', [FaqCategoryController::class, 'update']);
+            Route::delete('/{faqCategory:slug}/delete', [FaqCategoryController::class, 'destroy']);
+        });
+
+        Route::prefix('faq')->group(function () {
+            Route::get('/', [FaqController::class, 'index'])->name('faq.index');
+            Route::post('/store', [FaqController::class, 'store'])->name('faq.store');
+            Route::post('/datatable', [FaqController::class, 'datatable']);
+            Route::put('/{faq:slug}/update', [FaqController::class, 'update']);
+            Route::delete('/{faq:slug}/delete', [FaqController::class, 'destroy']);
         });
 
         // TODO Payment
