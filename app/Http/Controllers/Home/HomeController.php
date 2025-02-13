@@ -28,7 +28,9 @@ class HomeController extends Controller
         $educationalLevels = $this->educationalLevelRepository->getLevel();
         $quotas = $this->homeRepository->quotas();
         $schedules = $this->homeRepository->getSchedule();
+        $registrationSteps = $this->homeRepository->getRegistrationSteps();
+        //dd($registrationSteps->toArray());
 
-        return \view('home.home.index', compact('title', 'educationalLevels', 'quotas', 'schedules'));
+        return \view('home.home.index', compact('title', 'educationalLevels', 'quotas', 'schedules', 'registrationSteps'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
@@ -34,5 +35,10 @@ class RegistrationStep extends Model implements HasMedia
         static::creating(function (RegistrationStep $registrationStep) {
             $registrationStep->slug = Str::uuid()->toString();
         });
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

@@ -3,22 +3,27 @@
 namespace App\Repositories;
 
 use App\Models\EducationalInstitution;
+use App\Models\RegistrationStep;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class HomeRepository
 {
     protected EducationalInstitution $educationalInstitution;
+    protected RegistrationStep $registrationStep;
 
     /**
      * @param EducationalInstitution $educationalInstitution
+     * @param RegistrationStep $registrationStep
      */
-    public function __construct(EducationalInstitution $educationalInstitution)
+    public function __construct(EducationalInstitution $educationalInstitution, RegistrationStep $registrationStep)
     {
         $this->educationalInstitution = $educationalInstitution;
+        $this->registrationStep = $registrationStep;
     }
 
 
+    // TODO Quotas
     public function quotas(): Collection
     {
         return $this->educationalInstitution
@@ -94,6 +99,7 @@ class HomeRepository
             });
     }
 
+    // TODO Get Schedule
     public function getSchedule(): Collection
     {
         return $this->educationalInstitution
@@ -108,6 +114,37 @@ class HomeRepository
                     'startDate' => $registrationSchedule->start_date ? Carbon::parse($registrationSchedule->start_date)->isoFormat('DD MMM Y') : null,
                     'endDate' => $registrationSchedule->end_date ? Carbon::parse($registrationSchedule->end_date)->isoFormat('DD MMM Y') : null,
                     'hasEnded' => $registrationSchedule && (date('Y-m-d') >= date('Y-m-d', strtotime($registrationSchedule->end_date))) ?? false,
+                ]);
+            });
+    }
+
+    // TODO Registration Steps
+    public function getRegistrationSteps(): Collection
+    {
+        return $this->registrationStep
+            ->active()
+            ->select(['serial_number', 'title', 'description'])
+            ->orderBy('serial_number')
+            ->get()
+            ->map(function (RegistrationStep $registrationStep) {
+                // Default images based on serial_number
+                $defaultImages = [
+                    1 => asset('assets/steps/step-1.png'),
+                    2 => asset('assets/steps/step-2.png'),
+                    3 => asset('assets/steps/step-3.png'),
+                    4 => asset('assets/steps/step-4.png'),
+                ];
+
+                return collect([
+                    'serialNumber' => $registrationStep->serial_number,
+                    'title' => $registrationStep->title,
+                    'description' => $registrationStep->description,
+                    'image' => $registrationStep->hasMedia('steps') ? $registrationStep->getFirstTemporaryUrl(Carbon::now()->addMinutes(20), 'steps') : $defaultImages[$registrationStep->serial_number] ?? null,
+                    // Determine classPosition based on serial_number
+                    'classPosition' => $registrationStep->serial_number % 2 == 0 ? [
+                        'imageClass' => 'order-md-0 order-lg-1',
+                        'contentClass' => 'order-md-1 order-lg-0'
+                    ] : null
                 ]);
             });
     }
