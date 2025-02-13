@@ -130,7 +130,7 @@
             <div class="container">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
-                    <span class="text-uppercase">Prosedur Pendaftaran</span>
+                    <span class="text-uppercase">Cara Daftar</span>
                 </h6>
                 <h3 class="text-center mb-0 pb-5">{{ count($registrationSteps) }} Langkah mudah pendaftaran <span class="fw-bold text-primary">Siswa Baru</span> di website ini</h3>
             </div>

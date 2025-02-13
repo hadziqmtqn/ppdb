@@ -86,11 +86,12 @@ class MenuController extends Controller implements HasMiddleware
 
                         // Buat badge untuk setiap visibility
                         $badges = array_map(function ($visibility) {
-                            return '<span class="badge bg-secondary me-1">' . htmlspecialchars($visibility) . '</span>';
+                            //return '<span class="badge bg-secondary me-1">' . htmlspecialchars($visibility) . '</span>';
+                            return '<h6 class="mb-0 text-secondary"><i class="mdi mdi-circle mdi-14px me-2"></i>' . htmlspecialchars($visibility) . '</h6>';
                         }, $visibilities);
 
                         // Gabungkan badge menjadi string HTML
-                        return implode(' ', $badges);
+                        return implode('', $badges);
                     })
                     ->addColumn('url', function ($row) {
                         return '<a href="' . url($row->url) . '">'. $row->url . '</a>';

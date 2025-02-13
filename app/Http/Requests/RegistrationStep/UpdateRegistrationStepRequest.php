@@ -4,7 +4,7 @@ namespace App\Http\Requests\RegistrationStep;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegistrationStepRequest extends FormRequest
+class UpdateRegistrationStepRequest extends FormRequest
 {
     public function rules(): array
     {
@@ -12,7 +12,8 @@ class RegistrationStepRequest extends FormRequest
             'serial_number' => ['required', 'integer'],
             'title' => ['required'],
             'description' => ['required'],
-            'image' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:500']
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:500'],
+            'is_active' => ['required', 'boolean']
         ];
     }
 
@@ -27,7 +28,8 @@ class RegistrationStepRequest extends FormRequest
             'serial_number' => 'nomor urut',
             'title' => 'judul',
             'description' => 'deskripsi',
-            'image' => 'gambar'
+            'image' => 'gambar',
+            'is_active' => 'status aktif'
         ];
     }
 }

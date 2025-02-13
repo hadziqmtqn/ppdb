@@ -37,6 +37,7 @@ use App\Http\Controllers\Dashboard\Setting\MenuController;
 use App\Http\Controllers\Dashboard\Setting\MessageReceiverController;
 use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
+use App\Http\Controllers\Dashboard\Setting\RegistrationStepController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
 use App\Http\Controllers\Dashboard\Student\AcceptanceRegistrationController;
@@ -268,6 +269,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{detailMediaFile:slug}', [DetailMediaFileController::class, 'show'])->name('detail-media-file.show');
             Route::put('/{detailMediaFile:slug}/update', [DetailMediaFileController::class, 'update']);
             Route::delete('/{detailMediaFile:slug}/delete', [DetailMediaFileController::class, 'destroy']);
+        });
+
+        Route::prefix('registration-step')->group(function () {
+            Route::get('/', [RegistrationStepController::class, 'index'])->name('registration-step.index');
+            Route::post('/datatable', [RegistrationStepController::class, 'datatable']);
+            Route::post('/store', [RegistrationStepController::class, 'store'])->name('registration-step.store');
+            Route::get('/{registrationStep:slug}', [RegistrationStepController::class, 'show'])->name('registration-step.show');
+            Route::put('/{registrationStep:slug}/update', [RegistrationStepController::class, 'update'])->name('registration-step.update');
+            Route::delete('/{registrationStep:slug}/delete', [RegistrationStepController::class, 'destroy']);
         });
 
         // TODO Payment

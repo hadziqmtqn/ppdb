@@ -21,6 +21,7 @@
     <link rel="icon" type="image/x-icon" href="{{ $application['logo'] }}" />
 
     @include('layouts.head')
+    @yield('styles')
 </head>
 
 <body>
