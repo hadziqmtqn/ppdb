@@ -24,6 +24,7 @@ use Database\Seeders\References\RegistrationScheduleSeeder;
 use Database\Seeders\References\SchoolYearSeeder;
 use Database\Seeders\References\TransportationSeeder;
 use Database\Seeders\Setting\EmailConfigSeeder;
+use Database\Seeders\Setting\FaqSeeder;
 use Database\Seeders\Setting\MenuSeeder;
 use Database\Seeders\Setting\MessageTemplateSeeder;
 use Database\Seeders\Setting\RegistrationStepSeeder;
@@ -65,7 +66,8 @@ class DatabaseSeeder extends Seeder
             BankAccountSeeder::class,
             RegistrationFeeSeeder::class,
             //
-            RegistrationStepSeeder::class
+            RegistrationStepSeeder::class,
+            FaqSeeder::class
         ]);
 
         Student::factory()

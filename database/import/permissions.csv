@@ -96,3 +96,9 @@ payment-transaction-delete
 registration-step-read
 registration-step-write
 registration-step-delete
+faq-category-read
+faq-category-write
+faq-category-delete
+faq-read
+faq-write
+faq-delete
