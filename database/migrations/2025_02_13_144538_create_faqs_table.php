@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->uuid('slug')->unique();
             $table->unsignedBigInteger('faq_category_id');
             $table->unsignedBigInteger('educational_institution_id')->nullable();
-            $table->string('title');
+            $table->text('title');
             $table->longText('description');
             $table->timestamps();
 

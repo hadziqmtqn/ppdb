@@ -31,6 +31,21 @@
         "educational_institution_id": null,
         "title": "Saya tidak bisa membuka aplikasi SPMB",
         "description": "<ol><li>Pastikan Anda membuka aplikasi menggunakan browser dengan update terbaru (ditambah spesifikasi teknis minimum requirement aplikasi SPMB).</li><li>Pastikan internet dalam kondisi online.</li><li>Kendala lain hubungkan dengan live agent helpdesk.</li></ol>"
+      },
+      {
+        "educational_institution_id": null,
+        "title": "Bagaimana apabila Kartu Keluarga (KK) masa terbitnya kurang dari satu tahun dikarenakan ada perubahan anggota keluarga?",
+        "description": "<p>Kartu Keluarga (KK) yang diperbaharui karena ada perubahan anggota keluarga sehingga terbit kurang dari satu tahun, wajib melampirkan fotocopy KK sebelumnya atau melampirkan surat keterangan dari RT dan RW yang menjelaskan berapa lama yang bersangkutan telah menetap.</p>"
+      },
+      {
+        "educational_institution_id": null,
+        "title": "Bagaimana apabila alamat di Kartu Keluarga (KK) saya tidak lengkap seperti tidak memiliki nama jalan dan nomor rumah?",
+        "description": "<p>Bagi pemilik KK yang data alamatnya tidak lengkap (tidak memiliki nama jalan hingga nomor rumah), wajib memotret rumahnya dengan hasil foto tampak depan rumah terfoto lengkap/utuh, lalu unggah ke website SPMB.</p>"
+      },
+      {
+        "educational_institution_id": null,
+        "title": "Apa saja proses/tahapan SPMB?",
+        "description": "<p>Berikut ini merupakan proses/tahapan SPMB:</p><ul><li>Persiapan</li><li>Registrasi akun</li><li>Melengkapi pengkinian data</li><li>Melunasi biaya registrasi</li><li>Pengumuman</li><li>Daftar ulang (bagi siswa yang diterima)</li></ul>"
       }
     ]
   },

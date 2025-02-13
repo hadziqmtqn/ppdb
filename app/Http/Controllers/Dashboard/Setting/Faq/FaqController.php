@@ -66,6 +66,7 @@ class FaqController extends Controller implements HasMiddleware
                     })
                     ->addColumn('faqCategory', fn($row) => optional($row->faqCategory)->name)
                     ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name ?? 'Umum')
+                    ->addColumn('title', fn($row) => Str::limit(strip_tags($row->title), 80))
                     ->addColumn('description', fn($row) => Str::limit(strip_tags($row->description), 80))
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="'. route('faq.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
