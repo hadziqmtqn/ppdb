@@ -15,10 +15,24 @@
     ]
   },
   {
-    "name": "Persyaratan Calon Peserta SPMB"
+    "name": "Persyaratan Calon Peserta SPMB",
+    "faqs": [
+      {
+        "educational_institution_id": null,
+        "title": "Dokument Persyaratan SPMB",
+        "description": "<p><strong>Dokumen persyaratan Khusus:</strong></p><ul><li>Kartu Keluarga (KK) yang menerangkan bahwa Calon Peserta Didik yang bersangkutan telah berdomisili paling singkat 1 (satu) tahun.;&nbsp;</li><li>Bagi Calon Peserta Didik yang tinggal dengan wali/tidak tinggal dengan orang tua, berlaku&nbsp;ketentuan :&nbsp;&nbsp;</li><li class=\"ql-indent-1\">1) Telah&nbsp;berdomisili paling singkat satu&nbsp;tahun dibuktikan kesesuaian data kota/kabupaten&nbsp;pada Kartu&nbsp;Keluarga wali dengan&nbsp;sekolah asal pada saat&nbsp;kelas 9 (sembilan);</li><li class=\"ql-indent-1\">2) Dibuktikan dengan kesesuaian nama wali&nbsp;pada buku rapor /ijazah;</li></ul>"
+      }
+    ]
   },
   {
-    "name": "Seputar Pendaftaran SPMB"
+    "name": "Seputar Pendaftaran SPMB",
+    "faqs": [
+      {
+        "educational_institution_id": null,
+        "title": "Saya tidak bisa membuka aplikasi SPMB",
+        "description": "<ol><li>Pastikan Anda membuka aplikasi menggunakan browser dengan update terbaru (ditambah spesifikasi teknis minimum requirement aplikasi SPMB).</li><li>Pastikan internet dalam kondisi online.</li><li>Kendala lain hubungkan dengan live agent helpdesk.</li></ol>"
+      }
+    ]
   },
   {
     "name": "Jadwal / Timeline SPMB"
