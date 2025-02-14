@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -40,5 +41,16 @@ class Faq extends Model
     public function educationalInstitution(): BelongsTo
     {
         return $this->belongsTo(EducationalInstitution::class);
+    }
+
+    public function scopeFilterData(Builder $query, $request): Builder
+    {
+        $search = $request['search'] ?? null;
+        $faqCategoryId = $request['faq_category_id'] ?? null;
+        $educationalInstitutionId = $request['educational_institution_id'] ?? null;
+
+        return $query->when($search, fn($query) => $query->whereAny(['title', 'description'], 'LIKE', '%' . $search . '%'))
+            ->when($faqCategoryId, fn($query) => $query->where('faq_category_id', $faqCategoryId))
+            ->when($educationalInstitutionId, fn($query) => $query->where('educational_institution_id', $educationalInstitutionId));
     }
 }

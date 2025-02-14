@@ -1,6 +1,7 @@
 [
   {
     "name": "Informasi SPMB 2025/2026",
+    "qualification": [1,2,3],
     "faqs": [
       {
         "educational_institution_id": null,
@@ -16,6 +17,7 @@
   },
   {
     "name": "Persyaratan Calon Peserta SPMB",
+    "qualification": [1,2,3],
     "faqs": [
       {
         "educational_institution_id": null,
@@ -26,6 +28,7 @@
   },
   {
     "name": "Seputar Pendaftaran SPMB",
+    "qualification": [1,2,3],
     "faqs": [
       {
         "educational_institution_id": null,
@@ -51,6 +54,7 @@
   },
   {
     "name": "Jadwal / Timeline SPMB",
+    "qualification": [1,2,3],
     "faqs": [
       {
         "educational_institution_id": null,
@@ -61,6 +65,7 @@
   },
   {
     "name": "Cara Pendaftaran SPMB",
+    "qualification": [1,2,3],
     "faqs": [
       {
         "educational_institution_id": null,
@@ -71,6 +76,7 @@
   },
   {
     "name": "Jalur Prestasi",
+    "qualification": [1,2,3],
     "faqs": [
       {
         "educational_institution_id": null,
@@ -111,6 +117,7 @@
   },
   {
     "name": "Pilih Jurusan",
+    "qualification": [3],
     "faqs": [
       {
         "educational_institution_id": 3,

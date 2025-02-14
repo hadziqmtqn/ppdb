@@ -16,6 +16,7 @@ class FaqSeeder extends Seeder
         foreach ($datas as $data) {
             $faqCategory = new FaqCategory();
             $faqCategory->name = $data['name'];
+            $faqCategory->qualification = json_encode(array_map('intval', $data['qualification']));
             $faqCategory->save();
 
             if (isset($data['faqs'])) {

@@ -10,12 +10,14 @@ class FaqCategory extends Model
     protected $fillable = [
         'slug',
         'name',
+        'qualification'
     ];
 
     protected function casts(): array
     {
         return [
             'slug' => 'string',
+            'qualification' => 'array'
         ];
     }
 

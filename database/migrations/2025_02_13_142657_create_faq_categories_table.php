@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->uuid('slug')->unique();
             $table->string('name');
+            $table->json('qualification'); // menggunakan nilai dari id educational institutions
             $table->timestamps();
         });
     }
