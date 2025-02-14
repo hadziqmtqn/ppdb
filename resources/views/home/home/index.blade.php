@@ -211,27 +211,7 @@
 
                     <!-- FAQ's -->
                     <div class="col-lg-8 col-md-8 col-12">
-                        <div class="tab-content p-0" id="faqs">
-                            {{--<div class="tab-pane fade show active" id="faq-category-{id}" role="tabpanel">
-                                <h5 class="text-primary fw-bold">{Faq Category Name}</h5>
-                                <div id="accordionPayment" class="accordion">
-                                    --}}{{-- index pertama otomatis active (accordion-item active) --}}{{--
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#faq-{key}" aria-controls="faq-{key}">
-                                               {Faq Name}
-                                            </button>
-                                        </h2>
-
-                                        <div id="accordionPayment-1" class="accordion-collapse collapse show">
-                                            <div class="accordion-body">
-                                                {Faq Description}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>--}}
-                        </div>
+                        <div class="tab-content p-0" id="faqs"></div>
                     </div>
                     <!-- /FAQ's -->
                 </div>

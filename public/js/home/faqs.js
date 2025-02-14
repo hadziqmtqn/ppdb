@@ -82,7 +82,8 @@ function updateFaqCategories(categories) {
             const faqCategory = button.getAttribute('data-faq-category');
             const activeButton = document.querySelector('button.nav-link.active[data-educational-institution]');
             const educationalInstitutionId = activeButton ? activeButton.getAttribute('data-educational-institution') : '';
-            await fetchFaqs('', faqCategory, educationalInstitutionId); // Memanggil fetchFaqs saat kategori FAQ diklik
+            const searchInput = document.getElementById('faqSearch').value;
+            await fetchFaqs(searchInput, faqCategory, educationalInstitutionId); // Memanggil fetchFaqs saat kategori FAQ diklik
         });
     });
 
@@ -154,7 +155,7 @@ function updateFaqs(faqs) {
             accordionHeader.className = 'accordion-header';
 
             const button = document.createElement('button');
-            button.className = `accordion-button ${key === 0 ? '' : 'collapsed'}`;
+            button.className = `accordion-button fw-bold ${key === 0 ? '' : 'collapsed'}`;
             button.setAttribute('type', 'button');
             button.setAttribute('data-bs-toggle', 'collapse');
             button.setAttribute('aria-expanded', key === 0 ? 'true' : 'false');
@@ -216,7 +217,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             const firstCategoryButton = document.querySelector('button.nav-link[data-faq-category]');
             if (firstCategoryButton) {
                 const faqCategory = firstCategoryButton.getAttribute('data-faq-category');
-                await fetchFaqs('', faqCategory, educationalInstitutionId);
+                const searchInput = document.getElementById('faqSearch').value;
+                await fetchFaqs(searchInput, faqCategory, educationalInstitutionId);
             }
         });
     });
@@ -225,10 +227,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     const searchInput = document.getElementById('faqSearch');
     searchInput.addEventListener('input', async function() {
         const search = searchInput.value;
-        const activeButton = document.querySelector('button.nav-link.active[data-educational-institution]');
-        const educationalInstitutionId = activeButton ? activeButton.getAttribute('data-educational-institution') : '';
-        const activeCategoryButton = document.querySelector('button.nav-link.active[data-faq-category]');
-        const faqCategory = activeCategoryButton ? activeCategoryButton.getAttribute('data-faq-category') : '';
-        await fetchFaqs(search, faqCategory, educationalInstitutionId); // Memanggil fetchFaqs saat input search berubah
+        if (search.length >= 3) {
+            const activeButton = document.querySelector('button.nav-link.active[data-educational-institution]');
+            const educationalInstitutionId = activeButton ? activeButton.getAttribute('data-educational-institution') : '';
+            const activeCategoryButton = document.querySelector('button.nav-link.active[data-faq-category]');
+            const faqCategory = activeCategoryButton ? activeCategoryButton.getAttribute('data-faq-category') : '';
+            await fetchFaqs(search, faqCategory, educationalInstitutionId); // Memanggil fetchFaqs saat input search berubah
+        } else {
+            toastr.warning('Minimal 3 karakter pencarian');
+        }
     });
 });
