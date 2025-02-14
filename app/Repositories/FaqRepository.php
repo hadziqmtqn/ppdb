@@ -29,6 +29,7 @@ class FaqRepository
 
         try {
             $faqCategories = $this->faqCategory
+                ->whereHas('faqs')
                 ->get()
                 ->filter(function (FaqCategory $faqCategory) use ($educationalInstitutionId) {
                     $qualifications = json_decode($faqCategory->qualification, true);

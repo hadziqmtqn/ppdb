@@ -15,7 +15,10 @@ class FaqCategoryRequest extends FormRequest
             'name.*' => ['required', 'string'],
             'qualification' => ['required', 'array'],
             'qualification.*' => ['required', 'array'],
-            'qualification.*.*' => ['required', 'integer', 'exists:educational_institutions,id']
+            'qualification.*.*' => ['required', 'integer', 'exists:educational_institutions,id'],
+            'new_faq_category_name' => ['nullable'],
+            'new_qualification' => ['nullable', 'array'],
+            'new_qualification.*' => ['nullable'],
         ];
     }
 
@@ -33,7 +36,10 @@ class FaqCategoryRequest extends FormRequest
             'name.*' => 'nama',
             'qualification' => 'kualifikasi',
             'qualification.*' => 'kualifikasi',
-            'qualification.*.*' => 'kualifikasi'
+            'qualification.*.*' => 'kualifikasi',
+            'new_faq_category_name' => 'kategori baru',
+            'new_qualification' => 'kualifikasi baru',
+            'new_qualification.*' => 'kualifikasi baru',
         ];
     }
 }

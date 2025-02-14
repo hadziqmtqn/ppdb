@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class FaqCategory extends Model
@@ -29,6 +30,11 @@ class FaqCategory extends Model
         static::creating(function (FaqCategory $faqCategory) {
             $faqCategory->slug = Str::uuid()->toString();
         });
+    }
+
+    public function faqs(): HasMany
+    {
+        return $this->hasMany(Faq::class, 'faq_category_id');
     }
 
     // TODO SCOPE

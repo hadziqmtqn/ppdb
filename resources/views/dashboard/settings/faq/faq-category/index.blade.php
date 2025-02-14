@@ -33,12 +33,13 @@
                                 @foreach($educationalInstitutions as $educationalInstitution)
                                     <th>{{ $educationalInstitution->name }}</th>
                                 @endforeach
+                                <th>Opsi</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($faqCategories as $faqCategory)
                                 <tr>
-                                    <td>
+                                    <td class="text-nowrap">
                                         <input type="hidden" name="slugs[{{ $faqCategory['slug'] }}]" value="{{ $faqCategory['slug'] }}">
                                         <input type="text" name="name[{{ $faqCategory['slug'] }}]" id="faq_category_{{ $faqCategory['slug'] }}" class="form-control" aria-label="Faq Category" value="{{ $faqCategory['name'] }}">
                                     </td>
@@ -49,8 +50,29 @@
                                             </div>
                                         </td>
                                     @endforeach
+                                    <td>
+                                        @if($faqCategory['faqsCount'] == 0)
+                                            <button type="button" class="btn btn-sm btn-danger btn-icon" onclick="deleteFaqCategory('{{ $faqCategory['slug'] }}')" data-bs-toggle="tooltip" title="Hapus"><i class="mdi mdi-trash-can-outline"></i></button>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
+                            <tr>
+                                <td colspan="{{ $educationalInstitutions->count() + 2 }}" class="fw-bold">Tambah Baru</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" name="new_faq_category_name" id="new_faq_category_name" class="form-control" aria-label="Faq Category" value="{{ old('new_faq_category_name') }}">
+                                </td>
+                                @foreach($educationalInstitutions as $educationalInstitution)
+                                    <td>
+                                        <div class="form-check mb-0 d-flex justify-content-center">
+                                            <input class="form-check-input" name="new_qualification[]" type="checkbox" value="{{ $educationalInstitution->id }}" id="new_qualification">
+                                        </div>
+                                    </td>
+                                @endforeach
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -65,5 +87,5 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/faq/faq-category/delete.js') }}"></script>
 @endsection

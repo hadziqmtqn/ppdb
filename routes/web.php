@@ -287,9 +287,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('faq-category')->group(function () {
             Route::get('/', [FaqCategoryController::class, 'index'])->name('faq-category.index');
             Route::post('/store', [FaqCategoryController::class, 'store'])->name('faq-category.store');
-            Route::post('/datatable', [FaqCategoryController::class, 'datatable']);
-            Route::put('/{faqCategory:slug}/update', [FaqCategoryController::class, 'update']);
-            Route::delete('/{faqCategory:slug}/delete', [FaqCategoryController::class, 'destroy']);
+            Route::delete('/{faqCategory:slug}/delete', [FaqCategoryController::class, 'destroy'])->name('faq-category.destroy');
         });
 
         Route::prefix('faq')->group(function () {
