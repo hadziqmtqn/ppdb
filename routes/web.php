@@ -60,7 +60,8 @@ use App\Http\Controllers\Home\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/get-faqs', [HomeController::class, 'getFaqs']);
+Route::get('get-faq-categories', [HomeController::class, 'getFaqCategories']);
+Route::get('get-faqs', [HomeController::class, 'getFaqs']);
 
 Route::middleware('guest')->group(function () {
     Route::prefix('login')->group(function () {

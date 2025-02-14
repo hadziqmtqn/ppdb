@@ -186,23 +186,20 @@
                 </div>
 
                 <div class="row mt-4">
+                    <div class="col-md-12">
+                        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                            @foreach($educationalInstitutions as $educationalInstitution)
+                                <li class="nav-item" role="presentation">
+                                    <button type="button" class="nav-link {{ $loop->first ? 'active' : '' }} waves-effect waves-light" role="tab" data-bs-toggle="tab" data-bs-target="" data-educational-institution="{{ $educationalInstitution->id }}" aria-controls="navs-pills-justified-home" aria-selected="true">
+                                        <i class="tf-icons mdi mdi-home-outline me-1"></i> {{ $educationalInstitution->name }}
+                                    </button>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                     <!-- Navigation -->
                     <div class="col-lg-4 col-md-4 col-12 mb-md-0 mb-3">
                         <div class="card bg-primary text-white mb-3">
-                            <div class="card-header">
-                                <ul class="nav nav-pills" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button type="button" class="nav-link btn-white text-white waves-effect waves-light active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-tab-home" aria-controls="navs-pills-tab-home" aria-selected="true">
-                                            Home
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button type="button" class="nav-link btn-white text-white waves-effect waves-light" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-tab-profile" aria-controls="navs-pills-tab-profile" aria-selected="false" tabindex="-1">
-                                            Profile
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between flex-column mb-2 mb-md-0">
                                     <ul class="nav nav-align-left nav-pills flex-column e" role="tablist">
@@ -275,67 +272,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPayment-2" aria-controls="accordionPayment-2">
-                                                How do I pay for my order?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionPayment-2" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                We accept Visa®, MasterCard®, American Express®, and PayPal®. Our servers encrypt all
-                                                information submitted to them, so you can be confident that your credit card information
-                                                will be kept safe and secure.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPayment-3" aria-controls="accordionPayment-3">
-                                                What should I do if I'm having trouble placing an order?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionPayment-3" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                For any technical difficulties you are experiencing with our website, please contact us at
-                                                our
-                                                <a href="javascript:void(0);">support portal</a>, or you can call us toll-free at
-                                                <span class="fw-medium">1-000-000-000</span>, or email us at
-                                                <a href="javascript:void(0);">order@companymail.com</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPayment-4" aria-controls="accordionPayment-4">
-                                                Which license do I need for an end product that is only accessible to paying users?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionPayment-4" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                If you have paying users or you are developing any SaaS products then you need an Extended
-                                                License. For each products, you need a license. You can get free lifetime updates as well.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionPayment-5" aria-controls="accordionPayment-5">
-                                                Does my subscription automatically renew?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionPayment-5" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                No, This is not subscription based item.Pastry pudding cookie toffee bonbon jujubes
-                                                jujubes powder topping. Jelly beans gummi bears sweet roll bonbon muffin liquorice. Wafer
-                                                lollipop sesame snaps.
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="delivery" role="tabpanel">
@@ -365,35 +301,6 @@
                                                 For large products, we deliver your product via a third party logistics company offering
                                                 you the “room of choice” scheduled delivery service. For small products, we offer free
                                                 parcel delivery.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionDelivery-2" aria-controls="accordionDelivery-2">
-                                                What is the delivery cost of my order?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionDelivery-2" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                The cost of scheduled delivery is $69 or $99 per order, depending on the destination
-                                                postal code. The parcel delivery is free.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionDelivery-4" aria-controls="accordionDelivery-4">
-                                                What to do if my product arrives damaged?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionDelivery-4" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                We will promptly replace any product that is damaged in transit. Just contact our
-                                                <a href="javascript:void(0);">support team</a>, to notify us of the situation within 48
-                                                hours of product arrival.
                                             </div>
                                         </div>
                                     </div>
@@ -429,35 +336,6 @@
                                                     Parcel delivery orders cannot be cancelled, however a free return label can be provided
                                                     upon request.
                                                 </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionCancellation-2" aria-controls="accordionCancellation-2">
-                                                Can I return my product?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionCancellation-2" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                You can return your product within 15 days of delivery, by contacting our
-                                                <a href="javascript:void(0);">support team</a>, All merchandise returned must be in the
-                                                original packaging with all original items.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" aria-controls="accordionCancellation-3" data-bs-target="#accordionCancellation-3">
-                                                Where can I view status of return?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionCancellation-3" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                <p>Locate the item from Your <a href="javascript:void(0);">Orders</a></p>
-                                                <p class="mb-0">Select <span class="fw-medium">Return/Refund</span> status</p>
                                             </div>
                                         </div>
                                     </div>
@@ -500,41 +378,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionOrders-2" aria-controls="accordionOrders-2">
-                                                My Promotion Code is not working, what can I do?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionOrders-2" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                If you are having issues with a promotion code, please contact us at
-                                                <span class="fw-medium">1 000 000 000</span> for assistance.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionOrders-3" aria-controls="accordionOrders-3">
-                                                How do I track my Orders?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionOrders-3" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                <p>
-                                                    If you have an account just sign into your account from
-                                                    <a href="javascript:void(0);">here</a> and select
-                                                    <span class="fw-medium">“My Orders”</span>.
-                                                </p>
-                                                <p class="mb-0">
-                                                    If you have a a guest account track your order from
-                                                    <a href="javascript:void(0);">here</a> using the order number and the email address.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="product" role="tabpanel">
@@ -563,36 +406,6 @@
                                             <div class="accordion-body">
                                                 Yes, We will send you an email once your order has been shipped. This email will contain
                                                 tracking and order information.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionProduct-2" aria-controls="accordionProduct-2">
-                                                Where can I find warranty information?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionProduct-2" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                We are committed to quality products. For information on warranty period and warranty
-                                                services, visit our Warranty section <a href="javascript:void(0);">here</a>.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionProduct-3" aria-controls="accordionProduct-3">
-                                                How can I purchase additional warranty coverage?
-                                            </button>
-                                        </h2>
-                                        <div id="accordionProduct-3" class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                For the peace of your mind, we offer extended warranty plans that add additional year(s)
-                                                of protection to the standard manufacturer’s warranty provided by us. To purchase or find
-                                                out more about the extended warranty program, visit Extended Warranty section
-                                                <a href="javascript:void(0);">here</a>.
                                             </div>
                                         </div>
                                     </div>
@@ -630,4 +443,8 @@
     <script src="{{ asset('materialize/assets/js/front-page-landing.js') }}"></script>
     <script src="{{ asset('materialize/assets/js/ui-carousel.js') }}"></script>
     <script src="{{ asset('materialize/assets/js/extended-ui-timeline.js') }}"></script>
+
+    {{--faq--}}
+    <script src="{{ asset('js/home/faq-category.js') }}"></script>
+    <script src="{{ asset('js/home/faqs.js') }}"></script>
 @endsection
