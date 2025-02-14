@@ -26,7 +26,12 @@ async function fetchData(educationalInstitutionId) {
         const response = await axios.get(url);
         if (response.data.type === 'success') {
             const data = response.data.data;
-            updateFaqCategories(data);  // Update the FAQ categories based on the response data
+            if (Array.isArray(data) || typeof data === 'object') {
+                const categoriesArray = Array.isArray(data) ? data : Object.values(data);
+                updateFaqCategories(categoriesArray);  // Update the FAQ categories based on the response data
+            } else {
+                console.log('Invalid data format for categories');
+            }
         }
     } catch (error) {
         toastr.error(error.response?.data?.message || error.message);
@@ -117,7 +122,11 @@ async function fetchFaqs(search, faqCategory, educationalInstitutionId) {
         const response = await axios.get(url);
         if (response.data.type === 'success') {
             const data = response.data.data;
-            updateFaqs(data); // Update the FAQs based on the response data
+            if (Array.isArray(data)) {
+                updateFaqs(data); // Update the FAQs based on the response data
+            } else {
+                console.log('Invalid data format for FAQs');
+            }
         }
     } catch (error) {
         toastr.error(error.response?.data?.message || error.message);
