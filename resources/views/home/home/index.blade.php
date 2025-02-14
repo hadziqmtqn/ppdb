@@ -201,38 +201,14 @@
                     <div class="col-lg-4 col-md-4 col-12 mb-md-0 mb-3">
                         <div class="card bg-primary text-white mb-3">
                             <div class="card-body">
-                                <div class="d-flex justify-content-between flex-column mb-2 mb-md-0">
+                                <div class="d-flex justify-content-between flex-column mb-2 mb-md-0" id="faqCategories">
                                     <ul class="nav nav-align-left nav-pills flex-column e" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link active btn-white text-white waves-effect waves-light" data-bs-toggle="tab" data-bs-target="#payment" aria-selected="true" role="tab">
-                                                <i class="mdi mdi-credit-card-outline me-1"></i>
+                                        {{--<li class="nav-item" role="presentation">
+                                            <button class="nav-link active btn-white text-white waves-effect waves-light" data-bs-toggle="tab" data-bs-target="#faq-category-{id}" aria-selected="true" role="tab">
+                                                <i class="mdi mdi-check me-1"></i>
                                                 <span class="align-middle">Payment</span>
                                             </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link btn-white text-white waves-effect waves-light" data-bs-toggle="tab" data-bs-target="#delivery" aria-selected="false" tabindex="-1" role="tab">
-                                                <i class="mdi mdi-cart-plus me-1"></i>
-                                                <span class="align-middle">Delivery</span>
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link btn-white text-white waves-effect waves-light" data-bs-toggle="tab" data-bs-target="#cancellation" aria-selected="false" tabindex="-1" role="tab">
-                                                <i class="mdi mdi-reload me-1"></i>
-                                                <span class="align-middle">Cancellation &amp; Return</span>
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link btn-white text-white waves-effect waves-light" data-bs-toggle="tab" data-bs-target="#orders" aria-selected="false" tabindex="-1" role="tab">
-                                                <i class="mdi mdi-wallet-giftcard me-1"></i>
-                                                <span class="align-middle">My Orders</span>
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link btn-white text-white waves-effect waves-light" data-bs-toggle="tab" data-bs-target="#product" aria-selected="false" tabindex="-1" role="tab">
-                                                <i class="mdi mdi-cog-outline me-1"></i>
-                                                <span class="align-middle">Product &amp; Services</span>
-                                            </button>
-                                        </li>
+                                        </li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -446,5 +422,5 @@
 
     {{--faq--}}
     <script src="{{ asset('js/home/faq-category.js') }}"></script>
-    <script src="{{ asset('js/home/faqs.js') }}"></script>
+    {{--<script src="{{ asset('js/home/faqs.js') }}"></script>--}}
 @endsection

@@ -23,8 +23,10 @@ class FaqRepository
         $this->faq = $faq;
     }
 
-    public function getFaqCategories($educationalInstitutionId): JsonResponse
+    public function getFaqCategories($request): JsonResponse
     {
+        $educationalInstitutionId = $request['educational_institution_id'];
+
         try {
             $faqCategories = $this->faqCategory
                 ->get()
