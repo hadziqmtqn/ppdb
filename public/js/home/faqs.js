@@ -116,11 +116,77 @@ async function fetchFaqs(search, faqCategory, educationalInstitutionId) {
         const response = await axios.get(url);
         if (response.data.type === 'success') {
             const data = response.data.data;
-            console.log(data);
+            updateFaqs(data); // Update the FAQs based on the response data
         }
     } catch (error) {
         toastr.error(error.response?.data?.message || error.message);
     }
+}
+
+// Function to update the FAQs in the DOM
+function updateFaqs(faqs) {
+    const faqsContainer = document.getElementById('faqs');
+    faqsContainer.innerHTML = ''; // Clear existing FAQs
+
+    const categories = Array.from(new Set(faqs.map(faq => faq.faqCategory)));
+
+    categories.forEach((category, index) => {
+        const categoryFaqs = faqs.filter(faq => faq.faqCategory === category);
+
+        const tabPane = document.createElement('div');
+        tabPane.className = `tab-pane fade ${index === 0 ? 'show active' : ''}`;
+        tabPane.id = `faq-category-${categoryFaqs[0].faqCategory}`;
+        tabPane.setAttribute('role', 'tabpanel');
+
+        const h5 = document.createElement('h5');
+        h5.className = 'text-primary fw-bold';
+        h5.textContent = category;
+
+        const accordion = document.createElement('div');
+        accordion.className = 'accordion';
+        accordion.id = `accordion-${categoryFaqs[0].faqCategory}`;
+
+        categoryFaqs.forEach((faq, key) => {
+            const accordionItem = document.createElement('div');
+            accordionItem.className = 'accordion-item';
+
+            const accordionHeader = document.createElement('h2');
+            accordionHeader.className = 'accordion-header';
+
+            const button = document.createElement('button');
+            button.className = `accordion-button ${key === 0 ? '' : 'collapsed'}`;
+            button.setAttribute('type', 'button');
+            button.setAttribute('data-bs-toggle', 'collapse');
+            button.setAttribute('aria-expanded', key === 0 ? 'true' : 'false');
+            button.setAttribute('data-bs-target', `#faq-${key}`);
+            button.setAttribute('aria-controls', `faq-${key}`);
+            button.textContent = faq.title;
+
+            const accordionCollapse = document.createElement('div');
+            accordionCollapse.id = `faq-${key}`;
+            accordionCollapse.className = `accordion-collapse collapse ${key === 0 ? 'show' : ''}`;
+
+            const accordionBody = document.createElement('div');
+            accordionBody.className = 'accordion-body';
+            accordionBody.innerHTML = faq.description;
+
+            accordionCollapse.appendChild(accordionBody);
+            accordionHeader.appendChild(button);
+            accordionItem.appendChild(accordionHeader);
+            accordionItem.appendChild(accordionCollapse);
+            accordion.appendChild(accordionItem);
+        });
+
+        tabPane.appendChild(h5);
+        tabPane.appendChild(accordion);
+        faqsContainer.appendChild(tabPane);
+    });
+
+    // Initialize collapses
+    const collapseTriggerList = [].slice.call(document.querySelectorAll('.accordion-button'));
+    collapseTriggerList.map(function (collapseTriggerEl) {
+        return new bootstrap.Collapse(collapseTriggerEl);
+    });
 }
 
 // Menambahkan event listener DOMContentLoaded

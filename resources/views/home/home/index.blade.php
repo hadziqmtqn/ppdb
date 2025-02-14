@@ -211,38 +211,26 @@
 
                     <!-- FAQ's -->
                     <div class="col-lg-8 col-md-8 col-12">
-                        <div class="tab-content p-0">
-                            <div class="tab-pane fade show active" id="faq-category-{id}" role="tabpanel">
-                                <div class="d-flex mb-3 gap-3">
-                                    <div class="avatar">
-                                        <div class="avatar-initial bg-label-primary rounded">
-                                            <i class="mdi mdi-credit-card-outline mdi-24px"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h5 class="mb-0">
-                                            <span class="align-middle">Payment</span>
-                                        </h5>
-                                        <small>Get help with payment</small>
-                                    </div>
-                                </div>
+                        <div class="tab-content p-0" id="faqs">
+                            {{--<div class="tab-pane fade show active" id="faq-category-{id}" role="tabpanel">
+                                <h5 class="text-primary fw-bold">{Faq Category Name}</h5>
                                 <div id="accordionPayment" class="accordion">
-                                    <div class="accordion-item active">
+                                    --}}{{-- index pertama otomatis active (accordion-item active) --}}{{--
+                                    <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#accordionPayment-1" aria-controls="accordionPayment-1">
-                                                When is payment taken for my order?
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#faq-{key}" aria-controls="faq-{key}">
+                                               {Faq Name}
                                             </button>
                                         </h2>
 
                                         <div id="accordionPayment-1" class="accordion-collapse collapse show">
                                             <div class="accordion-body">
-                                                Payment is taken during the checkout process when you pay for your order. The order number
-                                                that appears on the confirmation screen indicates payment has been successfully processed.
+                                                {Faq Description}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                     <!-- /FAQ's -->
