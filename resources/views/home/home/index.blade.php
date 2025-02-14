@@ -202,14 +202,7 @@
                         <div class="card bg-primary text-white mb-3">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between flex-column mb-2 mb-md-0" id="faqCategories">
-                                    <ul class="nav nav-align-left nav-pills flex-column e" role="tablist">
-                                        {{--<li class="nav-item" role="presentation">
-                                            <button class="nav-link active btn-white text-white waves-effect waves-light" data-bs-toggle="tab" data-bs-target="#faq-category-{id}" aria-selected="true" role="tab">
-                                                <i class="mdi mdi-check me-1"></i>
-                                                <span class="align-middle">Payment</span>
-                                            </button>
-                                        </li>--}}
-                                    </ul>
+                                    <ul class="nav nav-align-left nav-pills flex-column e" role="tablist"></ul>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +212,7 @@
                     <!-- FAQ's -->
                     <div class="col-lg-8 col-md-8 col-12">
                         <div class="tab-content p-0">
-                            <div class="tab-pane fade show active" id="payment" role="tabpanel">
+                            <div class="tab-pane fade show active" id="faq-category-{id}" role="tabpanel">
                                 <div class="d-flex mb-3 gap-3">
                                     <div class="avatar">
                                         <div class="avatar-initial bg-label-primary rounded">
@@ -245,143 +238,6 @@
                                             <div class="accordion-body">
                                                 Payment is taken during the checkout process when you pay for your order. The order number
                                                 that appears on the confirmation screen indicates payment has been successfully processed.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="delivery" role="tabpanel">
-                                <div class="d-flex mb-3 gap-3">
-                                    <div class="avatar">
-                          <span class="avatar-initial bg-label-primary rounded">
-                            <i class="mdi mdi-cart-plus mdi-24px"></i>
-                          </span>
-                                    </div>
-                                    <div>
-                                        <h5 class="mb-0">
-                                            <span class="align-middle">Delivery</span>
-                                        </h5>
-                                        <small>Lorem ipsum, dolor sit amet.</small>
-                                    </div>
-                                </div>
-                                <div id="accordionDelivery" class="accordion">
-                                    <div class="accordion-item active">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#accordionDelivery-1" aria-controls="accordionDelivery-1">
-                                                How would you ship my order?
-                                            </button>
-                                        </h2>
-
-                                        <div id="accordionDelivery-1" class="accordion-collapse collapse show">
-                                            <div class="accordion-body">
-                                                For large products, we deliver your product via a third party logistics company offering
-                                                you the “room of choice” scheduled delivery service. For small products, we offer free
-                                                parcel delivery.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="cancellation" role="tabpanel">
-                                <div class="d-flex mb-3 gap-3">
-                                    <div class="avatar">
-                          <span class="avatar-initial bg-label-primary rounded">
-                            <i class="mdi mdi-reload mdi-24px"></i>
-                          </span>
-                                    </div>
-                                    <div>
-                                        <h5 class="mb-0"><span class="align-middle">Cancellation &amp; Return</span></h5>
-                                        <small>Lorem ipsum, dolor sit amet.</small>
-                                    </div>
-                                </div>
-                                <div id="accordionCancellation" class="accordion">
-                                    <div class="accordion-item active">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#accordionCancellation-1" aria-controls="accordionCancellation-1">
-                                                Can I cancel my order?
-                                            </button>
-                                        </h2>
-
-                                        <div id="accordionCancellation-1" class="accordion-collapse collapse show">
-                                            <div class="accordion-body">
-                                                <p>
-                                                    Scheduled delivery orders can be cancelled 72 hours prior to your selected delivery date
-                                                    for full refund.
-                                                </p>
-                                                <p class="mb-0">
-                                                    Parcel delivery orders cannot be cancelled, however a free return label can be provided
-                                                    upon request.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="orders" role="tabpanel">
-                                <div class="d-flex mb-3 gap-3">
-                                    <div class="avatar">
-                          <span class="avatar-initial bg-label-primary rounded">
-                            <i class="mdi mdi-wallet-giftcard mdi-24px"></i>
-                          </span>
-                                    </div>
-                                    <div>
-                                        <h5 class="mb-0">
-                                            <span class="align-middle">My Orders</span>
-                                        </h5>
-                                        <small>Lorem ipsum, dolor sit amet.</small>
-                                    </div>
-                                </div>
-                                <div id="accordionOrders" class="accordion">
-                                    <div class="accordion-item active">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#accordionOrders-1" aria-controls="accordionOrders-1">
-                                                Has my order been successful?
-                                            </button>
-                                        </h2>
-
-                                        <div id="accordionOrders-1" class="accordion-collapse collapse show">
-                                            <div class="accordion-body">
-                                                <p>
-                                                    All successful order transactions will receive an order confirmation email once the
-                                                    order has been processed. If you have not received your order confirmation email within
-                                                    24 hours, check your junk email or spam folder.
-                                                </p>
-                                                <p class="mb-0">
-                                                    Alternatively, log in to your account to check your order summary. If you do not have a
-                                                    account, you can contact our Customer Care Team on
-                                                    <span class="fw-medium">1-000-000-000</span>.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="product" role="tabpanel">
-                                <div class="d-flex mb-3 gap-3">
-                                    <div class="avatar">
-                          <span class="avatar-initial bg-label-primary rounded">
-                            <i class="mdi mdi-cog-outline mdi-24px"></i>
-                          </span>
-                                    </div>
-                                    <div>
-                                        <h5 class="mb-0">
-                                            <span class="align-middle">Product &amp; Services</span>
-                                        </h5>
-                                        <small>Lorem ipsum, dolor sit amet.</small>
-                                    </div>
-                                </div>
-                                <div id="accordionProduct" class="accordion">
-                                    <div class="accordion-item active">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#accordionProduct-1" aria-controls="accordionProduct-1">
-                                                Will I be notified once my order has shipped?
-                                            </button>
-                                        </h2>
-
-                                        <div id="accordionProduct-1" class="accordion-collapse collapse show">
-                                            <div class="accordion-body">
-                                                Yes, We will send you an email once your order has been shipped. This email will contain
-                                                tracking and order information.
                                             </div>
                                         </div>
                                     </div>
@@ -421,6 +277,5 @@
     <script src="{{ asset('materialize/assets/js/extended-ui-timeline.js') }}"></script>
 
     {{--faq--}}
-    <script src="{{ asset('js/home/faq-category.js') }}"></script>
-    {{--<script src="{{ asset('js/home/faqs.js') }}"></script>--}}
+    <script src="{{ asset('js/home/faqs.js') }}"></script>
 @endsection
