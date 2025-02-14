@@ -2,18 +2,20 @@
 
 namespace App\Http\Requests\Faq;
 
-use App\Traits\ApiResponse;
-use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FaqCategoryRequest extends FormRequest
 {
-    use ApiResponse, HandlesValidationFailure;
-
     public function rules(): array
     {
         return [
-            'name' => ['required'],
+            'slugs' => ['required', 'array'],
+            'slugs.*' => ['required', 'exists:faq_categories,slug'],
+            'name' => ['required', 'array'],
+            'name.*' => ['required', 'string'],
+            'qualification' => ['required', 'array'],
+            'qualification.*' => ['required', 'array'],
+            'qualification.*.*' => ['required', 'integer', 'exists:educational_institutions,id']
         ];
     }
 
@@ -25,7 +27,13 @@ class FaqCategoryRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nama'
+            'slugs' => 'id',
+            'slugs.*' => 'id',
+            'name' => 'nama',
+            'name.*' => 'nama',
+            'qualification' => 'kualifikasi',
+            'qualification.*' => 'kualifikasi',
+            'qualification.*.*' => 'kualifikasi'
         ];
     }
 }

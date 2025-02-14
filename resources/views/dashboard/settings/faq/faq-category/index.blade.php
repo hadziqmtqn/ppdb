@@ -23,27 +23,47 @@
 
             <div class="card mb-3">
                 <h5 class="card-header">{{ $title }}</h5>
-                <div class="card-datatable">
-                    <table class="table table-striped text-nowrap" id="datatable">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Opsi</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
+                <form action="{{ route('faq-category.store') }}" method="POST">
+                    @csrf
+                    <div class="card-datatable table-responsive">
+                        <table class="table table-striped text-nowrap">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Nama</th>
+                                @foreach($educationalInstitutions as $educationalInstitution)
+                                    <th>{{ $educationalInstitution->name }}</th>
+                                @endforeach
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($faqCategories as $faqCategory)
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="slugs[{{ $faqCategory['slug'] }}]" value="{{ $faqCategory['slug'] }}">
+                                        <input type="text" name="name[{{ $faqCategory['slug'] }}]" id="faq_category_{{ $faqCategory['slug'] }}" class="form-control" aria-label="Faq Category" value="{{ $faqCategory['name'] }}">
+                                    </td>
+                                    @foreach($educationalInstitutions as $educationalInstitution)
+                                        <td>
+                                            <div class="form-check mb-0 d-flex justify-content-center">
+                                                <input class="form-check-input" name="qualification[{{ $faqCategory['slug'] }}][]" type="checkbox" value="{{ $educationalInstitution->id }}" id="defaultCheck{{ $faqCategory['slug'] }}{{ $educationalInstitution->id }}" {{ in_array($educationalInstitution->id, $faqCategory['qualification']) ? 'checked' : '' }}>
+                                            </div>
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        @include('layouts.session')
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    @can('faq-category-write')
-        @include('dashboard.settings.faq.faq-category.modal-create')
-        @include('dashboard.settings.faq.faq-category.modal-edit')
-    @endcan
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/faq/faq-category/datatable.js') }}"></script>
-    <script src="{{ asset('js/faq/faq-category/create.js') }}"></script>
+
 @endsection

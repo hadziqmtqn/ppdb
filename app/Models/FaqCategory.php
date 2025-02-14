@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -28,5 +29,11 @@ class FaqCategory extends Model
         static::creating(function (FaqCategory $faqCategory) {
             $faqCategory->slug = Str::uuid()->toString();
         });
+    }
+
+    // TODO SCOPE
+    public function scopeFilterBySlug(Builder $query, $slug): Builder
+    {
+        return $query->where('slug', $slug);
     }
 }

@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Dashboard\Setting\Faq;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Faq\FaqCategoryRequest;
+use App\Models\EducationalInstitution;
 use App\Models\FaqCategory;
 use App\Traits\ApiResponse;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class FaqCategoryController extends Controller implements HasMiddleware
 {
@@ -34,67 +34,51 @@ class FaqCategoryController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'FAQ';
+        $educationalInstitutions = EducationalInstitution::select(['id', 'name'])
+            ->get();
+        $faqCategories = FaqCategory::get()
+            ->map(function (FaqCategory $faqCategory) {
+                $qualification = json_decode($faqCategory->qualification, true);
 
-        return \view('dashboard.settings.faq.faq-category.index', compact('title'));
+                if (!is_array($qualification)) $qualification = [];
+
+                return collect([
+                    'slug' => $faqCategory->slug,
+                    'name' => $faqCategory->name,
+                    'qualification' => $qualification
+                ]);
+            });
+
+        return \view('dashboard.settings.faq.faq-category.index', compact('title', 'educationalInstitutions', 'faqCategories'));
     }
 
-    public function datatable(Request $request): \Illuminate\Http\JsonResponse
+    public function store(FaqCategoryRequest $request)
     {
         try {
-            if ($request->ajax()) {
-                $data = FaqCategory::query()
-                    ->orderByDesc('created_at');
+            $slugs = $request->input('slugs', []);
+            $names = $request->input('name', []);
+            $qualifications = $request->input('qualification', []);
 
-                return DataTables::eloquent($data)
-                    ->addIndexColumn()
-                    ->filter(function ($instance) use ($request) {
-                        $search = $request->get('search');
-
-                        $instance->when($search, function ($query) use ($search) {
-                            $query->whereAny(['name'], 'LIKE', '%' . $search . '%');
-                        });
-                    })
-                    ->addColumn('action', function ($row) {
-                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
-
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make();
+            DB::beginTransaction();
+            foreach ($slugs as $key => $slug) {
+                $faqCategory = FaqCategory::filterBySlug($slug)
+                    ->firstOrFail();
+                $faqCategory->name = $names[$key];
+                // Set default qualification if not present
+                if (!isset($qualifications[$key])) {
+                    $qualifications[$key] = []; // Set default value here if needed
+                }
+                $faqCategory->qualification = json_encode(array_map('intval', $qualifications[$key]));
+                $faqCategory->save();
             }
-        }catch (Exception $exception) {
-            Log::error($exception->getMessage());
-        }
-
-        return response()->json(true);
-    }
-
-    public function store(FaqCategoryRequest $request): JsonResponse
-    {
-        try {
-            $faqCategory = new FaqCategory();
-            $faqCategory->name = $request->input('name');
-            $faqCategory->save();
+            DB::commit();
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
-            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return redirect()->back()->with('error', 'Data gagal disimpan!');
         }
 
-        return $this->apiResponse('Data berhasil disimpan!', $faqCategory->name, null, Response::HTTP_OK);
-    }
-
-    public function update(FaqCategoryRequest $request, FaqCategory $faqCategory): JsonResponse
-    {
-        try {
-            $faqCategory->name = $request->input('name');
-            $faqCategory->save();
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage());
-            return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return $this->apiResponse('Data berhasil disimpan!', $faqCategory->name, null, Response::HTTP_OK);
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }
 
     public function destroy(FaqCategory $faqCategory): JsonResponse
