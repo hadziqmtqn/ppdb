@@ -237,4 +237,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             toastr.warning('Minimal 3 karakter pencarian');
         }
     });
+
+    // Event listener untuk clear icon in search input
+    searchInput.addEventListener('search', async function() {
+        const search = searchInput.value;
+        const activeButton = document.querySelector('button.nav-link.active[data-educational-institution]');
+        const educationalInstitutionId = activeButton ? activeButton.getAttribute('data-educational-institution') : '';
+        const activeCategoryButton = document.querySelector('button.nav-link.active[data-faq-category]');
+        const faqCategory = activeCategoryButton ? activeCategoryButton.getAttribute('data-faq-category') : '';
+        await fetchFaqs(search, faqCategory, educationalInstitutionId); // Memanggil fetchFaqs saat ikon clear diklik
+    });
 });
