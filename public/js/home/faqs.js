@@ -66,15 +66,8 @@ function updateFaqCategories(categories) {
             button.setAttribute('aria-selected', 'true');
         }
 
-        const icon = document.createElement('i');
-        icon.className = 'mdi mdi-check me-1';
+        button.textContent = category.name;
 
-        const span = document.createElement('span');
-        span.className = 'align-middle';
-        span.textContent = category.name;
-
-        button.appendChild(icon);
-        button.appendChild(span);
         div.appendChild(button);
         li.appendChild(div);
         faqCategoriesContainer.appendChild(li);
