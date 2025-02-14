@@ -39,60 +39,33 @@
         <div class="container position-relative">
             <div class="row gx-0 gy-4 g-md-5">
                 <div class="col-lg-5">
-                    <a href="#" class="app-brand-link mb-4">
-                    <span class="app-brand-logo demo me-2">
-                        <img src="{{ $application['logo'] }}" alt="logo" style="width: 40px">
-                    </span>
+                    <a href="{{ route('home') }}" class="app-brand-link mb-4">
+                        <span class="app-brand-logo demo me-2">
+                            <img src="{{ $application['logo'] }}" alt="logo" style="width: 40px">
+                        </span>
                         <span class="app-brand-text demo footer-link fw-bold">{{ $application['name'] }}</span>
                     </a>
-                    <p class="footer-text footer-logo-description mb-4">
-                        Most Powerful & Comprehensive 🤩 React NextJS Admin Template with Elegant Material Design & Unique
-                        Layouts.
-                    </p>
-                    <form>
-                        <div class="d-flex mt-2 gap-3">
-                            <div class="form-floating form-floating-outline w-px-250">
-                                <input type="text" class="form-control bg-transparent text-white" id="newsletter-1" placeholder="Your email" />
-                                <label for="newsletter-1">Subscribe to newsletter</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Subscribe</button>
-                        </div>
-                    </form>
+                    <p class="footer-text footer-logo-description mb-4">{{ $application['description'] }}</p>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-6">
-                    <h6 class="footer-title mb-4">Demos</h6>
+                    <h6 class="footer-title mb-4">Menu</h6>
                     <ul class="list-unstyled mb-0">
                         <li class="mb-3">
-                            <a href="../vertical-menu-template/" target="_blank" class="footer-link">Vertical Layout</a>
+                            <a href="{{ route('home') }}" class="footer-link">Home</a>
                         </li>
                         <li class="mb-3">
-                            <a href="../horizontal-menu-template/" target="_blank" class="footer-link">Horizontal Layout</a>
+                            <a href="{{ url('/#quotas') }}" class="footer-link" onclick="navigateToSection(event, '#quotas')">Kuota Pendaftaran</a>
                         </li>
                         <li class="mb-3">
-                            <a href="../vertical-menu-template-bordered/" target="_blank" class="footer-link">Bordered Layout</a>
+                            <a href="{{ url('/#registrationSchedule') }}" class="footer-link" onclick="navigateToSection(event, '#registrationSchedule')">Jadwal Pendaftaran</a>
                         </li>
                         <li class="mb-3">
-                            <a href="../vertical-menu-template-semi-dark/" target="_blank" class="footer-link">Semi Dark Layout</a>
+                            <a href="{{ url('/#registrationStep') }}" class="footer-link" onclick="navigateToSection(event, '#registrationStep')">Cara Daftar</a>
                         </li>
-                        <li>
-                            <a href="../vertical-menu-template-dark/" target="_blank" class="footer-link">Dark Layout</a>
+                        <li class="mb-3">
+                            <a href="{{ url('/#faqContainer') }}" class="footer-link" onclick="navigateToSection(event, '#faqContainer')">FAQ</a>
                         </li>
                     </ul>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-6">
-                    <h6 class="footer-title mb-4">Pages</h6>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-3"><a href="#" class="footer-link">Pricing</a></li>
-                        <li class="mb-3"><a href="#" class="footer-link">Payment<span class="badge rounded-pill bg-primary ms-2">New</span></a></li>
-                        <li class="mb-3"><a href="#" class="footer-link">Checkout</a></li>
-                        <li class="mb-3"><a href="#" class="footer-link">Help Center</a></li>
-                        <li><a href="#" target="_blank" class="footer-link">Login/Register</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <h6 class="footer-title mb-4">Download our app</h6>
-                    <a href="javascript:void(0);" class="d-block footer-link mb-3 pb-2"><img src="{{ asset('materialize/assets/img/front-pages/landing-page/apple-icon.png') }}" alt="apple icon"/></a>
-                    <a href="javascript:void(0);" class="d-block footer-link"><img src="{{ asset('materialize/assets/img/front-pages/landing-page/google-play-icon.png') }}" alt="google play icon"/></a>
                 </div>
             </div>
         </div>

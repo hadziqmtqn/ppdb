@@ -14,7 +14,11 @@
                         <h6 class="h2 text-white fw-bold mb-1">{{ $application['name'] }}</h6>
                         <h4 class="h1 fw-bold fw-medium mb-2 text-white">{{ $application['foundation'] }}</h4>
                         <h5 class="h2 fw-bold fw-medium mb-2 text-white">Tahun Ajaran {{ $getSchoolYearActive['year'] }}</h5>
-                        <p class="mb-4 text-white">{!! $application['description'] !!}</p>
+                        <div class="row">
+                            <div class="col-lg-6 offset-lg-3">
+                                <p class="mb-4 text-white">{{ $application['description'] }}</p>
+                            </div>
+                        </div>
                         <a href="{{ route('registration.index') }}" class="btn btn-warning text-dark">Daftar Sekarang<i class="mdi mdi-arrow-right mdi-24px ms-3 scaleX-n1-rtl"></i></a>
                     </div>
                 </div>
@@ -214,24 +218,6 @@
                         <div class="tab-content p-0" id="faqs"></div>
                     </div>
                     <!-- /FAQ's -->
-                </div>
-            </div>
-        </section>
-
-        <section class="section-py">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 text-center">
-                        <h4 class="display-6">Still need help?</h4>
-                        <p>
-                            Our specialists are always happy to help.<br>Contact us during standard business hours or email us 24/7
-                            and we'll get back to you.
-                        </p>
-                        <div class="d-flex justify-content-center flex-wrap gap-3">
-                            <a href="javascript:void(0);" class="btn btn-primary waves-effect waves-light">Visit our community</a>
-                            <a href="javascript:void(0);" class="btn btn-primary waves-effect waves-light">Contact us</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>

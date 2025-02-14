@@ -12,7 +12,7 @@ class ApplicationSeeder extends Seeder
         $application = new Application();
         $application->name = 'Sistem Penerimaan Murid Baru';
         $application->foundation = 'Nusantara Education Foundation';
-        $application->description = "Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta<br/>Tahun Pelajaran secara online dan realtime.";
+        $application->description = 'Situs ini dipersiapkan sebagai pusat informasi dan pengolahan seleksi data siswa peserta Tahun Pelajaran secara online dan realtime.';
         $application->website = 'https://ppdb.bkn.my.id';
         $application->main_website = 'https://bkn.my.id';
         $application->register_verification = true;
