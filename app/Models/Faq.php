@@ -49,8 +49,15 @@ class Faq extends Model
         $faqCategoryId = $request['faq_category_id'] ?? null;
         $educationalInstitutionId = $request['educational_institution_id'] ?? null;
 
-        return $query->when($search, fn($query) => $query->whereAny(['title', 'description'], 'LIKE', '%' . $search . '%'))
-            ->when($faqCategoryId, fn($query) => $query->where('faq_category_id', $faqCategoryId))
-            ->when($educationalInstitutionId, fn($query) => $query->where('educational_institution_id', $educationalInstitutionId));
+        $query->when($search, fn($query) => $query->whereAny(['title', 'description'], 'LIKE', '%' . $search . '%'));
+
+        $query->where('faq_category_id', $faqCategoryId);
+
+        $query->where(function ($query) use ($educationalInstitutionId) {
+            $query->where('educational_institution_id', $educationalInstitutionId)
+                ->orWhereNull('educational_institution_id');
+        });
+
+        return $query;
     }
 }

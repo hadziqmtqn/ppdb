@@ -87,8 +87,8 @@ function updateFaqCategories(categories) {
     });
 
     // Initialize tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 }
@@ -130,6 +130,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (activeButton) {
         const educationalInstitutionId = activeButton.getAttribute('data-educational-institution');
         await fetchData(educationalInstitutionId); // Memanggil fetchData saat halaman dibuka
+
+        // Memanggil fetchFaqs saat halaman dibuka dengan kategori pertama
+        const firstCategoryButton = document.querySelector('button.nav-link[data-faq-category]');
+        if (firstCategoryButton) {
+            const faqCategory = firstCategoryButton.getAttribute('data-faq-category');
+            await fetchFaqs('', faqCategory, educationalInstitutionId);
+        }
     }
 
     // Menambahkan event listener untuk menangani klik pada tombol
@@ -138,6 +145,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         button.addEventListener('click', async function() {
             const educationalInstitutionId = button.getAttribute('data-educational-institution');
             await fetchData(educationalInstitutionId); // Memanggil fetchData saat tombol diklik
+
+            // Memanggil fetchFaqs saat tombol diklik dengan kategori pertama
+            const firstCategoryButton = document.querySelector('button.nav-link[data-faq-category]');
+            if (firstCategoryButton) {
+                const faqCategory = firstCategoryButton.getAttribute('data-faq-category');
+                await fetchFaqs('', faqCategory, educationalInstitutionId);
+            }
         });
     });
 

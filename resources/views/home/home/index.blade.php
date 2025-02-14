@@ -181,7 +181,7 @@
                     <p class="text-body text-center mb-0 px-3">atau pilih kategori untuk dengan cepat menemukan bantuan yang Anda butuhkan</p>
                     <div class="my-3 input-group input-group-lg input-group-merge px-5" style="max-width: 40rem">
                         <span class="input-group-text" id="search"><i class="mdi mdi-magnify mdi-20px"></i></span>
-                        <input type="search" class="form-control" placeholder="Ajukan pertanyaan...." aria-label="Search" id="faq_search" aria-describedby="search">
+                        <input type="search" class="form-control" placeholder="Ajukan pertanyaan...." aria-label="Search" id="faqSearch" aria-describedby="search">
                     </div>
                 </div>
 

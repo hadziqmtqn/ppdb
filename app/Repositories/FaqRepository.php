@@ -50,7 +50,9 @@ class FaqRepository
     public function getFaqs($request): JsonResponse
     {
         try {
-            $faqs = $this->faq->filterData($request)
+            $faqs = $this->faq
+                ->with('faqCategory:id,name', 'educationalInstitution:id,name')
+                ->filterData($request)
                 ->get();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -59,6 +61,8 @@ class FaqRepository
 
         return $this->apiResponse('Get data success', $faqs->map(function (Faq $faq) {
             return collect([
+                'faqCategory' => optional($faq->faqCategory)->name,
+                'educationalInstitution' => optional($faq->educationalInstitution)->name,
                 'title' => $faq->title,
                 'description' => $faq->description
             ]);
