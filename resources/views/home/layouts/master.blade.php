@@ -118,6 +118,7 @@
 <!-- build:js assets/vendor/js/core.js -->
 
 @include('layouts.script')
+<script src="{{ asset('js/home/navigation.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

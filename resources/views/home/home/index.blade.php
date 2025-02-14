@@ -21,7 +21,7 @@
             </div>
         </section>
 
-        <section id="features" class="section-py landing-features" style="padding-top: 10rem; padding-bottom: 5rem">
+        <section id="quotas" class="section-py landing-features" style="padding-top: 10rem; padding-bottom: 5rem">
             <div class="container">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2" />
@@ -74,7 +74,7 @@
             </div>
         </section>
 
-        <section class="section-py position-relative" style="padding-top: 5rem; padding-bottom: 3rem">
+        <section id="registrationSchedule" class="section-py position-relative" style="padding-top: 5rem; padding-bottom: 3rem">
             <div class="container" style="padding-bottom: 6rem; padding-top: 2rem">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
@@ -126,7 +126,7 @@
             </div>
         </section>
 
-        <section class="section-py bg-body pb-0 position-relative" style="padding-top: 7rem">
+        <section id="registrationStep" class="section-py bg-body pb-0 position-relative" style="padding-top: 7rem">
             <div class="container">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
                     <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
@@ -174,7 +174,7 @@
             </div>
         </section>
 
-        <section class="section-py position-relative">
+        <section id="faqContainer" class="section-py position-relative">
             <div class="container">
                 <div class="faq-header d-flex flex-column justify-content-center align-items-center pt-5 position-relative overflow-hidden rounded-3">
                     <h3 class="text-center text-primary mb-2">Halo, bagaimana kami bisa membantu?</h3>

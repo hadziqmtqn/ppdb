@@ -23,6 +23,18 @@
                 <li class="nav-item">
                     <a class="nav-link fw-medium" aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" aria-current="page" href="{{ url('/#quotas') }}" onclick="navigateToSection(event, '#quotas')">Kuota Pendaftaran</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" aria-current="page" href="{{ url('/#registrationSchedule') }}" onclick="navigateToSection(event, '#registrationSchedule')">Jadwal Pendaftaran</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" aria-current="page" href="{{ url('/#registrationStep') }}" onclick="navigateToSection(event, '#registrationStep')">Cara Daftar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" aria-current="page" href="{{ url('/#faqContainer') }}" onclick="navigateToSection(event, '#faqContainer')">FAQ</a>
+                </li>
             </ul>
         </div>
         <div class="landing-menu-overlay d-lg-none"></div>
