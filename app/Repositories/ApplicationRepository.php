@@ -60,13 +60,6 @@ class ApplicationRepository
                     '- Ukuran maksimal 500KB',
                     '- Background halaman beranda teratas'
                 ]
-            ],
-            [
-                'name' => 'carousel',
-                'note' => [
-                    '- Ukuran maksimal 500KB',
-                    '- File disarankan berdimensi 1000x500 px'
-                ]
             ]
         ]);
     }
