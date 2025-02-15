@@ -20,6 +20,7 @@ $(function () {
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'student', name: 'student'},
+            {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'admin', name: 'admin'},
             {data: 'subject', name: 'subject'},
             {data: 'is_seen', name: 'is_seen'},

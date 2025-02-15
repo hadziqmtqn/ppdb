@@ -9,6 +9,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Siswa</th>
+                    <th>Lembaga</th>
                     <th>Admin Pengirim</th>
                     <th>Subjek</th>
                     <th>Status dibaca</th>
@@ -23,4 +24,8 @@
 
 @section('scripts')
     <script src="{{ asset('js/message/conversation/datatable.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/message/conversation/select-students.js') }}"></script>
+    <script src="{{ asset('materialize/js/quill-message-editor.js') }}"></script>
+    <script src="{{ asset('js/message/conversation/create.js') }}"></script>
 @endsection

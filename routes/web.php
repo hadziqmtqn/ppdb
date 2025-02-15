@@ -346,8 +346,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [ConversationController::class, 'index'])->name('conversation.index');
             Route::post('/datatable', [ConversationController::class, 'datatable']);
             Route::post('/store', [ConversationController::class, 'store']);
-            Route::get('/{conversation:slug}', [ConversationController::class, 'show'])->name('conversation.show');
+            Route::get('/{conversation:slug}/show', [ConversationController::class, 'show'])->name('conversation.show');
             Route::delete('/{conversation:slug}/delete', [ConversationController::class, 'destroy']);
+
+            Route::get('/select-students', [ConversationController::class, 'selectStudent']);
         });
 
         // TODO Student Registration

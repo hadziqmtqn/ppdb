@@ -22,14 +22,13 @@ class ConversationRepository
 
     public function getStudents($request): JsonResponse
     {
-        $search = $request['search'] ?? null;
         $educationalInstitutionId = $request['educational_institution_id'] ?? null;
 
         try {
             $students = $this->user->whereHas('student.schoolYear', function ($query) {
                 $query->where('is_active', true);
             })
-                ->search($search)
+                ->search($request)
                 ->whereHas('student', fn($query) => $query->where('educational_institution_id', $educationalInstitutionId))
                 ->active()
                 ->get();

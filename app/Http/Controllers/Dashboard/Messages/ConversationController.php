@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Messages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Messages\ConversationRequest;
 use App\Models\Conversation;
+use App\Repositories\Message\ConversationRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -18,6 +19,16 @@ use Yajra\DataTables\Facades\DataTables;
 class ConversationController extends Controller
 {
     use AuthorizesRequests, ApiResponse;
+
+    protected ConversationRepository $conversationRepository;
+
+    /**
+     * @param ConversationRepository $conversationRepository
+     */
+    public function __construct(ConversationRepository $conversationRepository)
+    {
+        $this->conversationRepository = $conversationRepository;
+    }
 
     public function index(): View
     {
@@ -106,5 +117,11 @@ class ConversationController extends Controller
         }
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
+    }
+
+    // TODO Select
+    public function selectStudent(Request $request)
+    {
+        return $this->conversationRepository->getStudents($request);
     }
 }
