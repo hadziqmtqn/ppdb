@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating form-floating-outline mb-3">
-                                    <input type="number" name="whatsapp_number" id="whatsapp_number" class="form-control" placeholder="No. Whatsapp" value="{{ $application['whatsappNumber'] }}">
+                                    <input type="number" name="whatsapp_number" id="whatsapp_number" class="form-control" placeholder="Harus diawali 62" value="{{ $application['whatsappNumber'] }}">
                                     <label for="whatsapp_number">No. Whatsapp</label>
                                 </div>
                             </div>

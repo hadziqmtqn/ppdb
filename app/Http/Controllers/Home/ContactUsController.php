@@ -15,7 +15,7 @@ class ContactUsController extends Controller
         $application = Application::firstOrFail();
 
         try {
-            $phone = $application->whatsapp_number; // Ganti dengan nomor tujuan
+            $phone = $application->whatsapp_number;
             $name = urlencode($request->input('name'));
             $message = urlencode($request->input('message'));
 

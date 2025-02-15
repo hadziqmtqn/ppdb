@@ -148,8 +148,8 @@
     // Phone Number
     if (phoneNumber) {
         new Cleave(phoneNumber, {
-            prefix: '+62',
-            blocks: [3, 4, 4, 4],
+            prefix: '62',
+            blocks: [4, 3, 3, 4],
         });
     }
 })();

@@ -47,7 +47,7 @@
                     </a>
                     <p class="footer-text footer-logo-description mb-4">{{ $application['description'] }}</p>
                 </div>
-                <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <h6 class="footer-title mb-4">Menu</h6>
                     <ul class="list-unstyled mb-0">
                         <li class="mb-3">
@@ -67,8 +67,19 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-lg-5">
-                    <form action="" method="post"></form>
+                <div class="col-lg-4">
+                    <form action="{{ route('contact-us.store') }}" method="post">
+                        @csrf
+                        <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="name" id="name" class="form-control bg-transparent text-white" placeholder="Nama Saya" value="{{ old('name') }}" required>
+                            <label for="name">Nama Saya</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <textarea name="message" id="message" class="form-control bg-transparent text-white" placeholder="Tulis Pesan.." style="min-height: 100px" required>{{ old('message') }}</textarea>
+                            <label for="message">Pesan</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary waves-light waves-effect w-100">Kirim<i class="mdi mdi-send ms-1"></i></button>
+                    </form>
                 </div>
             </div>
         </div>
