@@ -10,10 +10,13 @@ use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class ConversationController extends Controller
@@ -79,16 +82,44 @@ class ConversationController extends Controller
         return response()->json(true);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(ConversationRequest $request): JsonResponse
     {
         try {
+            DB::beginTransaction();
             $conversation = new Conversation();
             $conversation->user_id = $request->input('user_id');
             $conversation->admin_id = $request->input('send_to') == 'user' ? auth()->id() : null;
             $conversation->subject = $request->input('subject');
             $conversation->message = $request->input('message');
             $conversation->save();
+
+            $content = $request->input('message');
+
+            // Mencari dan memproses semua gambar base64 di dalam konten
+            preg_match_all('/<img src="data:image\/(jpeg|png);base64,([^"]+)"/', $content, $matches);
+
+            foreach ($matches[0] as $index => $imgTag) {
+                $extension = $matches[1][$index];
+                $base64Image = $matches[2][$index];
+
+                // Mendekode base64 menjadi file gambar dan menyimpannya menggunakan Spatie Media Library
+                $media = $conversation->addMediaFromBase64($base64Image)
+                    ->usingFileName(uniqid() . '.' . $extension)
+                    ->toMediaCollection('images');
+
+                // Menggantikan base64 dengan URL gambar
+                $url = $media->getTemporaryUrl(Carbon::now()->addDays(2));
+                $content = str_replace($imgTag, '<img src="' . $url . '"', $content);
+            }
+
+            // Memperbarui konten post dengan konten yang telah dimodifikasi
+            $conversation->update(['message' => $content]);
+            DB::commit();
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return $this->apiResponse('Pesan gagal dikirim', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }

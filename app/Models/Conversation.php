@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Conversation extends Model
+class Conversation extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $fillable = [
         'slug',
         'user_id',
