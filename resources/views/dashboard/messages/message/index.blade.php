@@ -12,31 +12,40 @@
         </div>
         <div class="card-body" style="padding-left: 2.5rem">
             <ul class="timeline mb-0">
-                <li class="timeline-item ps-4 border-left-dashed">
+                <li class="timeline-item ps-4 {{ $conversation->messages->isNotEmpty() ? 'border-left-dashed' : 'border-transparent' }}">
                     <div class="timeline-indicator-advanced border-0 shadow-none avatar">
                         <img src="{{ asset('materialize/assets/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle">
                     </div>
                     <div class="timeline-event ps-1 pt-0">
                         <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
-                            <h5 class="card-header border-bottom">Quote</h5>
-                            <div class="card-body">
-                                <p class="card-text">Some quick example text to build on the card title and make up.</p>
+                            <h6 class="card-header fw-bold border-bottom pt-2 pb-2">
+                                {{ ucwords(strtolower(optional($conversation->admin)->name)) ?? ucwords(strtolower(optional($conversation->user)->name)) }}
+                                <span class="text-muted fw-normal">on {{ \Carbon\Carbon::parse($conversation->created_at)->isoFormat('DD MMM Y HH:mm') }}</span>
+                            </h6>
+                            <div class="card-body pb-2">
+                                {!! $conversation->message !!}
                             </div>
                         </div>
                     </div>
                 </li>
-                <li class="timeline-item ps-4 border-transparent">
-                    <div class="timeline-indicator-advanced border-0 shadow-none avatar">
-                        <img src="{{ asset('materialize/assets/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle">
-                    </div>
-                    <div class="timeline-event ps-1">
-                        <div class="timeline-header">
-                            <small class="text-primary text-uppercase fw-medium">Receiver</small>
+                @foreach($conversation->messages as $message)
+                    <li class="timeline-item ps-4 border-transparent">
+                        <div class="timeline-indicator-advanced border-0 shadow-none avatar">
+                            <img src="{{ asset('materialize/assets/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle">
                         </div>
-                        <h6 class="mb-2">Barry Schowalter</h6>
-                        <p class="mb-0">939 Orange, California(CA), 92118</p>
-                    </div>
-                </li>
+                        <div class="timeline-event ps-1 pt-0">
+                            <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
+                                <h6 class="card-header fw-bold border-bottom pt-2 pb-2">
+                                    User test
+                                    <span class="text-muted fw-normal">on 2020</span>
+                                </h6>
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
             </ul>
             {{--<ul class="timeline pb-0 mb-0">
                 <li class="timeline-item timeline-item-transparent border-primary">

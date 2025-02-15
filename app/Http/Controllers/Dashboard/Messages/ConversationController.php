@@ -111,7 +111,7 @@ class ConversationController extends Controller
                     ->toMediaCollection('images');
 
                 // Menggantikan base64 dengan URL gambar
-                $url = $media->getTemporaryUrl(Carbon::now()->addDays(2));
+                $url = $media->getTemporaryUrl(Carbon::now()->addSeconds(10));
                 $content = str_replace($imgTag, '<img src="' . $url . '"', $content);
             }
 
@@ -132,8 +132,54 @@ class ConversationController extends Controller
         $this->authorize('view', $conversation);
 
         $title = 'Kirim Pesan';
+        $conversation->load([
+            'user:id,name',
+            'admin:id,name',
+            'messages' => function ($query) {
+                $query->orderByDesc('created_at');
+            }
+        ]);
+
+        $content = $conversation->message;
+
+        // Mencari dan memperbarui semua URL gambar sementara di dalam konten
+        $updatedContent = $this->updateTemporaryUrls($conversation, $content);
+
+        // Mengembalikan pesan dengan URL gambar sementara yang baru
+        $conversation->message = $updatedContent;
+        //dd($updatedContent);
 
         return \view('dashboard.messages.message.index', compact('title', 'conversation'));
+    }
+
+    private function updateTemporaryUrls(Conversation $conversation, $content)
+    {
+        preg_match_all('/<img src="([^"]+)"/', $content, $matches);
+
+        foreach ($matches[1] as $url) {
+            $media = $conversation->getMedia('images')->first(function ($mediaItem) use ($url) {
+                return $mediaItem->getUrl() === $url;
+            });
+
+            if ($media) {
+                // Periksa apakah URL sementara masih berlaku
+                $expiryTime = Carbon::parse($media->expires_at);
+                if (Carbon::now()->lessThan($expiryTime)) {
+                    // Jika URL sementara masih berlaku, gunakan URL yang sama
+                    $newUrl = $url;
+                } else {
+                    // Jika URL sementara telah kedaluwarsa, buat URL sementara yang baru
+                    $newUrl = $media->getTemporaryUrl(Carbon::now()->addDays(2));
+                }
+
+                $content = str_replace($url, $newUrl, $content);
+            }
+        }
+
+        $conversation->message = $content;
+        $conversation->save();
+
+        return $content;
     }
 
     public function destroy(Conversation $conversation): JsonResponse

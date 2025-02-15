@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -38,6 +40,23 @@ class Conversation extends Model implements HasMedia
         });
     }
 
+    public function getUpdatedMessage()
+    {
+        $content = $this->message;
+
+        foreach ($this->getMedia('images') as $media) {
+            $newUrl = $media->getTemporaryUrl(Carbon::now()->addSeconds(10));
+
+            // Cari semua referensi gambar yang menggunakan ID media ini dan update URL-nya
+            $pattern = '/<img[^>]+src=["\']' . preg_quote($media->getUrl(), '/') . '["\']/';
+            $replacement = '<img src="' . $newUrl . '"';
+
+            $content = preg_replace($pattern, $replacement, $content);
+        }
+
+        return $content;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -46,5 +65,10 @@ class Conversation extends Model implements HasMedia
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class, 'admin_id');
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'conversation_id');
     }
 }
