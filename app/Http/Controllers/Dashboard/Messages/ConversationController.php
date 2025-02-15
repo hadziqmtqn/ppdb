@@ -67,7 +67,7 @@ class ConversationController extends Controller
                     ->addColumn('admin', fn($row) => optional($row->admin)->name)
                     ->addColumn('is_seen', fn($row) => '<span class="badge rounded-pill '. ($row->is_seen ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Dibaca' : 'Belum terbaca') .'</span>')
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="'. route('conversation.show', $row->slug) .'" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-pencil"></i></a> ';
+                        $btn = '<a href="'. route('conversation.show', $row->slug) .'" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
                         $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
 
                         return $btn;
@@ -124,7 +124,7 @@ class ConversationController extends Controller
             return $this->apiResponse('Pesan gagal dikirim', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Pesan berhasil dikirim', null, route('conversation.index'), Response::HTTP_OK);
+        return $this->apiResponse('Pesan berhasil dikirim', null, route('conversation.show', $conversation->slug), Response::HTTP_OK);
     }
 
     public function show(Conversation $conversation): View
