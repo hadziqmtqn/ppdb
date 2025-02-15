@@ -74,6 +74,14 @@
     ]
   },
   {
+    "name": "Kirim Pesan",
+    "type": "main_menu",
+    "visibility": ["conversation-read"],
+    "url": "/conversation",
+    "icon": "send",
+    "sub_menu": []
+  },
+  {
     "name": "Referensi",
     "type": "main_menu",
     "visibility": [

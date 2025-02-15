@@ -13,6 +13,7 @@ use App\Repositories\HomeRepository;
 use App\Repositories\MajorRepository;
 use App\Repositories\MediaFileRepository;
 use App\Repositories\MenuRepository;
+use App\Repositories\Message\ConversationRepository;
 use App\Repositories\MessageTemplateRepository;
 use App\Repositories\ModelRepository;
 use App\Repositories\MyAccountRepository;
@@ -69,6 +70,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(HomeRepository::class, HomeRepository::class);
         $this->app->singleton(RegistrationScheduleRepository::class, RegistrationScheduleRepository::class);
         $this->app->singleton(FaqRepository::class, FaqRepository::class);
+        $this->app->singleton(ConversationRepository::class, ConversationRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);

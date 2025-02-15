@@ -73,6 +73,7 @@ class StudentRepository
             'Transportasi' => optional(optional($user->residence)->transportation)->name,
         ]);
     }
+
     // TODO Previous School
     public function previousSchool(User $user): Collection
     {

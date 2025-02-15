@@ -10,32 +10,19 @@ class ConversationPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user): bool
-    {
-
-    }
-
     public function view(User $user, Conversation $conversation): bool
     {
-    }
+        if ($user->hasRole('user')) return $user->id === $conversation->user_id;
+        if ($user->hasRole('admin')) return optional($user->admin)->educational_institution_id === optional(optional($conversation->user)->student)->educational_institution_id;
 
-    public function create(User $user): bool
-    {
-    }
-
-    public function update(User $user, Conversation $conversation): bool
-    {
+        return true;
     }
 
     public function delete(User $user, Conversation $conversation): bool
     {
-    }
+        if ($user->hasRole('user')) return $user->id === $conversation->user_id;
+        if ($user->hasRole('admin')) return optional($user->admin)->educational_institution_id === optional(optional($conversation->user)->student)->educational_institution_id;
 
-    public function restore(User $user, Conversation $conversation): bool
-    {
-    }
-
-    public function forceDelete(User $user, Conversation $conversation): bool
-    {
+        return true;
     }
 }

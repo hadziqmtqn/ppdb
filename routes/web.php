@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\AccountVerificationController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
+use App\Http\Controllers\Dashboard\Messages\ConversationController;
 use App\Http\Controllers\Dashboard\Payment\BankAccountController;
 use App\Http\Controllers\Dashboard\Payment\PaymentChannelController;
 use App\Http\Controllers\Dashboard\Payment\PaymentController;
@@ -338,6 +339,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/{payment:slug}/check-payment', [PaymentTransactionController::class, 'checkPayment']);
             Route::put('/{payment:slug}/validation', [PaymentTransactionController::class, 'paymentValidation']);
             Route::delete('/{payment:slug}/delete', [PaymentTransactionController::class, 'destroy']);
+        });
+
+        // TODO Message
+        Route::group(['prefix' => 'conversation'], function () {
+            Route::get('/', [ConversationController::class, 'index'])->name('conversation.index');
+            Route::post('/datatable', [ConversationController::class, 'datatable']);
+            Route::post('/store', [ConversationController::class, 'store']);
+            Route::get('/{conversation:slug}', [ConversationController::class, 'show'])->name('conversation.show');
+            Route::delete('/{conversation:slug}/delete', [ConversationController::class, 'destroy']);
         });
 
         // TODO Student Registration
