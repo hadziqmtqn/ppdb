@@ -67,6 +67,9 @@
                         </li>
                     </ul>
                 </div>
+                <div class="col-lg-5">
+                    <form action="" method="post"></form>
+                </div>
             </div>
         </div>
     </div>

@@ -33,6 +33,7 @@ class ApplicationRepository
             'mainWebsite' => $application->main_website,
             'registerVerification' => $application->register_verification,
             'notificationMethod' => $application->notification_method,
+            'whatsappNumber' => $application->whatsapp_number,
             'logo' => $application->hasMedia('logo') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(5),'logo') : asset('assets/sekolah.png'),
             'loginAssets' => $application->hasMedia('login') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'login') : asset('materialize/assets/img/illustrations/auth-login-illustration-light.png'),
             'frontHeaderAssets' => $application->hasMedia('front_header') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'front_header') : asset('assets/jane.jpg'),

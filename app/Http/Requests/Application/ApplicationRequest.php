@@ -16,6 +16,7 @@ class ApplicationRequest extends FormRequest
             'main_website' => ['nullable', 'url'],
             'register_verification' => ['required', 'boolean'],
             'notification_method' => ['required', 'in:email,whatsapp'],
+            'whatsapp_number' => ['required', 'min_digits:10', 'max_digits:13'],
             'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:700'],
         ];
     }
@@ -35,6 +36,7 @@ class ApplicationRequest extends FormRequest
             'main_website' => 'website utama',
             'register_verification' => 'verifikasi akun',
             'notification_method' => 'metode notifikasi',
+            'whatsapp_number' => 'no. whatsapp',
             'logo' => 'logo',
         ];
     }

@@ -54,6 +54,7 @@ class ApplicationController extends Controller implements HasMiddleware
             $application->main_website = $request->input('main_website');
             $application->register_verification = $request->input('register_verification');
             $application->notification_method = $request->input('notification_method');
+            $application->whatsapp_number = $request->input('whatsapp_number');
             $application->save();
 
             if ($request->hasFile('logo') && $request->file('logo')->isValid()) {

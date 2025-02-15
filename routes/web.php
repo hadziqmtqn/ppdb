@@ -55,6 +55,7 @@ use App\Http\Controllers\Dashboard\Student\StudentReportController;
 use App\Http\Controllers\Dashboard\Student\StudentSecurityController;
 use App\Http\Controllers\Dashboard\Student\StudentStatsController;
 use App\Http\Controllers\Dashboard\Student\ValidationController;
+use App\Http\Controllers\Home\ContactUsController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\RegistrationController;
 use Illuminate\Support\Facades\Route;
@@ -63,18 +64,20 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('get-faq-categories', [HomeController::class, 'getFaqCategories']);
 Route::get('get-faqs', [HomeController::class, 'getFaqs']);
 
+Route::post('contact-us', [ContactUsController::class, 'store'])->name('contact-us.store');
+
 Route::middleware('guest')->group(function () {
-    Route::prefix('login')->group(function () {
+    Route::group(['prefix' => 'login'], function () {
         Route::get('/', [LoginController::class, 'index'])->name('login');
         Route::post('/store', [LoginController::class, 'store'])->name('login.store');
     });
 
-    Route::prefix('oauth')->group(function () {
+    Route::group(['prefix' => 'oauth'], function () {
         Route::get('/{provider}', [OAuthController::class, 'redirectToProvider'])->name('oauth.redirect-to-provider');
         Route::get('/{provider}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.handle-callback');
     });
 
-    Route::prefix('register')->group(function () {
+    Route::group(['prefix' => 'register'], function () {
         Route::get('/', [RegistrationController::class, 'index'])->name('registration.index');
         Route::post('/store', [RegistrationController::class, 'store']);
     });
@@ -87,16 +90,14 @@ Route::middleware('auth')->group(function () {
         Route::post('password-validation', [PasswordValidationController::class, 'store']);
 
         // TODO Dashboard
-        Route::prefix('dashboard')->group(function () {
-            Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-        });
+        Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-        Route::prefix('account')->group(function () {
+        Route::group(['prefix' => 'account'], function () {
             Route::get('/', [AccountController::class, 'index'])->name('account.index');
             Route::post('/update', [AccountController::class, 'update'])->name('account.update');
         });
 
-        Route::prefix('menu')->group(function () {
+        Route::group(['prefix' => 'menu'], function () {
             Route::get('/', [MenuController::class, 'index'])->name('menu.index');
             Route::post('/store', [MenuController::class, 'store'])->name('menu.store');
             Route::post('/datatable', [MenuController::class, 'datatable']);
@@ -107,14 +108,14 @@ Route::middleware('auth')->group(function () {
 
         Route::get('search-menu', [MenuController::class, 'searchMenu']);
 
-        Route::prefix('role')->group(function () {
+        Route::group(['prefix' => 'role'], function () {
             Route::get('/', [RoleController::class, 'index'])->name('role.index');
             Route::post('/datatable', [RoleController::class, 'datatable']);
             Route::get('/{role:slug}', [RoleController::class, 'edit'])->name('role.edit');
             Route::put('/{role:slug}/update', [RoleController::class, 'update'])->name('role.update');
         });
 
-        Route::prefix('application')->group(function () {
+        Route::group(['prefix' => 'application'], function () {
             Route::get('/', [ApplicationController::class, 'index'])->name('application.index');
             Route::post('/', [ApplicationController::class, 'store'])->name('application.store');
             Route::get('/{application:slug}', [ApplicationController::class, 'assets'])->name('application.assets');
@@ -122,13 +123,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{application:slug}/delete-assets', [ApplicationController::class, 'deleteAssets'])->name('application.delete-assets');
         });
 
-        Route::prefix('educational-level')->group(function () {
+        Route::group(['prefix' => 'educational-level'], function () {
             Route::get('/', [EducationalLevelController::class, 'index'])->name('educational-level.index');
             Route::post('/datatable', [EducationalLevelController::class, 'datatable']);
             Route::put('/{educationalLevel:slug}/store', [EducationalLevelController::class, 'store']);
         });
 
-        Route::prefix('educational-institution')->group(function () {
+        Route::group(['prefix' => 'educational-institution'], function () {
             Route::get('/', [EducationalInstitutionController::class, 'index'])->name('educational-institution.index');
             Route::post('/datatable', [EducationalInstitutionController::class, 'datatable']);
             Route::post('/store', [EducationalInstitutionController::class, 'store'])->name('educational-institution.store');
@@ -136,18 +137,18 @@ Route::middleware('auth')->group(function () {
             Route::put('/{educationalInstitution:slug}/update', [EducationalInstitutionController::class, 'update'])->name('educational-institution.update');
         });
 
-        Route::prefix('whatsapp-config')->group(function () {
+        Route::group(['prefix' => 'whatsapp-config'], function () {
             Route::get('/', [WhatsAppConfigController::class, 'index'])->name('whatsapp-config.index');
             Route::post('/datatable', [WhatsAppConfigController::class, 'datatable']);
             Route::put('/{whatsappConfig:slug}/update', [WhatsAppConfigController::class, 'update']);
         });
 
-        Route::prefix('email-config')->group(function () {
+        Route::group(['prefix' => 'email-config'], function () {
             Route::get('/', [EmailConfigController::class, 'index'])->name('email-config.index');
             Route::post('/store', [EmailConfigController::class, 'store'])->name('email-config.store');
         });
 
-        Route::prefix('admin')->group(function () {
+        Route::group(['prefix' => 'admin'], function () {
             Route::get('/', [AdminController::class, 'index'])->name('admin.index');
             Route::post('/datatable', [AdminController::class, 'datatable']);
             Route::post('/store', [AdminController::class, 'store'])->name('admin.store');
@@ -158,7 +159,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{user:username}/force-delete', [AdminController::class, 'forceDelete']);
         });
 
-        Route::prefix('message-template')->group(function () {
+        Route::group(['prefix' => 'message-template'], function () {
             Route::get('/', [MessageTemplateController::class, 'index'])->name('message-template.index');
             Route::post('/store', [MessageTemplateController::class, 'store'])->name('message-template.store');
             Route::post('/datatable', [MessageTemplateController::class, 'datatable']);
@@ -169,7 +170,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('email-verification', [EmailChangeController::class, 'verification'])->name('email-change.verification');
 
-        Route::prefix('school-year')->group(function () {
+        Route::group(['prefix' => 'school-year'], function () {
             Route::get('/', [SchoolYearController::class, 'index'])->name('school-year.index');
             Route::post('/datatable', [SchoolYearController::class, 'datatable']);
             Route::post('/store', [SchoolYearController::class, 'store'])->name('school-year.store');
@@ -177,13 +178,13 @@ Route::middleware('auth')->group(function () {
             Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update'])->name('school-year.update');
         });
 
-        Route::prefix('registration-schedule')->group(function () {
+        Route::group(['prefix' => 'registration-schedule'], function () {
             Route::post('/datatable', [RegistrationScheduleController::class, 'datatable']);
             Route::post('/store', [RegistrationScheduleController::class, 'store']);
             Route::put('/{registrationSchedule:slug}/update', [RegistrationScheduleController::class, 'update']);
         });
 
-        Route::prefix('registration-category')->group(function () {
+        Route::group(['prefix' => 'registration-category'], function () {
             Route::get('/', [RegistrationCategoryController::class, 'index'])->name('registration-category.index');
             Route::post('/datatable', [RegistrationCategoryController::class, 'datatable']);
             Route::post('/store', [RegistrationCategoryController::class, 'store'])->name('registration-category.store');
@@ -191,7 +192,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{registrationCategory:slug}/delete', [RegistrationCategoryController::class, 'destroy']);
         });
 
-        Route::prefix('class-level')->group(function () {
+        Route::group(['prefix' => 'class-level'], function () {
             Route::get('/', [ClassLevelController::class, 'index'])->name('class-level.index');
             Route::post('/datatable', [ClassLevelController::class, 'datatable']);
             Route::post('/store', [ClassLevelController::class, 'store']);
@@ -199,7 +200,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{classLevel:slug}/delete', [ClassLevelController::class, 'destroy']);
         });
 
-        Route::prefix('registration-path')->group(function () {
+        Route::group(['prefix' => 'registration-path'], function () {
             Route::get('/', [RegistrationPathController::class, 'index'])->name('registration-path.index');
             Route::post('/datatable', [RegistrationPathController::class, 'datatable']);
             Route::post('/store', [RegistrationPathController::class, 'store']);
@@ -207,7 +208,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{registrationPath:slug}/delete', [RegistrationPathController::class, 'destroy']);
         });
 
-        Route::prefix('major')->group(function () {
+        Route::group(['prefix' => 'major'], function () {
             Route::get('/', [MajorController::class, 'index'])->name('major.index');
             Route::post('/datatable', [MajorController::class, 'datatable']);
             Route::post('/store', [MajorController::class, 'store']);
@@ -215,7 +216,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{major:slug}/delete', [MajorController::class, 'destroy']);
         });
 
-        Route::prefix('distance-to-school')->group(function () {
+        Route::group(['prefix' => 'distance-to-school'], function () {
             Route::get('/', [DistanceToSchoolController::class, 'index'])->name('distance-to-school.index');
             Route::post('/datatable', [DistanceToSchoolController::class, 'datatable']);
             Route::post('/store', [DistanceToSchoolController::class, 'store']);
@@ -223,7 +224,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{distanceToSchool:slug}/delete', [DistanceToSchoolController::class, 'destroy']);
         });
 
-        Route::prefix('transportation')->group(function () {
+        Route::group(['prefix' => 'transportation'], function () {
             Route::get('/', [TransportationController::class, 'index'])->name('transportation.index');
             Route::post('/datatable', [TransportationController::class, 'datatable']);
             Route::post('/store', [TransportationController::class, 'store']);
@@ -231,7 +232,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{transportation:slug}/delete', [TransportationController::class, 'destroy']);
         });
 
-        Route::prefix('profession')->group(function () {
+        Route::group(['prefix' => 'profession'], function () {
             Route::get('/', [ProfessionController::class, 'index'])->name('profession.index');
             Route::post('/datatable', [ProfessionController::class, 'datatable']);
             Route::post('/store', [ProfessionController::class, 'store']);
@@ -239,7 +240,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{profession:slug}/delete', [ProfessionController::class, 'destroy']);
         });
 
-        Route::prefix('education')->group(function () {
+        Route::group(['prefix' => 'education'], function () {
             Route::get('/', [EducationController::class, 'index'])->name('education.index');
             Route::post('/datatable', [EducationController::class, 'datatable']);
             Route::post('/store', [EducationController::class, 'store']);
@@ -247,7 +248,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{education:slug}/delete', [EducationController::class, 'destroy']);
         });
 
-        Route::prefix('income')->group(function () {
+        Route::group(['prefix' => 'income'], function () {
             Route::get('/', [IncomeController::class, 'index'])->name('income.index');
             Route::post('/datatable', [IncomeController::class, 'datatable']);
             Route::post('/store', [IncomeController::class, 'store']);
@@ -255,13 +256,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{income:slug}/delete', [IncomeController::class, 'destroy']);
         });
 
-        Route::prefix('message-receiver')->group(function () {
+        Route::group(['prefix' => 'message-receiver'], function () {
             Route::post('/store', [MessageReceiverController::class, 'store']);
             Route::post('/datatable', [MessageReceiverController::class, 'datatable']);
             Route::delete('/{messageReceiver:slug}/delete', [MessageReceiverController::class, 'destroy']);
         });
 
-        Route::prefix('media-file')->group(function () {
+        Route::group(['prefix' => 'media-file'], function () {
             Route::get('/', [MediaFileController::class, 'index'])->name('media-file.index');
             Route::post('/datatable', [MediaFileController::class, 'datatable']);
             Route::post('/store', [MediaFileController::class, 'store']);
@@ -269,13 +270,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{mediaFile:slug}/delete', [MediaFileController::class, 'destroy']);
         });
 
-        Route::prefix('detail-media-file')->group(function () {
+        Route::group(['prefix' => 'detail-media-file'], function () {
             Route::get('/{detailMediaFile:slug}', [DetailMediaFileController::class, 'show'])->name('detail-media-file.show');
             Route::put('/{detailMediaFile:slug}/update', [DetailMediaFileController::class, 'update']);
             Route::delete('/{detailMediaFile:slug}/delete', [DetailMediaFileController::class, 'destroy']);
         });
 
-        Route::prefix('registration-step')->group(function () {
+        Route::group(['prefix' => 'registration-step'], function () {
             Route::get('/', [RegistrationStepController::class, 'index'])->name('registration-step.index');
             Route::post('/datatable', [RegistrationStepController::class, 'datatable']);
             Route::post('/store', [RegistrationStepController::class, 'store'])->name('registration-step.store');
@@ -284,13 +285,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{registrationStep:slug}/delete', [RegistrationStepController::class, 'destroy']);
         });
 
-        Route::prefix('faq-category')->group(function () {
+        Route::group(['prefix' => 'faq-category'], function () {
             Route::get('/', [FaqCategoryController::class, 'index'])->name('faq-category.index');
             Route::post('/store', [FaqCategoryController::class, 'store'])->name('faq-category.store');
             Route::delete('/{faqCategory:slug}/delete', [FaqCategoryController::class, 'destroy'])->name('faq-category.destroy');
         });
 
-        Route::prefix('faq')->group(function () {
+        Route::group(['prefix' => 'faq'], function () {
             Route::get('/', [FaqController::class, 'index'])->name('faq.index');
             Route::post('/store', [FaqController::class, 'store'])->name('faq.store');
             Route::post('/datatable', [FaqController::class, 'datatable']);
@@ -300,20 +301,20 @@ Route::middleware('auth')->group(function () {
         });
 
         // TODO Payment
-        Route::prefix('payment-setting')->group(function () {
+        Route::group(['prefix' => 'payment-setting'], function () {
             Route::get('/', [PaymentSettingController::class, 'index'])->name('payment-setting.index');
             Route::post('/store', [PaymentSettingController::class, 'store']);
             Route::post('/datatable', [PaymentSettingController::class, 'datatable']);
             Route::put('/{paymentSetting:slug}/update', [PaymentSettingController::class, 'update']);
         });
 
-        Route::prefix('payment-channel')->group(function () {
+        Route::group(['prefix' => 'payment-channel'], function () {
             Route::get('/', [PaymentChannelController::class, 'index'])->name('payment-channel.index');
             Route::post('/datatable', [PaymentChannelController::class, 'datatable']);
             Route::put('/{paymentChannel:slug}/update', [PaymentChannelController::class, 'update']);
         });
 
-        Route::prefix('bank-account')->group(function () {
+        Route::group(['prefix' => 'bank-account'], function () {
             Route::get('/', [BankAccountController::class, 'index'])->name('bank-account.index');
             Route::post('/datatable', [BankAccountController::class, 'datatable']);
             Route::post('/store', [BankAccountController::class, 'store']);
@@ -321,7 +322,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{bankAccount:slug}/delete', [BankAccountController::class, 'destroy']);
         });
 
-        Route::prefix('registration-fee')->group(function () {
+        Route::group(['prefix' => 'registration-fee'], function () {
             Route::get('/', [RegistrationFeeController::class, 'index'])->name('registration-fee.index');
             Route::post('/datatable', [RegistrationFeeController::class, 'datatable']);
             Route::post('/store', [RegistrationFeeController::class, 'store']);
@@ -329,7 +330,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{registrationFee:slug}/delete', [RegistrationFeeController::class, 'destroy']);
         });
 
-        Route::prefix('payment-transaction')->group(function () {
+        Route::group(['prefix' => 'payment-transaction'], function () {
             Route::get('/', [PaymentTransactionController::class, 'index'])->name('payment-transaction.index');
             Route::post('/datatable', [PaymentTransactionController::class, 'datatable']);
             Route::get('/{payment:slug}', [PaymentTransactionController::class, 'show'])->name('payment-transaction.show');
@@ -340,7 +341,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // TODO Student Registration
-        Route::prefix('student')->group(function () {
+        Route::group(['prefix' => 'student'], function () {
             Route::get('/', [StudentController::class, 'index'])->name('student.index')->middleware('only_admin');
             Route::post('/datatable', [StudentController::class, 'datatable']);
             Route::put('/{username}/restore', [StudentController::class, 'restore']);
@@ -361,43 +362,43 @@ Route::middleware('auth')->group(function () {
 
             Route::post('acceptance-registration/{user:username}/store', [AcceptanceRegistrationController::class, 'store']);
 
-            Route::prefix('student-registration')->group(function () {
+            Route::group(['prefix' => 'student-registration'], function () {
                 Route::get('/{user:username}', [StudentRegistrationController::class, 'index'])->name('student-registration.index');
                 Route::post('/{user:username}/store', [StudentRegistrationController::class, 'store']);
             });
 
-            Route::prefix('personal-data')->group(function () {
+            Route::group(['prefix' => 'personal-data'], function () {
                 Route::get('/{user:username}', [PersonalDataController::class, 'index'])->name('personal-data.index');
                 Route::post('/{user:username}/store', [PersonalDataController::class, 'store']);
             });
 
-            Route::prefix('family')->group(function () {
+            Route::group(['prefix' => 'family'], function () {
                 Route::get('/{user:username}', [FamilyController::class, 'index'])->name('family.index');
                 Route::post('/{user:username}/store', [FamilyController::class, 'store']);
             });
 
-            Route::prefix('place-of-recidence')->group(function () {
+            Route::group(['prefix' => 'place-of-recidence'], function () {
                 Route::get('/{user:username}', [ResidenceController::class, 'index'])->name('place-of-recidence.index');
                 Route::post('/{user:username}/store', [ResidenceController::class, 'store']);
             });
 
-            Route::prefix('previous-school')->group(function () {
+            Route::group(['prefix' => 'previous-school'], function () {
                 Route::get('/{user:username}', [PreviousSchoolController::class, 'index'])->name('previous-school.index');
                 Route::post('/{user:username}/store', [PreviousSchoolController::class, 'store']);
             });
 
-            Route::prefix('file-uploading')->group(function () {
+            Route::group(['prefix' => 'file-uploading'], function () {
                 Route::get('/{user:username}', [FileUploadingController::class, 'index'])->name('file-uploading.index');
                 Route::post('/{user:username}/store', [FileUploadingController::class, 'store']);
                 Route::delete('/{user:username}/delete', [FileUploadingController::class, 'destroy']);
             });
 
-            Route::prefix('student-security')->group(function () {
+            Route::group(['prefix' => 'student-security'], function () {
                 Route::get('/{user:username}/security', [StudentSecurityController::class, 'index'])->name('student-security.index');
                 Route::put('/{user:username}/store', [StudentSecurityController::class, 'store']);
             });
 
-            Route::prefix('current-bill')->group(function () {
+            Route::group(['prefix' => 'current-bill'], function () {
                 Route::get('/{user:username}', [CurrentBillController::class, 'index'])->name('current-bill.index');
             });
 
@@ -416,7 +417,7 @@ Route::middleware('auth')->group(function () {
         Route::get('select-bank-account', [BankAccountController::class, 'select']);
     });
 
-    Route::prefix('account-verification')->group(function () {
+    Route::group(['prefix' => 'account-verification'], function () {
         Route::get('/', [AccountVerificationController::class, 'index'])->name('account-verification.index')->middleware('verification_process');
         Route::get('/account-verification', [AccountVerificationController::class, 'verification'])->name('account-verification.verification')->middleware('verification_process');
         Route::post('/resend', [AccountVerificationController::class, 'resend'])->name('account-verification.resend')->middleware('verification_process');

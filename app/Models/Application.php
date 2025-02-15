@@ -19,7 +19,8 @@ class Application extends Model implements HasMedia
         'website',
         'main_website',
         'register_verification',
-        'notification_method'
+        'notification_method',
+        'whatsapp_number'
     ];
 
     protected function casts(): array

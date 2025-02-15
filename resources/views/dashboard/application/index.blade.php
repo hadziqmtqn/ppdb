@@ -60,6 +60,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating form-floating-outline mb-3">
+                                    <input type="number" name="whatsapp_number" id="whatsapp_number" class="form-control" placeholder="No. Whatsapp" value="{{ $application['whatsappNumber'] }}">
+                                    <label for="whatsapp_number">No. Whatsapp</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline mb-3">
                                     <input type="file" name="logo" id="logo" class="form-control" accept=".jpg,.jpeg,.png">
                                     <label for="logo">Logo</label>
                                 </div>
