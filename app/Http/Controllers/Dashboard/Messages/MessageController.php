@@ -17,6 +17,27 @@ class MessageController extends Controller
 {
     use ApiResponse, HandlesBase64Images;
 
+    public function index(Conversation $conversation): JsonResponse
+    {
+        try {
+            $messages = Message::query()
+                ->conversationId($conversation->id)
+                ->orderByDesc('created_at')
+                ->get();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Get data success', $messages->map(function (Message $message) {
+            return collect([
+                'slug' => $message->slug,
+                'message' => $message->message,
+                'isSeen' => $message->is_seen
+            ]);
+        }), null, Response::HTTP_OK);
+    }
+
     public function replyMessage(MessageRequest $request, Conversation $conversation): JsonResponse
     {
         try {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -30,5 +31,11 @@ class Message extends Model
         static::creating(function (Message $message) {
             $message->slug = Str::uuid()->toString();
         });
+    }
+
+    /*TODO Scope*/
+    public function scopeConversationId(Builder $query, $conversationId): Builder
+    {
+        return $query->where('conversation_id', $conversationId);
     }
 }

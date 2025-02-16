@@ -28,24 +28,25 @@
                         </div>
                     </div>
                 </li>
-                @foreach($conversation->messages as $message)
-                    <li class="timeline-item ps-4 border-transparent">
-                        <div class="timeline-indicator-advanced border-0 shadow-none avatar">
-                            <img src="{{ asset('materialize/assets/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle">
-                        </div>
-                        <div class="timeline-event ps-1 pt-0">
-                            <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
-                                <h6 class="card-header fw-bold border-bottom pt-2 pb-2">
-                                    User test
-                                    <span class="text-muted fw-normal">on 2020</span>
-                                </h6>
-                                <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
+            </ul>
+            <ul class="timeline mb-0" id="messages">
+                {{--looping pesan--}}
+                {{--<li class="timeline-item ps-4 border-transparent">
+                    <div class="timeline-indicator-advanced border-0 shadow-none avatar">
+                        <img src="{{ asset('materialize/assets/img/avatars/1.png') }}" alt="Avatar" class="rounded-circle">
+                    </div>
+                    <div class="timeline-event ps-1 pt-0">
+                        <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
+                            <h6 class="card-header fw-bold border-bottom pt-2 pb-2">
+                                User test
+                                <span class="text-muted fw-normal">on 2020</span>
+                            </h6>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up.</p>
                             </div>
                         </div>
-                    </li>
-                @endforeach
+                    </div>
+                </li>--}}
             </ul>
         </div>
     </div>
@@ -54,7 +55,7 @@
         <div class="card-header">
             <h5 class="card-title m-0">Balas Pesan</h5>
         </div>
-        <form onsubmit="return false" id="replyMessage" data-conversation-slug="{{ $conversation->slug }}">
+        <form onsubmit="return false" id="replyMessage" data-conversation="{{ $conversation->slug }}">
             <div class="card-body">
                 <div>
                     <label for="description">Pesan</label>
@@ -71,4 +72,5 @@
 
 @section('scripts')
     <script src="{{ asset('materialize/js/quill-message-editor.js') }}"></script>
+    <script src="{{ asset('js/message/message/reply-message.js') }}"></script>
 @endsection

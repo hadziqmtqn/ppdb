@@ -354,6 +354,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['prefix' => 'message'], function () {
+            Route::get('/{conversation:slug}', [MessageController::class, 'index']);
             Route::post('/{conversation:slug}/reply-message', [MessageController::class, 'replyMessage']);
             Route::delete('/{message:slug}/delete', [MessageController::class, 'destroy']);
         });
