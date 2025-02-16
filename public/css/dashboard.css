@@ -1,0 +1,23 @@
+.messages p img {
+    width: 100%; /* Default untuk mobile */
+    max-width: 100%;
+}
+
+@media (min-width: 768px) { /* Tablet dan di atasnya */
+    .messages p img {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1024px) { /* Desktop */
+    .messages p img {
+        width: 30%;
+    }
+}
+
+figure.image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}

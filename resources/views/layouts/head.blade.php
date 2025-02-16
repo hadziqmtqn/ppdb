@@ -55,14 +55,7 @@
 <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css">
 
 {{--custom--}}
-<style>
-    figure.image img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
 <!-- Helpers -->
 <script src="{{ asset('materialize/assets/vendor/js/helpers.js') }}"></script>

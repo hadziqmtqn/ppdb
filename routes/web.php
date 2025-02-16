@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\Messages\ConversationController;
+use App\Http\Controllers\Dashboard\Messages\MessageController;
 use App\Http\Controllers\Dashboard\Payment\BankAccountController;
 use App\Http\Controllers\Dashboard\Payment\PaymentChannelController;
 use App\Http\Controllers\Dashboard\Payment\PaymentController;
@@ -350,6 +351,11 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{conversation:slug}/delete', [ConversationController::class, 'destroy']);
 
             Route::get('/select-students', [ConversationController::class, 'selectStudent']);
+        });
+
+        Route::group(['prefix' => 'message'], function () {
+            Route::post('/{conversation:slug}/reply-message', [MessageController::class, 'replyMessage']);
+            Route::delete('/{message:slug}/delete', [MessageController::class, 'destroy']);
         });
 
         // TODO Student Registration

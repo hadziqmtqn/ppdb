@@ -6,11 +6,11 @@
         Detail {{ $title }}
     </h4>
 
-    <div class="card card- mb-4">
+    <div class="card mb-4 overflow-hidden" style="max-height: 800px">
         <div class="card-header">
             <h5 class="card-title m-0">{{ $conversation->subject }}</h5>
         </div>
-        <div class="card-body" style="padding-left: 2.5rem">
+        <div class="card-body" style="padding-left: 2.5rem" id="vertical-scroll">
             <ul class="timeline mb-0">
                 <li class="timeline-item ps-4 {{ $conversation->messages->isNotEmpty() ? 'border-left-dashed' : 'border-transparent' }}">
                     <div class="timeline-indicator-advanced border-0 shadow-none avatar">
@@ -22,7 +22,7 @@
                                 {{ ucwords(strtolower(optional($conversation->admin)->name)) ?? ucwords(strtolower(optional($conversation->user)->name)) }}
                                 <span class="text-muted fw-normal">on {{ \Carbon\Carbon::parse($conversation->created_at)->isoFormat('DD MMM Y HH:mm') }}</span>
                             </h6>
-                            <div class="card-body pb-2">
+                            <div class="card-body pb-2 messages">
                                 {!! $conversation->message !!}
                             </div>
                         </div>
@@ -47,68 +47,25 @@
                     </li>
                 @endforeach
             </ul>
-            {{--<ul class="timeline pb-0 mb-0">
-                <li class="timeline-item timeline-item-transparent border-primary">
-                    <span class="timeline-point timeline-point-primary"></span>
-                    <div class="timeline-event">
-                        <div class="timeline-header">
-                            <h6 class="mb-0">Order was placed (Order ID: #32543)</h6>
-                            <span class="text-muted">Tuesday 11:29 AM</span>
-                        </div>
-                        <p class="mt-2">Your order has been placed successfully</p>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-primary">
-                    <span class="timeline-point timeline-point-primary"></span>
-                    <div class="timeline-event">
-                        <div class="timeline-header">
-                            <h6 class="mb-0">Pick-up</h6>
-                            <span class="text-muted">Wednesday 11:29 AM</span>
-                        </div>
-                        <p class="mt-2">Pick-up scheduled with courier</p>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-primary">
-                    <span class="timeline-point timeline-point-primary"></span>
-                    <div class="timeline-event">
-                        <div class="timeline-header">
-                            <h6 class="mb-0">Dispatched</h6>
-                            <span class="text-muted">Thursday 11:29 AM</span>
-                        </div>
-                        <p class="mt-2">Item has been picked up by courier</p>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-primary">
-                    <span class="timeline-point timeline-point-primary"></span>
-                    <div class="timeline-event">
-                        <div class="timeline-header">
-                            <h6 class="mb-0">Package arrived</h6>
-                            <span class="text-muted">Saturday 15:20 AM</span>
-                        </div>
-                        <p class="mt-2">Package arrived at an Amazon facility, NY</p>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent">
-                    <span class="timeline-point timeline-point-primary"></span>
-                    <div class="timeline-event">
-                        <div class="timeline-header">
-                            <h6 class="mb-0">Dispatched for delivery</h6>
-                            <span class="text-muted">Today 14:12 PM</span>
-                        </div>
-                        <p class="mt-2">Package has left an Amazon facility, NY</p>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent border-transparent pb-0">
-                    <span class="timeline-point timeline-point-secondary"></span>
-                    <div class="timeline-event pb-0">
-                        <div class="timeline-header">
-                            <h6 class="mb-0">Delivery</h6>
-                        </div>
-                        <p class="mt-2 mb-0">Package will be delivered by tomorrow</p>
-                    </div>
-                </li>
-            </ul>--}}
         </div>
+    </div>
+
+    <div class="card card- mb-4">
+        <div class="card-header">
+            <h5 class="card-title m-0">Balas Pesan</h5>
+        </div>
+        <form onsubmit="return false" id="replyMessage" data-conversation-slug="{{ $conversation->slug }}">
+            <div class="card-body">
+                <div>
+                    <label for="description">Pesan</label>
+                    <div class="quill-editor"></div>
+                    <textarea name="message" id="description" class="d-none" placeholder="Pesan"></textarea>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" id="btnReplyMessage">Balas Pesan <i class="mdi mdi-send ms-2"></i></button>
+            </div>
+        </form>
     </div>
 @endsection
 
