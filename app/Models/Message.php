@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\MessageEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +16,10 @@ class Message extends Model
         'user_id',
         'message',
         'is_seen',
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => MessageEvent::class
     ];
 
     protected function casts(): array

@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const form = document.getElementById('replyMessageForm');
     const conversationSlug = form.dataset.conversation;
     const btnReplyMessage = document.getElementById('btnReplyMessage');
-    const quillEditor = document.querySelector('.quill-editor'); // Assuming this is your Quill editor container
+    const quillEditor = document.querySelector('.quill-editor');
 
     if (!form || !btnReplyMessage || !quillEditor) {
         return;
@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         toastrOption();
         blockUi();
 
-        // Clear previous errors
         form.querySelectorAll('.is-invalid').forEach(element => {
             element.classList.remove('is-invalid');
         });
@@ -21,11 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
             element.remove();
         });
 
-        // Update the textarea with the content of the Quill editor
         const messageTextarea = form.querySelector('textarea[name="message"]');
         const quillContent = quillEditor.__quill.root.innerHTML.trim();
 
-        // Check if the Quill content is empty or contains only HTML tags like <p><br></p>
         if (quillContent === '<p><br></p>' || quillContent === '') {
             toastr.error('Pesan tidak boleh kosong.');
             unBlockUi();
@@ -33,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         messageTextarea.value = quillContent;
-
         const formData = new FormData(form);
 
         try {
@@ -44,17 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 unBlockUi();
 
                 const newConversationElement = document.getElementById('newConversation');
-
                 if (newConversationElement) {
                     newConversationElement.remove();
                 }
 
-                // Clear the Quill editor and textarea
                 quillEditor.__quill.root.innerHTML = '';
                 messageTextarea.value = '';
-
-                // Fetch new messages
-                await fetchData(conversationSlug);
 
                 return;
             }
@@ -72,14 +63,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (const key in errors) {
                     const input = form.querySelector(`[name="${key}"]`);
                     if (input) {
-                        // Add is-invalid class to the input field
                         input.classList.add('is-invalid');
-
-                        // Create error message element
                         const errorMessage = document.createElement('div');
                         errorMessage.classList.add('invalid-feedback');
                         errorMessage.innerHTML = errors[key].join('<br>');
-
                         if (input.parentNode.classList.contains('form-floating')) {
                             input.parentNode.appendChild(errorMessage);
                         } else {
@@ -92,5 +79,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             unBlockUi();
         }
+    });
+
+    // Fetch Pusher configuration
+    const pusherConfigResponse = await axios.get('/get-pusher-config');
+    const pusherConfig = pusherConfigResponse.data;
+
+    // Pusher configuration for real-time updates
+    const pusher = new Pusher(pusherConfig.key, {
+        cluster: pusherConfig.cluster,
+        encrypted: true
+    });
+
+    const channel = pusher.subscribe('private-conversation.' + conversationSlug);
+    channel.bind('App\\Events\\MessageSent', function(data) {
+        fetchData(conversationSlug);
     });
 });

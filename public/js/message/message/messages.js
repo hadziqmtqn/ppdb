@@ -6,8 +6,6 @@ async function fetchData(conversationSlug) {
         if (response.data.type === 'success') {
             const data = response.data.data;
             const replyMessages = document.getElementById('replyMessages');
-
-            // Clear existing replyMessages
             replyMessages.innerHTML = '';
 
             data.forEach((message, index) => {
@@ -34,15 +32,12 @@ async function fetchData(conversationSlug) {
                 `;
                 replyMessages.innerHTML += messageItem;
             });
-
-            console.log(data);
         }
     } catch (error) {
         toastr.error(error.response.data.message);
     }
 }
 
-// Menambahkan event listener DOMContentLoaded
 document.addEventListener('DOMContentLoaded', async function() {
     const messages = document.getElementById('replyMessages');
     const conversation = messages.dataset.conversation;
@@ -51,5 +46,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         return;
     }
 
-    await fetchData(conversation); // Memanggil fetchData saat halaman dibuka
+    await fetchData(conversation);
+
+    // Fetch Pusher configuration
+    const pusherConfigResponse = await axios.get('/get-pusher-config');
+    const pusherConfig = pusherConfigResponse.data;
+
+    // Pusher configuration for real-time updates
+    const pusher = new Pusher(pusherConfig.key, {
+        cluster: pusherConfig.cluster,
+        encrypted: true
+    });
+
+    const channel = pusher.subscribe('private-conversation.' + conversation);
+    channel.bind('App\\Events\\MessageSent', function(data) {
+        fetchData(conversation);
+    });
 });

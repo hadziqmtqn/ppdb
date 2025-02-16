@@ -68,4 +68,5 @@
     <script src="{{ asset('materialize/js/quill-message-editor.js') }}"></script>
     <script src="{{ asset('js/message/message/reply-message.js') }}"></script>
     <script src="{{ asset('js/message/message/messages.js') }}"></script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 @endsection
