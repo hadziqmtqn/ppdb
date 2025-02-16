@@ -35,6 +35,13 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="menu-item {{ $title == 'Kirim Pesan' ? 'active' : '' }}">
+                    <a href="{{ route('conversation.index') }}" class="menu-link">
+                        <i class="menu-icon tf-icons mdi mdi-send"></i>
+                        <div data-i18n="Kirim Pesan">Kirim Pesan</div>
+                    </a>
+                </li>
             @else
                 @foreach($listMenus as $listMenu)
                     @if($listMenu) <!-- Pastikan menu tidak null -->

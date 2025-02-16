@@ -51,6 +51,7 @@ class ConversationController extends Controller
                         'user.student.educationalInstitution:id,name',
                         'admin:id,name'
                     ])
+                    ->filterByStudent()
                     ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)
