@@ -13,17 +13,24 @@
                     <h5 class="card-title m-0">{{ $conversation->subject }}</h5>
                 </div>
                 <div class="card-body" style="padding-left: 2.5rem" id="vertical-scroll">
+                    <ul class="timeline mb-0" id="replyMessages" data-conversation="{{ $conversation->slug }}"></ul>
                     <ul class="timeline mb-0">
-                        <li class="timeline-item ps-4 {{ $conversation->messages->isNotEmpty() ? 'border-left-dashed' : 'border-transparent' }}">
+                        <li class="timeline-item ps-4 border-transparent">
                             <div class="timeline-indicator-advanced border-0 shadow-none avatar">
                                 <img src="{{ url('https://ui-avatars.com/api/?name='. (ucwords(strtolower(optional($conversation->admin)->name)) ?? ucwords(strtolower(optional($conversation->user)->name))) .'&color=7F9CF5&background=EBF4FF') }}" alt="Avatar" class="rounded-circle">
                             </div>
                             <div class="timeline-event ps-1 pt-0">
                                 <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
-                                    <h6 class="card-header fw-bold border-bottom pt-2 pb-2">
-                                        {{ ucwords(strtolower(optional($conversation->admin)->name)) ?? ucwords(strtolower(optional($conversation->user)->name)) }}
-                                        <span class="text-muted fw-normal">on {{ \Carbon\Carbon::parse($conversation->created_at)->isoFormat('DD MMM Y HH:mm') }}</span>
-                                    </h6>
+                                    <div class="card-header border-bottom pt-3 pb-3 d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="fw-bold mb-0">{{ ucwords(strtolower(optional($conversation->admin)->name)) ?? ucwords(strtolower(optional($conversation->user)->name)) }} <span class="text-muted fw-normal">on {{ \Carbon\Carbon::parse($conversation->created_at)->isoFormat('DD MMM Y HH:mm') }}</span></h6>
+                                        </div>
+                                        @if($conversation->messages->isEmpty())
+                                            <div id="newConversation">
+                                                <span class="spinner-grow text-primary spinner-grow-sm me-1" role="status" aria-hidden="true"></span>Terbaru
+                                            </div>
+                                        @endif
+                                    </div>
                                     <div class="card-body pb-2 messages">
                                         {!! $conversation->message !!}
                                     </div>
@@ -31,7 +38,6 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="timeline mb-0" id="replyMessages" data-conversation="{{ $conversation->slug }}"></ul>
                 </div>
             </div>
         </div>

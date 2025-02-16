@@ -18,10 +18,10 @@ async function fetchData(conversationSlug) {
                         </div>
                         <div class="timeline-event ps-1 pt-0">
                             <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
-                                <h6 class="card-header fw-bold border-bottom pt-2 pb-2">
-                                    ${message.username}
-                                    <span class="text-muted fw-normal">on ${message.date}</span>
-                                </h6>
+                                <div class="card-header border-bottom pt-3 pb-3 d-flex justify-content-between">
+                                    <div><h6 class="fw-bold mb-0">${message.username} <span class="text-muted fw-normal">on ${message.date}</span></h6></div>
+                                    <div><span class="spinner-grow text-primary spinner-grow-sm me-1" role="status" aria-hidden="true"></span>Terbaru</div>
+                                </div>
                                 <div class="card-body pb-2 messages">
                                     ${message.message}
                                 </div>
