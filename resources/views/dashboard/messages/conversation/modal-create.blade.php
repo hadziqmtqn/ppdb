@@ -13,11 +13,11 @@
                             <input type="hidden" name="send_to" value="admin">
                         @else
                             <input type="hidden" name="send_to" value="user">
-                            <div class="form-floating form-floating mb-3">
+                            <div class="form-floating form-floating-outline mb-3">
                                 <select name="educational_institution_id" id="select-educational-institution" class="form-select select2"></select>
                                 <label for="select-educational-institution">Lembaga</label>
                             </div>
-                            <div class="form-floating form-floating mb-3">
+                            <div class="form-floating form-floating-outline mb-3">
                                 <select name="user_id" id="select-student" class="form-select select2"></select>
                                 <label for="select-student">Siswa</label>
                             </div>

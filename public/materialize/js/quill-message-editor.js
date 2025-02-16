@@ -4,32 +4,7 @@
     // Full Toolbar
     // --------------------------------------------------------------------
     const fullToolbar = [
-        [
-            {
-                font: []
-            },
-            {
-                size: []
-            }
-        ],
         ['bold', 'italic', 'underline', 'strike'],
-        [
-            {
-                color: []
-            },
-            {
-                background: []
-            }
-        ],
-        [
-            {
-                header: '1'
-            },
-            {
-                header: '2'
-            },
-            'blockquote',
-        ],
         [
             {
                 list: 'ordered'

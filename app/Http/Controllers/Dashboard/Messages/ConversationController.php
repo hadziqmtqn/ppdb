@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,13 +106,20 @@ class ConversationController extends Controller
                 $extension = $matches[1][$index];
                 $base64Image = $matches[2][$index];
 
-                // Mendekode base64 menjadi file gambar dan menyimpannya menggunakan Spatie Media Library
-                $media = $conversation->addMediaFromBase64($base64Image)
-                    ->usingFileName(uniqid() . '.' . $extension)
-                    ->toMediaCollection('images');
+                // Mendekode base64 menjadi file gambar
+                $image = base64_decode($base64Image);
+                $imageName = uniqid() . '.' . $extension;
+                $imagePath = 'conversation/' . $conversation->slug . '/' . $imageName;
+
+                // Menyimpan gambar ke storage S3
+                Storage::disk('s3')->put($imagePath, $image);
+
+                // Mengatur visibilitas gambar menjadi publik
+                Storage::disk('s3')->setVisibility($imagePath, 'public');
 
                 // Menggantikan base64 dengan URL gambar
-                $url = $media->getTemporaryUrl(Carbon::now()->addSeconds(10));
+                $url = Storage::disk('s3')->url($imagePath);
+
                 $content = str_replace($imgTag, '<img src="' . $url . '"', $content);
             }
 
@@ -187,6 +195,10 @@ class ConversationController extends Controller
         $this->authorize('delete', $conversation);
 
         try {
+            if ($conversation->hasMedia('images')) {
+                $conversation->clearMediaCollection('images');
+            }
+
             $conversation->delete();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
