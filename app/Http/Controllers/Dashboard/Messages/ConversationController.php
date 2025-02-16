@@ -7,13 +7,12 @@ use App\Http\Requests\Messages\ConversationRequest;
 use App\Models\Conversation;
 use App\Repositories\Message\ConversationRepository;
 use App\Traits\ApiResponse;
+use App\Traits\HandlesBase64Images;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ConversationController extends Controller
 {
-    use AuthorizesRequests, ApiResponse;
+    use AuthorizesRequests, ApiResponse, HandlesBase64Images;
 
     protected ConversationRepository $conversationRepository;
 
@@ -99,29 +98,9 @@ class ConversationController extends Controller
 
             $content = $request->input('message');
 
-            // Mencari dan memproses semua gambar base64 di dalam konten
-            preg_match_all('/<img src="data:image\/(jpeg|png);base64,([^"]+)"/', $content, $matches);
-
-            foreach ($matches[0] as $index => $imgTag) {
-                $extension = $matches[1][$index];
-                $base64Image = $matches[2][$index];
-
-                // Mendekode base64 menjadi file gambar
-                $image = base64_decode($base64Image);
-                $imageName = uniqid() . '.' . $extension;
-                $imagePath = 'conversation/' . $conversation->slug . '/' . $imageName;
-
-                // Menyimpan gambar ke storage S3
-                Storage::disk('s3')->put($imagePath, $image);
-
-                // Mengatur visibilitas gambar menjadi publik
-                Storage::disk('s3')->setVisibility($imagePath, 'public');
-
-                // Menggantikan base64 dengan URL gambar
-                $url = Storage::disk('s3')->url($imagePath);
-
-                $content = str_replace($imgTag, '<img src="' . $url . '"', $content);
-            }
+            // Memproses gambar base64 di dalam konten menggunakan trait
+            $directory = 'conversation/' . $conversation->slug;
+            $content = $this->processBase64Images($content, $directory);
 
             // Memperbarui konten post dengan konten yang telah dimodifikasi
             $conversation->update(['message' => $content]);
@@ -148,59 +127,26 @@ class ConversationController extends Controller
             }
         ]);
 
-        $content = $conversation->message;
-
-        // Mencari dan memperbarui semua URL gambar sementara di dalam konten
-        $updatedContent = $this->updateTemporaryUrls($conversation, $content);
-
-        // Mengembalikan pesan dengan URL gambar sementara yang baru
-        $conversation->message = $updatedContent;
-        //dd($updatedContent);
-
         return \view('dashboard.messages.message.index', compact('title', 'conversation'));
     }
 
-    private function updateTemporaryUrls(Conversation $conversation, $content)
-    {
-        preg_match_all('/<img src="([^"]+)"/', $content, $matches);
-
-        foreach ($matches[1] as $url) {
-            $media = $conversation->getMedia('images')->first(function ($mediaItem) use ($url) {
-                return $mediaItem->getUrl() === $url;
-            });
-
-            if ($media) {
-                // Periksa apakah URL sementara masih berlaku
-                $expiryTime = Carbon::parse($media->expires_at);
-                if (Carbon::now()->lessThan($expiryTime)) {
-                    // Jika URL sementara masih berlaku, gunakan URL yang sama
-                    $newUrl = $url;
-                } else {
-                    // Jika URL sementara telah kedaluwarsa, buat URL sementara yang baru
-                    $newUrl = $media->getTemporaryUrl(Carbon::now()->addDays(2));
-                }
-
-                $content = str_replace($url, $newUrl, $content);
-            }
-        }
-
-        $conversation->message = $content;
-        $conversation->save();
-
-        return $content;
-    }
-
+    /**
+     * @throws Throwable
+     */
     public function destroy(Conversation $conversation): JsonResponse
     {
         $this->authorize('delete', $conversation);
 
         try {
-            if ($conversation->hasMedia('images')) {
-                $conversation->clearMediaCollection('images');
-            }
+            DB::beginTransaction();
+            // Hapus direktori yang berisi gambar
+            $directory = 'conversation/' . $conversation->slug;
+            $this->deleteDirectory($directory);
 
             $conversation->delete();
+            DB::commit();
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal dihapus!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
