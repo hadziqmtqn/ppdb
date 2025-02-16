@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('replyMessage');
+    const form = document.getElementById('replyMessageForm');
     const conversationSlug = form.dataset.conversation;
     const btnReplyMessage = document.getElementById('btnReplyMessage');
     const quillEditor = document.querySelector('.quill-editor'); // Assuming this is your Quill editor container

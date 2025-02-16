@@ -5,6 +5,32 @@ async function fetchData(conversationSlug) {
         const response = await axios.get(`/message/${conversationSlug}`);
         if (response.data.type === 'success') {
             const data = response.data.data;
+            const replyMessages = document.getElementById('replyMessages');
+
+            // Clear existing replyMessages
+            replyMessages.innerHTML = '';
+
+            data.forEach(message => {
+                const messageItem = `
+                    <li class="timeline-item ps-4 border-left-dashed">
+                        <div class="timeline-indicator-advanced border-0 shadow-none avatar">
+                            <img src="${message.avatar}" alt="Avatar" class="rounded-circle">
+                        </div>
+                        <div class="timeline-event ps-1 pt-0">
+                            <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
+                                <h6 class="card-header fw-bold border-bottom pt-2 pb-2">
+                                    ${message.username}
+                                    <span class="text-muted fw-normal">on ${message.date}</span>
+                                </h6>
+                                <div class="card-body pb-2 messages">
+                                    ${message.message}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                `;
+                replyMessages.innerHTML += messageItem;
+            });
 
             console.log(data);
         }
@@ -15,31 +41,12 @@ async function fetchData(conversationSlug) {
 
 // Menambahkan event listener DOMContentLoaded
 document.addEventListener('DOMContentLoaded', async function() {
-    const schoolYear = $('#select-school-year'),
-        educationalInstitution = $('#select-educational-institution'),
-        registrationCategory = $('#select-registration-category'),
-        registrationPath = $('#select-registration-path');
+    const messages = document.getElementById('replyMessages');
+    const conversation = messages.dataset.conversation;
 
-    if (schoolYear.length === 0 || educationalInstitution.length === 0 || registrationCategory.length === 0 || registrationPath.length === 0) {
+    if (!messages) {
         return;
     }
 
-    // Inisialisasi select2 setelah elemen tersedia di DOM
-    educationalInstitution.select2();
-
-    //schoolYear.on('change', fetchData);
-    schoolYear.on('select2:select change', function () {
-        fetchData();
-    });
-    educationalInstitution.on('select2:select change', function() {
-        fetchData();  // Panggil fetchData di sini
-    });
-    registrationCategory.on('select2:select change', function() {
-        fetchData();  // Panggil fetchData di sini
-    });
-    registrationPath.on('select2:select change', function() {
-        fetchData();  // Panggil fetchData di sini
-    });
-
-    await fetchData(); // Memanggil fetchData saat halaman dibuka
+    await fetchData(conversation); // Memanggil fetchData saat halaman dibuka
 });

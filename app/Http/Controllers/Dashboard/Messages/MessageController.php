@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Traits\ApiResponse;
 use App\Traits\HandlesBase64Images;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class MessageController extends Controller
     public function index(Conversation $conversation): JsonResponse
     {
         try {
-            $messages = Message::query()
+            $messages = Message::with('user:id,name')
                 ->conversationId($conversation->id)
                 ->orderByDesc('created_at')
                 ->get();
@@ -32,7 +33,10 @@ class MessageController extends Controller
         return $this->apiResponse('Get data success', $messages->map(function (Message $message) {
             return collect([
                 'slug' => $message->slug,
+                'username' => ucwords(strtolower(optional($message->user)->name)),
+                'avatar' => url('https://ui-avatars.com/api/?name='. optional($message->user)->name .'&color=7F9CF5&background=EBF4FF'),
                 'message' => $message->message,
+                'date' => Carbon::parse($message->created_at)->isoFormat('DD MMM Y HH:mm'),
                 'isSeen' => $message->is_seen
             ]);
         }), null, Response::HTTP_OK);
