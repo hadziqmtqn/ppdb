@@ -10,7 +10,10 @@ async function fetchData(conversationSlug) {
             // Clear existing replyMessages
             replyMessages.innerHTML = '';
 
-            data.forEach(message => {
+            data.forEach((message, index) => {
+                const isLastMessage = index === 0;
+                const latestBadge = isLastMessage ? `<div><span class="spinner-grow text-primary spinner-grow-sm me-1" role="status" aria-hidden="true"></span>Terbaru</div>` : '';
+
                 const messageItem = `
                     <li class="timeline-item ps-4 border-left-dashed">
                         <div class="timeline-indicator-advanced border-0 shadow-none avatar">
@@ -20,7 +23,7 @@ async function fetchData(conversationSlug) {
                             <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
                                 <div class="card-header border-bottom pt-3 pb-3 d-flex justify-content-between">
                                     <div><h6 class="fw-bold mb-0">${message.username} <span class="text-muted fw-normal">on ${message.date}</span></h6></div>
-                                    <div><span class="spinner-grow text-primary spinner-grow-sm me-1" role="status" aria-hidden="true"></span>Terbaru</div>
+                                    ${latestBadge}
                                 </div>
                                 <div class="card-body pb-2 messages">
                                     ${message.message}

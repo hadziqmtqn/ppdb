@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 toastr.success(response.data.message);
                 unBlockUi();
 
+                const newConversationElement = document.getElementById('newConversation');
+
+                if (newConversationElement) {
+                    newConversationElement.remove();
+                }
+
                 // Clear the Quill editor and textarea
                 quillEditor.__quill.root.innerHTML = '';
                 messageTextarea.value = '';
