@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 quillEditor.__quill.root.innerHTML = '';
                 messageTextarea.value = '';
 
-                console.log(response.data);
+                // Fetch new messages
+                await fetchData(conversationSlug);
 
                 return;
             }
