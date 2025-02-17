@@ -48,18 +48,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     await fetchData(conversation);
 
-    // Fetch Pusher configuration
-    const pusherConfigResponse = await axios.get('/get-pusher-config');
-    const pusherConfig = pusherConfigResponse.data;
-
-    // Pusher configuration for real-time updates
-    const pusher = new Pusher(pusherConfig.key, {
-        cluster: pusherConfig.cluster,
-        encrypted: true
-    });
-
-    const channel = pusher.subscribe('private-conversation.' + conversation);
-    channel.bind('App\\Events\\MessageSent', function(data) {
-        fetchData(conversation);
-    });
+    if (window.Echo) {
+        window.Echo.private('conversation.' + conversation)
+            .listen('MessageSent', (e) => {
+                console.log('Event received:', e);
+                fetchData(conversation);
+            });
+    } else {
+        console.error('Laravel Echo not initialized');
+    }
 });

@@ -86,6 +86,8 @@ Route::middleware('guest')->group(function () {
     });
 });
 
+//Broadcast::routes(['middleware' => ['auth']]);
+
 Route::middleware('auth')->group(function () {
     Route::middleware('account_verified')->group(function () {
         // TODO Auth

@@ -22,7 +22,7 @@ class MessageEvent implements ShouldBroadcast
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('conversation.' . $this->message->conversation_id);
+        return new PrivateChannel('conversation.' . $this->message->conversation->slug);
     }
 
     public function broadcastWith(): array

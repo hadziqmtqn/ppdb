@@ -44,6 +44,11 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function conversation(): BelongsTo
+    {
+        return $this->belongsTo(Conversation::class);
+    }
+
     /*TODO Scope*/
     public function scopeConversationId(Builder $query, $conversationId): Builder
     {

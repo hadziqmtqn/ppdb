@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 quillEditor.__quill.root.innerHTML = '';
                 messageTextarea.value = '';
 
+                // Memastikan fetchData dipanggil setelah pesan dikirim
+                fetchData(conversationSlug);
+
                 return;
             }
 
@@ -81,18 +84,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     });
 
-    // Fetch Pusher configuration
-    const pusherConfigResponse = await axios.get('/get-pusher-config');
-    const pusherConfig = pusherConfigResponse.data;
-
-    // Pusher configuration for real-time updates
-    const pusher = new Pusher(pusherConfig.key, {
-        cluster: pusherConfig.cluster,
-        encrypted: true
-    });
-
-    const channel = pusher.subscribe('private-conversation.' + conversationSlug);
-    channel.bind('App\\Events\\MessageSent', function(data) {
-        fetchData(conversationSlug);
-    });
+    // Menggunakan Laravel Echo untuk real-time updates
+    if (window.Echo) {
+        window.Echo.private('conversation.' + conversationSlug)
+            .listen('MessageSent', (e) => {
+                console.log('Event received:', e);
+                fetchData(conversationSlug);
+            });
+    } else {
+        console.error('Laravel Echo not initialized');
+    }
 });
