@@ -23,7 +23,7 @@
                                 <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
                                     <div class="card-header border-bottom pt-3 pb-3 d-flex justify-content-between">
                                         <div>
-                                            <h6 class="fw-bold mb-0">{{ ucwords(strtolower(optional($conversation->admin)->name ?? optional($conversation->user)->name)) }} <span class="text-muted fw-normal">on {{ \Carbon\Carbon::parse($conversation->created_at)->isoFormat('DD MMM Y HH:mm') }}</span></h6>
+                                            <h6 class="fw-bold mb-0"><span class="{{ (auth()->user()->id == $conversation->user_id) || (auth()->user()->id == $conversation->admin_id) ? 'text-primary' : '' }}">{{ ucwords(strtolower(optional($conversation->admin)->name ?? optional($conversation->user)->name)) }}</span> <span class="text-muted fw-normal">on {{ \Carbon\Carbon::parse($conversation->created_at)->isoFormat('DD MMM Y HH:mm') }}</span></h6>
                                         </div>
                                         @if($conversation->messages->isEmpty())
                                             <div id="newConversation">

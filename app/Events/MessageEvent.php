@@ -28,9 +28,8 @@ class MessageEvent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
+            'username' => ucwords(strtolower(optional($this->message->user)->name)),
             'message' => $this->message->message,
-            'username' => optional($this->message->user)->name,
-            'avatar' => url('https://ui-avatars.com/api/?name='. optional($this->message->user)->name .'&color=7F9CF5&background=EBF4FF'),
             'date' => $this->message->created_at->isoFormat('DD MMM Y HH:mm'),
         ];
     }

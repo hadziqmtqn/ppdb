@@ -20,7 +20,7 @@ async function fetchData(conversationSlug) {
                         <div class="timeline-event ps-1 pt-0">
                             <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
                                 <div class="card-header border-bottom pt-3 pb-3 d-flex justify-content-between">
-                                    <div><h6 class="fw-bold mb-0">${message.username} <span class="text-muted fw-normal">on ${message.date}</span></h6></div>
+                                    <div><h6 class="fw-bold mb-0"><span class="${message.nameColor}">${message.username}</span> <span class="text-muted fw-normal">on ${message.date}</span></h6></div>
                                     ${latestBadge}
                                 </div>
                                 <div class="card-body pb-2 messages">

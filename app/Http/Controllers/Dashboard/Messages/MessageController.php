@@ -37,7 +37,8 @@ class MessageController extends Controller
                 'avatar' => url('https://ui-avatars.com/api/?name='. optional($message->user)->name .'&color=7F9CF5&background=EBF4FF'),
                 'message' => $message->message,
                 'date' => Carbon::parse($message->created_at)->isoFormat('DD MMM Y HH:mm'),
-                'isSeen' => $message->is_seen
+                'isSeen' => $message->is_seen,
+                'nameColor' => (auth()->user()->id == $message->user_id) ? 'text-primary' : ''
             ]);
         }), null, Response::HTTP_OK);
     }
