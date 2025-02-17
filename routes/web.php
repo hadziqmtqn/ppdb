@@ -11,7 +11,6 @@ use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\EmailChangeController;
 use App\Http\Controllers\Dashboard\Messages\ConversationController;
 use App\Http\Controllers\Dashboard\Messages\MessageController;
-use App\Http\Controllers\Dashboard\Messages\PusherController;
 use App\Http\Controllers\Dashboard\Payment\BankAccountController;
 use App\Http\Controllers\Dashboard\Payment\PaymentChannelController;
 use App\Http\Controllers\Dashboard\Payment\PaymentController;
@@ -358,6 +357,7 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['prefix' => 'message'], function () {
             Route::get('/{conversation:slug}', [MessageController::class, 'index']);
+            Route::get('/{conversation:slug}/latest', [MessageController::class, 'latest']);
             Route::post('/{conversation:slug}/reply-message', [MessageController::class, 'replyMessage']);
             Route::delete('/{message:slug}/delete', [MessageController::class, 'destroy']);
         });
@@ -444,9 +444,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/account-verification', [AccountVerificationController::class, 'verification'])->name('account-verification.verification')->middleware('verification_process');
         Route::post('/resend', [AccountVerificationController::class, 'resend'])->name('account-verification.resend')->middleware('verification_process');
     });
-
-    // TODO Pusher Config
-    Route::get('get-pusher-config', [PusherController::class, 'getPusherConfig']);
 });
 
 Route::get('select-educational-institution', [EducationalInstitutionController::class, 'select']);

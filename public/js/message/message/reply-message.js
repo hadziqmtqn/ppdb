@@ -47,9 +47,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 quillEditor.__quill.root.innerHTML = '';
                 messageTextarea.value = '';
 
-                // Memastikan fetchData dipanggil setelah pesan dikirim
-                fetchData(conversationSlug);
-
                 return;
             }
 

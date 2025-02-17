@@ -23,7 +23,6 @@ class MessageController extends Controller
         try {
             $messages = Message::with('user:id,name')
                 ->conversationId($conversation->id)
-                ->orderByDesc('created_at')
                 ->get();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -41,6 +40,29 @@ class MessageController extends Controller
                 'nameColor' => (auth()->user()->id == $message->user_id) ? 'text-primary' : ''
             ]);
         }), null, Response::HTTP_OK);
+    }
+
+    public function latest(Conversation $conversation): JsonResponse
+    {
+        try {
+            $message = Message::with('user:id,name')
+                ->conversationId($conversation->id)
+                ->latest()
+                ->first();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Get data success', [
+            'slug' => $message->slug,
+            'username' => ucwords(strtolower(optional($message->user)->name)),
+            'avatar' => url('https://ui-avatars.com/api/?name='. optional($message->user)->name .'&color=7F9CF5&background=EBF4FF'),
+            'message' => $message->message,
+            'date' => Carbon::parse($message->created_at)->isoFormat('DD MMM Y HH:mm'),
+            'isSeen' => $message->is_seen,
+            'nameColor' => (auth()->user()->id == $message->user_id) ? 'text-primary' : ''
+        ], null, Response::HTTP_OK);
     }
 
     public function replyMessage(MessageRequest $request, Conversation $conversation): JsonResponse
