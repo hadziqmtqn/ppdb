@@ -83,16 +83,4 @@ document.addEventListener('DOMContentLoaded', async function() {
             unBlockUi();
         }
     });
-
-    // Menggunakan Laravel Echo untuk real-time updates
-    if (window.Echo) {
-        console.log('Laravel Echo ada');
-        window.Echo.private('conversation.' + conversationSlug)
-            .listen('MessageEvent', (e) => {
-                console.log('Event received:', e);
-                fetchData(conversationSlug);
-            });
-    } else {
-        console.error('Laravel Echo not initialized');
-    }
 });

@@ -47,15 +47,4 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     await fetchData(conversation);
-
-    if (window.Echo) {
-        console.log('Laravel Echo ada');
-        window.Echo.private('conversation.' + conversation)
-            .listen('MessageEvent', (e) => {
-                console.log('Event received:', e);
-                fetchData(conversation);
-            });
-    } else {
-        console.error('Laravel Echo not initialized');
-    }
 });
