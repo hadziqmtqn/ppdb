@@ -86,8 +86,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Menggunakan Laravel Echo untuk real-time updates
     if (window.Echo) {
+        console.log('Laravel Echo ada');
         window.Echo.private('conversation.' + conversationSlug)
-            .listen('MessageSent', (e) => {
+            .listen('MessageEvent', (e) => {
                 console.log('Event received:', e);
                 fetchData(conversationSlug);
             });
