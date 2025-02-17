@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!replyMessageForm) {
         return;
     }
+
     const conversationSlug = replyMessageForm.dataset.conversation;
 
     toastrOption();
