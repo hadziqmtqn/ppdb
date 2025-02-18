@@ -54,14 +54,11 @@ class RegistrationSettingController extends Controller implements HasMiddleware
                         });
                     })
                     ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
-                    ->addColumn('accepted_with_school_raport', fn($row) => '<span class="badge rounded-pill '. ($row->accepted_with_school_report ? 'bg-primary' : 'bg-warning') .'">'. ($row->accepted_with_school_report ? 'Ya' : 'Tidak') .'</span>')
+                    ->addColumn('accepted_with_school_report', fn($row) => '<span class="badge rounded-pill '. ($row->accepted_with_school_report ? 'bg-primary' : 'bg-warning') .'">'. ($row->accepted_with_school_report ? 'Ya' : 'Tidak') .'</span>')
                     ->addColumn('action', function ($row) {
-                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. $row->educational_institution_id .'" data-accepted="'. $row->accepted_with_school_raport .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
-
-                        return $btn;
+                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. $row->educational_institution_id .'" data-accepted="'. $row->accepted_with_school_report .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
                     })
-                    ->rawColumns(['action', 'accepted_with_school_raport'])
+                    ->rawColumns(['action', 'accepted_with_school_report'])
                     ->make();
             }
         }catch (Exception $exception) {

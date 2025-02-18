@@ -40,10 +40,12 @@
     </div>
     @can('registration-setting-write')
         @include('dashboard.settings.registration-setting.modal-create')
+        @include('dashboard.settings.registration-setting.modal-edit')
     @endcan
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/registration-setting/datatable.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/registration-setting/create.js') }}"></script>
 @endsection
