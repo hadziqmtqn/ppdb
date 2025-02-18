@@ -8,12 +8,13 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Opsi</th>
                     <th>Nama Siswa</th>
                     <th>Lembaga</th>
                     <th>Admin Pengirim</th>
                     <th>Subjek</th>
                     <th>Status dibaca</th>
-                    <th>Opsi</th>
+                    <th>Dikirim Pada</th>
                 </tr>
                 </thead>
             </table>

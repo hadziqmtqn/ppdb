@@ -4,7 +4,7 @@
     // Full Toolbar
     // --------------------------------------------------------------------
     const fullToolbar = [
-        ['bold', 'italic', 'underline', 'strike'],
+        ['bold', 'italic', 'underline'],
         [
             {
                 list: 'ordered'

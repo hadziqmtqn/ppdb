@@ -42,7 +42,7 @@ function appendMessage(message, isLatest = false) {
                 <img src="${message.avatar}" alt="Avatar" class="rounded-circle">
             </div>
             <div class="timeline-event ps-1 pt-0">
-                <div class="card shadow-none bg-transparent border border-opacity-25 mb-3">
+                <div class="card shadow-none bg-transparent border border-opacity-25 mb-1">
                     <div class="card-header border-bottom pt-3 pb-3 d-flex justify-content-between">
                         <div><h6 class="fw-bold mb-0"><span class="${message.nameColor}">${message.username}</span> <span class="text-muted fw-normal">on ${message.date}</span></h6></div>
                         ${latestBadge}
@@ -50,6 +50,9 @@ function appendMessage(message, isLatest = false) {
                     <div class="card-body pb-2 messages">
                         ${message.message}
                     </div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="badge bg-label-secondary">Belum Dibaca</span>
                 </div>
             </div>
         </li>

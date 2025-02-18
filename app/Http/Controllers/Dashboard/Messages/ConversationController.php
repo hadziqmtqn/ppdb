@@ -11,6 +11,7 @@ use App\Traits\HandlesBase64Images;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -49,7 +50,8 @@ class ConversationController extends Controller
                         'user:id,name',
                         'user.student:id,user_id,educational_institution_id',
                         'user.student.educationalInstitution:id,name',
-                        'admin:id,name'
+                        'admin:id,name',
+                        'messageHasntBeenSeen'
                     ])
                     ->filterByStudent()
                     ->orderByDesc('created_at');
@@ -66,7 +68,10 @@ class ConversationController extends Controller
                     ->addColumn('educationalInstitution', fn($row) => optional(optional(optional($row->user)->student)->educationalInstitution)->name)
                     ->addColumn('student', fn($row) => optional($row->user)->name)
                     ->addColumn('admin', fn($row) => optional($row->admin)->name)
-                    ->addColumn('is_seen', fn($row) => '<span class="badge rounded-pill '. ($row->is_seen ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Dibaca' : 'Belum terbaca') .'</span>')
+                    ->addColumn('is_seen', function ($row) {
+                        return '<span class="badge rounded-pill '. (($row->is_seen && !$row->messageHasntBeenSeen) ? 'bg-primary' : 'bg-secondary') .'">'. (($row->is_seen && !$row->messageHasntBeenSeen) ? 'Dilihat' : 'Belum dilihat') .'</span>';
+                    })
+                    ->addColumn('created_at', fn($row) => Carbon::parse($row->created_at)->isoFormat('DD MMM Y HH:mm'))
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="'. route('conversation.show', $row->slug) .'" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
                         $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
@@ -127,6 +132,10 @@ class ConversationController extends Controller
                 $query->orderByDesc('created_at');
             }
         ]);
+
+        if (!$conversation->is_seen && (($conversation->admin_id && auth()->user()->hasRole('user')) || (!$conversation->admin_id && !auth()->user()->hasRole('user'))) ) {
+            $conversation->update(['is_seen' => true]);
+        }
 
         return \view('dashboard.messages.message.index', compact('title', 'conversation'));
     }

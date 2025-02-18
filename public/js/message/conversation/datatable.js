@@ -6,7 +6,7 @@ $(function () {
         serverSide: true,
         scrollX: true,
         scrollCollapse: true,
-        order: [[1, 'asc']],
+        order: [[6, 'desc']],
         ajax: {
             url: "/conversation/datatable",
             type: "POST",
@@ -19,12 +19,13 @@ $(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
             {data: 'student', name: 'student'},
             {data: 'educationalInstitution', name: 'educationalInstitution'},
             {data: 'admin', name: 'admin'},
             {data: 'subject', name: 'subject'},
             {data: 'is_seen', name: 'is_seen'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'created_at', name: 'created_at'},
         ],
         dom:
             '<"row mx-2"' +

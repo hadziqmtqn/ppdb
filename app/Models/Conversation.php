@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -53,6 +54,14 @@ class Conversation extends Model implements HasMedia
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'conversation_id');
+    }
+
+    public function messageHasntBeenSeen(): HasOne
+    {
+        return $this->hasOne(Message::class, 'conversation_id')
+            ->where('is_seen', false)
+            ->where('user_id', '!=', auth()->user()->id)
+            ->latest();
     }
 
     // TODO Scope

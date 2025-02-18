@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     newConversationElement.remove();
                 }
 
+                $('#modalReply').modal('hide');
                 quillEditor.__quill.root.innerHTML = '';
                 messageTextarea.value = '';
 
