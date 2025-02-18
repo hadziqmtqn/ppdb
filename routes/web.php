@@ -360,6 +360,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{conversation:slug}/latest', [MessageController::class, 'latest']);
             Route::post('/{conversation:slug}/reply-message', [MessageController::class, 'replyMessage']);
             Route::delete('/{message:slug}/delete', [MessageController::class, 'destroy']);
+            Route::patch('/{message:slug}/read', [MessageController::class, 'read']);
         });
 
         // TODO Student Registration

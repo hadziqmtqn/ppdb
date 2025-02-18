@@ -100,4 +100,16 @@ class MessageController extends Controller
 
         return $this->apiResponse('Data berhasil dihapus!', null, null, Response::HTTP_OK);
     }
+
+    public function read(Message $message): JsonResponse
+    {
+        try {
+            $message->update(['is_seen' => true]);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Pesan gagal dibaca!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('Pesan berhasil dibaca!', null, null, Response::HTTP_OK);
+    }
 }

@@ -37,7 +37,7 @@ function appendMessage(message, isLatest = false) {
     const latestBadge = isLatest ? `<div><span class="spinner-grow text-primary spinner-grow-sm me-1" role="status" aria-hidden="true"></span>Terbaru</div>` : '';
 
     const messageItem = `
-        <li class="timeline-item ps-4 border-left-dashed">
+        <li class="timeline-item ps-4 border-left-dashed" data-slug="${message.slug}">
             <div class="timeline-indicator-advanced border-0 shadow-none avatar">
                 <img src="${message.avatar}" alt="Avatar" class="rounded-circle">
             </div>
@@ -51,8 +51,8 @@ function appendMessage(message, isLatest = false) {
                         ${message.message}
                     </div>
                 </div>
-                <div class="d-flex justify-content-between mb-3">
-                    <span class="badge bg-label-secondary">Belum Dibaca</span>
+                <div class="d-flex justify-content-between mb-3 read-area-button">
+                    ${message.isSeen ? '<span class="badge bg-label-primary">Dibaca</span>' : `<button type="button" class="btn btn-xs btn-label-secondary btn-read-message" data-slug="${message.slug}">Belum Dibaca</button>`}
                 </div>
             </div>
         </li>
@@ -61,14 +61,43 @@ function appendMessage(message, isLatest = false) {
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const messages = document.getElementById('replyMessages');
-    const conversation = messages.dataset.conversation;
+    const replyMessages = document.getElementById('replyMessages');
+    const conversation = replyMessages.dataset.conversation;
 
-    if (!messages) {
+    if (!replyMessages) {
         return;
     }
 
     // Fetch the initial set of messages
     const initialMessages = await fetchData(conversation);
     initialMessages.forEach(message => appendMessage(message));
+
+    // Add event listener for each read button after DOM is loaded
+    const btnReadMessages = document.querySelectorAll('.btn-read-message');
+    btnReadMessages.forEach(function (button) {
+        button.addEventListener('click', async function () {
+            const slug = button.dataset.slug;
+            try {
+                const response = await axios.patch(`/message/${slug}/read`);
+                if (response.data.type === 'success') {
+                    toastr.success(response.data.message);
+                    const messageElement = document.querySelector(`li[data-slug="${slug}"]`);
+                    if (messageElement) {
+                        const buttonContainer = messageElement.querySelector('.read-area-button');
+                        if (buttonContainer) {
+                            button.remove();
+                            const badge = document.createElement('span');
+                            badge.className = 'badge bg-label-primary';
+                            badge.textContent = 'Dibaca';
+                            buttonContainer.appendChild(badge);
+                        }
+                    }
+                } else {
+                    toastr.error(response.data.message);
+                }
+            } catch (error) {
+                toastr.error(error.response.data.message);
+            }
+        });
+    });
 });
