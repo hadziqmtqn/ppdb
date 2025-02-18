@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -34,5 +35,11 @@ class RegistrationSetting extends Model
             'slug' => 'string',
             'accepted_with_school_report' => 'boolean',
         ];
+    }
+
+    // TODO Scope
+    public function scopeEducationalInstitutionId(Builder $query, $educationalInstitutionId): Builder
+    {
+        return $query->where('educational_institution_id', $educationalInstitutionId);
     }
 }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Throwable;
 
 class FaqCategoryController extends Controller implements HasMiddleware
 {
@@ -52,6 +53,9 @@ class FaqCategoryController extends Controller implements HasMiddleware
         return \view('dashboard.settings.faq.faq-category.index', compact('title', 'educationalInstitutions', 'faqCategories'));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(FaqCategoryRequest $request)
     {
         try {

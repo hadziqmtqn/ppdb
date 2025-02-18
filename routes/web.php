@@ -41,6 +41,7 @@ use App\Http\Controllers\Dashboard\Setting\MenuController;
 use App\Http\Controllers\Dashboard\Setting\MessageReceiverController;
 use App\Http\Controllers\Dashboard\Setting\MessageTemplateController;
 use App\Http\Controllers\Dashboard\Setting\PermissionController;
+use App\Http\Controllers\Dashboard\Setting\RegistrationSettingController;
 use App\Http\Controllers\Dashboard\Setting\RegistrationStepController;
 use App\Http\Controllers\Dashboard\Setting\RoleController;
 use App\Http\Controllers\Dashboard\Setting\WhatsappConfigController;
@@ -302,6 +303,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/{faq:slug}/show', [FaqController::class, 'show'])->name('faq.show');
             Route::put('/{faq:slug}/update', [FaqController::class, 'update'])->name('faq.update');
             Route::delete('/{faq:slug}/delete', [FaqController::class, 'destroy']);
+        });
+
+        Route::group(['prefix' => 'registration-setting'], function () {
+            Route::get('/', [RegistrationSettingController::class, 'index'])->name('registration-setting.index');
+            Route::post('/datatable', [RegistrationSettingController::class, 'datatable']);
+            Route::post('/store', [RegistrationSettingController::class, 'store']);
+            Route::put('/{registrationSetting:slug}/update', [RegistrationSettingController::class, 'update']);
         });
 
         // TODO Payment
