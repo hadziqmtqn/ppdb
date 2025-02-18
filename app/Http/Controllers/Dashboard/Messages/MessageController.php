@@ -37,7 +37,8 @@ class MessageController extends Controller
                 'message' => $message->message,
                 'date' => Carbon::parse($message->created_at)->isoFormat('DD MMM Y HH:mm'),
                 'isSeen' => $message->is_seen,
-                'nameColor' => (auth()->user()->id == $message->user_id) ? 'text-primary' : ''
+                'nameColor' => (auth()->user()->id == $message->user_id) ? 'text-primary' : '',
+                'myMessage' => ($message->user_id == auth()->id()) ? 'YES' : 'NO'
             ]);
         }), null, Response::HTTP_OK);
     }
@@ -61,7 +62,8 @@ class MessageController extends Controller
             'message' => $message->message,
             'date' => Carbon::parse($message->created_at)->isoFormat('DD MMM Y HH:mm'),
             'isSeen' => $message->is_seen,
-            'nameColor' => (auth()->user()->id == $message->user_id) ? 'text-primary' : ''
+            'nameColor' => (auth()->user()->id == $message->user_id) ? 'text-primary' : '',
+            'myMessage' => ($message->user_id == auth()->id()) ? 'YES' : 'NO'
         ], null, Response::HTTP_OK);
     }
 

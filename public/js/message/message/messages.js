@@ -35,6 +35,10 @@ async function fetchLatestMessage(conversationSlug) {
 function appendMessage(message, isLatest = false) {
     const replyMessages = document.getElementById('replyMessages');
     const latestBadge = isLatest ? `<div><span class="spinner-grow text-primary spinner-grow-sm me-1" role="status" aria-hidden="true"></span>Terbaru</div>` : '';
+    const myMessage = message.myMessage === 'NO' ?
+        `<div class="d-flex justify-content-between mb-3 read-area-button">
+            ${message.isSeen ? '<span class="badge bg-label-primary">Dibaca</span>' : `<button type="button" class="btn btn-xs btn-label-secondary btn-read-message" data-slug="${message.slug}">Belum Dibaca</button>`}
+        </div>` : '';
 
     const messageItem = `
         <li class="timeline-item ps-4 border-left-dashed" data-slug="${message.slug}">
@@ -51,16 +55,14 @@ function appendMessage(message, isLatest = false) {
                         ${message.message}
                     </div>
                 </div>
-                <div class="d-flex justify-content-between mb-3 read-area-button">
-                    ${message.isSeen ? '<span class="badge bg-label-primary">Dibaca</span>' : `<button type="button" class="btn btn-xs btn-label-secondary btn-read-message" data-slug="${message.slug}">Belum Dibaca</button>`}
-                </div>
+                ${myMessage}
             </div>
         </li>
     `;
     replyMessages.insertAdjacentHTML('afterbegin', messageItem);
 }
 
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     const replyMessages = document.getElementById('replyMessages');
     const conversation = replyMessages.dataset.conversation;
 

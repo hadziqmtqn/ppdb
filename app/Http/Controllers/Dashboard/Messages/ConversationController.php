@@ -69,7 +69,7 @@ class ConversationController extends Controller
                     ->addColumn('student', fn($row) => optional($row->user)->name)
                     ->addColumn('admin', fn($row) => optional($row->admin)->name)
                     ->addColumn('is_seen', function ($row) {
-                        return '<span class="badge rounded-pill '. (($row->is_seen && !$row->messageHasntBeenSeen) ? 'bg-primary' : 'bg-secondary') .'">'. (($row->is_seen && !$row->messageHasntBeenSeen) ? 'Dilihat' : 'Belum dilihat') .'</span>';
+                        return '<span class="badge rounded-pill '. (($row->is_seen && !$row->messageHasntBeenSeen) ? 'bg-primary' : 'bg-secondary') .'">'. (($row->is_seen && !$row->messageHasntBeenSeen) ? 'Dibaca' : 'Belum dibaca') .'</span>';
                     })
                     ->addColumn('created_at', fn($row) => Carbon::parse($row->created_at)->isoFormat('DD MMM Y HH:mm'))
                     ->addColumn('action', function ($row) {
