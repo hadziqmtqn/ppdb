@@ -47,7 +47,7 @@
                 <div class="card-header">
                     <h5 class="card-title m-0">Balas Pesan</h5>
                 </div>
-                <form onsubmit="return false" id="replyMessageForm" data-conversation="{{ $conversation->slug }}">
+                <form onsubmit="return false" id="replyMessageForm" data-conversation="{{ $conversation->slug }}" data-user-id="{{ auth()->id() }}">
                     <div class="card-body">
                         <div>
                             <label for="description">Pesan</label>

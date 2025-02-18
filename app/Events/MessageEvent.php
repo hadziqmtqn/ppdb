@@ -14,10 +14,12 @@ class MessageEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Message $message;
+    public int $userId;
 
     public function __construct(Message $message)
     {
         $this->message = $message;
+        $this->userId = auth()->id(); // Attach the authenticated user's ID
     }
 
     public function broadcastOn(): Channel
@@ -31,6 +33,7 @@ class MessageEvent implements ShouldBroadcast
             'username' => ucwords(strtolower(optional($this->message->user)->name)),
             'message' => $this->message->message,
             'date' => $this->message->created_at->isoFormat('DD MMM Y HH:mm'),
+            'userId' => $this->userId, // Include the authenticated user's ID
         ];
     }
 }
