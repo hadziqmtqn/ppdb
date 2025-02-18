@@ -74,10 +74,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     const initialMessages = await fetchData(conversation);
     initialMessages.forEach(message => appendMessage(message));
 
-    // Add event listener for each read button after DOM is loaded
-    const btnReadMessages = document.querySelectorAll('.btn-read-message');
-    btnReadMessages.forEach(function (button) {
-        button.addEventListener('click', async function () {
+    // Event delegation for read buttons
+    replyMessages.addEventListener('click', async function (event) {
+        if (event.target && event.target.classList.contains('btn-read-message')) {
+            const button = event.target;
             const slug = button.dataset.slug;
             try {
                 const response = await axios.patch(`/message/${slug}/read`);
@@ -100,6 +100,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             } catch (error) {
                 toastr.error(error.response.data.message);
             }
-        });
+        }
     });
 });
