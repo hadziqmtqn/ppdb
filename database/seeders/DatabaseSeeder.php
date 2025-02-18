@@ -27,6 +27,7 @@ use Database\Seeders\Setting\EmailConfigSeeder;
 use Database\Seeders\Setting\FaqSeeder;
 use Database\Seeders\Setting\MenuSeeder;
 use Database\Seeders\Setting\MessageTemplateSeeder;
+use Database\Seeders\Setting\RegistrationSettingSeeder;
 use Database\Seeders\Setting\RegistrationStepSeeder;
 use Database\Seeders\Setting\WhatsappConfigSeeder;
 use Illuminate\Database\Seeder;
@@ -67,7 +68,8 @@ class DatabaseSeeder extends Seeder
             RegistrationFeeSeeder::class,
             //
             RegistrationStepSeeder::class,
-            FaqSeeder::class
+            FaqSeeder::class,
+            RegistrationSettingSeeder::class
         ]);
 
         Student::factory()

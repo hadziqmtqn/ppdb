@@ -103,3 +103,6 @@ faq-read
 faq-write
 faq-delete
 conversation-read
+registration-setting-read
+registration-setting-write
+registration-setting-delete

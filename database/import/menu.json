@@ -188,7 +188,8 @@
       "email-config-read",
       "message-template-read",
       "registration-step-read",
-      "faq-read"
+      "faq-read",
+      "registration-setting-read"
     ],
     "url": "#",
     "icon": "cog-outline",
@@ -220,6 +221,13 @@
         "visibility": ["application-read"],
         "url": "/application",
         "icon": "apps"
+      },
+      {
+        "name": "Pengaturan Registrasi",
+        "type": "sub_menu",
+        "visibility": ["registration-setting-read"],
+        "url": "/registration-setting",
+        "icon": "target-variant"
       },
       {
         "name": "Langkah Pendaftaran",
