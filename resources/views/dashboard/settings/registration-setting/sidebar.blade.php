@@ -6,5 +6,11 @@
                 <span class="align-middle">Pengaturan Registrasi</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('educational-group.index') }}" class="nav-link {{ url()->current() == route('educational-group.index') ? 'active' : '' }}">
+                <i class="mdi mdi-chart-histogram me-1"></i>
+                <span class="align-middle">Kelompok Pendidikan</span>
+            </a>
+        </li>
     </ul>
 </div>

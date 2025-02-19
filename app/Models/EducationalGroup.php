@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class EducationalGroup extends Model
@@ -33,5 +34,10 @@ class EducationalGroup extends Model
         static::updating(function (EducationalGroup $educationalGroup) {
             $educationalGroup->code = strtoupper(Str::slug($educationalGroup->name));
         });
+    }
+
+    public function nextEducationalLevel(): BelongsTo
+    {
+        return $this->belongsTo(EducationalLevel::class, 'next_educational_level_id');
     }
 }

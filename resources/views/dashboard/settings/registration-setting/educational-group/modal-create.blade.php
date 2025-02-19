@@ -4,23 +4,17 @@
             <div class="modal-body p-md-0">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="text-center mb-4">
-                    <h3 class="mb-0 pb-1">Tambah {{ $title }}</h3>
-                    <p class="mb-2">Dengan memilih lembaga yang sama akan memperbarui data yang telah ada sebelumnya.</p>
+                    <h3 class="mb-0 pb-1">Tambah Kelompok Pendidikan</h3>
                 </div>
                 <form onsubmit="return false" id="formCreate" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework">
                     <div class="col-12 fv-plugins-icon-container">
                         <div class="form-floating form-floating-outline mb-3">
-                            <select name="educational_institution_id" class="form-select select2" id="select-educational-institution"></select>
-                            <label for="select-educational-institution">Lembaga</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama">
+                            <label for="name">Nama</label>
                         </div>
-                        <div class="mb-2">Registrasi diterima dengan Nilai Raport</div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="accepted_with_school_report" id="yes" value="1">
-                            <label class="form-check-label" for="yes">Ya</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="accepted_with_school_report" id="no" value="0">
-                            <label class="form-check-label" for="no">Tidak</label>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="next_educational_level_id" class="form-select select2" id="select-educational-level"></select>
+                            <label for="select-educational-level">Level Pendidikan Selanjutnya</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">

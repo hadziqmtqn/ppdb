@@ -34,6 +34,7 @@ use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
 use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\References\TransportationController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
+use App\Http\Controllers\Dashboard\Setting\EducationalGroupController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
 use App\Http\Controllers\Dashboard\Setting\Faq\FaqCategoryController;
 use App\Http\Controllers\Dashboard\Setting\Faq\FaqController;
@@ -310,6 +311,13 @@ Route::middleware('auth')->group(function () {
             Route::post('/datatable', [RegistrationSettingController::class, 'datatable']);
             Route::post('/store', [RegistrationSettingController::class, 'store']);
             Route::put('/{registrationSetting:slug}/update', [RegistrationSettingController::class, 'update']);
+        });
+
+        Route::group(['prefix' => 'educational-group'], function () {
+            Route::get('/', [EducationalGroupController::class, 'index'])->name('educational-group.index');
+            Route::post('/datatable', [EducationalGroupController::class, 'datatable']);
+            Route::post('/store', [EducationalGroupController::class, 'store']);
+            Route::put('/{educationalGroup:slug}/update', [EducationalGroupController::class, 'update']);
         });
 
         // TODO Payment
