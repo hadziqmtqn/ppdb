@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
@@ -35,5 +36,11 @@ class Lesson extends Model
     public function lessonMappings(): HasMany
     {
         return $this->hasMany(LessonMapping::class, 'lesson_id');
+    }
+
+    // TODO Scope
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

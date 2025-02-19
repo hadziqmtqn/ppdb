@@ -1,6 +1,6 @@
 $(document).ready(function () {
     const selectEducationalGroup = $('#select-educational-group');
-    const educationalInstitutionId = $('#select-educational-institution');
+    const educationalInstitutionId = $('#select-educational-institution-0');
 
     selectEducationalGroup.wrap('<div class="position-relative"></div>').select2({
         placeholder: 'Pilih',

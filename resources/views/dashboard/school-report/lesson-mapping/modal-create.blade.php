@@ -9,16 +9,21 @@
                 <form onsubmit="return false" id="formCreate" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework">
                     <div class="col-12 fv-plugins-icon-container">
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Nama">
-                            <label for="name">Nama</label>
+                            <select name="lesson_id" id="lesson" class="form-select select2">
+                                <option value=""></option>
+                                @foreach($lessons as $lesson)
+                                    <option value="{{ $lesson->id }}">{{ $lesson->name }}</option>
+                                @endforeach
+                            </select>
+                            <label for="lesson">Mata Pelajaran</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <select name="type" class="form-select select2" id="type">
-                                <option value=""></option>
-                                <option value="umum">Umum</option>
-                                <option value="keagamaan">Keagamaan</option>
-                            </select>
-                            <label for="type">Tipe</label>
+                            <select name="educational_institution_id" class="form-select select2" id="select-educational-institution"></select>
+                            <label for="select-educational-institution">Lembaga</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="previous_educational_group[]" class="form-select select2" multiple id="select-educational-group"></select>
+                            <label for="select-educational-group">Jenjang/Level Kelompok Pendidikan Sebelumnya</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">

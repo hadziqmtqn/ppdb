@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\SchoolReport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SchoolReport\LessonMapping\LessonMappingRequest;
 use App\Models\EducationalGroup;
+use App\Models\Lesson;
 use App\Models\LessonMapping;
 use App\Traits\ApiResponse;
 use Exception;
@@ -35,8 +36,15 @@ class LessonMappingController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Registrasi';
+        $lessons = $this->getLessons();
 
-        return \view('dashboard.school-report.lesson-mapping.index', compact('title'));
+        return \view('dashboard.school-report.lesson-mapping.index', compact('title', 'lessons'));
+    }
+
+    public function getLessons()
+    {
+        return Lesson::active()
+            ->get();
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse
@@ -113,8 +121,14 @@ class LessonMappingController extends Controller implements HasMiddleware
     public function show(LessonMapping $lessonMapping): View
     {
         $title = 'Pengaturan Registrasi';
+        $lessons = $this->getLessons();
+        $lessonMapping->load('educationalInstitution:id,name', 'lesson:id,name');
+        $previousEducationalGroups = json_decode($lessonMapping->previous_educational_group, true);
+        $educationalGroups = EducationalGroup::whereIn('id', $previousEducationalGroups)
+            ->select(['id', 'name'])
+            ->get();
 
-        return \view('dashboard.school-report.lesson-mapping.show', compact('title', 'lessonMapping'));
+        return \view('dashboard.school-report.lesson-mapping.show', compact('title', 'lessonMapping', 'lessons', 'educationalGroups'));
     }
 
     public function update(LessonMappingRequest $request, LessonMapping $lessonMapping): JsonResponse
