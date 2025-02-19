@@ -34,6 +34,7 @@ use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
 use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\References\TransportationController;
 use App\Http\Controllers\Dashboard\SchoolReport\LessonController;
+use App\Http\Controllers\Dashboard\SchoolReport\LessonMappingController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EducationalGroupController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
@@ -387,6 +388,15 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [LessonController::class, 'store']);
             Route::put('/{lesson:slug}/update', [LessonController::class, 'update']);
             Route::delete('/{lesson:slug}/delete', [LessonController::class, 'destroy']);
+        });
+
+        Route::group(['prefix' => 'lesson-mapping'], function () {
+            Route::get('/', [LessonMappingController::class, 'index'])->name('lesson-mapping.index');
+            Route::post('/datatable', [LessonMappingController::class, 'datatable']);
+            Route::post('/store', [LessonMappingController::class, 'store']);
+            Route::get('/{lessonMapping:slug}/show', [LessonMappingController::class, 'show'])->name('lesson-mapping.show');
+            Route::put('/{lessonMapping:slug}/update', [LessonMappingController::class, 'update']);
+            Route::delete('/{lessonMapping:slug}/delete', [LessonMappingController::class, 'destroy']);
         });
 
         // TODO Student Registration

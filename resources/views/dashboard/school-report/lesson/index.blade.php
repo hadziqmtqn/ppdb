@@ -10,7 +10,7 @@
             <div class="d-flex mb-3 gap-3">
                 <div class="avatar">
                     <div class="avatar-initial bg-label-primary rounded">
-                        <i class="mdi mdi-account-check-outline mdi-24px"></i>
+                        <i class="mdi mdi-note-minus-outline mdi-24px"></i>
                     </div>
                 </div>
                 <div>

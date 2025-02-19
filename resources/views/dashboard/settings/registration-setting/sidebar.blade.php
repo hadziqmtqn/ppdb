@@ -18,5 +18,11 @@
                 <span class="align-middle">Mata Pelajaran</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('lesson-mapping.index') }}" class="nav-link {{ url()->current() == route('lesson-mapping.index') ? 'active' : '' }}">
+                <i class="mdi mdi-note-plus-outline me-1"></i>
+                <span class="align-middle">Pembagian Mata Pelajaran</span>
+            </a>
+        </li>
     </ul>
 </div>
