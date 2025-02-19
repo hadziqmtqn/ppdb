@@ -33,6 +33,7 @@ use App\Http\Controllers\Dashboard\References\RegistrationPathController;
 use App\Http\Controllers\Dashboard\References\RegistrationScheduleController;
 use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\References\TransportationController;
+use App\Http\Controllers\Dashboard\SchoolReport\LessonController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EducationalGroupController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
@@ -377,6 +378,15 @@ Route::middleware('auth')->group(function () {
             Route::post('/{conversation:slug}/reply-message', [MessageController::class, 'replyMessage']);
             Route::delete('/{message:slug}/delete', [MessageController::class, 'destroy']);
             Route::patch('/{message:slug}/read', [MessageController::class, 'read']);
+        });
+
+        // TODO School Report
+        Route::group(['prefix' => 'lesson'], function () {
+            Route::get('/', [LessonController::class, 'index'])->name('lesson.index');
+            Route::post('/datatable', [LessonController::class, 'datatable']);
+            Route::post('/store', [LessonController::class, 'store']);
+            Route::put('/{lesson:slug}/update', [LessonController::class, 'update']);
+            Route::delete('/{lesson:slug}/delete', [LessonController::class, 'destroy']);
         });
 
         // TODO Student Registration

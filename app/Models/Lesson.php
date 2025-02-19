@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Lesson extends Model
@@ -29,5 +30,10 @@ class Lesson extends Model
         static::creating(function (Lesson $lesson) {
             $lesson->slug = Str::uuid()->toString();
         });
+    }
+
+    public function lessonMappings(): HasMany
+    {
+        return $this->hasMany(LessonMapping::class, 'lesson_id');
     }
 }
