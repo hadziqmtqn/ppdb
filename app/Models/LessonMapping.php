@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class LessonMapping extends Model
@@ -29,5 +31,24 @@ class LessonMapping extends Model
         static::creating(function (LessonMapping $lessonMapping) {
             $lessonMapping->slug = Str::uuid()->toString();
         });
+    }
+
+    public function lesson(): BelongsTo
+    {
+        return $this->belongsTo(Lesson::class);
+    }
+
+    public function educationalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(EducationalInstitution::class);
+    }
+
+    // TODO Scope
+    public function scopeFilterData(Builder $query, $filter): Builder
+    {
+        return $query->where([
+            'lesson_id' => $filter['lesson_id'],
+            'educational_institution_id' => $filter['educational_institution_id']
+        ]);
     }
 }
