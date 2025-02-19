@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Policies\ConversationPolicy;
 use App\Policies\EmailChangePolicy;
+use App\Policies\PaymentPolicy;
 use App\Policies\UserPolicy;
 use App\Repositories\ApplicationRepository;
 use App\Repositories\ClassLevelRepository;
+use App\Repositories\EducationalGroupRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
 use App\Repositories\FaqRepository;
@@ -71,6 +74,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(RegistrationScheduleRepository::class, RegistrationScheduleRepository::class);
         $this->app->singleton(FaqRepository::class, FaqRepository::class);
         $this->app->singleton(ConversationRepository::class, ConversationRepository::class);
+        $this->app->singleton(EducationalGroupRepository::class, EducationalGroupRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);
@@ -83,6 +87,8 @@ class AppServiceProvider extends ServiceProvider
         // TODO Policy
         Gate::policy(EmailChangePolicy::class, EmailChangePolicy::class);
         Gate::policy(UserPolicy::class, UserPolicy::class);
+        Gate::policy(ConversationPolicy::class, ConversationPolicy::class);
+        Gate::policy(PaymentPolicy::class, PaymentPolicy::class);
     }
 
     /**

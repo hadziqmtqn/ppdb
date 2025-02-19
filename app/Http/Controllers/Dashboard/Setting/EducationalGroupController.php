@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Setting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EducationalGroup\EducationalGroupRequest;
 use App\Models\EducationalGroup;
+use App\Repositories\EducationalGroupRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,6 +21,16 @@ use Yajra\DataTables\Facades\DataTables;
 class EducationalGroupController extends Controller implements HasMiddleware
 {
     use ApiResponse;
+
+    protected EducationalGroupRepository $educationalGroupRepository;
+
+    /**
+     * @param EducationalGroupRepository $educationalGroupRepository
+     */
+    public function __construct(EducationalGroupRepository $educationalGroupRepository)
+    {
+        $this->educationalGroupRepository = $educationalGroupRepository;
+    }
 
     public static function middleware(): array
     {
@@ -95,5 +106,11 @@ class EducationalGroupController extends Controller implements HasMiddleware
         }
 
         return $this->apiResponse('Data berhasil disimpan!', null, null, Response::HTTP_OK);
+    }
+
+    // TODO Select
+    public function select(Request $request)
+    {
+        return $this->educationalGroupRepository->select($request);
     }
 }
