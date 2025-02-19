@@ -11,6 +11,7 @@ use Database\Seeders\Payment\PaymentSettingSeeder;
 use Database\Seeders\Payment\RegistrationFeeSeeder;
 use Database\Seeders\References\ClassLevelSeeder;
 use Database\Seeders\References\DistanceToSchoolSeeder;
+use Database\Seeders\References\EducationalGroupSeeder;
 use Database\Seeders\References\EducationalInstitutionSeeder;
 use Database\Seeders\References\EducationalLevelSeeder;
 use Database\Seeders\References\EducationSeeder;
@@ -69,7 +70,8 @@ class DatabaseSeeder extends Seeder
             //
             RegistrationStepSeeder::class,
             FaqSeeder::class,
-            RegistrationSettingSeeder::class
+            RegistrationSettingSeeder::class,
+            EducationalGroupSeeder::class
         ]);
 
         Student::factory()
