@@ -28,7 +28,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
+                            <th>Nama</th>
                             <th>Level Pendidikan Selanjutnya</th>
                             <th>Opsi</th>
                         </tr>

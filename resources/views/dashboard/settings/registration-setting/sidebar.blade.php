@@ -12,5 +12,11 @@
                 <span class="align-middle">Kelompok Pendidikan</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('lesson.index') }}" class="nav-link {{ url()->current() == route('lesson.index') ? 'active' : '' }}">
+                <i class="mdi mdi-note-minus-outline me-1"></i>
+                <span class="align-middle">Mata Pelajaran</span>
+            </a>
+        </li>
     </ul>
 </div>
