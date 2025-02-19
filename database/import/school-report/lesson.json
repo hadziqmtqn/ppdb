@@ -1,0 +1,170 @@
+[
+  {
+    "name": "Pendidikan Pancasila dan Kewarganegaraan",
+    "type": "umum",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [5,6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [7,8]
+      }
+    ]
+  },
+  {
+    "name": "Matematika",
+    "type": "umum",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [5,6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [7,8]
+      }
+    ]
+  },
+  {
+    "name": "Bahasa Indonesia",
+    "type": "umum",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [5,6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [7,8]
+      }
+    ]
+  },
+  {
+    "name": "Ilmu Pengetahuan Alam",
+    "type": "umum",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [5,6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [7,8]
+      }
+    ]
+  },
+  {
+    "name": "Ilmu Pengetahuan Sosial",
+    "type": "umum",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [5,6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [7,8]
+      }
+    ]
+  },
+  {
+    "name": "Bahasa Inggris",
+    "type": "umum",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [5,6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [7,8]
+      }
+    ]
+  },
+  {
+    "name": "Pendidikan Agama dan Budi Pekerti",
+    "type": "keagamaan",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [5]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [7]
+      }
+    ]
+  },
+  {
+    "name": "Quran Hadits",
+    "type": "keagamaan",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [8]
+      }
+    ]
+  },
+  {
+    "name": "Akidah Akhlak",
+    "type": "keagamaan",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [8]
+      }
+    ]
+  },
+  {
+    "name": "Fikih",
+    "type": "keagamaan",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [8]
+      }
+    ]
+  },
+  {
+    "name": "Sejarah Kebudayaan Islam",
+    "type": "keagamaan",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [8]
+      }
+    ]
+  },
+  {
+    "name": "Bahasa Arab",
+    "type": "keagamaan",
+    "lesson_mapping": [
+      {
+        "educational_institution_id": 2,
+        "provious_educational_group": [6]
+      },
+      {
+        "educational_institution_id": 3,
+        "provious_educational_group": [8]
+      }
+    ]
+  }
+]

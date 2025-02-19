@@ -107,3 +107,9 @@ registration-setting-read
 registration-setting-write
 educational-group-read
 educational-group-write
+lesson-read
+lesson-write
+lesson-delete
+lesson-mapping-read
+lesson-mapping-write
+lesson-mapping-delete
