@@ -1,18 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let timeoutId;
     const username = document.getElementById('username').value;
 
     toastrOption();
 
     document.querySelectorAll('.score-input').forEach(input => {
         input.addEventListener('input', function() {
-            clearTimeout(timeoutId);
+            if (this.dataset.timeoutId) {
+                clearTimeout(this.dataset.timeoutId);
+            }
 
             const semester = this.getAttribute('data-semester');
             const lessonId = this.getAttribute('data-lesson-id');
             const score = this.value;
 
-            timeoutId = setTimeout(async () => {
+            const timeoutId = setTimeout(async () => {
                 const formData = new FormData();
                 formData.append('semester', semester);
                 formData.append('lesson_id', lessonId);
@@ -35,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     toastr.error(error.response.data.message);
                 }
             }, 2000); // Jeda 2 detik
+
+            this.dataset.timeoutId = timeoutId.toString();
         });
     });
 });

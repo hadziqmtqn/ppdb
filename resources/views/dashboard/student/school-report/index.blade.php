@@ -16,7 +16,8 @@
                 </h4>
                 <div class="mb-0 text-dark">
                     <ul>
-                        <li>Ketika nilai rapor sudah tersimpan Anda tidak bisa mengubah pilihan <span class="fw-bold">Kelompok Pendidikan</span> pada Data Asal Sekolah</li>
+                        <li>Ketika nilai rapor sudah tersimpan Anda tidak bisa mengubah pilihan <span class="fw-bold">Kelompok Pendidikan</span> pada Data Asal Sekolah.</li>
+                        <li>Upload rapor dalam bentuk <span class="fw-bold">PDF</span> tiap semester dengan maksimal 3MB.</li>
                     </ul>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
