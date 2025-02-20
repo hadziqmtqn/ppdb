@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->uuid('slug');
             $table->unsignedBigInteger('user_id');
             $table->string('school_name');
+            $table->unsignedBigInteger('educational_group_id');
             $table->enum('status', ['Negeri', 'Swasta']);
             $table->string('province')->nullable();
             $table->string('city')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('educational_group_id')->references('id')->on('educational_groups')->restrictOnDelete();
         });
     }
 

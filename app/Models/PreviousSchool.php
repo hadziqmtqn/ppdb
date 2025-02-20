@@ -12,6 +12,7 @@ class PreviousSchool extends Model
         'slug',
         'user_id',
         'school_name',
+        'educational_group_id',
         'status',
         'province',
         'city',
@@ -36,6 +37,7 @@ class PreviousSchool extends Model
         });
     }
 
+    // TODO Scope
     public function scopeUserId(Builder $query, $userId): Builder
     {
         return $query->where('user_id', $userId);
