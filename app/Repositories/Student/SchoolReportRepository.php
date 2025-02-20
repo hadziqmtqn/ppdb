@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Student;
 
+use App\Models\DetailSchoolReport;
 use App\Models\LessonMapping;
 use App\Models\RegistrationSetting;
 use App\Models\User;
@@ -11,11 +12,13 @@ class SchoolReportRepository
 {
     protected RegistrationSetting $registrationSetting;
     protected LessonMapping $lessonMapping;
+    protected DetailSchoolReport $detailSchoolReport;
 
-    public function __construct(RegistrationSetting $registrationSetting, LessonMapping $lessonMapping)
+    public function __construct(RegistrationSetting $registrationSetting, LessonMapping $lessonMapping, DetailSchoolReport $detailSchoolReport)
     {
         $this->registrationSetting = $registrationSetting;
         $this->lessonMapping = $lessonMapping;
+        $this->detailSchoolReport = $detailSchoolReport;
     }
 
     public function getLessons(User $user): Collection
@@ -35,14 +38,27 @@ class SchoolReportRepository
                 return $previousEducationalGroups->contains(optional($user->previousSchool)->educational_group_id);
             });
 
-        return $semesters->mapWithKeys(function ($semester) use ($lessonMappings) {
+        return $semesters->mapWithKeys(function ($semester) use ($lessonMappings, $user) {
             return [
-                $semester => $lessonMappings->map(function (LessonMapping $lessonMapping) {
-                    return [
-                        'id' => $lessonMapping->id,
-                        'lessonName' => optional($lessonMapping->lesson)->name
-                    ];
-                })
+                $semester => collect([
+                    'totalScore' => 0,
+                    'detailSchoolReports' => $lessonMappings->map(function (LessonMapping $lessonMapping) use ($user, $semester) {
+                        $score = $this->detailSchoolReport->whereHas('schoolReport', function ($query) use ($user, $semester) {
+                            $query->where([
+                                'user_id' =>$user->id,
+                                'semester' => $semester
+                            ]);
+                        })
+                            ->lessonId($lessonMapping->lesson_id)
+                            ->first();
+
+                        return [
+                            'lessonId' => $lessonMapping->lesson_id,
+                            'lessonName' => optional($lessonMapping->lesson)->name,
+                            'score' => $score?->score
+                        ];
+                    })
+                ])
             ];
         });
     }

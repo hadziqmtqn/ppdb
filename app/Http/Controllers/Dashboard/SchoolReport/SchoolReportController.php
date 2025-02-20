@@ -28,11 +28,10 @@ class SchoolReportController extends Controller
     public function index(User $user): View
     {
         $this->authorize('view-student', $user);
-        $title = 'Rapor Sekolah';
+        $title = 'Siswa';
         $user->load('student.educationalInstitution:id,name', 'previousSchool');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReports = $this->schoolReportRepository->getLessons($user);
-        dd($schoolReports->toArray());
 
         return \view('dashboard.student.school-report.index', compact('title', 'user', 'menus', 'schoolReports'));
     }
