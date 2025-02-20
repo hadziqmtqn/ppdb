@@ -88,31 +88,8 @@ class SchoolReportController extends Controller
             return $this->apiResponse('Nilai Rapor gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Nilai Rapor berhasil disimpan!', null, null, Response::HTTP_OK);
-    }
-
-    public function show(SchoolReport $schoolReport)
-    {
-        $this->authorize('view', $schoolReport);
-
-        return $schoolReport;
-    }
-
-    public function update(SchoolReportRequest $request, SchoolReport $schoolReport)
-    {
-        $this->authorize('update', $schoolReport);
-
-        $schoolReport->update($request->validated());
-
-        return $schoolReport;
-    }
-
-    public function destroy(SchoolReport $schoolReport)
-    {
-        $this->authorize('delete', $schoolReport);
-
-        $schoolReport->delete();
-
-        return response()->json();
+        return $this->apiResponse('Nilai Rapor berhasil disimpan!', [
+            'slug' => $schoolReport->slug
+        ], null, Response::HTTP_OK);
     }
 }

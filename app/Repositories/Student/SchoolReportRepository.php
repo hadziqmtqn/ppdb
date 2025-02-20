@@ -5,7 +5,9 @@ namespace App\Repositories\Student;
 use App\Models\DetailSchoolReport;
 use App\Models\LessonMapping;
 use App\Models\RegistrationSetting;
+use App\Models\SchoolReport;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class SchoolReportRepository
@@ -13,12 +15,14 @@ class SchoolReportRepository
     protected RegistrationSetting $registrationSetting;
     protected LessonMapping $lessonMapping;
     protected DetailSchoolReport $detailSchoolReport;
+    protected SchoolReport $schoolReport;
 
-    public function __construct(RegistrationSetting $registrationSetting, LessonMapping $lessonMapping, DetailSchoolReport $detailSchoolReport)
+    public function __construct(RegistrationSetting $registrationSetting, LessonMapping $lessonMapping, DetailSchoolReport $detailSchoolReport, SchoolReport $schoolReport)
     {
         $this->registrationSetting = $registrationSetting;
         $this->lessonMapping = $lessonMapping;
         $this->detailSchoolReport = $detailSchoolReport;
+        $this->schoolReport = $schoolReport;
     }
 
     public function getLessons(User $user): Collection
@@ -39,9 +43,17 @@ class SchoolReportRepository
             });
 
         return $semesters->mapWithKeys(function ($semester) use ($lessonMappings, $user) {
+            $schoolReport = $this->schoolReport->filterData([
+                'user_id' => $user->id,
+                'semester' => $semester
+            ])
+                ->first();
+
             return [
                 $semester => collect([
-                    'totalScore' => 0,
+                    'slug' => $schoolReport?->slug,
+                    'totalScore' => $schoolReport?->total_score,
+                    'file' => $schoolReport && $schoolReport->hasMedia('rapor_semester_' . $semester) ? $schoolReport->getFirstTemporaryUrl(Carbon::now()->addHour(), 'rapor_semester_' . $semester) : null,
                     'detailSchoolReports' => $lessonMappings->map(function (LessonMapping $lessonMapping) use ($user, $semester) {
                         $score = $this->detailSchoolReport->whereHas('schoolReport', function ($query) use ($user, $semester) {
                             $query->where([
