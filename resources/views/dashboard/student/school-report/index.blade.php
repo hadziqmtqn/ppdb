@@ -10,6 +10,18 @@
             @include('dashboard.student.menu')
         </div>
         <div class="col-md-8">
+            <div class="alert alert-outline-warning alert-dismissible mb-4" role="alert">
+                <h4 class="alert-heading d-flex align-items-center">
+                    <i class="mdi mdi-information-outline mdi-24px me-2"></i>Keterangan
+                </h4>
+                <div class="mb-0 text-dark">
+                    <ul>
+                        <li>Ketika nilai rapor sudah tersimpan Anda tidak bisa mengubah pilihan <span class="fw-bold">Kelompok Pendidikan</span> pada Data Asal Sekolah</li>
+                    </ul>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
             <input type="hidden" name="username" value="{{ $user->username }}" id="username">
             @foreach($schoolReports as $semester => $schoolReport)
                 <div class="card mb-3">

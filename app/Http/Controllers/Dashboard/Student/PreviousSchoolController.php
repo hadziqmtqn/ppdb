@@ -54,6 +54,12 @@ class PreviousSchoolController extends Controller implements HasMiddleware
         Gate::authorize('store', $user);
 
         try {
+            $user->load('schoolReports', 'previousSchool');
+
+            if (($user->schoolReports && $user->schoolReports->isNotEmpty()) && (optional($user->previousSchool)->educational_group_id != $request->input('educational_group_id'))) {
+                return $this->apiResponse('Tidak boleh mengubah Kelompok Pendidikan jika sudah mengisi Nilai Rapor', null, null, Response::HTTP_BAD_REQUEST);
+            }
+
             $previousSchool = PreviousSchool::query()
                 ->userId($user->id)
                 ->firstOrNew();
