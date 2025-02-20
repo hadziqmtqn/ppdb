@@ -70,6 +70,8 @@ class SchoolReportController extends Controller
             $detailSchoolReport->score = $request->input('score');
             $detailSchoolReport->save();
 
+
+
             $schoolReport->total_score = DetailSchoolReport::schoolReportId($schoolReport->id)
                 ->sum('score');
             $schoolReport->save();
@@ -80,7 +82,7 @@ class SchoolReportController extends Controller
             return $this->apiResponse('Nilai Rapor gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Nilai Rapor gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->apiResponse('Nilai Rapor gagal disimpan!', null, null, Response::HTTP_OK);
     }
 
     public function show(SchoolReport $schoolReport)

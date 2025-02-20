@@ -10,7 +10,7 @@
             @include('dashboard.student.menu')
         </div>
         <div class="col-md-8">
-            <input type="hidden" name="username" value="{{ $user->username }}">
+            <input type="hidden" name="username" value="{{ $user->username }}" id="username">
             @foreach($schoolReports as $semester => $schoolReport)
                 <div class="card mb-3">
                     <h5 class="card-header">Nilai Rapor Pada Asal Sekolah di Semester {{ $semester }}</h5>
@@ -24,11 +24,10 @@
                             </thead>
                             <tbody>
                             @foreach($schoolReport['detailSchoolReports'] as $report)
-                                <input type="hidden" name="lesson_id" value="{{ $report['lessonId'] }}">
                                 <tr>
                                     <td>{{ $report['lessonName'] }}</td>
                                     <td>
-                                        <input type="number" name="score" value="{{ $report['score'] }}" class="form-control" aria-label="Score">
+                                        <input type="number" name="score" value="{{ $report['score'] }}" class="form-control score-input" aria-label="Score" data-semester="{{ $semester }}" data-lesson-id="{{ $report['lessonId'] }}">
                                     </td>
                                 </tr>
                             @endforeach
@@ -42,5 +41,5 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/student/school-report/create.js') }}"></script>
 @endsection
