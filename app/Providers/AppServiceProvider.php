@@ -36,6 +36,7 @@ use App\Repositories\SendMessage\PaymentCallbackRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use App\Repositories\SendMessage\SafetyChangesRepository;
 use App\Repositories\Student\Payment\CurrentBillRepository;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
 use App\Repositories\Student\StudentStatsRepository;
@@ -76,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(FaqRepository::class, FaqRepository::class);
         $this->app->singleton(ConversationRepository::class, ConversationRepository::class);
         $this->app->singleton(EducationalGroupRepository::class, EducationalGroupRepository::class);
+        $this->app->singleton(SchoolReportRepository::class, SchoolReportRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);

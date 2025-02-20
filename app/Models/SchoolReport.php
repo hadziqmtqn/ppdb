@@ -10,6 +10,7 @@ class SchoolReport extends Model
     protected $fillable = [
         'slug',
         'user_id',
+        'semester',
         'total_score',
     ];
 

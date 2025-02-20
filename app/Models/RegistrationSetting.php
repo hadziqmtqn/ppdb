@@ -44,4 +44,9 @@ class RegistrationSetting extends Model
     {
         return $query->where('educational_institution_id', $educationalInstitutionId);
     }
+
+    public function scopeAcceptedWithSchoolReport(Builder $query): Builder
+    {
+        return $query->where('accepted_with_school_report', true);
+    }
 }

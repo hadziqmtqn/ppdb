@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->uuid('slug');
             $table->unsignedBigInteger('user_id');
+            $table->integer('semester');
             $table->float('total_score')->default(0);
             $table->timestamps();
 

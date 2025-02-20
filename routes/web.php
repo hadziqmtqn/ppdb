@@ -35,6 +35,7 @@ use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\References\TransportationController;
 use App\Http\Controllers\Dashboard\SchoolReport\LessonController;
 use App\Http\Controllers\Dashboard\SchoolReport\LessonMappingController;
+use App\Http\Controllers\Dashboard\SchoolReport\SchoolReportController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EducationalGroupController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
@@ -463,6 +464,10 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::post('payment/{user:username}/store', [PaymentController::class, 'store']);
+
+            Route::group(['prefix' => 'schooll-report'], function () {
+                Route::get('/{user:username}', [SchoolReportController::class, 'index'])->name('school-report.index');
+            });
         });
 
         // TODO Select Routes

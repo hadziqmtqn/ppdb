@@ -51,4 +51,9 @@ class LessonMapping extends Model
             'educational_institution_id' => $filter['educational_institution_id']
         ]);
     }
+
+    public function scopeEducationalInstitutionId(Builder $query, $educationalInstitutionId): Builder
+    {
+        return $query->where('educational_institution_id', $educationalInstitutionId);
+    }
 }
