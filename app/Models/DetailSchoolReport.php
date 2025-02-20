@@ -19,6 +19,11 @@ class DetailSchoolReport extends Model
         return $this->belongsTo(SchoolReport::class);
     }
 
+    public function lesson(): BelongsTo
+    {
+        return $this->belongsTo(Lesson::class);
+    }
+
     // TODO Scope
     public function scopeLessonId(Builder $query, $lessonId): Builder
     {

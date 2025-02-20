@@ -70,10 +70,16 @@ class SchoolReportController extends Controller
             $detailSchoolReport->score = $request->input('score');
             $detailSchoolReport->save();
 
-
-
-            $schoolReport->total_score = DetailSchoolReport::schoolReportId($schoolReport->id)
+            // TODO Total Score
+            $totalGeneralLesson = DetailSchoolReport::whereHas('lesson', fn($query) => $query->where('type', 'umum'))
+                ->schoolReportId($schoolReport->id)
                 ->sum('score');
+
+            $avgScoreReligiousStudy = DetailSchoolReport::whereHas('lesson', fn($query) => $query->where('type', 'keagamaan'))
+                ->schoolReportId($schoolReport->id)
+                ->avg('score');
+
+            $schoolReport->total_score = $totalGeneralLesson + $avgScoreReligiousStudy;
             $schoolReport->save();
             DB::commit();
         } catch (Exception $exception) {
@@ -82,7 +88,7 @@ class SchoolReportController extends Controller
             return $this->apiResponse('Nilai Rapor gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Nilai Rapor gagal disimpan!', null, null, Response::HTTP_OK);
+        return $this->apiResponse('Nilai Rapor berhasil disimpan!', null, null, Response::HTTP_OK);
     }
 
     public function show(SchoolReport $schoolReport)
