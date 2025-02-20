@@ -24,4 +24,9 @@ class DetailSchoolReport extends Model
     {
         return $query->where('lesson_id', $lessonId);
     }
+
+    public function scopeSchoolReportId(Builder $query, $schoolReportId): Builder
+    {
+        return $query->where('school_report_id', $schoolReportId);
+    }
 }

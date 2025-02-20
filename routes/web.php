@@ -467,6 +467,7 @@ Route::middleware('auth')->group(function () {
 
             Route::group(['prefix' => 'school-report', 'middleware' => 'registration_is_completed'], function () {
                 Route::get('/{user:username}', [SchoolReportController::class, 'index'])->name('school-report.index');
+                Route::post('/{user:username}/store', [SchoolReportController::class, 'store']);
             });
         });
 

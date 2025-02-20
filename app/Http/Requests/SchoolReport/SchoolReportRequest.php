@@ -15,6 +15,7 @@ class SchoolReportRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'semester' => ['required'],
             'lesson_id' => ['required', 'integer', 'exists:lessons,id'],
             'score' => ['required', 'numeric'],
         ];

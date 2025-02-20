@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -28,5 +29,14 @@ class SchoolReport extends Model
         static::creating(function (SchoolReport $schoolReport) {
             $schoolReport->slug = Str::uuid()->toString();
         });
+    }
+
+    // TODO Scope
+    public function scopeFilterData(Builder $query, $filter): Builder
+    {
+        return $query->where([
+            'user_id' => $filter['user_id'],
+            'semester' => $filter['semester']
+        ]);
     }
 }
