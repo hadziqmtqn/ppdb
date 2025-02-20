@@ -25,7 +25,7 @@ class RegistrationSettingController extends Controller implements HasMiddleware
     {
         // TODO: Implement middleware() method.
         return [
-            new Middleware(PermissionMiddleware::using('registration-setting-read'), only: ['index', 'datatable']),
+            new Middleware(PermissionMiddleware::using('registration-setting-read'), only: ['index', 'datatable', 'show']),
             new Middleware(PermissionMiddleware::using('registration-setting-write'), only: ['store', 'update'])
         ];
     }
@@ -55,8 +55,15 @@ class RegistrationSettingController extends Controller implements HasMiddleware
                     })
                     ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
                     ->addColumn('accepted_with_school_report', fn($row) => '<span class="badge rounded-pill '. ($row->accepted_with_school_report ? 'bg-primary' : 'bg-warning') .'">'. ($row->accepted_with_school_report ? 'Ya' : 'Tidak') .'</span>')
+                    ->addColumn('school_report_semester', function ($row) {
+                        $schoolReportSemester = json_decode($row->school_report_semester, true);
+
+                        if (!is_array($schoolReportSemester)) return '-';
+
+                        return implode(', ', $schoolReportSemester);
+                    })
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. $row->educational_institution_id .'" data-accepted="'. $row->accepted_with_school_report .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
+                        return '<a href="'. route('registration-setting.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a>';
                     })
                     ->rawColumns(['action', 'accepted_with_school_report'])
                     ->make();
@@ -75,6 +82,7 @@ class RegistrationSettingController extends Controller implements HasMiddleware
                 ->firstOrNew();
             $registrationSetting->educational_institution_id = $request->input('educational_institution_id');
             $registrationSetting->accepted_with_school_report = $request->input('accepted_with_school_report');
+            $registrationSetting->school_report_semester = $registrationSetting->accepted_with_school_report ? json_encode(array_map('intval', $request->input('school_report_semester'))) : null;
             $registrationSetting->save();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
@@ -84,17 +92,26 @@ class RegistrationSettingController extends Controller implements HasMiddleware
         return $this->apiResponse('Data berhasil disimpan!', null, null, Response::HTTP_OK);
     }
 
+    public function show(RegistrationSetting $registrationSetting): View
+    {
+        $title = 'Pengaturan Registrasi';
+        $registrationSetting->load('educationalInstitution:id,name');
+        $schoolReportSemester = $registrationSetting->school_report_semester ? json_decode($registrationSetting->school_report_semester, true) : [];
+
+        return \view('dashboard.settings.registration-setting.show', compact('title', 'registrationSetting', 'schoolReportSemester'));
+    }
+
     public function update(RegistrationSettingRequest $request, RegistrationSetting $registrationSetting): JsonResponse
     {
         try {
-            $registrationSetting->educational_institution_id = $request->input('educational_institution_id');
             $registrationSetting->accepted_with_school_report = $request->input('accepted_with_school_report');
+            $registrationSetting->school_report_semester = $registrationSetting->accepted_with_school_report ? json_encode(array_map('intval', $request->input('school_report_semester'))) : null;
             $registrationSetting->save();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Data gagal disimpan!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return $this->apiResponse('Data berhasil disimpan!', null, null, Response::HTTP_OK);
+        return $this->apiResponse('Data berhasil disimpan!', null, route('registration-setting.index'), Response::HTTP_OK);
     }
 }

@@ -13,14 +13,26 @@
                             <select name="educational_institution_id" class="form-select select2" id="select-educational-institution"></select>
                             <label for="select-educational-institution">Lembaga</label>
                         </div>
-                        <div class="mb-2">Registrasi diterima dengan Nilai Raport</div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="accepted_with_school_report" id="yes" value="1">
-                            <label class="form-check-label" for="yes">Ya</label>
+                        <div class="mb-3">
+                            <div class="mb-2">Registrasi diterima dengan Nilai Raport</div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="accepted_with_school_report" id="yes" value="1">
+                                <label class="form-check-label" for="yes">Ya</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="accepted_with_school_report" id="no" value="0">
+                                <label class="form-check-label" for="no">Tidak</label>
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="accepted_with_school_report" id="no" value="0">
-                            <label class="form-check-label" for="no">Tidak</label>
+                        <div id="inputSemester" class="d-none">
+                            <div class="form-floating form-floating-outline mb-3">
+                                <select name="school_report_semester[]" id="school_report_semester" class="form-select select2" multiple>
+                                    @foreach(range(1,6) as $range)
+                                        <option value="{{ $range }}">Semester {{ $range }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="school_report_semester">Rapor Semster</label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 text-center">

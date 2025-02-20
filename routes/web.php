@@ -312,6 +312,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RegistrationSettingController::class, 'index'])->name('registration-setting.index');
             Route::post('/datatable', [RegistrationSettingController::class, 'datatable']);
             Route::post('/store', [RegistrationSettingController::class, 'store']);
+            Route::get('/{registrationSetting:slug}/show', [RegistrationSettingController::class, 'show'])->name('registration-setting.show');
             Route::put('/{registrationSetting:slug}/update', [RegistrationSettingController::class, 'update']);
         });
 

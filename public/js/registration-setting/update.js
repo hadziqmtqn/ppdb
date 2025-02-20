@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('formCreate');
+    const form = document.getElementById('formEdit');
+    const slug = form.dataset.slug;
     const btnSubmit = document.getElementById('btn-submit');
 
     if (!form || !btnSubmit) {
@@ -52,17 +53,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(form);
 
         try {
-            const response = await axios.post(`/registration-setting/store`, formData);
+            const response = await axios.post(`/registration-setting/${slug}/update`, formData);
             if (response.data.type === 'success') {
                 toastr.success(response.data.message);
                 unBlockUi();
 
-                form.reset();
-                $('#select-educational-institution-0').val(null).trigger('change');
-                $('#school_report_semester').val(null).trigger('change');
-
-                $('#datatable').DataTable().ajax.reload();
-                $('#modalCreate').modal('hide');
+                if (response.data.redirect) {
+                    window.location.href = response.data.redirect;
+                }
 
                 return;
             }

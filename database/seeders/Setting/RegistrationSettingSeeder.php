@@ -16,6 +16,7 @@ class RegistrationSettingSeeder extends Seeder
             $registrationSetting = new RegistrationSetting();
             $registrationSetting->educational_institution_id = $educationalInstitution->id;
             $registrationSetting->accepted_with_school_report = !($educationalInstitution->educational_level_id == 1);
+            $registrationSetting->school_report_semester = $registrationSetting->accepted_with_school_report ? "[4,5,6]" : null;
             $registrationSetting->save();
         }
     }

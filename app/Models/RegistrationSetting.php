@@ -13,7 +13,17 @@ class RegistrationSetting extends Model
         'slug',
         'educational_institution_id',
         'accepted_with_school_report',
+        'school_report_semester'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'slug' => 'string',
+            'accepted_with_school_report' => 'boolean',
+            'school_report_semester' => 'array'
+        ];
+    }
 
     protected static function boot(): void
     {
@@ -27,14 +37,6 @@ class RegistrationSetting extends Model
     public function educationalInstitution(): BelongsTo
     {
         return $this->belongsTo(EducationalInstitution::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'slug' => 'string',
-            'accepted_with_school_report' => 'boolean',
-        ];
     }
 
     // TODO Scope

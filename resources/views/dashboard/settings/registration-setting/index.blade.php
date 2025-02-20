@@ -30,6 +30,7 @@
                             <th>#</th>
                             <th>Lembaga</th>
                             <th>Diterima dengan Nilai Rapor</th>
+                            <th>Rapor Semester</th>
                             <th>Opsi</th>
                         </tr>
                         </thead>
@@ -40,7 +41,6 @@
     </div>
     @can('registration-setting-write')
         @include('dashboard.settings.registration-setting.modal-create')
-        @include('dashboard.settings.registration-setting.modal-edit')
     @endcan
 @endsection
 
@@ -48,4 +48,5 @@
     <script src="{{ asset('js/registration-setting/datatable.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
     <script src="{{ asset('js/registration-setting/create.js') }}"></script>
+    <script src="{{ asset('js/registration-setting/input-semester.js') }}"></script>
 @endsection

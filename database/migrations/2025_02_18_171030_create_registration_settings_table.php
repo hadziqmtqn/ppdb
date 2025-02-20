@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->uuid('slug')->unique();
             $table->unsignedBigInteger('educational_institution_id');
             $table->boolean('accepted_with_school_report')->default(false);
+            $table->json('school_report_semester')->nullable();
             $table->timestamps();
 
             $table->foreign('educational_institution_id')->references('id')->on('educational_institutions')->cascadeOnDelete();
