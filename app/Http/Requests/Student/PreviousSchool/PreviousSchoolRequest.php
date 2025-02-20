@@ -14,6 +14,7 @@ class PreviousSchoolRequest extends FormRequest
     {
         return [
             'school_name' => ['required'],
+            'educational_group_id' => ['required', 'integer', 'exists:educational_groups,id'],
             'status' => ['required', 'in:"Swasta","Negeri"'],
             'province' => ['nullable'],
             'city' => ['nullable'],
@@ -32,6 +33,7 @@ class PreviousSchoolRequest extends FormRequest
     {
         return [
             'school_name' => 'nama asal sekolah',
+            'educational_group_id' => 'kelompok pendidikan',
             'status' => 'status',
             'address' => 'alamat',
             'province' => 'provinsi',

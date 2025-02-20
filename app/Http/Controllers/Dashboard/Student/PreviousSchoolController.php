@@ -43,7 +43,7 @@ class PreviousSchoolController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('previousSchool');
+        $user->load('previousSchool.educationalGroup:id,name');
         $menus = $this->studentRegistrationRepository->menus($user);
 
         return \view('dashboard.student.previous-school.index', compact('title', 'user', 'menus'));
@@ -59,6 +59,7 @@ class PreviousSchoolController extends Controller implements HasMiddleware
                 ->firstOrNew();
             $previousSchool->user_id = $user->id;
             $previousSchool->school_name = $request->input('school_name');
+            $previousSchool->educational_group_id = $request->input('educational_group_id');
             $previousSchool->status = $request->input('status');
             $previousSchool->province = $request->input('province');
             $previousSchool->city = $request->input('city');

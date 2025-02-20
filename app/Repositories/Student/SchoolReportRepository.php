@@ -36,11 +36,14 @@ class SchoolReportRepository
             });
 
         return $semesters->mapWithKeys(function ($semester) use ($lessonMappings) {
-            return [$semester => $lessonMappings->map(function (LessonMapping $lessonMapping) {
-                return [
-                    'id' => $lessonMapping->id
-                ];
-            })];
+            return [
+                $semester => $lessonMappings->map(function (LessonMapping $lessonMapping) {
+                    return [
+                        'id' => $lessonMapping->id,
+                        'lessonName' => optional($lessonMapping->lesson)->name
+                    ];
+                })
+            ];
         });
     }
 }

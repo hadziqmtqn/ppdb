@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AccountVerifiedMiddleware;
 use App\Http\Middleware\OnlyAdminMiddleware;
+use App\Http\Middleware\RegistrationIsCompletedMiddleware;
 use App\Http\Middleware\StudentMiddleware;
 use App\Http\Middleware\VerificationProcessMiddleware;
 use Illuminate\Foundation\Application;
@@ -26,7 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'account_verified' => AccountVerifiedMiddleware::class,
             'verification_process' => VerificationProcessMiddleware::class,
             'student_access' => StudentMiddleware::class,
-            'only_admin' => OnlyAdminMiddleware::class
+            'only_admin' => OnlyAdminMiddleware::class,
+            'registration_is_completed' => RegistrationIsCompletedMiddleware::class
         ]);
 
         $middleware->validateCsrfTokens(except: [

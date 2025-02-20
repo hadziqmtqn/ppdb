@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class PreviousSchool extends Model
@@ -35,6 +36,11 @@ class PreviousSchool extends Model
         static::creating(function (PreviousSchool $previousSchool) {
             $previousSchool->slug = Str::uuid()->toString();
         });
+    }
+
+    public function educationalGroup(): BelongsTo
+    {
+        return $this->belongsTo(EducationalGroup::class);
     }
 
     // TODO Scope

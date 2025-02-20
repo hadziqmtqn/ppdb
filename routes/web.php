@@ -465,7 +465,7 @@ Route::middleware('auth')->group(function () {
 
             Route::post('payment/{user:username}/store', [PaymentController::class, 'store']);
 
-            Route::group(['prefix' => 'schooll-report'], function () {
+            Route::group(['prefix' => 'school-report', 'middleware' => 'registration_is_completed'], function () {
                 Route::get('/{user:username}', [SchoolReportController::class, 'index'])->name('school-report.index');
             });
         });

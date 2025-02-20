@@ -32,9 +32,9 @@ class SchoolReportController extends Controller
         $user->load('student.educationalInstitution:id,name', 'previousSchool');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReports = $this->schoolReportRepository->getLessons($user);
-        dd($schoolReports);
+        dd($schoolReports->toArray());
 
-        return \view('dashboard.student.school-report.index', compact('title', 'user', 'menus'));
+        return \view('dashboard.student.school-report.index', compact('title', 'user', 'menus', 'schoolReports'));
     }
 
     public function store(SchoolReportRequest $request)

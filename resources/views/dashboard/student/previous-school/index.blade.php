@@ -14,9 +14,16 @@
                 <h5 class="card-header">Data Asal Sekolah</h5>
                 <form id="form" onsubmit="return false" data-username="{{ $user->username }}">
                     <div class="card-body">
+                        <input type="hidden" name="" id="select-educational-institution-0" value="{{ $user->student->educational_institution_id }}">
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="text" name="school_name" id="school_name" class="form-control" placeholder="Nama Asal Sekolah" value="{{ optional($user->previousSchool)->school_name }}">
                             <label for="school_name">Nama Asal Sekolah</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
+                            <select name="educational_group_id" id="select-educational-group" class="form-select select2">
+                                <option value="{{ optional($user->previousSchool)->educational_group_id }}" selected>{{ optional(optional($user->previousSchool)->educationalGroup)->name }}</option>
+                            </select>
+                            <label for="select-educational-group">Kelompok Pendidikan</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
                             <select name="status" id="status" class="form-select select2">
@@ -68,4 +75,5 @@
 @section('scripts')
     <script src="{{ asset('js/student/previous-school/store.js') }}"></script>
     <script src="{{ asset('js/idn-location/address.js') }}"></script>
+    <script src="{{ asset('js/educational-group/select.js') }}"></script>
 @endsection
