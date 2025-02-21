@@ -45,7 +45,7 @@ class ResidenceController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('residence');
+        $user->load('residence', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
         $distanceToSchools = DistanceToSchool::select(['id', 'name'])
             ->get();

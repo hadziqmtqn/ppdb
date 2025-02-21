@@ -43,7 +43,7 @@ class PersonalDataController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('personalData');
+        $user->load('personalData', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
 
         return view('dashboard.student.personal-data.index', compact('title', 'user', 'menus'));

@@ -20,15 +20,17 @@
                 @endforeach
             </div>
         </div>
-        <div class="demo-inline-spacing">
-            <div class="list-group">
-                <a href="{{ route('school-report.index', $user->username) }}" class="list-group-item list-group-item-primary {{ url()->current() == route('school-report.index', $user->username) ? 'active' : '' }} waves-effect">
+        @if(optional(optional(optional($user->student)->educationalInstitution)->registrationSetting)->accepted_with_school_report)
+            <div class="demo-inline-spacing">
+                <div class="list-group">
+                    <a href="{{ route('school-report.index', $user->username) }}" class="list-group-item list-group-item-primary {{ url()->current() == route('school-report.index', $user->username) ? 'active' : '' }} waves-effect">
                     <span class="d-flex justify-content-between">
                         <span><i class="mdi mdi-file-document-outline me-2"></i>Nilai Rapor</span>
                         <span><i class="mdi mdi-information-outline text-warning" data-bs-toggle="tooltip" title="Belum Lengkap"></i></span>
                     </span>
-                </a>
+                    </a>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>

@@ -21,12 +21,17 @@ class RegistrationIsCompletedMiddleware
 
     public function handle(Request $request, Closure $next)
     {
-        $user = User::filterByUsername($request->route('user')->username)
+        $user = User::with('student.educationalInstitution.registrationSetting')
+            ->whereHas('student')
+            ->filterByUsername($request->route('user')->username)
             ->firstOrFail();
 
         $allCompetencies = $this->studentRegistrationRepository->allCompleted($user);
 
         if (!$allCompetencies) return redirect()->back()->with('warning', 'Harap lengkapi data registrasi');
+
+        if (!optional(optional(optional($user->student)->educationalInstitution)->registrationSetting)->accepted_with_school_report)
+            return redirect()->back()->with('warning', 'Cek kembali pengaturan registrasi');
 
         return $next($request);
     }

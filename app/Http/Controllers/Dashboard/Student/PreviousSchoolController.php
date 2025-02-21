@@ -43,7 +43,7 @@ class PreviousSchoolController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('previousSchool.educationalGroup:id,name');
+        $user->load('previousSchool.educationalGroup:id,name', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
 
         return \view('dashboard.student.previous-school.index', compact('title', 'user', 'menus'));

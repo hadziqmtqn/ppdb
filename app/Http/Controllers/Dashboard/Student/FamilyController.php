@@ -46,7 +46,7 @@ class FamilyController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('family');
+        $user->load('family', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
         $educations = Education::select(['id', 'name'])
             ->get();

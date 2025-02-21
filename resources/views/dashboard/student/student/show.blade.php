@@ -188,8 +188,8 @@
                                 <h4 class="card-title">Berkas</h4>
                             </div>
                         </div>
-                        <div class="card-datatable">
-                            <table class="table w-100 text-nowrap table-responsive">
+                        <div class="card-datatable table-responsive">
+                            <table class="table w-100 text-nowrap">
                                 <thead>
                                 <tr>
                                     <th>Nama Berkas</th>
@@ -233,13 +233,13 @@
                                     <h4 class="card-title">Nilai Raport</h4>
                                 </div>
                             </div>
-                            <div class="card-datatable">
-                                <table class="table w-100 text-nowrap table-responsive">
+                            <div class="card-datatable table-responsive">
+                                <table class="table w-100 text-nowrap">
                                     <tbody>
                                     @foreach($schoolReports['schoolReports'] as $schoolReport)
                                         <tr>
                                             <td class="table-light fw-bold">Semester {{ $schoolReport['semester'] }}</td>
-                                            <td class="table-light fw-bold">{{ $schoolReport['totalScore'] }}</td>
+                                            <td class="table-light fw-bold">{{ !auth()->user()->hasRole('user') ? $schoolReport['totalScore'] : null }}</td>
                                         </tr>
                                         @foreach($schoolReport['detailSchoolReports'] as $detailSchoolReport)
                                             <tr>

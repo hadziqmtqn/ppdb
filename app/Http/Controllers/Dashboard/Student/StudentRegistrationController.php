@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class StudentRegistrationController extends Controller implements HasMiddleware
 {
@@ -42,12 +43,15 @@ class StudentRegistrationController extends Controller implements HasMiddleware
         Gate::authorize('view-student', $user);
 
         $title = 'Siswa';
-        $user->load('student.educationalInstitution:id,name', 'student.educationalInstitution.majors', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
+        $user->load('student.educationalInstitution:id,name', 'student.educationalInstitution.registrationSetting', 'student.educationalInstitution.majors', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
         $menus = $this->studentRegistrationRepository->menus($user);
 
         return view('dashboard.student.student-registration.index', compact('title', 'user', 'menus'));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(StudentRequest $request, User $user): JsonResponse
     {
         Gate::authorize('store', $user);
