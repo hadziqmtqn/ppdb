@@ -477,6 +477,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('/{user:username}/store-report-file', [SchoolReportController::class, 'storeReportFile']);
                 Route::delete('/{user:username}/delete-report-file', [SchoolReportController::class, 'deleteReportFile']);
             });
+
+            Route::get('school-value-report/{user:username}', [SchoolValueReportController::class, 'show'])->name('school-value-report.show');
         });
 
         // TODO Select Routes

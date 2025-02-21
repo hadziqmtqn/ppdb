@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Repositories\Student\SchoolReportRepository;
 use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -16,6 +18,18 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SchoolValueReportController extends Controller implements HasMiddleware
 {
+    use AuthorizesRequests;
+
+    protected SchoolReportRepository $schoolReportRepository;
+
+    /**
+     * @param SchoolReportRepository $schoolReportRepository
+     */
+    public function __construct(SchoolReportRepository $schoolReportRepository)
+    {
+        $this->schoolReportRepository = $schoolReportRepository;
+    }
+
     public static function middleware(): array
     {
         // TODO: Implement middleware() method.
@@ -35,7 +49,7 @@ class SchoolValueReportController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $users = User::with('student:id,user_id,educational_institution_id', 'student.educationalInstitution:id,name')
+                $users = User::with('student:id,user_id,educational_institution_id,school_year_id', 'student.educationalInstitution:id,name', 'previousSchool:id,user_id,school_name,educational_group_id')
                     ->withSum('schoolReports', 'total_score')
                     ->whereHas('student')
                     ->whereHas('schoolReports')
@@ -46,22 +60,27 @@ class SchoolValueReportController extends Controller implements HasMiddleware
 
                 // Filter data berdasarkan pencarian dan filter tambahan
                 $search = $request->get('search');
-                $email = $request->get('email');
-                $institution = $request->get('institution');
+                $schoolYear = $request->get('school_year_id');
+                $educationalInstitution = $request->get('educational_institution_id');
+                $educationalGroup = $request->get('educational_group_id');
 
-                $users = $users->filter(function ($user) use ($search, $email, $institution) {
+                $users = $users->filter(function ($user) use ($search, $schoolYear, $educationalInstitution, $educationalGroup) {
                     $match = true;
 
                     if ($search) {
                         $match = stripos($user->name, $search) !== false;
                     }
 
-                    if ($email) {
-                        $match = $match && stripos($user->email, $email) !== false;
+                    if ($schoolYear) {
+                        $match = $match && optional($user->student)->school_year_id == $schoolYear;
                     }
 
-                    if ($institution) {
-                        $match = $match && optional(optional($user->student)->educationalInstitution)->name === $institution;
+                    if ($educationalInstitution) {
+                        $match = $match && optional($user->student)->educational_institution_id == $educationalInstitution;
+                    }
+
+                    if ($educationalGroup) {
+                        $match = $match && optional($user->previousSchool)->educational_group_id == $educationalGroup;
                     }
 
                     return $match;
@@ -70,9 +89,10 @@ class SchoolValueReportController extends Controller implements HasMiddleware
                 return DataTables::of($users)
                     ->addIndexColumn()
                     ->addColumn('educationalInstitution', fn($row) => optional(optional($row->student)->educationalInstitution)->name)
+                    ->addColumn('previousSchool', fn($row) => optional($row->previousSchool)->school_name)
                     ->addColumn('totalScore', fn($row) => $row->school_reports_sum_total_score)
                     ->addColumn('action', function ($row) {
-                        return '<a href="#" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil-outline"></i></a> ';
+                        return '<a href="'. route('school-value-report.show', $row->username) .'" class="btn btn-icon btn-sm btn-secondary"><i class="mdi mdi-eye"></i></a>';
                     })
                     ->rawColumns(['action'])
                     ->make();
@@ -82,5 +102,15 @@ class SchoolValueReportController extends Controller implements HasMiddleware
         }
 
         return response()->json(true);
+    }
+
+    public function show(User $user): View
+    {
+        $this->authorize('view-student', $user);
+        $title = 'Nilai Raport';
+        $user->load('student.educationalInstitution', 'previousSchool.educationalGroup');
+        $schoolReports = $this->schoolReportRepository->getByUser($user);
+
+        return \view('dashboard.student.school-value-report.show', compact('title', 'schoolReports', 'user'));
     }
 }
