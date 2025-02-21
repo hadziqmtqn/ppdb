@@ -56,12 +56,12 @@
                                 <li class="list-group-item">
                                     <div class="d-flex justify-content-between w-100">
                                         <h5 class="mb-1">Upload Rapor Semester {{ $semester }}</h5>
-                                        {{----}}
-                                        {{--<div class="btn-group" role="group">
-                                            <a href="#" type="button" class="btn btn-outline-secondary btn-xs waves-effect" target="_blank">Lihat</a>
-                                            <button type="button" class="btn btn-outline-danger btn-xs waves-effect btn-delete-file" data-username="{{ $user->username }}" data-file-name="rapor_semester_{{ $semester }}">Hapus</button>
-                                        </div>--}}
-                                        {{----}}
+                                        @if($schoolReport['file'])
+                                            <div class="btn-group" role="group">
+                                                <a href="{{ $schoolReport['file'] }}" type="button" class="btn btn-outline-secondary btn-xs waves-effect" target="_blank">Lihat</a>
+                                                <button type="button" class="btn btn-outline-danger btn-xs waves-effect btn-delete-file" data-username="{{ $user->username }}" data-file-name="rapor_semester_{{ $semester }}" data-slug="{{ $schoolReport['slug'] }}">Hapus</button>
+                                            </div>
+                                        @endif
                                     </div>
                                     <hr>
                                     <div class="mb-3">

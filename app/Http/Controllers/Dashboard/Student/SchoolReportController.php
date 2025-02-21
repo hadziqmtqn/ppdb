@@ -132,7 +132,26 @@ class SchoolReportController extends Controller
         }
 
         return $this->apiResponse('File berhasil diupload', [
+            'slug' => $schoolReport->slug,
             'fileUrl' => $fileUrl
         ], null, Response::HTTP_OK);
+    }
+
+    public function deleteReportFile(Request $request, User $user): JsonResponse
+    {
+        try {
+            $user->load('student');
+            $schoolReport = SchoolReport::filterBySlug($request->input('slug'))
+                ->firstOrFail();
+
+            if ($schoolReport->hasMedia($request->input('file'))) {
+                $schoolReport->clearMediaCollection($request->input('file'));
+            }
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('File gagal diupload', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return $this->apiResponse('File berhasil diupload', null, null, Response::HTTP_OK);
     }
 }

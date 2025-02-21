@@ -469,6 +469,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{user:username}', [SchoolReportController::class, 'index'])->name('school-report.index');
                 Route::post('/{user:username}/store', [SchoolReportController::class, 'store']);
                 Route::post('/{user:username}/store-report-file', [SchoolReportController::class, 'storeReportFile']);
+                Route::delete('/{user:username}/delete-report-file', [SchoolReportController::class, 'deleteReportFile']);
             });
         });
 

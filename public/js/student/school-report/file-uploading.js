@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.btn-delete-file').forEach(button => {
         button.addEventListener('click', function () {
             const username = this.dataset.username;
+            const slug = this.dataset.slug;
             const fileName = this.dataset.fileName;
             const listItem = this.closest('.list-group-item');
 
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (result.isConfirmed) {
                     axios.delete(`/school-report/${username}/delete-report-file`, {
                         data: {
+                            slug: slug,
                             file: fileName,
                         },
                         headers: {
@@ -131,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 deleteButton = document.createElement('button');
                                 deleteButton.type = 'button';
                                 deleteButton.className = 'btn btn-outline-danger btn-xs waves-effect btn-delete-file';
+                                deleteButton.setAttribute('data-slug', data.slug);
                                 deleteButton.innerText = 'Hapus';
                                 buttonGroup.appendChild(deleteButton);
                             }
@@ -141,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (!deleteButton.hasListener) {
                                 deleteButton.addEventListener('click', function () {
                                     const username = deleteButton.dataset.username;
+                                    const slug = deleteButton.dataset.slug;
                                     const fileName = deleteButton.dataset.fileName;
                                     const listItem = deleteButton.closest('.list-group-item');
 
@@ -161,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         if (result.isConfirmed) {
                                             axios.delete(`/school-report/${username}/delete-report-file`, {
                                                 data: {
+                                                    slug: slug,
                                                     file: fileName,
                                                 },
                                                 headers: {
@@ -211,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Menggunakan Axios untuk menghapus file
                     axios.delete(`/school-report/${username}/delete-report-file`, {
                         data: {
+                            slug: slug,
                             file: fileName,
                         },
                         headers: {
