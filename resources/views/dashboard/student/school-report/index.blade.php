@@ -66,6 +66,7 @@
                                     <hr>
                                     <div class="mb-3">
                                         <input type="file" class="filepond" name="rapor_semester_{{ $semester }}" data-slug="{{ $schoolReport['slug'] }}" id="filepond_{{ $semester }}" data-semester="{{ $semester }}" data-allow-reorder="false" data-max-file-size="3MB" data-max-files="1">
+                                        <input type="hidden" id="slug_input_{{ $semester }}" name="slug_{{ $semester }}" value="{{ $schoolReport['slug'] }}">
                                     </div>
                                 </li>
                             </ul>

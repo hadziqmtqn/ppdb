@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     inputElements.forEach(inputElement => {
         const fileName = inputElement.name; // Mendapatkan nama file
-        const slug = inputElement.dataset.slug;
+        const semester = inputElement.getAttribute('data-semester');
 
         // Menginisialisasi FilePond dengan pengaturan manual untuk upload via Axios
         FilePond.create(inputElement, {
@@ -83,10 +83,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Membuat FormData
                     const formData = new FormData();
                     formData.append(fieldName, file);
-                    formData.append('slug', slug);
 
-                    // Mendapatkan username dari form
+                    // Mendapatkan username dan slug dari form
                     const username = document.getElementById('form').dataset.username;
+                    const slugInput = document.getElementById(`slug_input_${semester}`);
+                    const slug = slugInput ? slugInput.value : null;
+
+                    if (!slug) {
+                        toastr.error('Slug tidak ditemukan. Simpan nilai terlebih dahulu.');
+                        return;
+                    }
+
+                    formData.append('slug', slug);
 
                     // Menggunakan Axios untuk upload file beserta form data lainnya
                     axios.post(`/school-report/${username}/store-report-file`, formData, {
@@ -212,6 +220,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 revert: (uniqueFileId, load, error) => {
                     // Mendapatkan username dari form
                     const username = document.getElementById('form').dataset.username;
+                    const slugInput = document.getElementById(`slug_input_${semester}`);
+                    const slug = slugInput ? slugInput.value : null;
 
                     // Menggunakan Axios untuk menghapus file
                     axios.delete(`/school-report/${username}/delete-report-file`, {

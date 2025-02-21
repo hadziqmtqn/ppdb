@@ -9,17 +9,14 @@ use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class FileUploadingController extends Controller implements HasMiddleware
+class FileUploadingController extends Controller
 {
     use ApiResponse;
 
@@ -30,16 +27,6 @@ class FileUploadingController extends Controller implements HasMiddleware
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
         $this->schoolReportRepository = $schoolReportRepository;
-    }
-
-    public static function middleware(): array
-    {
-        // TODO: Implement middleware() method.
-        return [
-            new Middleware(PermissionMiddleware::using('file-uploading-read'), only: ['index']),
-            new Middleware(PermissionMiddleware::using('file-uploading-write'), only: ['store']),
-            new Middleware(PermissionMiddleware::using('file-uploading-delete'), only: ['destroy']),
-        ];
     }
 
     public function index(User $user): View

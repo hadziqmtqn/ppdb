@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         toastr.success(response.data.message);
 
                         const slug = response.data.data.slug;
-                        const fileInput = document.querySelector(`#filepond_${semester}`);
-                        if (fileInput) {
-                            fileInput.setAttribute('data-slug', slug);
+                        const hiddenInput = document.getElementById(`slug_input_${semester}`);
+                        if (hiddenInput) {
+                            hiddenInput.value = slug; // Update hidden input value here
                         }
                     } else {
                         const errors = response.data.errors;
