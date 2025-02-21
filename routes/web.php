@@ -418,6 +418,7 @@ Route::middleware('auth')->group(function () {
         Route::get('school-report', [SchoolValueReportController::class, 'index'])->name('school-report');
         Route::group(['prefix' => 'school-value-report'], function () {
             Route::post('/datatable', [SchoolValueReportController::class, 'datatable']);
+            Route::post('/export', [SchoolValueReportController::class, 'export']);
         });
 
         Route::middleware('student_access')->group(function () {

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard\Student;
 
+use App\Exports\Student\SchoolValueReportExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SchoolReport\FilterRequest;
+use App\Models\EducationalInstitution;
+use App\Models\SchoolYear;
 use App\Models\User;
 use App\Repositories\Student\SchoolReportRepository;
+use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
@@ -13,12 +18,14 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class SchoolValueReportController extends Controller implements HasMiddleware
 {
-    use AuthorizesRequests;
+    use AuthorizesRequests, ApiResponse;
 
     protected SchoolReportRepository $schoolReportRepository;
 
@@ -114,5 +121,20 @@ class SchoolValueReportController extends Controller implements HasMiddleware
         $schoolReports = $this->schoolReportRepository->getByUser($user);
 
         return \view('dashboard.student.school-value-report.show', compact('title', 'schoolReports', 'user', 'subTitle'));
+    }
+
+    public function export(FilterRequest $request)
+    {
+        try {
+            $schoolYear = SchoolYear::findOrFail($request->input('school_year_id'));
+            $educationalInstitution = EducationalInstitution::find($request->input('educational_institution_id'));
+
+            $educationalInstitutionName = optional($educationalInstitution)->name ?? ' Semua Lembaga ';
+
+            return Excel::download(new SchoolValueReportExport($request), 'Daftar Nilai Rapor ' . $educationalInstitutionName . ' TA-' . $schoolYear->first_year . '-' . $schoolYear->last_year . '.xlsx');
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Laporan gagal diunduh!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

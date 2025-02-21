@@ -50,4 +50,5 @@
     <script src="{{ asset('js/school-year/select.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
     <script src="{{ asset('js/educational-group/select.js') }}"></script>
+    <script src="{{ asset('js/student/school-value-report/report-excel.js') }}"></script>
 @endsection
