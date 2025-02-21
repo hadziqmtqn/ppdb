@@ -47,7 +47,7 @@ class ResidenceController extends Controller implements HasMiddleware
     {
         Gate::authorize('view-student', $user);
 
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $user->load('residence', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);

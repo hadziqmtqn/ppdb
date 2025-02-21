@@ -45,7 +45,7 @@ class StudentRegistrationController extends Controller implements HasMiddleware
     {
         Gate::authorize('view-student', $user);
 
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $user->load('student.educationalInstitution:id,name', 'student.educationalInstitution.registrationSetting', 'student.educationalInstitution.majors', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);

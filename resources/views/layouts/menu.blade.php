@@ -8,7 +8,7 @@
                 </a>
             </li>
             @if(auth()->user()->hasRole('user'))
-                <li class="menu-item {{ $title == 'Siswa' ? 'active' : '' }}">
+                <li class="menu-item {{ $title == 'Manajemen Siswa' ? 'active' : '' }}">
                     <a href="{{ route('student.show', auth()->user()->username) }}" class="menu-link">
                         <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
                         <div data-i18n="Siswa">Siswa</div>

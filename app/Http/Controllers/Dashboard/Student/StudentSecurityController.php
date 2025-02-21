@@ -32,7 +32,7 @@ class StudentSecurityController extends Controller
     {
         Gate::authorize('view-student', $user);
 
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $user->load([
             'student.educationalInstitution:id,name',
             'student.registrationCategory:id,name',

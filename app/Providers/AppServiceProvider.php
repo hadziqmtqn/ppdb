@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Policies\ConversationPolicy;
 use App\Policies\EmailChangePolicy;
 use App\Policies\PaymentPolicy;
-use App\Policies\SchoolReportPolicy;
 use App\Policies\UserPolicy;
 use App\Repositories\ApplicationRepository;
 use App\Repositories\ClassLevelRepository;
@@ -92,7 +91,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(UserPolicy::class, UserPolicy::class);
         Gate::policy(ConversationPolicy::class, ConversationPolicy::class);
         Gate::policy(PaymentPolicy::class, PaymentPolicy::class);
-        Gate::policy(SchoolReportPolicy::class, SchoolReportPolicy::class);
     }
 
     /**

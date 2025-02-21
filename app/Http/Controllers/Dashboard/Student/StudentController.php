@@ -59,7 +59,7 @@ class StudentController extends Controller implements HasMiddleware
 
     public function index(): View
     {
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $stats = $this->studentStatsRepository->stats();
 
         return \view('dashboard.student.student.index', compact('title', 'stats'));
@@ -146,7 +146,7 @@ class StudentController extends Controller implements HasMiddleware
     {
         Gate::authorize('view-student', $user);
 
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $user->load([
             'student.user:id,name',
             'student.educationalInstitution:id,name',

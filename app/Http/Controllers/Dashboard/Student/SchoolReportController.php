@@ -38,7 +38,7 @@ class SchoolReportController extends Controller
     public function index(User $user): View
     {
         $this->authorize('view-student', $user);
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $user->load('student.educationalInstitution:id,name', 'previousSchool');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReports = $this->schoolReportRepository->getLessons($user);

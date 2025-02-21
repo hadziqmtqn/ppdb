@@ -45,7 +45,7 @@ class PreviousSchoolController extends Controller implements HasMiddleware
     {
         Gate::authorize('view-student', $user);
 
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $user->load('previousSchool.educationalGroup:id,name', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);

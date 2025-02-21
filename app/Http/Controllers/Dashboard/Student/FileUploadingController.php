@@ -46,7 +46,7 @@ class FileUploadingController extends Controller implements HasMiddleware
     {
         Gate::authorize('view-student', $user);
 
-        $title = 'Siswa';
+        $title = 'Manajemen Siswa';
         $user->load('student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
         $files = $this->studentRegistrationRepository->getFiles($user->student);

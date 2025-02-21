@@ -30,12 +30,34 @@
     ]
   },
   {
-    "name": "Siswa",
+    "name": "Manajemen Siswa",
     "type": "main_menu",
-    "visibility": ["student-read"],
-    "url": "/student",
+    "visibility": [
+      "student-read",
+      "school-report-read"
+    ],
+    "url": "#",
     "icon": "account-school-outline",
-    "sub_menu": []
+    "sub_menu": [
+      {
+        "name": "Data Siswa",
+        "type": "sub_menu",
+        "visibility": [
+          "student-read"
+        ],
+        "url": "/student",
+        "icon": "account-tie-outline"
+      },
+      {
+        "name": "Data Siswa",
+        "type": "sub_menu",
+        "visibility": [
+          "school-report-read"
+        ],
+        "url": "/school-report",
+        "icon": "chart-arc"
+      }
+    ]
   },
   {
     "name": "Pembayaran",
