@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\StudengRegistration\StudentRequest;
 use App\Models\User;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -22,6 +23,15 @@ class StudentRegistrationController extends Controller implements HasMiddleware
 {
     use ApiResponse;
 
+    protected StudentRegistrationRepository $studentRegistrationRepository;
+    protected SchoolReportRepository $schoolReportRepository;
+
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository)
+    {
+        $this->studentRegistrationRepository = $studentRegistrationRepository;
+        $this->schoolReportRepository = $schoolReportRepository;
+    }
+
     public static function middleware(): array
     {
         // TODO: Implement middleware() method.
@@ -31,13 +41,6 @@ class StudentRegistrationController extends Controller implements HasMiddleware
         ];
     }
 
-    protected StudentRegistrationRepository $studentRegistrationRepository;
-
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
-    {
-        $this->studentRegistrationRepository = $studentRegistrationRepository;
-    }
-
     public function index(User $user)
     {
         Gate::authorize('view-student', $user);
@@ -45,8 +48,9 @@ class StudentRegistrationController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('student.educationalInstitution:id,name', 'student.educationalInstitution.registrationSetting', 'student.educationalInstitution.majors', 'student.registrationCategory:id,name', 'student.registrationPath:id,name', 'student.major:id,name');
         $menus = $this->studentRegistrationRepository->menus($user);
+        $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);
 
-        return view('dashboard.student.student-registration.index', compact('title', 'user', 'menus'));
+        return view('dashboard.student.student-registration.index', compact('title', 'user', 'menus', 'schoolReportIsCompleted'));
     }
 
     /**

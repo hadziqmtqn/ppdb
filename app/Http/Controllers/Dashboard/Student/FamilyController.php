@@ -9,6 +9,7 @@ use App\Models\Family;
 use App\Models\Income;
 use App\Models\Profession;
 use App\Models\User;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -26,10 +27,12 @@ class FamilyController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRegistrationRepository $studentRegistrationRepository;
+    protected SchoolReportRepository $schoolReportRepository;
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
+        $this->schoolReportRepository = $schoolReportRepository;
     }
 
     public static function middleware(): array
@@ -48,6 +51,7 @@ class FamilyController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('family', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
+        $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);
         $educations = Education::select(['id', 'name'])
             ->get();
         $professions = Profession::select(['id', 'name'])
@@ -55,7 +59,7 @@ class FamilyController extends Controller implements HasMiddleware
         $incomes = Income::select(['id', 'nominal'])
             ->get();
 
-        return view('dashboard.student.family.index', compact('title', 'user', 'menus', 'educations', 'professions', 'incomes'));
+        return view('dashboard.student.family.index', compact('title', 'user', 'menus', 'educations', 'professions', 'incomes', 'schoolReportIsCompleted'));
     }
 
     public function store(FamilyRequest $request, User $user): JsonResponse

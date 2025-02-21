@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\PreviousSchool\PreviousSchoolRequest;
 use App\Models\PreviousSchool;
 use App\Models\User;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -23,10 +24,12 @@ class PreviousSchoolController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRegistrationRepository $studentRegistrationRepository;
+    protected SchoolReportRepository $schoolReportRepository;
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
+        $this->schoolReportRepository = $schoolReportRepository;
     }
 
     public static function middleware(): array
@@ -45,8 +48,9 @@ class PreviousSchoolController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('previousSchool.educationalGroup:id,name', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
+        $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);
 
-        return \view('dashboard.student.previous-school.index', compact('title', 'user', 'menus'));
+        return \view('dashboard.student.previous-school.index', compact('title', 'user', 'menus', 'schoolReportIsCompleted'));
     }
 
     public function store(PreviousSchoolRequest $request, User $user): JsonResponse

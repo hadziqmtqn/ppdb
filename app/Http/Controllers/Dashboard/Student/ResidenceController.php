@@ -8,6 +8,7 @@ use App\Models\DistanceToSchool;
 use App\Models\Residence;
 use App\Models\Transportation;
 use App\Models\User;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -25,10 +26,12 @@ class ResidenceController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRegistrationRepository $studentRegistrationRepository;
+    protected SchoolReportRepository $schoolReportRepository;
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
+        $this->schoolReportRepository = $schoolReportRepository;
     }
 
     public static function middleware(): array
@@ -47,12 +50,13 @@ class ResidenceController extends Controller implements HasMiddleware
         $title = 'Siswa';
         $user->load('residence', 'student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
+        $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);
         $distanceToSchools = DistanceToSchool::select(['id', 'name'])
             ->get();
         $transportations = Transportation::select(['id', 'name'])
             ->get();
 
-        return view('dashboard.student.residence.index', compact('title', 'user', 'menus', 'distanceToSchools', 'transportations'));
+        return view('dashboard.student.residence.index', compact('title', 'user', 'menus', 'distanceToSchools', 'transportations', 'schoolReportIsCompleted'));
     }
 
     public function store(ResidenceRequest $request, User $user): JsonResponse

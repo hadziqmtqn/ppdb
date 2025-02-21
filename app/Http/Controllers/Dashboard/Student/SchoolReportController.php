@@ -42,8 +42,9 @@ class SchoolReportController extends Controller
         $user->load('student.educationalInstitution:id,name', 'previousSchool');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReports = $this->schoolReportRepository->getLessons($user);
+        $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);
 
-        return \view('dashboard.student.school-report.index', compact('title', 'user', 'menus', 'schoolReports'));
+        return \view('dashboard.student.school-report.index', compact('title', 'user', 'menus', 'schoolReports', 'schoolReportIsCompleted'));
     }
 
     /**

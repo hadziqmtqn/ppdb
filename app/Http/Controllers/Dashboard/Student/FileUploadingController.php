@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -23,10 +24,12 @@ class FileUploadingController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRegistrationRepository $studentRegistrationRepository;
+    protected SchoolReportRepository $schoolReportRepository;
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
+        $this->schoolReportRepository = $schoolReportRepository;
     }
 
     public static function middleware(): array
@@ -47,8 +50,9 @@ class FileUploadingController extends Controller implements HasMiddleware
         $user->load('student.educationalInstitution.registrationSetting');
         $menus = $this->studentRegistrationRepository->menus($user);
         $files = $this->studentRegistrationRepository->getFiles($user->student);
+        $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);
 
-        return view('dashboard.student.file-uploading.index', compact('title', 'user', 'menus', 'files'));
+        return view('dashboard.student.file-uploading.index', compact('title', 'user', 'menus', 'files', 'schoolReportIsCompleted'));
     }
 
     public function store(Request $request, User $user): JsonResponse

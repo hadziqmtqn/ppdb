@@ -95,4 +95,23 @@ class SchoolReportRepository
             })
         ]);
     }
+
+    public function isComplete(User $user): bool
+    {
+        $lessons = $this->getLessons($user);
+
+        foreach ($lessons as $data) {
+            if (is_null($data['file'])) {
+                return false;
+            }
+
+            foreach ($data['detailSchoolReports'] as $detail) {
+                if (is_null($detail['score'])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }
