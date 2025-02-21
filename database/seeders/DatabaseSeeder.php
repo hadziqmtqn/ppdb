@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Student;
 use Database\Seeders\Auth\AdminSeeder;
 use Database\Seeders\Auth\PermissionSeeder;
 use Database\Seeders\Payment\BankAccountSeeder;
@@ -32,6 +31,7 @@ use Database\Seeders\Setting\MessageTemplateSeeder;
 use Database\Seeders\Setting\RegistrationSettingSeeder;
 use Database\Seeders\Setting\RegistrationStepSeeder;
 use Database\Seeders\Setting\WhatsappConfigSeeder;
+use Database\Seeders\Student\StudentSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -74,11 +74,9 @@ class DatabaseSeeder extends Seeder
             RegistrationSettingSeeder::class,
             EducationalGroupSeeder::class,
             // TODO School Report
-            LessonSeeder::class
+            LessonSeeder::class,
+            // TODO Student Faker
+            StudentSeeder::class
         ]);
-
-        Student::factory()
-            ->count(100)
-            ->create();
     }
 }
