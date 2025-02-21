@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     inputElements.forEach(inputElement => {
         const fileName = inputElement.name; // Mendapatkan nama file
+        const slug = inputElement.dataset.slug;
 
         // Menginisialisasi FilePond dengan pengaturan manual untuk upload via Axios
         FilePond.create(inputElement, {
@@ -80,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Membuat FormData
                     const formData = new FormData();
                     formData.append(fieldName, file);
+                    formData.append('slug', slug);
 
                     // Mendapatkan username dari form
                     const username = document.getElementById('form').dataset.username;

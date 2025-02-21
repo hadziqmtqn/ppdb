@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -35,6 +36,11 @@ class SchoolReport extends Model implements HasMedia
         });
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     // TODO Scope
     public function scopeFilterData(Builder $query, $filter): Builder
     {
@@ -42,5 +48,10 @@ class SchoolReport extends Model implements HasMedia
             'user_id' => $filter['user_id'],
             'semester' => $filter['semester']
         ]);
+    }
+
+    public function scopeFilterBySlug(Builder $query, $slug): Builder
+    {
+        return $query->where('slug', $slug);
     }
 }

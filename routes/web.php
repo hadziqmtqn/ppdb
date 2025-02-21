@@ -35,7 +35,6 @@ use App\Http\Controllers\Dashboard\References\SchoolYearController;
 use App\Http\Controllers\Dashboard\References\TransportationController;
 use App\Http\Controllers\Dashboard\SchoolReport\LessonController;
 use App\Http\Controllers\Dashboard\SchoolReport\LessonMappingController;
-use App\Http\Controllers\Dashboard\SchoolReport\SchoolReportController;
 use App\Http\Controllers\Dashboard\Setting\ApplicationController;
 use App\Http\Controllers\Dashboard\Setting\EducationalGroupController;
 use App\Http\Controllers\Dashboard\Setting\EmailConfigController;
@@ -56,6 +55,7 @@ use App\Http\Controllers\Dashboard\Student\Payment\CurrentBillController;
 use App\Http\Controllers\Dashboard\Student\PersonalDataController;
 use App\Http\Controllers\Dashboard\Student\PreviousSchoolController;
 use App\Http\Controllers\Dashboard\Student\ResidenceController;
+use App\Http\Controllers\Dashboard\Student\SchoolReportController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
 use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
 use App\Http\Controllers\Dashboard\Student\StudentReportController;
@@ -468,6 +468,7 @@ Route::middleware('auth')->group(function () {
             Route::group(['prefix' => 'school-report', 'middleware' => 'registration_is_completed'], function () {
                 Route::get('/{user:username}', [SchoolReportController::class, 'index'])->name('school-report.index');
                 Route::post('/{user:username}/store', [SchoolReportController::class, 'store']);
+                Route::post('/{user:username}/store-report-file', [SchoolReportController::class, 'storeReportFile']);
             });
         });
 

@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     if (response.data.type === 'success') {
                         toastr.success(response.data.message);
+
+                        const slug = response.data.data.slug;
+                        const fileInput = document.querySelector(`#filepond_${semester}`);
+                        if (fileInput) {
+                            fileInput.setAttribute('data-slug', slug);
+                        }
                     } else {
                         const errors = response.data.errors;
                         let message = '';
