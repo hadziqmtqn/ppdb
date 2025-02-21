@@ -9,7 +9,6 @@ $(function () {
         serverSide: true,
         scrollX: true,
         scrollCollapse: true,
-        order: [[1, 'asc']],
         ajax: {
             url: "/school-value-report/datatable",
             type: "POST",
@@ -25,10 +24,10 @@ $(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'name', name: 'name'},
-            {data: 'educationalInstitution', name: 'educationalInstitution'},
-            {data: 'previousSchool', name: 'previousSchool'},
-            {data: 'totalScore', name: 'totalScore'},
+            {data: 'name', name: 'name', orderable: false, searchable: false},
+            {data: 'educationalInstitution', name: 'educationalInstitution', orderable: false, searchable: false},
+            {data: 'previousSchool', name: 'previousSchool', orderable: false, searchable: false},
+            {data: 'totalScore', name: 'totalScore', orderable: false, searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         dom:

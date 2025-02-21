@@ -74,8 +74,15 @@ class StudentSeeder extends Seeder
                             $detailSchoolReport->save();
                         });
 
-                        $schoolReport->total_score = DetailSchoolReport::schoolReportId($schoolReport->id)
+                        $totalGeneralLesson = DetailSchoolReport::whereHas('lesson', fn($query) => $query->where('type', 'umum'))
+                            ->schoolReportId($schoolReport->id)
                             ->sum('score');
+
+                        $avgScoreReligiousStudy = DetailSchoolReport::whereHas('lesson', fn($query) => $query->where('type', 'keagamaan'))
+                            ->schoolReportId($schoolReport->id)
+                            ->avg('score');
+
+                        $schoolReport->total_score = $totalGeneralLesson + $avgScoreReligiousStudy;
                         $schoolReport->save();
                     }
                 }

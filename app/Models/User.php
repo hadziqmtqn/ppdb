@@ -44,6 +44,8 @@ class User extends Authenticatable implements HasMedia
     protected $hidden = [
         'password',
         'remember_token',
+        'oauth_id',
+        'oauth_type'
     ];
 
     /**

@@ -49,7 +49,7 @@
         "icon": "account-tie-outline"
       },
       {
-        "name": "Data Siswa",
+        "name": "Nilai Rapor",
         "type": "sub_menu",
         "visibility": [
           "school-report-read"

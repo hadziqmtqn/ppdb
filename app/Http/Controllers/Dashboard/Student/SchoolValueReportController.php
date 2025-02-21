@@ -98,7 +98,7 @@ class SchoolValueReportController extends Controller implements HasMiddleware
                     ->addIndexColumn()
                     ->addColumn('educationalInstitution', fn($row) => optional(optional($row->student)->educationalInstitution)->name)
                     ->addColumn('previousSchool', fn($row) => optional($row->previousSchool)->school_name)
-                    ->addColumn('totalScore', fn($row) => $row->school_reports_sum_total_score)
+                    ->addColumn('totalScore', fn($row) => round($row->school_reports_sum_total_score, 2))
                     ->addColumn('action', function ($row) {
                         return '<a href="'. route('school-value-report.show', $row->username) .'" class="btn btn-icon btn-sm btn-secondary"><i class="mdi mdi-eye"></i></a>';
                     })
