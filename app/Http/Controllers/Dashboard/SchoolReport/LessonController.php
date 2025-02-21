@@ -35,8 +35,9 @@ class LessonController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Registrasi';
+        $subTitle = 'Mata Pelajaran';
 
-        return \view('dashboard.school-report.lesson.index', compact('title'));
+        return \view('dashboard.school-report.lesson.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse

@@ -33,6 +33,7 @@ class FaqCategoryController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'FAQ';
+        $subTitle = 'Kategori Pertanyaan';
         $educationalInstitutions = EducationalInstitution::select(['id', 'name'])
             ->get();
         $faqCategories = FaqCategory::withCount('faqs')
@@ -50,7 +51,7 @@ class FaqCategoryController extends Controller implements HasMiddleware
                 ]);
             });
 
-        return \view('dashboard.settings.faq.faq-category.index', compact('title', 'educationalInstitutions', 'faqCategories'));
+        return \view('dashboard.settings.faq.faq-category.index', compact('title', 'subTitle', 'educationalInstitutions', 'faqCategories'));
     }
 
     /**

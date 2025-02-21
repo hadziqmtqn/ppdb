@@ -15,14 +15,14 @@
                 </div>
                 <div>
                     <h5 class="mb-0">
-                        <span class="align-middle">{{ $title }}</span>
+                        <span class="align-middle">{{ $subTitle }}</span>
                     </h5>
-                    <small>Kategori Pertanyaan yang sering diajukan</small>
+                    <small>{{ $subTitle }} yang sering diajukan</small>
                 </div>
             </div>
 
             <div class="card mb-3">
-                <h5 class="card-header">{{ $title }}</h5>
+                <h5 class="card-header">{{ $subTitle }}</h5>
                 <form action="{{ route('faq-category.store') }}" method="POST">
                     @csrf
                     <div class="card-datatable table-responsive">

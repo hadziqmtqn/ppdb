@@ -25,8 +25,9 @@ class PaymentTransactionController extends Controller
     public function index(): View
     {
         $title = 'Transaksi Pembayaran';
+        $subTitle = 'Transaksi Pembayaran';
 
-        return \view('dashboard.payment.payment-transaction.index', compact('title'));
+        return \view('dashboard.payment.payment-transaction.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse
@@ -109,8 +110,9 @@ class PaymentTransactionController extends Controller
         Gate::authorize('view', $payment);
 
         $title = 'Transaksi Pembayaran';
+        $subTitle = 'Detail Transaksi Pembayaran';
 
-        return \view('dashboard.payment.payment-transaction.show', compact('title', 'payment'));
+        return \view('dashboard.payment.payment-transaction.show', compact('title', 'payment', 'subTitle'));
     }
 
     public function confirm(PaymentConfirmationRequest $request, Payment $payment)

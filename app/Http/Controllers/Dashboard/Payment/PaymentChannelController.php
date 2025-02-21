@@ -32,8 +32,9 @@ class PaymentChannelController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Pembayaran';
+        $subTitle = 'Saluran Pembayaran';
 
-        return \view('dashboard.payment.payment-channel.index', compact('title'));
+        return \view('dashboard.payment.payment-channel.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse

@@ -41,8 +41,9 @@ class SchoolValueReportController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Nilai Raport';
+        $subTitle = 'Nilai Raport';
 
-        return \view('dashboard.student.school-value-report.index', compact('title'));
+        return \view('dashboard.student.school-value-report.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): JsonResponse
@@ -107,10 +108,11 @@ class SchoolValueReportController extends Controller implements HasMiddleware
     public function show(User $user): View
     {
         $this->authorize('view-student', $user);
-        $title = 'Nilai Raport';
+        $title = 'Nilai Rapor';
+        $subTitle = 'Detail Nilai Rapor';
         $user->load('student.educationalInstitution', 'previousSchool.educationalGroup');
         $schoolReports = $this->schoolReportRepository->getByUser($user);
 
-        return \view('dashboard.student.school-value-report.show', compact('title', 'schoolReports', 'user'));
+        return \view('dashboard.student.school-value-report.show', compact('title', 'schoolReports', 'user', 'subTitle'));
     }
 }

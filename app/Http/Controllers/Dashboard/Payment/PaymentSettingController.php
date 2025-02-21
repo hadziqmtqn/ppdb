@@ -33,8 +33,9 @@ class PaymentSettingController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Pembayaran';
+        $subTitle = 'Pengaturan Pembayaran';
 
-        return \view('dashboard.payment.payment-setting.index', compact('title'));
+        return \view('dashboard.payment.payment-setting.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse

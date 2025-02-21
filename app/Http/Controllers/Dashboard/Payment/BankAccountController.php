@@ -46,11 +46,12 @@ class BankAccountController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Pembayaran';
+        $subTitle = 'Rekening Bank';
         $paymentChannels = PaymentChannel::active()
             ->select(['id', 'name'])
             ->get();
 
-        return \view('dashboard.payment.bank-account.index', compact('title', 'paymentChannels'));
+        return \view('dashboard.payment.bank-account.index', compact('title', 'paymentChannels', 'subTitle'));
     }
 
     public function datatable(Request $request): JsonResponse

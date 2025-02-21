@@ -44,8 +44,9 @@ class EducationalGroupController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Registrasi';
+        $subTitle = 'Kelompok Pendidikan';
 
-        return \view('dashboard.settings.registration-setting.educational-group.index', compact('title'));
+        return \view('dashboard.settings.registration-setting.educational-group.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse

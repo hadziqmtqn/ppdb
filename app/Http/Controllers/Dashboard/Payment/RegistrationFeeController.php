@@ -35,8 +35,9 @@ class RegistrationFeeController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Biaya Pendaftaran';
+        $subTitle = 'Biaya Pendaftaran';
 
-        return \view('dashboard.payment.registration-fee.index', compact('title'));
+        return \view('dashboard.payment.registration-fee.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse

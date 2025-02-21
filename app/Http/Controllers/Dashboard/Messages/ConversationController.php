@@ -37,8 +37,9 @@ class ConversationController extends Controller
     public function index(): View
     {
         $title = 'Kirim Pesan';
+        $subTitle = 'Kirim Pesan';
 
-        return \view('dashboard.messages.conversation.index', compact('title'));
+        return \view('dashboard.messages.conversation.index', compact('title', 'subTitle'));
     }
 
     public function datatable(Request $request): \Illuminate\Http\JsonResponse
@@ -125,6 +126,7 @@ class ConversationController extends Controller
         $this->authorize('view', $conversation);
 
         $title = 'Kirim Pesan';
+        $subTitle = 'Detail Kirim Pesan';
         $conversation->load([
             'user:id,name',
             'admin:id,name',
@@ -137,7 +139,7 @@ class ConversationController extends Controller
             $conversation->update(['is_seen' => true]);
         }
 
-        return \view('dashboard.messages.message.index', compact('title', 'conversation'));
+        return \view('dashboard.messages.message.index', compact('title', 'conversation', 'subTitle'));
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $subTitle }}</h4>
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-sm-between mb-4 text-center text-sm-start gap-2">
         <div class="mb-2 mb-sm-0">
             <a href="{{ route('student.show', optional($payment->user)->username) }}" class="h4 mb-1 text-primary" target="_blank">Nama: {{ optional($payment->user)->name }}</a>

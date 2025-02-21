@@ -415,7 +415,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('student-stats', [StudentStatsController::class, 'index']);
 
-        Route::get('school-report', [SchoolValueReportController::class, 'index'])->name('school-report.index');
+        Route::get('school-report', [SchoolValueReportController::class, 'index'])->name('school-report');
         Route::group(['prefix' => 'school-value-report'], function () {
             Route::post('/datatable', [SchoolValueReportController::class, 'datatable']);
         });

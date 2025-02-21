@@ -3,7 +3,7 @@
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span>
         <span class="text-muted fw-light"><a href="{{ route('conversation.index') }}">Kirim Pesan</a> /</span>
-        Detail {{ $title }}
+        Detail {{ $subTitle }}
     </h4>
 
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-sm-between mb-4 text-center text-sm-start gap-2">

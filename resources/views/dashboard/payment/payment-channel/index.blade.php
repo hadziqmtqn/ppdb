@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $subTitle }}</h4>
     <div class="row mt-4">
         <div class="col-lg-3 col-md-4 col-12 mb-md-0 mb-3">
             @include('dashboard.payment.sidebar')

@@ -13,7 +13,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{ $title }} | {{ $application['name'] }}</title>
+    <title>{{ !isset($subTitle) ? $title : $subTitle }} | {{ $application['name'] }}</title>
 
     <meta name="description" content="{{ $application['description'] }}" />
 

@@ -36,9 +36,10 @@ class LessonMappingController extends Controller implements HasMiddleware
     public function index(): View
     {
         $title = 'Pengaturan Registrasi';
+        $subTitle = 'Pembagian Mata Pelajaran';
         $lessons = $this->getLessons();
 
-        return \view('dashboard.school-report.lesson-mapping.index', compact('title', 'lessons'));
+        return \view('dashboard.school-report.lesson-mapping.index', compact('title', 'subTitle', 'lessons'));
     }
 
     public function getLessons()
@@ -121,6 +122,7 @@ class LessonMappingController extends Controller implements HasMiddleware
     public function show(LessonMapping $lessonMapping): View
     {
         $title = 'Pengaturan Registrasi';
+        $subTitle = 'Detail Pembagian Mata Pelajaran';
         $lessons = $this->getLessons();
         $lessonMapping->load('educationalInstitution:id,name', 'lesson:id,name');
         $previousEducationalGroups = json_decode($lessonMapping->previous_educational_group, true);
@@ -128,7 +130,7 @@ class LessonMappingController extends Controller implements HasMiddleware
             ->select(['id', 'name'])
             ->get();
 
-        return \view('dashboard.school-report.lesson-mapping.show', compact('title', 'lessonMapping', 'lessons', 'educationalGroups'));
+        return \view('dashboard.school-report.lesson-mapping.show', compact('title', 'subTitle', 'lessonMapping', 'lessons', 'educationalGroups'));
     }
 
     public function update(LessonMappingRequest $request, LessonMapping $lessonMapping): JsonResponse

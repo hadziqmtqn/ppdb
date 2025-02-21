@@ -3,7 +3,7 @@
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span>
         <span class="text-muted fw-light"><a href="{{ route('lesson-mapping.index') }}">Pembagian Mata Pelajaran</a> /</span>
-        {{ $title }}
+        {{ $subTitle }}
     </h4>
     <div class="row mt-4">
         <div class="col-lg-3 col-md-4 col-12 mb-md-0 mb-3">
@@ -19,14 +19,14 @@
                 </div>
                 <div>
                     <h5 class="mb-0">
-                        <span class="align-middle">Pembagian Mata Pelajaran</span>
+                        <span class="align-middle">{{ $subTitle }}</span>
                     </h5>
-                    <small>Referensi Pembagian Mata Pelajaran Pada Nilai Rapor</small>
+                    <small>Referensi {{ $subTitle }} Pada Nilai Rapor</small>
                 </div>
             </div>
 
             <div class="card mb-3">
-                <h5 class="card-header">Pembagian Mata Pelajaran</h5>
+                <h5 class="card-header">{{ $subTitle }}</h5>
                 <form onsubmit="return false" id="formEdit" data-slug="{{ $lessonMapping->slug }}">
                     @method('PUT')
                     <div class="card-body">
