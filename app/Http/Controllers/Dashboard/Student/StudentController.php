@@ -7,6 +7,7 @@ use App\Http\Requests\Student\FilterRequest;
 use App\Models\RegistrationSchedule;
 use App\Models\User;
 use App\Repositories\RegistrationScheduleRepository;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
 use App\Repositories\Student\StudentStatsRepository;
@@ -23,6 +24,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class StudentController extends Controller implements HasMiddleware
@@ -33,13 +35,15 @@ class StudentController extends Controller implements HasMiddleware
     protected StudentRegistrationRepository $studentRegistrationRepository;
     protected StudentStatsRepository $studentStatsRepository;
     protected RegistrationScheduleRepository $registrationScheduleRepository;
+    protected SchoolReportRepository $schoolReportRepository;
 
-    public function __construct(StudentRepository $studentRepository, StudentRegistrationRepository $studentRegistrationRepository, StudentStatsRepository $studentStatsRepository, RegistrationScheduleRepository $registrationScheduleRepository)
+    public function __construct(StudentRepository $studentRepository, StudentRegistrationRepository $studentRegistrationRepository, StudentStatsRepository $studentStatsRepository, RegistrationScheduleRepository $registrationScheduleRepository, SchoolReportRepository $schoolReportRepository)
     {
         $this->studentRepository = $studentRepository;
         $this->studentRegistrationRepository = $studentRegistrationRepository;
         $this->studentStatsRepository = $studentStatsRepository;
         $this->registrationScheduleRepository = $registrationScheduleRepository;
+        $this->schoolReportRepository = $schoolReportRepository;
     }
 
     public static function middleware(): array
@@ -146,6 +150,7 @@ class StudentController extends Controller implements HasMiddleware
         $user->load([
             'student.user:id,name',
             'student.educationalInstitution:id,name',
+            'student.educationalInstitution.registrationSetting',
             'student.registrationCategory:id,name',
             'student.registrationPath:id,name',
             'student.major:id,name',
@@ -183,7 +188,10 @@ class StudentController extends Controller implements HasMiddleware
         $registrationValidation = $this->studentRegistrationRepository->registrationValidationStatus($user->student);
         $registrationStatus = $this->studentRegistrationRepository->registrationStatus($user->student);
 
-        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl', 'registrationValidation', 'registrationStatus'));
+        // TODO School Report
+        $schoolReports = $this->schoolReportRepository->getByUser($user);
+
+        return \view('dashboard.student.student.show', compact('title', 'user', 'registrations', 'personalData', 'families', 'residences', 'previousSchools', 'mediaFiles', 'photoUrl', 'registrationValidation', 'registrationStatus', 'schoolReports'));
     }
 
     public function inactive(User $user)
@@ -231,6 +239,9 @@ class StudentController extends Controller implements HasMiddleware
         return $this->apiResponse('Data berhasil dikembalikan!', null, null, Response::HTTP_OK);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function permanentlyDelete($username): JsonResponse
     {
         $user = User::with('student')

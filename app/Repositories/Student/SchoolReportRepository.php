@@ -74,4 +74,25 @@ class SchoolReportRepository
             ];
         });
     }
+
+    public function getByUser(User $user): Collection
+    {
+        $user->load('schoolReports.detailSchoolReports.lesson:id,name');
+
+        return collect([
+            'totalScore' => $user->schoolReports->sum('total_score'),
+            'schoolReports' => $user->schoolReports->map(function (SchoolReport $schoolReport) {
+                return collect([
+                    'semester' => $schoolReport->semester,
+                    'totalScore' => $schoolReport->total_score,
+                    'detailSchoolReports' => $schoolReport->detailSchoolReports->map(function (DetailSchoolReport $detailSchoolReport) {
+                        return collect([
+                            'lessonName' => optional($detailSchoolReport->lesson)->name,
+                            'score' => $detailSchoolReport->score
+                        ]);
+                    })
+                ]);
+            })
+        ]);
+    }
 }

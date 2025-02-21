@@ -218,6 +218,42 @@
                         </div>
                     </div>
                 </div>
+                @if(optional(optional(optional($user->student)->educationalInstitution)->registrationSetting)->accepted_with_school_report)
+                    <div class="col-md-12 mb-4">
+                        <div class="card">
+                            <div class="card-body pb-0">
+                                <div class="card-icon mb-3">
+                                    <div class="avatar">
+                                        <div class="avatar-initial rounded bg-label-secondary">
+                                            <i class="mdi mdi-file-outline mdi-24px"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <h4 class="card-title">Nilai Raport</h4>
+                                </div>
+                            </div>
+                            <div class="card-datatable">
+                                <table class="table w-100 text-nowrap table-responsive">
+                                    <tbody>
+                                    @foreach($schoolReports['schoolReports'] as $schoolReport)
+                                        <tr>
+                                            <td class="table-light fw-bold">Semester {{ $schoolReport['semester'] }}</td>
+                                            <td class="table-light fw-bold">{{ $schoolReport['totalScore'] }}</td>
+                                        </tr>
+                                        @foreach($schoolReport['detailSchoolReports'] as $detailSchoolReport)
+                                            <tr>
+                                                <td>{{ $detailSchoolReport['lessonName'] }}</td>
+                                                <td>{{ $detailSchoolReport['score'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

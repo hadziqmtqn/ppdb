@@ -75,4 +75,9 @@ class EducationalInstitution extends Model implements HasMedia
     {
         return $this->hasMany(RegistrationPath::class, 'educational_institution_id');
     }
+
+    public function registrationSetting(): HasOne
+    {
+        return $this->hasOne(RegistrationSetting::class, 'educational_institution_id');
+    }
 }
