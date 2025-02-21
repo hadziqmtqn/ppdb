@@ -56,6 +56,7 @@ use App\Http\Controllers\Dashboard\Student\PersonalDataController;
 use App\Http\Controllers\Dashboard\Student\PreviousSchoolController;
 use App\Http\Controllers\Dashboard\Student\ResidenceController;
 use App\Http\Controllers\Dashboard\Student\SchoolReportController;
+use App\Http\Controllers\Dashboard\Student\SchoolValueReportController;
 use App\Http\Controllers\Dashboard\Student\StudentController;
 use App\Http\Controllers\Dashboard\Student\StudentRegistrationController;
 use App\Http\Controllers\Dashboard\Student\StudentReportController;
@@ -413,6 +414,11 @@ Route::middleware('auth')->group(function () {
         Route::get('student-report-pdf/{user:username}', [StudentReportController::class, 'pdf'])->name('student-report-pdf-user:username');
 
         Route::get('student-stats', [StudentStatsController::class, 'index']);
+
+        Route::get('school-report', [SchoolValueReportController::class, 'index'])->name('school-report.index');
+        Route::group(['prefix' => 'school-value-report'], function () {
+            Route::post('/datatable', [SchoolValueReportController::class, 'datatable']);
+        });
 
         Route::middleware('student_access')->group(function () {
             Route::get('student/{user:username}/show', [StudentController::class, 'show'])->name('student.show');
