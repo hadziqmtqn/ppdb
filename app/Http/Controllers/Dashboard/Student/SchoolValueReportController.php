@@ -58,7 +58,7 @@ class SchoolValueReportController extends Controller implements HasMiddleware
     {
         try {
             if ($request->ajax()) {
-                $users = User::with('student:id,user_id,educational_institution_id,school_year_id', 'student.educationalInstitution:id,name', 'previousSchool:id,user_id,school_name,educational_group_id')
+                $users = User::with('student:id,user_id,educational_institution_id,school_year_id', 'student.educationalInstitution:id,name', 'previousSchool.previousSchoolReference')
                     ->withSum('schoolReports', 'total_score')
                     ->whereHas('student')
                     ->whereHas('schoolReports')
@@ -89,7 +89,7 @@ class SchoolValueReportController extends Controller implements HasMiddleware
                     }
 
                     if ($educationalGroup) {
-                        $match = $match && optional($user->previousSchool)->educational_group_id == $educationalGroup;
+                        $match = $match && optional(optional($user->previousSchool)->previousSchoolReference)->educational_group_id == $educationalGroup;
                     }
 
                     return $match;
@@ -98,7 +98,7 @@ class SchoolValueReportController extends Controller implements HasMiddleware
                 return DataTables::of($users)
                     ->addIndexColumn()
                     ->addColumn('educationalInstitution', fn($row) => optional(optional($row->student)->educationalInstitution)->name)
-                    ->addColumn('previousSchool', fn($row) => optional($row->previousSchool)->school_name)
+                    ->addColumn('previousSchool', fn($row) => optional(optional($row->previousSchool)->previousSchoolReference)->name)
                     ->addColumn('totalScore', fn($row) => round($row->school_reports_sum_total_score, 2))
                     ->addColumn('action', function ($row) {
                         return '<a href="'. route('school-value-report.show', $row->username) .'" class="btn btn-icon btn-sm btn-secondary"><i class="mdi mdi-eye"></i></a>';
@@ -118,7 +118,7 @@ class SchoolValueReportController extends Controller implements HasMiddleware
         $this->authorize('view-student', $user);
         $title = 'Nilai Rapor';
         $subTitle = 'Detail Nilai Rapor';
-        $user->load('student.educationalInstitution', 'previousSchool.educationalGroup');
+        $user->load('student.educationalInstitution', 'previousSchool.previousSchoolReference.educationalGroup');
         $schoolReports = $this->schoolReportRepository->getByUser($user);
 
         return \view('dashboard.student.school-value-report.show', compact('title', 'schoolReports', 'user', 'subTitle'));

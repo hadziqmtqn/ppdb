@@ -54,10 +54,10 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
     {
         $lessons = $this->getLessons();
 
-        $users = User::with('student.educationalInstitution', 'previousSchool', 'schoolReports.detailSchoolReports')
+        $users = User::with('student.educationalInstitution', 'previousSchool.previousSchoolReference', 'schoolReports.detailSchoolReports')
             ->withSum('schoolReports', 'total_score')
             ->whereHas('student', fn($query) => $query->where('educational_institution_id', $this->educationalInstitution()->id))
-            ->whereHas('previousSchool', fn($query) => $query->where('educational_group_id', $this->educationalGroup()->id))
+            ->whereHas('previousSchool.previousSchoolReference', fn($query) => $query->where('educational_group_id', $this->educationalGroup()->id))
             ->whereHas('schoolReports')
             ->get()
             ->sortByDesc('school_reports_sum_total_score');
@@ -71,7 +71,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                 $user->name,
                 optional($user->student)->registration_number,
                 optional(optional($user->student)->educationalInstitution)->name,
-                optional($user->previousSchool)->school_name
+                optional(optional($user->previousSchool)->previousSchoolReference)->name
             ]);
 
             foreach ($lessons as $lesson) {
@@ -133,7 +133,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
         return LessonMapping::educationalInstitutionId($this->educationalInstitution()->id)
             ->whereHas('lesson', fn($query) => $query->where('is_active', true))
             ->get()
-            ->filter(fn($lessonMapping) => collect(json_decode($lessonMapping->previous_educational_group, true))
+            ->filter(fn(LessonMapping $lessonMapping) => collect(json_decode($lessonMapping->previous_educational_group, true))
                 ->contains($this->educationalGroup()->id))
             ->map(fn(LessonMapping $lessonMapping) => [
                 'lessonId' => $lessonMapping->lesson_id,
