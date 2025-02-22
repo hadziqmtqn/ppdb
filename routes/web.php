@@ -27,6 +27,7 @@ use App\Http\Controllers\Dashboard\References\EducationController;
 use App\Http\Controllers\Dashboard\References\IncomeController;
 use App\Http\Controllers\Dashboard\References\MajorController;
 use App\Http\Controllers\Dashboard\References\MediaFileController;
+use App\Http\Controllers\Dashboard\References\PreviousSchoolReferenceController;
 use App\Http\Controllers\Dashboard\References\ProfessionController;
 use App\Http\Controllers\Dashboard\References\RegistrationCategoryController;
 use App\Http\Controllers\Dashboard\References\RegistrationPathController;
@@ -493,6 +494,7 @@ Route::middleware('auth')->group(function () {
         Route::get('select-media-file', [MediaFileController::class, 'select']);
         Route::get('select-bank-account', [BankAccountController::class, 'select']);
         Route::get('select-educational-group', [EducationalGroupController::class, 'select']);
+        Route::get('select-previous-school-reference', [PreviousSchoolReferenceController::class, 'select']);
     });
 
     Route::group(['prefix' => 'account-verification'], function () {

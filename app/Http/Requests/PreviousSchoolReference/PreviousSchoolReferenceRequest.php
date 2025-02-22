@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PreviousSchoolReference;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -9,7 +9,6 @@ class PreviousSchoolReferenceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => ['required'],
             'educational_group_id' => ['required', 'integer'],
             'npsn' => ['nullable'],
             'name' => ['required'],

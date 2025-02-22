@@ -157,7 +157,7 @@ class StudentController extends Controller implements HasMiddleware
             'personalData',
             'family',
             'residence',
-            'previousSchool'
+            'previousSchool.previousSchoolReference'
         ]);
 
         if (!$user->student) {

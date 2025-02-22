@@ -78,13 +78,13 @@ class StudentRepository
     public function previousSchool(User $user): Collection
     {
         return collect([
-            'Nama Asal Sekolah' => optional($user->previousSchool)->school_name,
-            'Status' => optional($user->previousSchool)->status,
-            'Provinsi' => optional($user->previousSchool)->province,
-            'Kota/Kab.' => optional($user->previousSchool)->city,
-            'Kecamatan' => optional($user->previousSchool)->district,
-            'Desa/Kel.' => optional($user->previousSchool)->village,
-            'Jalan' => optional($user->previousSchool)->street,
+            'Nama Asal Sekolah' => optional(optional($user->previousSchool)->previousSchoolReference)->name,
+            'Status' => optional(optional($user->previousSchool)->previousSchoolReference)->status,
+            'Provinsi' => optional(optional($user->previousSchool)->previousSchoolReference)->province,
+            'Kota/Kab.' => optional(optional($user->previousSchool)->previousSchoolReference)->city,
+            'Kecamatan' => optional(optional($user->previousSchool)->previousSchoolReference)->district,
+            'Desa/Kel.' => optional(optional($user->previousSchool)->previousSchoolReference)->village,
+            'Jalan' => optional(optional($user->previousSchool)->previousSchoolReference)->street,
         ]);
     }
 }

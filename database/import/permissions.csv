@@ -111,3 +111,6 @@ lesson-mapping-read
 lesson-mapping-write
 lesson-mapping-delete
 school-report-read
+previous-school-reference-read
+previous-school-reference-write
+previous-school-reference-delete

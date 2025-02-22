@@ -76,4 +76,6 @@
     <script src="{{ asset('js/student/previous-school/store.js') }}"></script>
     <script src="{{ asset('js/idn-location/address.js') }}"></script>
     <script src="{{ asset('js/educational-group/select.js') }}"></script>
+
+    <script src="{{ asset('js/previous-school-reference/select.js') }}"></script>
 @endsection

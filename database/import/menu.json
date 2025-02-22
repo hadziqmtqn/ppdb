@@ -114,7 +114,8 @@
       "major-read",
       "distance-to-school-read",
       "transportation-read",
-      "profession-read"
+      "profession-read",
+      "previous-school-reference-read"
     ],
     "url": "#",
     "icon": "tag-outline",
@@ -195,6 +196,13 @@
         "visibility": ["media-file-read"],
         "url": "/media-file",
         "icon": "file-document-outline"
+      },
+      {
+        "name": "Referensi Asal Sekolah",
+        "type": "sub_menu",
+        "visibility": ["previous-school-reference-read"],
+        "url": "/previous-school-reference",
+        "icon": "office-building-marker-outline"
       }
     ]
   },

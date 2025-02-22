@@ -48,4 +48,21 @@ class PreviousSchoolReference extends Model
     {
         return $query->where('educational_group_id', $educationalGroupId);
     }
+
+    public function scopeSearch(Builder $query, $request): Builder
+    {
+        $search = $request['search'] ?? null;
+
+        return $query->when($search, fn($query) => $query->whereAny(['name', 'npsn'], 'LIKE', '%' . $search . '%'));
+    }
+
+    public function scopeFilterData(Builder $query, $request): Builder
+    {
+        return $query->where([
+            'province' => $request['province'] ?? null,
+            'city' => $request['city'] ?? null,
+            'district' => $request['district'] ?? null,
+            'village' => $request['village'] ?? null
+        ]);
+    }
 }
