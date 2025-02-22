@@ -45,36 +45,43 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
     {
         $lessons = $this->getLessons();
 
-        return User::with('student.educationalInstitution', 'previousSchool', 'schoolReports.detailSchoolReports')
+        $users = User::with('student.educationalInstitution', 'previousSchool', 'schoolReports.detailSchoolReports')
+            ->withSum('schoolReports', 'total_score')
             ->whereHas('student', fn($query) => $query->where('educational_institution_id', $this->educationalInstitution()->id))
             ->whereHas('previousSchool', fn($query) => $query->where('educational_group_id', $this->educationalGroup()->id))
             ->whereHas('schoolReports')
-            ->get()
-            ->map(function (User $user, $index) use ($lessons) {
-                $row = collect([
-                    $index + 1,
-                    $user->name,
-                    optional(optional($user->student)->educationalInstitution)->name,
-                    optional($user->previousSchool)->school_name
-                ]);
+            ->get();
 
-                foreach ($lessons as $lesson) {
-                    foreach ($lesson['semesters'] as $semester) {
-                        $score = $user->schoolReports
-                            ->where('semester', $semester)
-                            ->flatMap(fn($report) => $report->detailSchoolReports)
-                            ->where('lesson_id', $lesson['lessonId'])
-                            ->first()
-                            ->score ?? '';
-                        $row->push($score);
-                    }
+        $users = $users->sortByDesc('school_reports_sum_total_score');
+
+        return $users->map(function (User $user) use ($lessons) {
+            static $no = 0;
+            $no++;
+
+            $row = collect([
+                $no,
+                $user->name,
+                optional(optional($user->student)->educationalInstitution)->name,
+                optional($user->previousSchool)->school_name
+            ]);
+
+            foreach ($lessons as $lesson) {
+                foreach ($lesson['semesters'] as $semester) {
+                    $score = $user->schoolReports
+                        ->where('semester', $semester)
+                        ->flatMap(fn($report) => $report->detailSchoolReports)
+                        ->where('lesson_id', $lesson['lessonId'])
+                        ->first()
+                        ->score ?? '';
+                    $row->push($score);
                 }
+            }
 
-                $totalScore = $user->schoolReports->sum('total_score');
-                $row->push($totalScore);
+            $totalScore = $user->schoolReports->sum('total_score');
+            $row->push($totalScore);
 
-                return $row;
-            });
+            return $row;
+        });
     }
 
     public function headings(): array
