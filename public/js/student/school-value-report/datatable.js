@@ -41,11 +41,52 @@ $(function () {
             '>',
         buttons: [
             {
-                text: '<i class="mdi mdi-file-excel-outline me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Export</span>',
-                className: 'btn btn-primary waves-effect waves-light',
+                text: '<i class="mdi mdi-download me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Export</span>',
+                className: 'btn btn-primary waves-effect waves-light me-2',
                 attr: {
                     'id': 'exportExcelButton',
+                    'data-bs-toggle': 'tooltip',
+                    'title': 'Unduh Rincian'
                 }
+            },
+            {
+                extend: 'collection',
+                className: 'btn btn-secondary dropdown-toggle me-w waves-effect waves-light',
+                text: '<i class="mdi mdi-export-variant me-1"></i> <span class="d-none d-sm-inline-block">Unduh Rekap</span>',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: '<i class="mdi mdi-printer-outline me-1" ></i>Print',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4],
+                        },
+                    },
+                    {
+                        extend: 'csv',
+                        text: '<i class="mdi mdi-file-document-outline me-1" ></i>Csv',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        text: '<i class="mdi mdi-file-excel-outline me-1"></i>Excel',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="mdi mdi-file-pdf-box me-1"></i>PDF',
+                        className: 'dropdown-item',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
+                    },
+                ]
             }
         ],
     });
