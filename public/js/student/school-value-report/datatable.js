@@ -53,6 +53,10 @@ $(function () {
                 extend: 'collection',
                 className: 'btn btn-secondary dropdown-toggle me-w waves-effect waves-light',
                 text: '<i class="mdi mdi-export-variant me-1"></i> <span class="d-none d-sm-inline-block">Unduh Rekap</span>',
+                attr: {
+                    'data-bs-toggle': 'tooltip',
+                    'title': 'Unduh Rekap Nilai'
+                },
                 buttons: [
                     {
                         extend: 'print',
@@ -99,6 +103,15 @@ $(function () {
         });
 
         dataTable.ajax.reload();
+    });
+
+    dataTable.on('draw.dt', function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                boundary: document.body
+            });
+        });
     });
 
     exportExcelHandler();

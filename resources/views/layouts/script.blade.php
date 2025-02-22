@@ -20,7 +20,7 @@
 <script src="{{ asset('materialize/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/block-ui/block-ui.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{ url('https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/autosize/autosize.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/cleavejs/cleave.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
@@ -32,7 +32,7 @@
 <script src="{{ asset('materialize/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.id.min.js" integrity="sha512-5dCXH+uVhgMJkIOoV1tEejq2voWTEqqh2Q2+Caz6//+6i9dLpfyDmAzKcdbogrXjPLanlDO5pTsBDKzmaJcWFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.id.min.js') }}" integrity="sha512-5dCXH+uVhgMJkIOoV1tEejq2voWTEqqh2Q2+Caz6//+6i9dLpfyDmAzKcdbogrXjPLanlDO5pTsBDKzmaJcWFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/pickr/pickr.js') }}"></script>
 <script src="{{ asset('materialize/assets/vendor/libs/clipboard/clipboard.js') }}"></script>
@@ -59,10 +59,10 @@
 <script src="{{ asset('materialize/assets/js/ui-popover.js') }}"></script>
 
 {{--plugins--}}
-<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="{{ url('https://unpkg.com/filepond@^4/dist/filepond.js')}}"></script>
+<script src="{{ url('https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js')}}"></script>
+<script src="{{ url('https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js')}}"></script>
+<script src="{{ url('https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js')}}"></script>
 
 <script type="importmap">
     {

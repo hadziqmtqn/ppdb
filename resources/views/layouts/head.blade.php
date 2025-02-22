@@ -50,9 +50,9 @@
 <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/page-profile.css') }}" />
 
 {{--plugins--}}
-<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css">
+<link href="{{ url('https://unpkg.com/filepond@^4/dist/filepond.css') }}" rel="stylesheet" />
+<link href="{{ url('https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css') }}" rel="stylesheet"/>
+<link rel="stylesheet" href="{{ url('https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css') }}">
 
 {{--custom--}}
 <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
