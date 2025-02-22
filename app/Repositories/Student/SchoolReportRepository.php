@@ -39,7 +39,7 @@ class SchoolReportRepository
             ->get()
             ->filter(function (LessonMapping $lessonMapping) use ($user) {
                 $previousEducationalGroups = collect(json_decode($lessonMapping->previous_educational_group, true));
-                return $previousEducationalGroups->contains(optional($user->previousSchool)->educational_group_id);
+                return $previousEducationalGroups->contains(optional(optional($user->previousSchool)->previousSchoolReference)->educational_group_id);
             });
 
         return $semesters->mapWithKeys(function ($semester) use ($lessonMappings, $user) {

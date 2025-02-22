@@ -39,7 +39,7 @@ class SchoolReportController extends Controller
     {
         $this->authorize('view-student', $user);
         $title = 'Manajemen Siswa';
-        $user->load('student.educationalInstitution:id,name', 'previousSchool');
+        $user->load('student.educationalInstitution:id,name', 'previousSchool.previousSchoolReference');
         $menus = $this->studentRegistrationRepository->menus($user);
         $schoolReports = $this->schoolReportRepository->getLessons($user);
         $schoolReportIsCompleted = $this->schoolReportRepository->isComplete($user);
