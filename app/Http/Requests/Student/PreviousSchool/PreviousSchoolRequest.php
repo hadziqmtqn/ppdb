@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Student\PreviousSchool;
 
+use App\Rules\Student\StudentRegistration\PreviousSchoolReferenceRule;
 use App\Traits\ApiResponse;
 use App\Traits\HandlesValidationFailure;
 use Illuminate\Foundation\Http\FormRequest;
@@ -17,12 +18,12 @@ class PreviousSchoolRequest extends FormRequest
             'province' => ['required'],
             'city' => ['required'],
             'district' => ['required'],
-            'village' => ['nullable'],
-            'street' => ['nullable'],
-            'previous_school_reference_id' => ['required_if:create_new,0', 'nullable', 'integer', 'exists:previous_school_references,id'],
+            'village' => ['required'],
+            'street' => ['required_if:create_new,1', 'nullable'],
+            'previous_school_reference_id' => ['required_if:create_new,0', 'nullable', 'integer', 'exists:previous_school_references,id', new PreviousSchoolReferenceRule($this->route('user')->username)],
             'create_new' => ['required', 'boolean'],
             'school_name' => ['required_if:create_new,1', 'nullable'],
-            'status' => ['required_if:create_new,1', 'integer', 'in:"Swasta","Negeri"'],
+            'status' => ['required_if:create_new,1', 'nullable', 'in:"Swasta","Negeri"'],
         ];
     }
 
@@ -34,10 +35,11 @@ class PreviousSchoolRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'educational_group_id' => ':attribute wajib diisi jika tambah baru',
-            'previous_school_reference_id' => ':attribute wajib diisi jika tidak tambah baru',
-            'school_name' => ':attribute wajib diisi jika tambah baru',
-            'status' => ':attribute wajib diisi jika tambah baru'
+            'educational_group_id.required_if' => ':attribute wajib diisi jika tambah baru',
+            'previous_school_reference_id.required_if' => ':attribute wajib diisi jika tidak tambah baru',
+            'school_name.required_if' => ':attribute wajib diisi jika tambah baru',
+            'status.required_if' => ':attribute wajib diisi jika tambah baru',
+            'street.required_if' => ':attribute wajib diisi jika tambah baru'
         ];
     }
 
@@ -47,6 +49,7 @@ class PreviousSchoolRequest extends FormRequest
             'create_new' => 'tambah baru',
             'school_name' => 'nama asal sekolah',
             'educational_group_id' => 'kelompok pendidikan',
+            'previous_school_reference_id' => 'asal sekolah',
             'status' => 'status',
             'address' => 'alamat',
             'province' => 'provinsi',

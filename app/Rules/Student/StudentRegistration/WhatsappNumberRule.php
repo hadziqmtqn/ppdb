@@ -9,7 +9,6 @@ use Closure;
 
 class WhatsappNumberRule extends UserRule
 {
-
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $this->failIfNotFound($fail);

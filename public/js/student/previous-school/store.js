@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('form');
     const username = form.dataset.username;
     const btnSubmit = document.getElementById('btn-submit');
+    const createNewCheckbox = document.getElementById('createNew');
 
     if (!form || !btnSubmit) {
         return;
@@ -51,6 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const formData = new FormData(form);
+
+        // Ensure the create_new checkbox value is correctly set
+        formData.set('create_new', createNewCheckbox.checked ? '1' : '0');
+
         try {
             const response = await axios.post(`/previous-school/${username}/store`, formData);
             if (response.data.type === 'success') {

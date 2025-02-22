@@ -46,10 +46,6 @@
                             <label for="village">Desa/Kelurahan</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="street" id="street" class="form-control" placeholder="Jalan" value="{{ optional(optional($user->previousSchool)->previousSchoolReference)->street }}">
-                            <label for="street">Jalan</label>
-                        </div>
-                        <div class="form-floating form-floating-outline mb-3">
                             <select name="previous_school_reference_id" id="select-previous-school-reference" class="form-select select2" data-allow-clear="true">
                                 <option value="{{ optional($user->previousSchool)->previous_school_reference_id }}" selected>{{ optional(optional($user->previousSchool)->previousSchoolReference)->name }} ({{ optional(optional($user->previousSchool)->previousSchoolReference)->status }})</option>
                             </select>
@@ -73,6 +69,10 @@
                                 </select>
                                 <label for="status">Status Sekolah</label>
                             </div>
+                            <div class="form-floating form-floating-outline mb-3">
+                                <input type="text" name="street" id="street" class="form-control" placeholder="Nama Jalan">
+                                <label for="street">Jalan</label>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -90,4 +90,5 @@
     <script src="{{ asset('js/educational-group/select.js') }}"></script>
 
     <script src="{{ asset('js/previous-school-reference/select.js') }}"></script>
+    <script src="{{ asset('js/student/previous-school/new-school.js') }}"></script>
 @endsection

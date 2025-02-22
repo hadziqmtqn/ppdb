@@ -2,12 +2,10 @@
 
 namespace App\Rules\Student\StudentRegistration;
 
-use App\Models\Student;
-use App\Models\User;
 use App\Rules\Student\UserRule;
 use Closure;
 
-class NisnRule extends UserRule
+class PreviousSchoolReferenceRule extends UserRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -15,11 +13,9 @@ class NisnRule extends UserRule
         $user = $this->getUser();
 
         if ($user) {
-            $whatsappNumberExist = Student::where('nisn', $value)
-                ->where('user_id', '!=', $user->id)
-                ->exists();
-
-            if ($whatsappNumberExist) $fail('NISN telah digunakan');
+            if (($user->school_reports_count > 0) && (optional($user->previousSchool)->previous_school_reference_id != $value)) {
+                $fail('Tidak boleh mengubah Asal Sekolah jika sudah mengisi Nilai Rapor');
+            }
         }
     }
 }
