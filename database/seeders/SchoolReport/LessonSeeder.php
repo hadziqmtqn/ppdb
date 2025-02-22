@@ -19,6 +19,7 @@ class LessonSeeder extends Seeder
 
         foreach ($rows as $row) {
             $lesson = new Lesson();
+            $lesson->code = $row['code'];
             $lesson->name = $row['name'];
             $lesson->type = $row['type'];
             $lesson->save();

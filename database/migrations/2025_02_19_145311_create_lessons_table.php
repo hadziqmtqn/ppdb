@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->uuid('slug')->unique();
+            $table->string('code')->unique();
             $table->string('name');
             $table->enum('type', ['umum', 'keagamaan']);
             $table->boolean('is_active')->default(true);

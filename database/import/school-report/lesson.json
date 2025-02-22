@@ -1,5 +1,6 @@
 [
   {
+    "code" : "PPKn",
     "name": "Pendidikan Pancasila dan Kewarganegaraan",
     "type": "umum",
     "lesson_mapping": [
@@ -14,6 +15,7 @@
     ]
   },
   {
+    "code": "MTK",
     "name": "Matematika",
     "type": "umum",
     "lesson_mapping": [
@@ -28,6 +30,7 @@
     ]
   },
   {
+    "code": "BIND",
     "name": "Bahasa Indonesia",
     "type": "umum",
     "lesson_mapping": [
@@ -42,6 +45,7 @@
     ]
   },
   {
+    "code": "IPA",
     "name": "Ilmu Pengetahuan Alam",
     "type": "umum",
     "lesson_mapping": [
@@ -56,6 +60,7 @@
     ]
   },
   {
+    "code": "IPS",
     "name": "Ilmu Pengetahuan Sosial",
     "type": "umum",
     "lesson_mapping": [
@@ -70,6 +75,7 @@
     ]
   },
   {
+    "code": "BING",
     "name": "Bahasa Inggris",
     "type": "umum",
     "lesson_mapping": [
@@ -84,6 +90,7 @@
     ]
   },
   {
+    "code": "PABP",
     "name": "Pendidikan Agama dan Budi Pekerti",
     "type": "keagamaan",
     "lesson_mapping": [
@@ -98,6 +105,7 @@
     ]
   },
   {
+    "code": "QH",
     "name": "Quran Hadits",
     "type": "keagamaan",
     "lesson_mapping": [
@@ -112,6 +120,7 @@
     ]
   },
   {
+    "code": "AA",
     "name": "Akidah Akhlak",
     "type": "keagamaan",
     "lesson_mapping": [
@@ -126,6 +135,7 @@
     ]
   },
   {
+    "code": "FIKIH",
     "name": "Fikih",
     "type": "keagamaan",
     "lesson_mapping": [
@@ -140,6 +150,7 @@
     ]
   },
   {
+    "code": "SKI",
     "name": "Sejarah Kebudayaan Islam",
     "type": "keagamaan",
     "lesson_mapping": [
@@ -154,6 +165,7 @@
     ]
   },
   {
+    "code": "BA",
     "name": "Bahasa Arab",
     "type": "keagamaan",
     "lesson_mapping": [

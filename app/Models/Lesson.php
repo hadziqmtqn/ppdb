@@ -11,6 +11,7 @@ class Lesson extends Model
 {
     protected $fillable = [
         'slug',
+        'code',
         'name',
         'type',
         'is_active',

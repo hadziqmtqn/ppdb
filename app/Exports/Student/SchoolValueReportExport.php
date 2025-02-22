@@ -72,7 +72,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
 
         $lessons = $this->getLessons();
         foreach ($lessons as $lesson) {
-            $mainHeading[] = $lesson['lessonName'];
+            $mainHeading[] = $lesson['lessonCode'];
             $semesterCount = count($lesson['semesters']);
             for ($i = 1; $i < $semesterCount; $i++) {
                 $mainHeading[] = '';
@@ -82,7 +82,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
             }
         }
 
-        return [$mainHeading, $semesterHeading];
+        return [$mainHeading, $semesterHeading, ['Skor']];
     }
 
     private function getLessons(): Collection
@@ -97,7 +97,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
             ->map(function (LessonMapping $lessonMapping) {
                 return [
                     'lessonId' => $lessonMapping->lesson_id,
-                    'lessonName' => optional($lessonMapping->lesson)->name,
+                    'lessonCode' => optional($lessonMapping->lesson)->code,
                     'semesters' => $this->semesters()
                 ];
             });
