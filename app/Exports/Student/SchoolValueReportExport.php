@@ -140,7 +140,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                 $sheet = $event->sheet->getDelegate();
                 $lastColumnIndex = $sheet->getHighestColumn();
                 $lastColumn = Coordinate::columnIndexFromString($lastColumnIndex);
-                $lastColumnToAdd = Coordinate::stringFromColumnIndex($lastColumn );
+                $lastColumnToAdd = Coordinate::stringFromColumnIndex($lastColumn);
                 $totalRows = $sheet->getHighestRow();
                 $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial');
                 $sheet->getParent()->getDefaultStyle()->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
@@ -153,8 +153,24 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                     ->setBold(true);
 
                 // merge title
-                foreach (['A1:A2','B1:B2','C1:C2','D1:D2','E1:E2'] as $range) {
+                foreach (['A1:A2', 'B1:B2', 'C1:C2', 'D1:D2', 'E1:E2', $lastColumnToAdd . '1:' . $lastColumnToAdd . '2'] as $range) {
                     $sheet->mergeCells($range);
+                }
+
+                // dynamically merge lesson columns
+                $lessons = $this->getLessons();
+                $currentColumnIndex = 6; // starting from column 'F'
+                foreach ($lessons as $lesson) {
+                    $semesterCount = count($lesson['semesters']);
+                    if ($semesterCount > 1) {
+                        $endColumnIndex = $currentColumnIndex + $semesterCount - 1;
+                        $startColumn = Coordinate::stringFromColumnIndex($currentColumnIndex);
+                        $endColumn = Coordinate::stringFromColumnIndex($endColumnIndex);
+                        $sheet->mergeCells("{$startColumn}1:{$endColumn}1");
+                        $currentColumnIndex = $endColumnIndex + 1;
+                    } else {
+                        $currentColumnIndex++;
+                    }
                 }
 
                 // background header
