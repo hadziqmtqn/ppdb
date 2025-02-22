@@ -13,6 +13,7 @@ class UpdateLessonRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'code' => ['required', 'unique:lessons,code,' . $this->route('lesson')->slug . ',slug'],
             'name' => ['required'],
             'type' => ['required'],
             'is_active' => ['required', 'boolean']
@@ -27,6 +28,7 @@ class UpdateLessonRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'code' => 'kode',
             'name' => 'nama',
             'type' => 'tipe mapel',
             'is_active' => 'status aktif'

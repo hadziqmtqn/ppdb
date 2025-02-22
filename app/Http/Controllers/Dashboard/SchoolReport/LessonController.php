@@ -59,7 +59,7 @@ class LessonController extends Controller implements HasMiddleware
                     ->addColumn('type', fn($row) => ucfirst($row->type))
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
-                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" data-type="'. $row->type .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
+                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-name="'. $row->name .'" data-code="'. $row->code .'" data-type="'. $row->type .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
 
                         if ($row->lesson_mappings_count == 0) {
                             $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
@@ -81,6 +81,7 @@ class LessonController extends Controller implements HasMiddleware
     {
         try {
             $lesson = new Lesson();
+            $lesson->code = $request->input('code');
             $lesson->name = $request->input('name');
             $lesson->type = $request->input('type');
             $lesson->save();
@@ -95,6 +96,7 @@ class LessonController extends Controller implements HasMiddleware
     public function update(UpdateLessonRequest $request, Lesson $lesson): JsonResponse
     {
         try {
+            $lesson->code = $request->input('code');
             $lesson->name = $request->input('name');
             $lesson->type = $request->input('type');
             $lesson->is_active = $request->input('is_active');

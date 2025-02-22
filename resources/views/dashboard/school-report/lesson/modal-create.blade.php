@@ -9,6 +9,10 @@
                 <form onsubmit="return false" id="formCreate" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework">
                     <div class="col-12 fv-plugins-icon-container">
                         <div class="form-floating form-floating-outline mb-3">
+                            <input type="text" name="code" id="code" class="form-control" placeholder="Kode">
+                            <label for="code">Kode</label>
+                        </div>
+                        <div class="form-floating form-floating-outline mb-3">
                             <input type="text" name="name" id="name" class="form-control" placeholder="Nama">
                             <label for="name">Nama</label>
                         </div>

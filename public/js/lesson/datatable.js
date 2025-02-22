@@ -19,6 +19,7 @@ $(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'type', name: 'type'},
             {data: 'is_active', name: 'is_active', orderable: false, searchable: false},
@@ -54,10 +55,12 @@ $(function () {
     $('#modalEdit').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget);
         const slug = button.data('slug');
+        const code = button.data('code');
         const name = button.data('name');
         const type = button.data('type');
         const active = button.data('active');
 
+        $('#editCode').val(code);
         $('#editName').val(name);
         $('#editType').val(type).trigger('change');
 

@@ -28,6 +28,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>Kode</th>
                             <th>Nama</th>
                             <th>Tipe</th>
                             <th>Status</th>

@@ -13,6 +13,7 @@ class LessonRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'code' => ['required', 'unique:lessons,code'],
             'name' => ['required'],
             'type' => ['required'],
         ];
@@ -26,6 +27,7 @@ class LessonRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'code' => 'kode',
             'name' => 'nama',
             'type' => 'tipe mapel',
         ];
