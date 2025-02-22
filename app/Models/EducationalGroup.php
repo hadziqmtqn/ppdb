@@ -55,4 +55,10 @@ class EducationalGroup extends Model
                 });
             });
     }
+
+    public static function selectByCode($code): EducationalGroup
+    {
+        return self::where('code', $code)
+            ->firstOrFail();
+    }
 }

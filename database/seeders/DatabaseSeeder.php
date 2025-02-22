@@ -17,6 +17,7 @@ use Database\Seeders\References\EducationSeeder;
 use Database\Seeders\References\MediaFileSeeder;
 use Database\Seeders\References\IncomeSeeder;
 use Database\Seeders\References\MajorSeeder;
+use Database\Seeders\References\PreviousSchoolReferenceSeeder;
 use Database\Seeders\References\ProfessionSeeder;
 use Database\Seeders\References\RegistrationCategorySeeder;
 use Database\Seeders\References\RegistrationPathSeeder;
@@ -73,6 +74,7 @@ class DatabaseSeeder extends Seeder
             FaqSeeder::class,
             RegistrationSettingSeeder::class,
             EducationalGroupSeeder::class,
+            PreviousSchoolReferenceSeeder::class,
             // TODO School Report
             LessonSeeder::class,
             // TODO Student Faker

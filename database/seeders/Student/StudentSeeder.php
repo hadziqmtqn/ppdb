@@ -7,37 +7,22 @@ use App\Models\EducationalGroup;
 use App\Models\LessonMapping;
 use App\Models\PersonalData;
 use App\Models\PreviousSchool;
+use App\Models\PreviousSchoolReference;
 use App\Models\RegistrationSetting;
 use App\Models\SchoolReport;
 use App\Models\Student;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
-use League\Csv\Exception;
-use League\Csv\InvalidArgument;
-use League\Csv\Reader;
-use League\Csv\UnavailableStream;
 
 class StudentSeeder extends Seeder
 {
-    /**
-     * @throws InvalidArgument
-     * @throws UnavailableStream
-     * @throws Exception
-     */
     public function run(): void
     {
         $faker = Factory::create();
 
-        // previous school references
-        $previousSchoolReferences = Reader::createFromPath(database_path('import/school-references.csv'))
-            ->setHeaderOffset(0)
-            ->setDelimiter(';');
-
-        $schoolData = iterator_to_array($previousSchoolReferences->getRecords());
-
         Student::factory(100)
             ->create()
-            ->each(function (Student $student) use ($faker, $schoolData) {
+            ->each(function (Student $student) use ($faker) {
                 // Personal Data
                 $personalData = new PersonalData();
                 $personalData->user_id = $student->user_id;
@@ -52,32 +37,15 @@ class StudentSeeder extends Seeder
 
                 // Previous School
                 $educationalGroups = EducationalGroup::where('next_educational_level_id', $student->educationalInstitution->educational_level_id)
-                    ->pluck('code', 'id')
-                    ->toArray();
-
-                $randomEducationalGroup = $faker->randomElement($educationalGroups);
-                $educationalGroupId = array_search($randomEducationalGroup, $educationalGroups);
-                $educationalGroupCode = $randomEducationalGroup;
-
-                // Filter school names and statuses based on educational group
-                $filteredSchoolData = array_filter($schoolData, function ($school) use ($educationalGroupCode) {
-                    return $school['educational_group'] === $educationalGroupCode;
-                });
-
-                if ($filteredSchoolData) {
-                    $selectedSchool = $faker->randomElement($filteredSchoolData);
-                    $schoolName = $selectedSchool['name'];
-                    $schoolStatus = $selectedSchool['status'];
-                } else {
-                    $schoolName = $faker->word;
-                    $schoolStatus = $faker->randomElement(['Negeri', 'Swasta']);
-                }
+                    ->pluck('id')
+                    ->random();
+                $previousSchoolReferences = PreviousSchoolReference::educationalGroupId($educationalGroups)
+                    ->pluck('id')
+                    ->random();
 
                 $previousSchool = new PreviousSchool();
                 $previousSchool->user_id = $student->user_id;
-                $previousSchool->school_name = $schoolName;
-                $previousSchool->educational_group_id = $educationalGroupId;
-                $previousSchool->status = $schoolStatus;
+                $previousSchool->previous_school_reference_id = $previousSchoolReferences;
                 $previousSchool->save();
 
                 // School Report
@@ -90,7 +58,7 @@ class StudentSeeder extends Seeder
                     ->get()
                     ->filter(function (LessonMapping $lessonMapping) use ($student) {
                         $previousEducationalGroups = collect(json_decode($lessonMapping->previous_educational_group, true));
-                        return $previousEducationalGroups->contains(optional(optional($student->user)->previousSchool)->educational_group_id);
+                        return $previousEducationalGroups->contains(optional(optional(optional($student->user)->previousSchool)->previousSchoolReference)->educational_group_id);
                     });
 
                 if ($registrationSetting) {

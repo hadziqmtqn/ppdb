@@ -11,18 +11,11 @@ return new class extends Migration {
             $table->id();
             $table->uuid('slug');
             $table->unsignedBigInteger('user_id');
-            $table->string('school_name');
-            $table->unsignedBigInteger('educational_group_id');
-            $table->enum('status', ['Negeri', 'Swasta']);
-            $table->string('province')->nullable();
-            $table->string('city')->nullable();
-            $table->string('district')->nullable();
-            $table->string('village')->nullable();
-            $table->string('street')->nullable();
+            $table->unsignedBigInteger('previous_school_reference_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('educational_group_id')->references('id')->on('educational_groups')->restrictOnDelete();
+            $table->foreign('previous_school_reference_id')->references('id')->on('previous_school_references')->restrictOnDelete();
         });
     }
 

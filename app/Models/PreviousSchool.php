@@ -12,14 +12,7 @@ class PreviousSchool extends Model
     protected $fillable = [
         'slug',
         'user_id',
-        'school_name',
-        'educational_group_id',
-        'status',
-        'province',
-        'city',
-        'district',
-        'village',
-        'street'
+        'previous_school_reference_id',
     ];
 
     protected function casts(): array
@@ -38,9 +31,9 @@ class PreviousSchool extends Model
         });
     }
 
-    public function educationalGroup(): BelongsTo
+    public function previousSchoolReference(): BelongsTo
     {
-        return $this->belongsTo(EducationalGroup::class);
+        return $this->belongsTo(PreviousSchoolReference::class);
     }
 
     // TODO Scope
