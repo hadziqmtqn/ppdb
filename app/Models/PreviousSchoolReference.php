@@ -58,11 +58,17 @@ class PreviousSchoolReference extends Model
 
     public function scopeFilterData(Builder $query, $request): Builder
     {
-        return $query->where([
+        $village = $request['village'] ?? null;
+
+        $query->where([
+            'educational_group_id' => $request['educational_group_id'] ?? null,
             'province' => $request['province'] ?? null,
             'city' => $request['city'] ?? null,
-            'district' => $request['district'] ?? null,
-            'village' => $request['village'] ?? null
+            'district' => $request['district'] ?? null
         ]);
+
+        $query->when($village, fn($query) => $query->where('village', $village));
+
+        return $query;
     }
 }

@@ -13,16 +13,16 @@ class PreviousSchoolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'create_new' => ['required', 'boolean'],
-            'previous_school_reference_id' => ['required_if:create_new,0', 'nullable', 'integer', 'exists:previous_school_references,id'],
-            'school_name' => ['required_if:create_new,1', 'nullable'],
-            'educational_group_id' => ['required_if:create_new,1', 'nullable', 'integer', 'exists:educational_groups,id'],
-            'status' => ['required_if:create_new,1', 'integer', 'in:"Swasta","Negeri"'],
-            'province' => ['nullable'],
-            'city' => ['nullable'],
-            'district' => ['nullable'],
+            'educational_group_id' => ['required', 'integer', 'exists:educational_groups,id'],
+            'province' => ['required'],
+            'city' => ['required'],
+            'district' => ['required'],
             'village' => ['nullable'],
-            'street' => ['nullable']
+            'street' => ['nullable'],
+            'previous_school_reference_id' => ['required_if:create_new,0', 'nullable', 'integer', 'exists:previous_school_references,id'],
+            'create_new' => ['required', 'boolean'],
+            'school_name' => ['required_if:create_new,1', 'nullable'],
+            'status' => ['required_if:create_new,1', 'integer', 'in:"Swasta","Negeri"'],
         ];
     }
 
@@ -34,9 +34,9 @@ class PreviousSchoolRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'educational_group_id' => ':attribute wajib diisi jika tambah baru',
             'previous_school_reference_id' => ':attribute wajib diisi jika tidak tambah baru',
             'school_name' => ':attribute wajib diisi jika tambah baru',
-            'educational_group_id' => ':attribute wajib diisi jika tambah baru',
             'status' => ':attribute wajib diisi jika tambah baru'
         ];
     }

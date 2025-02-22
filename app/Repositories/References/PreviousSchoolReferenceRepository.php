@@ -34,7 +34,7 @@ class PreviousSchoolReferenceRepository
         return $this->apiResponse('Get data success', $previousSchoolReferences->map(function (PreviousSchoolReference $previousSchoolReference) {
             return collect([
                 'id' => $previousSchoolReference->id,
-                'name' => $previousSchoolReference->name
+                'name' => $previousSchoolReference->name . ' (' . $previousSchoolReference->status . ')'
             ]);
         }), null, Response::HTTP_OK);
     }
