@@ -43,19 +43,37 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
      */
     public function collection(): Collection
     {
-        // Implement the logic for gathering the data collection here.
-        return User::with('student.educationalInstitution', 'previousSchool')
+        $lessons = $this->getLessons();
+
+        return User::with('student.educationalInstitution', 'previousSchool', 'schoolReports.detailSchoolReports')
             ->whereHas('student', fn($query) => $query->where('educational_institution_id', $this->educationalInstitution()->id))
             ->whereHas('previousSchool', fn($query) => $query->where('educational_group_id', $this->educationalGroup()->id))
             ->whereHas('schoolReports')
             ->get()
-            ->map(function (User $user, $index) {
-                return collect([
+            ->map(function (User $user, $index) use ($lessons) {
+                $row = collect([
                     $index + 1,
                     $user->name,
                     optional(optional($user->student)->educationalInstitution)->name,
                     optional($user->previousSchool)->school_name
                 ]);
+
+                foreach ($lessons as $lesson) {
+                    foreach ($lesson['semesters'] as $semester) {
+                        $score = $user->schoolReports
+                            ->where('semester', $semester)
+                            ->flatMap(fn($report) => $report->detailSchoolReports)
+                            ->where('lesson_id', $lesson['lessonId'])
+                            ->first()
+                            ->score ?? '';
+                        $row->push($score);
+                    }
+                }
+
+                $totalScore = $user->schoolReports->sum('total_score');
+                $row->push($totalScore);
+
+                return $row;
             });
     }
 
@@ -82,11 +100,21 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
             }
         }
 
-        return [$mainHeading, $semesterHeading, ['Skor']];
+        $mainHeading[] = 'Skor';
+        $semesterHeading[] = '';
+
+        return [$mainHeading, $semesterHeading];
     }
 
     private function getLessons(): Collection
     {
+        $registrationSetting = $this->educationalInstitution()->registrationSetting;
+
+        $semesters = collect();
+        if ($registrationSetting->accepted_with_school_report) {
+            $semesters = collect(json_decode($registrationSetting->school_report_semester, true));
+        }
+
         return LessonMapping::educationalInstitutionId($this->educationalInstitution()->id)
             ->whereHas('lesson', fn($query) => $query->where('is_active', true))
             ->get()
@@ -94,25 +122,12 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                 $previousEducationalGroups = collect(json_decode($lessonMapping->previous_educational_group, true));
                 return $previousEducationalGroups->contains($this->educationalGroup()->id);
             })
-            ->map(function (LessonMapping $lessonMapping) {
+            ->map(function (LessonMapping $lessonMapping) use ($semesters) {
                 return [
                     'lessonId' => $lessonMapping->lesson_id,
                     'lessonCode' => optional($lessonMapping->lesson)->code,
-                    'semesters' => $this->semesters()
+                    'semesters' => $semesters
                 ];
             });
-    }
-
-    private function semesters(): Collection
-    {
-        $registrationSetting = $this->educationalInstitution()->registrationSetting;
-
-        if ($registrationSetting->accepted_with_school_report) {
-            $semesters = collect(json_decode($registrationSetting->school_report_semester, true));
-        } else {
-            $semesters = collect();
-        }
-
-        return $semesters;
     }
 }
