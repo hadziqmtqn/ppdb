@@ -126,9 +126,10 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
             ->get()
             ->filter(fn($lessonMapping) => collect(json_decode($lessonMapping->previous_educational_group, true))
                 ->contains($this->educationalGroup()->id))
-            ->map(fn($lessonMapping) => [
+            ->map(fn(LessonMapping $lessonMapping) => [
                 'lessonId' => $lessonMapping->lesson_id,
                 'lessonCode' => optional($lessonMapping->lesson)->code,
+                'lessonName' => optional($lessonMapping->lesson)->name,
                 'semesters' => $semesters
             ]);
     }
