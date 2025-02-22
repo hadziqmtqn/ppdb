@@ -41,16 +41,12 @@ function exportExcelHandler() {
             }
 
         } catch (error) {
-            if (error.response && error.response.status === 422) {
-                const reader = new FileReader();
-                reader.onload = function () {
-                    const errorMessage = JSON.parse(reader.result).message || 'Data gagal diekspor';
-                    toastr.error(errorMessage);
-                };
-                reader.readAsText(error.response.data); // Baca blob sebagai teks
-            } else {
-                toastr.error(error.response?.data?.message || 'Terjadi kesalahan');
-            }
+            const reader = new FileReader();
+            reader.onload = function () {
+                const errorMessage = JSON.parse(reader.result).message || 'Data gagal diekspor';
+                toastr.error(errorMessage);
+            };
+            reader.readAsText(error.response.data);
         } finally {
             unBlockUi();
         }

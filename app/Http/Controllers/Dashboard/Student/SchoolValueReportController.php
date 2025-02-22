@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 use App\Exports\Student\SchoolValueReportExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SchoolReport\FilterRequest;
+use App\Models\EducationalGroup;
 use App\Models\EducationalInstitution;
 use App\Models\SchoolYear;
 use App\Models\User;
@@ -127,11 +128,13 @@ class SchoolValueReportController extends Controller implements HasMiddleware
     {
         try {
             $schoolYear = SchoolYear::findOrFail($request->input('school_year_id'));
-            $educationalInstitution = EducationalInstitution::find($request->input('educational_institution_id'));
+            $educationalInstitution = EducationalInstitution::with('registrationSetting')
+                ->findOrFail($request->input('educational_institution_id'));
+            $educationalGroup = EducationalGroup::findOrFail($request->input('educational_group_id'));
 
-            $educationalInstitutionName = optional($educationalInstitution)->name ?? ' Semua Lembaga ';
+            if (!optional($educationalInstitution->registrationSetting)->accepted_with_school_report) return $this->apiResponse('Registrasi tidak menggunakan Nilai Rapor', null, null, Response::HTTP_BAD_REQUEST);
 
-            return Excel::download(new SchoolValueReportExport($request), 'Daftar Nilai Rapor ' . $educationalInstitutionName . ' TA-' . $schoolYear->first_year . '-' . $schoolYear->last_year . '.xlsx');
+            return Excel::download(new SchoolValueReportExport($request), 'Daftar Nilai Rapor ' . $educationalInstitution->name . ' Grup ' . $educationalGroup->name . ' TA-' . $schoolYear->first_year . '-' . $schoolYear->last_year . '.xlsx');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this->apiResponse('Laporan gagal diunduh!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
