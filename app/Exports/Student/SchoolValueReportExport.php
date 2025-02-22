@@ -103,7 +103,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                 $mainHeading[] = '';
             }
             foreach ($lesson['semesters'] as $semester) {
-                $semesterHeading[] = 'Sem. ' . $semester;
+                $semesterHeading[] = 'Sem ' . $semester;
             }
         }
 
@@ -143,10 +143,10 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                 $lastColumnToAdd = Coordinate::stringFromColumnIndex($lastColumn );
                 $totalRows = $sheet->getHighestRow();
                 $sheet->getParent()->getDefaultStyle()->getFont()->setName('Arial');
-                $sheet->getParent()->getDefaultStyle()->getAlignment()
-                    ->setVertical(Alignment::VERTICAL_CENTER);
+                $sheet->getParent()->getDefaultStyle()->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
 
-                $sheet->getStyle('A1:' . $lastColumnToAdd . '2')->getAlignment()
+                $sheet->getStyle('A1:' . $lastColumnToAdd . '2')
+                    ->getAlignment()
                     ->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A1:' . $lastColumnToAdd . '2')
                     ->getFont()
@@ -158,11 +158,25 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                 }
 
                 // background header
-                $sheet->getStyle('A1:' . $lastColumnIndex . '2')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB('86D293');
+                $sheet->getStyle('A1:' . $lastColumnIndex . '2')
+                    ->getFill()
+                    ->setFillType(Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('86D293');
                 // border header
-                $sheet->getStyle('A1:' . $lastColumnIndex . $totalRows)->getBorders()->getAllBorders()->setBorderStyle('thin');
+                $sheet->getStyle('A1:' . $lastColumnIndex . $totalRows)
+                    ->getBorders()
+                    ->getAllBorders()
+                    ->setBorderStyle('thin');
                 // semua baris menggunakan format "text" secara default
-                $sheet->getStyle('A1:' . $lastColumnIndex . $totalRows)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_TEXT);
+                $sheet->getStyle('A1:' . $lastColumnIndex . $totalRows)
+                    ->getNumberFormat()
+                    ->setFormatCode(NumberFormat::FORMAT_TEXT);
+
+                // semua nilai rata tengah
+                $sheet->getStyle('F3:' . $lastColumnToAdd . $totalRows)
+                    ->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER);
             }
         ];
     }
