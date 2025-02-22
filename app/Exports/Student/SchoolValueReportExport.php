@@ -2,6 +2,7 @@
 
 namespace App\Exports\Student;
 
+use App\Exports\Lesson\LessonExport;
 use App\Models\EducationalGroup;
 use App\Models\EducationalInstitution;
 use App\Models\LessonMapping;
@@ -13,13 +14,15 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHeadings, WithEvents
+class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHeadings, WithEvents, WithTitle, WithMultipleSheets
 {
     use Exportable;
 
@@ -28,6 +31,12 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
     public function __construct(Request $request)
     {
         $this->request = $request;
+    }
+
+    public function title(): string
+    {
+        // TODO: Implement title() method.
+        return 'Nilai Rapor';
     }
 
     private function educationalInstitution(): ?EducationalInstitution
@@ -113,7 +122,7 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
         return [$mainHeading, $semesterHeading];
     }
 
-    private function getLessons(): Collection
+    public function getLessons(): Collection
     {
         $registrationSetting = $this->educationalInstitution()->registrationSetting;
 
@@ -195,6 +204,15 @@ class SchoolValueReportExport implements FromCollection, ShouldAutoSize, WithHea
                     ->getAlignment()
                     ->setHorizontal(Alignment::HORIZONTAL_CENTER);
             }
+        ];
+    }
+
+    public function sheets(): array
+    {
+        // TODO: Implement sheets() method.
+        return [
+            'Nilai Rapor' => $this,
+            'Kode Mapel' => new LessonExport($this->getLessons())
         ];
     }
 }
