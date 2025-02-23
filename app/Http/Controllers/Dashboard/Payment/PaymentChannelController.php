@@ -54,7 +54,7 @@ class PaymentChannelController extends Controller implements HasMiddleware
                         });
                     })
                     ->addColumn('is_active', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="is-active btn btn-sm '. ($row->is_active ? 'btn-primary' : 'btn-danger').'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</button>';
+                        return '<button type="button" data-slug="'. $row->slug .'" class="is-active btn btn-sm '. ($row->is_active ? 'btn-primary' : 'btn-danger').'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</button>';
                     })
                     ->rawColumns(['is_active'])
                     ->make();

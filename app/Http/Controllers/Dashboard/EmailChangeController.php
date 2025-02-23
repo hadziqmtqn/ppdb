@@ -9,9 +9,13 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class EmailChangeController extends Controller
 {
+    /**
+     * @throws Throwable
+     */
     public function verification(VerificationRequest $request)
     {
         try {

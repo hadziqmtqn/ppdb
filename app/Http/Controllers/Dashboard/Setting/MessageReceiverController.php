@@ -53,7 +53,7 @@ class MessageReceiverController extends Controller implements HasMiddleware
                     ->addColumn('user', fn($row) => optional($row->user)->name)
                     ->addColumn('contact', fn($row) => optional($row->user)->email . ' | ' . optional(optional($row->user)->admin)->whatsapp_number)
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        return '<button type="button" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
                     })
                     ->rawColumns(['action'])
                     ->make();

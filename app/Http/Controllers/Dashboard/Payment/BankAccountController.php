@@ -76,8 +76,8 @@ class BankAccountController extends Controller implements HasMiddleware
                     ->addColumn('paymentChannel', fn($row) => optional($row->paymentChannel)->name)
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
-                        $btn = '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-account-name="'. $row->account_name .'" data-account-number="'. $row->account_number .'" data-payment-channel-id="'. $row->payment_channel_id .'" data-educational-institution="'. $row->educational_institution_id .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        $btn = '<button type="button" data-slug="'. $row->slug .'" data-account-name="'. $row->account_name .'" data-account-number="'. $row->account_number .'" data-payment-channel-id="'. $row->payment_channel_id .'" data-educational-institution="'. $row->educational_institution_id .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';
+                        $btn .= '<button type="button" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
 
                         return $btn;
                     })

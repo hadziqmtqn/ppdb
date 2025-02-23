@@ -54,7 +54,7 @@ class WhatsappConfigController extends Controller implements HasMiddleware
                     })
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-domain="'. $row->domain .'" data-api-key="'. $row->api_key .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
+                        return '<button type="button" data-slug="'. $row->slug .'" data-domain="'. $row->domain .'" data-api-key="'. $row->api_key .'" data-active="'. $row->is_active .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
                     })
                     ->rawColumns(['action', 'is_active'])
                     ->make();

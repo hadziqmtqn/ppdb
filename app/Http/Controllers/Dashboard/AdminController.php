@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller implements HasMiddleware
@@ -83,11 +84,11 @@ class AdminController extends Controller implements HasMiddleware
                         if (!$row->deleted_at) {
                             $btn = '<a href="' . route('admin.show', $row->username) . '" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
                             if ($row->roles->first()->name != 'super-admin') {
-                                $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                                $btn .= '<button type="button" data-username="' . $row->username . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
                             }
                         }else {
-                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
-                            $btn .= '<button href="javascript:void(0)" data-username="' . $row->username . '" class="force-delete btn btn-sm btn-danger"><i class="mdi mdi-trash-can-outline me-1"></i>Hapus Permanen</button>';
+                            $btn .= '<button type="button" data-username="' . $row->username . '" class="restore btn btn-icon btn-sm btn-warning"><i class="mdi mdi-restore-alert"></i></button> ';
+                            $btn .= '<button type="button" data-username="' . $row->username . '" class="force-delete btn btn-sm btn-danger"><i class="mdi mdi-trash-can-outline me-1"></i>Hapus Permanen</button>';
                         }
 
                         return $btn;
@@ -102,6 +103,9 @@ class AdminController extends Controller implements HasMiddleware
         return response()->json(true);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(AdminRequest $request)
     {
         try {
@@ -141,6 +145,9 @@ class AdminController extends Controller implements HasMiddleware
         return \view('dashboard.admin.show', compact('title', 'user'));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function update(UpdateAdminRequest $request, User $user)
     {
         try {
@@ -171,6 +178,9 @@ class AdminController extends Controller implements HasMiddleware
         return to_route('admin.index')->with('success', 'Data berhasil disimpan');
     }
 
+    /**
+     * @throws Throwable
+     */
     public function destroy(User $user): \Symfony\Component\HttpFoundation\JsonResponse
     {
         try {
@@ -205,6 +215,9 @@ class AdminController extends Controller implements HasMiddleware
         return $this->apiResponse('Data berhasil dikembalikan', null, null, Response::HTTP_OK);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function forceDelete($username): \Symfony\Component\HttpFoundation\JsonResponse
     {
         try {

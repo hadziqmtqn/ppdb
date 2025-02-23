@@ -58,7 +58,7 @@ class PaymentSettingController extends Controller implements HasMiddleware
                     ->addColumn('educationalInstitution', fn($row) => optional($row->educationalInstitution)->name)
                     ->addColumn('payment_method', fn($row) => str_replace('_', ' ', $row->payment_method))
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. $row->educational_institution_id .'" data-payment-method="'. $row->payment_method .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
+                        return '<button type="button" data-slug="'. $row->slug .'" data-educational-institution="'. $row->educational_institution_id .'" data-payment-method="'. $row->payment_method .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button>';
                     })
                     ->rawColumns(['action'])
                     ->make();

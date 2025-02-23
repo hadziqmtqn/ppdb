@@ -62,7 +62,7 @@ class RegistrationStepController extends Controller implements HasMiddleware
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="' . route('registration-step.show', $row->slug) . '" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil-outline"></i></a> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
+                        $btn .= '<button type="button" data-slug="' . $row->slug . '" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-trash-can-outline"></i></button>';
 
                         return $btn;
                     })

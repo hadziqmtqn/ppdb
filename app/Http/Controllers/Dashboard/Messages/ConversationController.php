@@ -75,7 +75,7 @@ class ConversationController extends Controller
                     ->addColumn('created_at', fn($row) => Carbon::parse($row->created_at)->isoFormat('DD MMM Y HH:mm'))
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="'. route('conversation.show', $row->slug) .'" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        $btn .= '<button type="button" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
 
                         return $btn;
                     })

@@ -81,7 +81,7 @@ class RegistrationScheduleController extends Controller implements HasMiddleware
                         return $data;
                     })
                     ->addColumn('action', function ($row) {
-                        return '<button href="javascript:void(0)" data-slug="'. $row->slug .'" data-educational-institution="'. optional($row->educationalInstitution)->name .'" data-school-year="'. optional($row->schoolYear)->first_year . '-' . optional($row->schoolYear)->last_year .'" data-start-date="'. date('Y-m-d', strtotime($row->start_date)) .'" data-end-date="'. date('Y-m-d', strtotime($row->end_date)) .'" data-quota="'. $row->quota .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditRegistrationSchedule"><i class="mdi mdi-pencil"></i></button>';
+                        return '<button type="button" data-slug="'. $row->slug .'" data-educational-institution="'. optional($row->educationalInstitution)->name .'" data-school-year="'. optional($row->schoolYear)->first_year . '-' . optional($row->schoolYear)->last_year .'" data-start-date="'. date('Y-m-d', strtotime($row->start_date)) .'" data-end-date="'. date('Y-m-d', strtotime($row->end_date)) .'" data-quota="'. $row->quota .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditRegistrationSchedule"><i class="mdi mdi-pencil"></i></button>';
                     })
                     ->rawColumns(['action', 'status'])
                     ->make();

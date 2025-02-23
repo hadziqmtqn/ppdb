@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Throwable;
 
 class AccountController extends Controller
 {
@@ -36,6 +37,9 @@ class AccountController extends Controller
         return view('dashboard.account.index', compact('title', 'emailChange'));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function update(AccountRequest $request)
     {
         try {

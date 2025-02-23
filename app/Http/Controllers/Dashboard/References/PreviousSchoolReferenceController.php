@@ -72,7 +72,7 @@ class PreviousSchoolReferenceController extends Controller implements HasMiddlew
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="'. route('previous-school-reference.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
                         if (($row->previous_schools_count == 0)) {
-                            $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                            $btn .= '<button type="button" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
                         }
 
                         return $btn;

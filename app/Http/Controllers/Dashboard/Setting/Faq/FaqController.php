@@ -70,7 +70,7 @@ class FaqController extends Controller implements HasMiddleware
                     ->addColumn('description', fn($row) => Str::limit(strip_tags($row->description), 80))
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="'. route('faq.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> ';
-                        $btn .= '<button href="javascript:void(0)" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
+                        $btn .= '<button type="button" data-slug="'. $row->slug .'" class="delete btn btn-icon btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>';
 
                         return $btn;
                     })
