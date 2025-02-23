@@ -33,12 +33,6 @@ class AdminDashboardRepository
                 'icon' => 'office-building-marker-outline',
                 'color' => 'primary',
                 'total' => $this->educationalInstitution->active()->count()
-            ],
-            'Total Semua Siswa' => [
-                'title' => 'Jumlah siswa terdaftar dalam aplikasi',
-                'icon' => 'account-group-outline',
-                'color' => 'success',
-                'total' => $this->student->count()
             ]
         ]);
     }

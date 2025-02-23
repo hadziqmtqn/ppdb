@@ -55,6 +55,30 @@ class AdminDashboardController extends Controller
         }
     }
 
+    public function totalStudentByGender(FilterRequest $request): JsonResponse
+    {
+        try {
+            $totalStudent = $this->studentStatsRepository->totalStudent($request);
+            $maleStudent = $this->studentStatsRepository->maleStudent($request);
+            $femaleStudent = $this->studentStatsRepository->famaleStudent($request);
+
+            // Menghitung persentase
+            $malePercentage = $totalStudent > 0 ? ($maleStudent / $totalStudent) * 100 : 0;
+            $femalePercentage = $totalStudent > 0 ? ($femaleStudent / $totalStudent) * 100 : 0;
+
+            return $this->apiResponse('Get data successfully.', [
+                'totalStudent' => $totalStudent,
+                'maleStudent' => $maleStudent,
+                'malePercentage' => $malePercentage,
+                'femaleStudent' => $femaleStudent,
+                'femalePercentage' => $femalePercentage,
+            ], null, Response::HTTP_OK);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function previousSchoolReferenceDatatable(Request $request)
     {
         return $this->adminDashboardRepository->previousSchoolReferenceDatatable($request);

@@ -31,6 +31,19 @@
                 </div>
             </div>
         @endforeach
+        <div class="col-xl-2 col-lg-3 col-sm-4 col-6">
+            <div class="card h-100">
+                <div class="card-header pb-0">
+                    <div class="d-flex align-items-end mb-1 flex-wrap gap-2">
+                        <h4 class="mb-0 me-2" id="totalStudentByGender">0</h4>
+                    </div>
+                    <span class="d-block mb-2 text-body">Total Siswa</span>
+                </div>
+                <div class="card-body">
+                    <div id="studentByGenderChart"></div>
+                </div>
+            </div>
+        </div>
         {{--TODO Close Base Data--}}
     </div>
 
@@ -112,4 +125,5 @@
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
     <script src="{{ asset('js/dashboard/admin/student-stats.js') }}"></script>
     <script src="{{ asset('js/dashboard/admin/previous-school-reference-datatable.js') }}"></script>
+    <script src="{{ asset('js/dashboard/admin/total-student-by-gender.js') }}"></script>
 @endsection
