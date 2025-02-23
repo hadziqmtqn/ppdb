@@ -1,10 +1,17 @@
 @extends('layouts.master')
 @section('content')
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('dashboard') }}">Dashboard</a> /</span> {{ $title }}</h4>
-    <div class="card mb-3">
-        <h5 class="card-header">{{ $title }}</h5>
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up.</p>
+    <div class="row gy-4">
+        <div class="col-md-12 col-lg-8">
+            <div class="card">
+                <div class="card-body text-nowrap">
+                    <h4 class="card-title mb-1 d-flex gap-2 flex-wrap">Congratulations {{ auth()->user()->name }}! 🎉</h4>
+                    <p class="pb-0">Fokuslah untuk mencapai tujuanmu, meskipun banyak hal yang menarik dalam perjalanannya.</p>
+                    <h4 class="text-primary mb-1">$42.8k</h4>
+                    <p class="mb-2 pb-1">78% of target 🚀</p>
+                    <a href="#" class="btn btn-sm btn-primary waves-effect waves-light">View Sales</a>
+                </div>
+                <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/illustrations/trophy.png') }}" class="position-absolute bottom-0 end-0 me-3" height="140" alt="view sales">
+            </div>
         </div>
     </div>
 @endsection

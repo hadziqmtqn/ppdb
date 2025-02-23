@@ -64,6 +64,7 @@ use App\Http\Controllers\Dashboard\Student\StudentReportController;
 use App\Http\Controllers\Dashboard\Student\StudentSecurityController;
 use App\Http\Controllers\Dashboard\Student\StudentStatsController;
 use App\Http\Controllers\Dashboard\Student\ValidationController;
+use App\Http\Controllers\Dashboard\UserDashboardController;
 use App\Http\Controllers\Home\ContactUsController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\RegistrationController;
@@ -101,7 +102,8 @@ Route::middleware('auth')->group(function () {
         Route::post('password-validation', [PasswordValidationController::class, 'store']);
 
         // TODO Dashboard
-        Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard')->middleware('admin.dashboard');
+        Route::get('/user-dashboard', [UserDashboardController::class, 'index'])->name('user-dashboard.index')->middleware('user.dashboard');
 
         Route::group(['prefix' => 'account'], function () {
             Route::get('/', [AccountController::class, 'index'])->name('account.index');

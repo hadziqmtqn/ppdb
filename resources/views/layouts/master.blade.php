@@ -5,7 +5,7 @@
     class="light-style layout-menu-fixed layout-compact"
     dir="ltr"
     data-theme="theme-default"
-    data-assets-path="/materialize/assets/"
+    data-assets-path="{{ url('https://hadziqmtqn.github.io/materialize/assets/') }}"
     data-template="horizontal-menu-template">
 <head>
     <meta charset="utf-8" />

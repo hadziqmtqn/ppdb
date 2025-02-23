@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Middleware\AccountVerifiedMiddleware;
+use App\Http\Middleware\AdminDashboardMiddleware;
 use App\Http\Middleware\OnlyAdminMiddleware;
 use App\Http\Middleware\RegistrationIsCompletedMiddleware;
 use App\Http\Middleware\StudentMiddleware;
+use App\Http\Middleware\UserDashboardMiddleware;
 use App\Http\Middleware\VerificationProcessMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -28,7 +30,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'verification_process' => VerificationProcessMiddleware::class,
             'student_access' => StudentMiddleware::class,
             'only_admin' => OnlyAdminMiddleware::class,
-            'registration_is_completed' => RegistrationIsCompletedMiddleware::class
+            'registration_is_completed' => RegistrationIsCompletedMiddleware::class,
+            'admin.dashboard' => AdminDashboardMiddleware::class,
+            'user.dashboard' => UserDashboardMiddleware::class
         ]);
 
         $middleware->validateCsrfTokens(except: [

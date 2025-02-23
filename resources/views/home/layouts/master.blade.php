@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-wide" dir="ltr" data-theme="theme-default" data-assets-path="/materialize/assets/" data-template="front-pages">
+<html lang="en" class="light-style layout-navbar-fixed layout-wide" dir="ltr" data-theme="theme-default" data-assets-path="{{ url('https://hadziqmtqn.github.io/materialize/assets/') }}" data-template="front-pages">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -17,8 +17,8 @@
 </head>
 
 <body>
-<script src="{{ asset('materialize/assets/vendor/js/dropdown-hover.js') }}"></script>
-<script src="{{ asset('materialize/assets/vendor/js/mega-dropdown.js') }}"></script>
+<script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/js/dropdown-hover.js') }}"></script>
+<script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/js/mega-dropdown.js') }}"></script>
 
 <!-- Navbar: Start -->
 @include('home.layouts.navbar')
@@ -35,7 +35,7 @@
 <!-- Footer: Start -->
 <footer class="landing-footer">
     <div class="footer-top position-relative overflow-hidden">
-        <img src="{{ asset('materialize/assets/img/front-pages/backgrounds/footer-bg.png') }}" alt="footer bg" class="footer-bg banner-bg-img" />
+        <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/front-pages/backgrounds/footer-bg.png') }}" alt="footer bg" class="footer-bg banner-bg-img" />
         <div class="container position-relative">
             <div class="row gx-0 gy-4 g-md-5">
                 <div class="col-lg-5">

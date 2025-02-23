@@ -111,7 +111,7 @@ class PreviousSchoolReferenceController extends Controller implements HasMiddlew
 
     public function show(PreviousSchoolReference $previousSchoolReference): View
     {
-        $title = 'Reference Asal Sekolah';
+        $title = 'Referensi Asal Sekolah';
         $subTitle = 'Detail ' . $title;
         $previousSchoolReference->load('educationalGroup:id,name');
 
