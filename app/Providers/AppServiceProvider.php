@@ -8,6 +8,7 @@ use App\Policies\PaymentPolicy;
 use App\Policies\UserPolicy;
 use App\Repositories\ApplicationRepository;
 use App\Repositories\ClassLevelRepository;
+use App\Repositories\Dashboard\AdminDashboardRepository;
 use App\Repositories\EducationalGroupRepository;
 use App\Repositories\EducationalInstitutionRepository;
 use App\Repositories\EducationalLevelRepository;
@@ -79,6 +80,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(EducationalGroupRepository::class, EducationalGroupRepository::class);
         $this->app->singleton(SchoolReportRepository::class, SchoolReportRepository::class);
         $this->app->singleton(PreviousSchoolReferenceRepository::class, PreviousSchoolReferenceRepository::class);
+
+        // TODO Dashboard Component
+        $this->app->singleton(AdminDashboardRepository::class, AdminDashboardRepository::class);
 
         // TODO Send Messages
         $this->app->singleton(AccountVerificationRepository::class, AccountVerificationRepository::class);
