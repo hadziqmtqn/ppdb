@@ -103,7 +103,9 @@ Route::middleware('auth')->group(function () {
 
         // TODO Dashboard
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard')->middleware('admin.dashboard');
-        Route::get('/user-dashboard', [UserDashboardController::class, 'index'])->name('user-dashboard.index')->middleware('user.dashboard');
+        Route::get('user-dashboard', [UserDashboardController::class, 'index'])->name('user-dashboard.index')->middleware('user.dashboard');
+
+        Route::get('student-stats-dashboard', [AdminDashboardController::class, 'studentStats']);
 
         Route::group(['prefix' => 'account'], function () {
             Route::get('/', [AccountController::class, 'index'])->name('account.index');

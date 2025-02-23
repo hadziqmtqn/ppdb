@@ -60,7 +60,7 @@
     </div>
 
     {{--TODO Student Stats--}}
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-widget-separator-wrapper">
             <div class="card-body card-widget-separator">
                 <div class="row gy-4 gy-sm-1">
@@ -82,9 +82,33 @@
             </div>
         </div>
     </div>
+    {{--TODO Close Student Stats--}}
+
+    {{--TODO Previous School Reference--}}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-datatable">
+                    <table class="table table-striped text-nowrap" id="datatable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>NPSN</th>
+                            <th>Asal Sekolah</th>
+                            <th>Kelompok Pendidikan</th>
+                            <th>Jumlah Siswa</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--TODO Close Previous School Reference--}}
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/school-year/select.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
+    <script src="{{ asset('js/dashboard/admin/student-stats.js') }}"></script>
 @endsection
