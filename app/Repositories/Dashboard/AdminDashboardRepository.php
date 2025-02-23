@@ -76,7 +76,16 @@ class AdminDashboardRepository
                 $data = $this->previousSchoolReference->query()
                     ->with('educationalGroup:id,name')
                     ->withCount('previousSchools')
-                    ->whereHas('previousSchools');
+                    ->whereHas('previousSchools.user.student', function ($query) use ($request) {
+                        $query->where('school_year_id', $request->get('school_year_id'));
+                    });
+
+                $educationalInstitution = $request->get('educational_institution_id');
+                $data->when($educationalInstitution, function ($query) use ($educationalInstitution) {
+                    $query->whereHas('previousSchools.user.student', function ($query) use ($educationalInstitution) {
+                        $query->where('educational_institution_id', $educationalInstitution);
+                    });
+                });
 
                 return DataTables::eloquent($data)
                     ->addIndexColumn()

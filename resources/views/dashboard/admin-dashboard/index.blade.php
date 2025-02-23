@@ -42,7 +42,7 @@
         <div class="card-body pb-2">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-floating form-floating-outline mb-3">
+                    <div class="form-floating form-floating-outline mb-3 filter">
                         <select name="" id="select-school-year" class="form-select select2">
                             <option value="{{ $getSchoolYearActive['id'] }}">{{ $getSchoolYearActive['year'] }}</option>
                         </select>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-floating form-floating-outline mb-3">
+                    <div class="form-floating form-floating-outline mb-3 filter">
                         <select name="" id="select-educational-institution" class="form-select select2" data-allow-clear="true"></select>
                         <label for="select-educational-institution">Lembaga Pendidikan</label>
                     </div>

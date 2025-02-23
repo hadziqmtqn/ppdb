@@ -1,12 +1,14 @@
 $(function () {
     const table = '#datatable';
+    const schoolYear = $('#select-school-year');
+    const educationalInstitution = $('#select-educational-institution-0');
 
-    $(table).DataTable({
+    const dataTable = $(table).DataTable({
         processing: true,
         serverSide: true,
         scrollX: true,
         scrollCollapse: true,
-        order: [[1, 'asc']],
+        order: [[4, 'desc']],
         ajax: {
             url: "/previous-school-reference-datatable",
             type: "POST",
@@ -15,6 +17,8 @@ $(function () {
             },
             data: function (d) {
                 d.search = $(table + '_filter ' + 'input[type="search"]').val();
+                d.school_year_id = schoolYear.val();
+                d.educational_institution_id = educationalInstitution.val();
             }
         },
         columns: [
@@ -36,7 +40,7 @@ $(function () {
         language: {
             sLengthMenu: '_MENU_',
             search: '',
-            searchPlaceholder: 'Search Order'
+            searchPlaceholder: 'Search..'
         },
         // Buttons with Dropdown
         buttons: [
@@ -80,5 +84,14 @@ $(function () {
                 ]
             }
         ],
+    });
+
+    $('.filter').on('change', function () {
+        dataTable.ajax.params({
+            school_year_id: schoolYear.val(),
+            educational_institution_id: educationalInstitution.val()
+        });
+
+        dataTable.ajax.reload();
     });
 });

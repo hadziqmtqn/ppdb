@@ -36,6 +36,11 @@ class PreviousSchool extends Model
         return $this->belongsTo(PreviousSchoolReference::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     // TODO Scope
     public function scopeUserId(Builder $query, $userId): Builder
     {
