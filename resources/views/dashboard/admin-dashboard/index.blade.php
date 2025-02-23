@@ -111,4 +111,5 @@
     <script src="{{ asset('js/school-year/select.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
     <script src="{{ asset('js/dashboard/admin/student-stats.js') }}"></script>
+    <script src="{{ asset('js/dashboard/admin/previous-school-reference-datatable.js') }}"></script>
 @endsection

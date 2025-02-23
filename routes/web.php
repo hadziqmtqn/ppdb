@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
         Route::get('user-dashboard', [UserDashboardController::class, 'index'])->name('user-dashboard.index')->middleware('user.dashboard');
 
         Route::get('student-stats-dashboard', [AdminDashboardController::class, 'studentStats']);
+        Route::post('previous-school-reference-datatable', [AdminDashboardController::class, 'previousSchoolReferenceDatatable']);
 
         Route::group(['prefix' => 'account'], function () {
             Route::get('/', [AccountController::class, 'index'])->name('account.index');
