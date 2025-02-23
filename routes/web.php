@@ -326,6 +326,15 @@ Route::middleware('auth')->group(function () {
             Route::put('/{educationalGroup:slug}/update', [EducationalGroupController::class, 'update']);
         });
 
+        Route::group(['prefix' => 'previous-school-reference'], function () {
+            Route::get('/', [PreviousSchoolReferenceController::class, 'index'])->name('previous-school-reference.index');
+            Route::post('/datatable', [PreviousSchoolReferenceController::class, 'datatable']);
+            Route::post('/store', [PreviousSchoolReferenceController::class, 'store']);
+            Route::get('/{previousSchoolReference:slug}', [PreviousSchoolReferenceController::class, 'show'])->name('previous-school-reference.show');
+            Route::put('/{previousSchoolReference:slug}/update', [PreviousSchoolReferenceController::class, 'update']);
+            Route::delete('/{previousSchoolReference:slug}/delete', [PreviousSchoolReferenceController::class, 'destroy']);
+        });
+
         // TODO Payment
         Route::group(['prefix' => 'payment-setting'], function () {
             Route::get('/', [PaymentSettingController::class, 'index'])->name('payment-setting.index');
@@ -494,6 +503,7 @@ Route::middleware('auth')->group(function () {
         Route::get('select-media-file', [MediaFileController::class, 'select']);
         Route::get('select-bank-account', [BankAccountController::class, 'select']);
         Route::get('select-educational-group', [EducationalGroupController::class, 'select']);
+        Route::get('select-educational-group/single-select', [EducationalGroupController::class, 'singleSelect']);
         Route::get('select-previous-school-reference', [PreviousSchoolReferenceController::class, 'select']);
     });
 

@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const formData = new FormData(form);
+        formData.append('_method', 'PUT');
 
         try {
             const response = await axios.post(`/registration-setting/${slug}/update`, formData);

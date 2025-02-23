@@ -56,7 +56,7 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
             'family.guardianIncome:id,nominal',
             'residence.distanceToSchool:id,name',
             'residence.transportation:id,name',
-            'previousSchool',
+            'previousSchool.previousSchoolReference',
         ])
             ->filterStudentDatatable($this->request)
             ->orderBy('name')
@@ -106,13 +106,13 @@ class StudentReportExcel implements FromCollection, ShouldAutoSize, WithHeadings
                     optional(optional($user->residence)->distanceToSchool)->name, // 'Jarak ke Sekolah',
                     optional(optional($user->residence)->transportation)->name, // transportasi
                     // previous school
-                    optional($user->previousSchool)->school_name, // 'Nama Asal Sekolah',
-                    optional($user->previousSchool)->status, // 'Status',
-                    optional($user->previousSchool)->province, // 'Provinsi',
-                    optional($user->previousSchool)->city, // 'Kota/Kab.',
-                    optional($user->previousSchool)->district, // 'Kec.',
-                    optional($user->previousSchool)->village, // 'Desa/Kel.',
-                    optional($user->previousSchool)->street, // 'Jalan',
+                    optional(optional($user->previousSchool)->previousSchoolReference)->name, // 'Nama Asal Sekolah',
+                    optional(optional($user->previousSchool)->previousSchoolReference)->status, // 'Status',
+                    optional(optional($user->previousSchool)->previousSchoolReference)->province, // 'Provinsi',
+                    optional(optional($user->previousSchool)->previousSchoolReference)->city, // 'Kota/Kab.',
+                    optional(optional($user->previousSchool)->previousSchoolReference)->district, // 'Kec.',
+                    optional(optional($user->previousSchool)->previousSchoolReference)->village, // 'Desa/Kel.',
+                    optional(optional($user->previousSchool)->previousSchoolReference)->street, // 'Jalan',
                 ]);
             });
     }

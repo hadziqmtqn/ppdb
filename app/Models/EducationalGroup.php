@@ -46,10 +46,15 @@ class EducationalGroup extends Model
     public function scopeSearch(Builder $query, $request): Builder
     {
         $search = $request['search'] ?? null;
+
+        return $query->when($search, fn($query) => $query->whereAny(['name'], 'LIKE', '%' . $search . '%'));
+    }
+
+    public function scopeFilter(Builder $query, $request): Builder
+    {
         $educationalInstitutionId = $request['educational_institution_id'] ?? null;
 
-        return $query->when($search, fn($query) => $query->whereAny(['name'], 'LIKE', '%' . $search . '%'))
-            ->whereHas('nextEducationalLevel', function ($query) use ($educationalInstitutionId) {
+        return $query->whereHas('nextEducationalLevel', function ($query) use ($educationalInstitutionId) {
                 $query->whereHas('educationalInstitutions', function ($query) use ($educationalInstitutionId) {
                     $query->where('id', $educationalInstitutionId);
                 });

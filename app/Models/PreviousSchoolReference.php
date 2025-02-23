@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class PreviousSchoolReference extends Model
@@ -35,12 +36,22 @@ class PreviousSchoolReference extends Model
 
         static::creating(function (PreviousSchoolReference $previousSchoolReference) {
             $previousSchoolReference->slug = Str::uuid()->toString();
+            $previousSchoolReference->name = strtoupper($previousSchoolReference->name);
+        });
+
+        static::updating(function (PreviousSchoolReference $previousSchoolReference) {
+            $previousSchoolReference->name = strtoupper($previousSchoolReference->name);
         });
     }
 
     public function educationalGroup(): BelongsTo
     {
         return $this->belongsTo(EducationalGroup::class);
+    }
+
+    public function previousSchools(): HasMany
+    {
+        return $this->hasMany(PreviousSchool::class, 'previous_school_reference_id');
     }
 
     // TODO Scope

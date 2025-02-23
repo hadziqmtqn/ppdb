@@ -28,7 +28,6 @@
             <div class="card mb-3">
                 <h5 class="card-header">Pembagian Mata Pelajaran</h5>
                 <form onsubmit="return false" id="formEdit" data-slug="{{ $registrationSetting->slug }}">
-                    @method('PUT')
                     <div class="card-body">
                         <input type="hidden" name="educational_institution_id" id="editEducationalInstitution" value="{{ $registrationSetting->educational_institution_id }}">
                         <div class="form-floating form-floating-outline mb-3">

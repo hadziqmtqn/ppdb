@@ -13,10 +13,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('educational_group_id');
             $table->string('npsn')->nullable();
             $table->string('name');
-            $table->string('province')->nullable();
-            $table->string('city')->nullable();
-            $table->string('district')->nullable();
-            $table->string('village')->nullable();
+            $table->string('province');
+            $table->string('city');
+            $table->string('district');
+            $table->string('village');
             $table->string('street')->nullable();
             $table->string('status');
             $table->timestamps();

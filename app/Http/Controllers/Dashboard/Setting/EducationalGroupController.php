@@ -114,4 +114,9 @@ class EducationalGroupController extends Controller implements HasMiddleware
     {
         return $this->educationalGroupRepository->select($request);
     }
+
+    public function singleSelect(Request $request)
+    {
+        return $this->educationalGroupRepository->singleSelect($request);
+    }
 }
