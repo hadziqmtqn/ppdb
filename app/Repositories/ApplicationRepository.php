@@ -35,7 +35,7 @@ class ApplicationRepository
             'notificationMethod' => $application->notification_method,
             'whatsappNumber' => $application->whatsapp_number,
             'logo' => $application->hasMedia('logo') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(5),'logo') : asset('assets/sekolah.png'),
-            'loginAssets' => $application->hasMedia('login') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'login') : asset('materialize/assets/img/illustrations/auth-login-illustration-light.png'),
+            'loginAssets' => $application->hasMedia('login') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'login') : url('https://hadziqmtqn.github.io/materialize/assets/img/illustrations/auth-login-illustration-light.png'),
             'frontHeaderAssets' => $application->hasMedia('front_header') ? $application->getFirstTemporaryUrl(Carbon::now()->addMinutes(10),'front_header') : asset('assets/jane.jpg'),
             'carouselAssets' => $application->getMedia('carousel')->map(function (Media $media) {
                 return [

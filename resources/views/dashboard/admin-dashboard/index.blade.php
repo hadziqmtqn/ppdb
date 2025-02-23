@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    <div class="row gy-4">
+    <div class="row gy-4 mb-4">
         <div class="col-xl-8 col-md-12 col-lg-6">
             <div class="card h-100">
                 <div class="card-body">
@@ -33,4 +33,58 @@
         @endforeach
         {{--TODO Close Base Data--}}
     </div>
+
+    {{--TODO Select Option--}}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="mdi mdi-filter me-2"></i>Filter Data</h5>
+        </div>
+        <div class="card-body pb-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating form-floating-outline mb-3">
+                        <select name="" id="select-school-year" class="form-select select2">
+                            <option value="{{ $getSchoolYearActive['id'] }}">{{ $getSchoolYearActive['year'] }}</option>
+                        </select>
+                        <label for="select-school-year">Tahun Ajaran</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating form-floating-outline mb-3">
+                        <select name="" id="select-educational-institution" class="form-select select2" data-allow-clear="true"></select>
+                        <label for="select-educational-institution">Lembaga Pendidikan</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{--TODO Student Stats--}}
+    <div class="card">
+        <div class="card-widget-separator-wrapper">
+            <div class="card-body card-widget-separator">
+                <div class="row gy-4 gy-sm-1">
+                    @foreach($stats as $key => $stat)
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="d-flex justify-content-between align-items-start card-widget-1 {{ !$loop->last ? 'border-end' : '' }} pb-3 pb-sm-0">
+                                <div>
+                                    <h3 class="mb-1" id="{{ $stat['id'] }}">{{ $stat['total'] }}</h3>
+                                    <p class="mb-0">{{ $key }}</p>
+                                </div>
+                                <div class="avatar me-sm-4">
+                                    <span class="avatar-initial rounded bg-label-secondary"><i class="mdi mdi-{{ $stat['icon'] }} text-heading mdi-20px"></i></span>
+                                </div>
+                            </div>
+                            <hr class="d-none d-sm-block d-lg-none me-4">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/school-year/select.js') }}"></script>
+    <script src="{{ asset('js/educational-institution/select.js') }}"></script>
 @endsection

@@ -34,4 +34,30 @@ class AdminDashboardRepository
             ]
         ]);
     }
+
+    public function stats(): Collection
+    {
+        return collect([
+            'Total Siswa' => [
+                'total' => 0,
+                'icon' => 'account-multiple-outline',
+                'id' => 'totalStudents'
+            ],
+            'Pendaftaran Diterima' => [
+                'total' => 0,
+                'icon' => 'check-all',
+                'id' => 'registrationReceived'
+            ],
+            'Belum Diterima' => [
+                'total' => 0,
+                'icon' => 'wallet-outline',
+                'id' => 'notYetReceived'
+            ],
+            'Registrasi Ditolak' => [
+                'total' => 0,
+                'icon' => 'alert-octagon-outline',
+                'id' => 'registrationRejected'
+            ]
+        ]);
+    }
 }

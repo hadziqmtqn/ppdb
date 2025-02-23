@@ -76,7 +76,7 @@ class StudentStatsRepository
         }
     }
 
-    private function totalStudent($request): int
+    public function totalStudent($request): int
     {
         return $this->student
             ->whereHas('user')
@@ -84,7 +84,7 @@ class StudentStatsRepository
             ->count();
     }
 
-    private function notYetValidated($request): int
+    public function notYetValidated($request): int
     {
         return $this->student
             ->whereHas('user')
@@ -93,7 +93,7 @@ class StudentStatsRepository
             ->count();
     }
 
-    private function validated($request): int
+    public function validated($request): int
     {
         return $this->student
             ->whereHas('user')
@@ -102,7 +102,7 @@ class StudentStatsRepository
             ->count();
     }
 
-    private function registrationReceived($request): int
+    public function registrationReceived($request): int
     {
         return $this->student
             ->whereHas('user')
@@ -111,7 +111,7 @@ class StudentStatsRepository
             ->count();
     }
 
-    private function notYetReceived($request): int
+    public function notYetReceived($request): int
     {
         return $this->student
             ->whereHas('user')
@@ -120,7 +120,7 @@ class StudentStatsRepository
             ->count();
     }
 
-    private function registrationRejected($request): int
+    public function registrationRejected($request): int
     {
         return $this->student
             ->whereHas('user')
