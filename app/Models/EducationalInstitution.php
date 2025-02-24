@@ -61,9 +61,9 @@ class EducationalInstitution extends Model implements HasMedia
             });
     }
 
-    public function scopeActive(Builder $query): Builder
+    public function students(): HasMany
     {
-        return $query->where('is_active', true);
+        return $this->hasMany(Student::class, 'educational_institution_id');
     }
 
     public function majors(): HasMany
@@ -79,5 +79,11 @@ class EducationalInstitution extends Model implements HasMedia
     public function registrationSetting(): HasOne
     {
         return $this->hasOne(RegistrationSetting::class, 'educational_institution_id');
+    }
+
+    // TODO Scope
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

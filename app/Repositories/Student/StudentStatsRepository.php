@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Student;
 
+use App\Models\EducationalInstitution;
+use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Traits\ApiResponse;
 use Exception;
@@ -15,10 +17,14 @@ class StudentStatsRepository
     use ApiResponse;
 
     protected Student $student;
+    protected SchoolYear $schoolYear;
+    protected EducationalInstitution $educationalInstitution;
 
-    public function __construct(Student $student)
+    public function __construct(Student $student, SchoolYear $schoolYear, EducationalInstitution $educationalInstitution)
     {
         $this->student = $student;
+        $this->schoolYear = $schoolYear;
+        $this->educationalInstitution = $educationalInstitution;
     }
 
     // TODO Stats
@@ -127,5 +133,44 @@ class StudentStatsRepository
             ->statsFilter($request)
             ->registrationStatus('ditolak')
             ->count();
+    }
+
+    public function totalStudentReceived(): Collection
+    {
+        // Get the active school year
+        $activeYear = $this->schoolYear
+            ->where('is_active', true)
+            ->first();
+
+        // Get the previous school year based on the active year's id
+        $previousYear = $this->schoolYear
+            ->where('id', '<', $activeYear->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        // Combine the previous year and the active year into a collection
+        $result = collect([$previousYear, $activeYear]);
+
+        // Process the result and return
+        return $result->map(function (SchoolYear $schoolYear) {
+            return collect([
+                'id' => $schoolYear->id,
+                'status' => $schoolYear->is_active,
+                'year' => $schoolYear->first_year . '/' . $schoolYear->last_year,
+                'educationalInstitutions' => $this->educationalInstitution->withCount([
+                    'students' => fn($query) => $query->where([
+                        'school_year_id' => $schoolYear->id,
+                        'registration_status' => 'diterima'
+                    ])
+                ])
+                    ->get()
+                    ->map(function (EducationalInstitution $educationalInstitution) {
+                        return collect([
+                            'name' => $educationalInstitution->name,
+                            'total' => $educationalInstitution->students_count,
+                        ]);
+                    })
+            ]);
+        });
     }
 }

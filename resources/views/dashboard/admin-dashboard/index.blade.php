@@ -4,7 +4,7 @@
         <div class="col-xl-8 col-md-12 col-lg-6">
             <div class="card h-100">
                 <div class="card-body">
-                    <h4 class="card-title mb-2 d-flex gap-2 flex-wrap">Congratulations {{ auth()->user()->name }}! 🎉</h4>
+                    <h4 class="card-title mb-2 d-flex gap-2 flex-wrap">Welcome {{ auth()->user()->name }}! 🎉</h4>
                     <p class="pb-4">Fokuslah untuk mencapai tujuanmu, meskipun banyak hal yang menarik dalam perjalanannya. 🚀</p>
                     <a href="{{ route('student.index') }}" class="btn btn-sm btn-primary waves-effect waves-light">Lihat Data Siswa</a>
                 </div>
@@ -34,10 +34,7 @@
         <div class="col-xl-2 col-lg-3 col-sm-4 col-6">
             <div class="card h-100">
                 <div class="card-header pb-0">
-                    <span class="d-block mb-2 text-body">Progres Lengkap</span>
-                    <div class="d-flex align-items-end mb-1 flex-wrap gap-2">
-                        <h4 class="mb-0 me-2" id="totalStudentByCompleteness">0</h4>
-                    </div>
+                    <span class="d-block mb-2 text-body">Biodata Lengkap <i class="mdi mdi-help-circle-outline ms-1 cursor-pointer" data-bs-toggle="tooltip" title="Persentase Biodata Lengkap"></i></span>
                 </div>
                 <div class="card-body pt-2">
                     <div id="studentByCompletenessChart"></div>
@@ -49,9 +46,6 @@
 
     {{--TODO Select Option--}}
     <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="mb-0"><i class="mdi mdi-filter me-2"></i>Filter Data</h5>
-        </div>
         <div class="card-body pb-2">
             <div class="row">
                 <div class="col-md-6">

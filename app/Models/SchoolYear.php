@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class SchoolYear extends Model
@@ -48,6 +49,12 @@ class SchoolYear extends Model
         });
     }
 
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class, 'school_year_id');
+    }
+
+    // TODO Scope
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);

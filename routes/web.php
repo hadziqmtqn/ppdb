@@ -108,6 +108,7 @@ Route::middleware('auth')->group(function () {
         Route::get('student-stats-dashboard', [AdminDashboardController::class, 'studentStats']);
         Route::get('student-by-data-completeness', [AdminDashboardController::class, 'totalStudentByDataCompleteness']);
         Route::post('previous-school-reference-datatable', [AdminDashboardController::class, 'previousSchoolReferenceDatatable']);
+        Route::get('total-student-received', [AdminDashboardController::class, 'totalStudentReceived']);
 
         Route::group(['prefix' => 'account'], function () {
             Route::get('/', [AccountController::class, 'index'])->name('account.index');

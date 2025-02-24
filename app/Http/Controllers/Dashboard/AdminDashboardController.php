@@ -78,4 +78,14 @@ class AdminDashboardController extends Controller
     {
         return $this->adminDashboardRepository->previousSchoolReferenceDatatable($request);
     }
+
+    public function totalStudentReceived(): JsonResponse
+    {
+        try {
+            return $this->apiResponse('Get data successfully.', $this->studentStatsRepository->totalStudentReceived(), null, Response::HTTP_OK);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this->apiResponse('Internal server error', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
