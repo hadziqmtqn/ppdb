@@ -144,12 +144,12 @@ class StudentStatsRepository
 
         // Get the previous school year based on the active year's id
         $previousYear = $this->schoolYear
-            ->where('id', '<', $activeYear->id)
+            ->where('id', '<', $activeYear->id ?? 0)
             ->orderBy('id', 'desc')
             ->first();
 
         // Combine the previous year and the active year into a collection
-        $result = collect([$previousYear, $activeYear]);
+        $result = collect([$previousYear, $activeYear])->filter();
 
         // Process the result and return
         return $result->map(function (SchoolYear $schoolYear) {
