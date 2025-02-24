@@ -153,4 +153,37 @@ class StudentRegistrationRepository
 
         return collect($registrationStatus);
     }
+
+    public function countCompletedUsers($request): Collection
+    {
+        $students = Student::with('user')
+            ->statsFilter($request)
+            ->get();
+
+        $completedUsersCount = 0;
+        $incompleteUsersCount = 0;
+
+        foreach ($students as $student) {
+            if ($this->allCompleted($student->user)) {
+                $completedUsersCount++;
+            } else {
+                $incompleteUsersCount++;
+            }
+        }
+
+        $totalUsers = $completedUsersCount + $incompleteUsersCount;
+        $completedPercentage = $totalUsers > 0 ? ($completedUsersCount / $totalUsers) * 100 : 0;
+        $incompletePercentage = $totalUsers > 0 ? ($incompleteUsersCount / $totalUsers) * 100 : 0;
+
+        return collect([
+            'completed' => [
+                'count' => $completedUsersCount,
+                'percentage' => round($completedPercentage)
+            ],
+            'incomplete' => [
+                'count' => $incompleteUsersCount,
+                'percentage' => round($incompletePercentage)
+            ]
+        ]);
+    }
 }

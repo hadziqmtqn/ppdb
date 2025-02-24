@@ -21,20 +21,20 @@
         }
     };
 
-    let studentByGenderChart; // Variable to store the chart instance
+    let studentByCompletenessChart; // Variable to store the chart instance
 
     // Function to render the chart
-    function renderChart(malePercentage, femalePercentage) {
-        const studentByGenderChartEl = document.querySelector('#studentByGenderChart');
-        const studentByGenderChartConfig = {
+    function renderChart(completed, incompleted) {
+        const studentByCompletenessChartEl = document.querySelector('#studentByCompletenessChart');
+        const studentByCompletenessChartConfig = {
             chart: {
                 height: 127,
                 parentHeightOffset: 0,
                 type: 'donut'
             },
-            labels: ['L', 'P'],
-            series: [malePercentage, femalePercentage], // Data from the response
-            colors: [config.colors.primary, config.colors.secondary],
+            labels: ['Lengkap', 'Tdk. Lengkap'],
+            series: [completed, incompleted], // Data from the response
+            colors: [config.colors.primary, config.colors.danger],
             stroke: {
                 width: 5,
                 colors: cardColor
@@ -96,12 +96,12 @@
             }
         };
 
-        if (studentByGenderChartEl !== undefined && studentByGenderChartEl !== null) {
-            if (studentByGenderChart) {
-                studentByGenderChart.destroy(); // Destroy the existing chart instance
+        if (studentByCompletenessChartEl !== undefined && studentByCompletenessChartEl !== null) {
+            if (studentByCompletenessChart) {
+                studentByCompletenessChart.destroy(); // Destroy the existing chart instance
             }
-            studentByGenderChart = new ApexCharts(studentByGenderChartEl, studentByGenderChartConfig);
-            studentByGenderChart.render();
+            studentByCompletenessChart = new ApexCharts(studentByCompletenessChartEl, studentByCompletenessChartConfig);
+            studentByCompletenessChart.render();
         }
     }
 
@@ -110,7 +110,7 @@
 
     // Function to fetch and render chart data
     function fetchAndRenderChart(schoolYearId, educationalInstitutionId) {
-        axios.get('/student-by-gender', {
+        axios.get('/student-by-data-completeness', {
             params: {
                 school_year_id: schoolYearId,
                 educational_institution_id: educationalInstitutionId
@@ -118,14 +118,14 @@
         })
             .then(function (response) {
                 const data = response.data.data;
-                const malePercentage = data.malePercentage;
-                const femalePercentage = data.femalePercentage;
+                const completed = data.completedData.completed.percentage;
+                const incompleted = data.completedData.incomplete.percentage;
 
                 // Update the total student count
-                document.getElementById('totalStudentByGender').textContent = data.totalStudent;
+                document.getElementById('totalStudentByCompleteness').textContent = data.totalStudent;
 
                 // Render the chart with the fetched data
-                renderChart(malePercentage, femalePercentage);
+                renderChart(completed, incompleted);
             })
             .catch(function (error) {
                 console.error('Error fetching student data:', error);

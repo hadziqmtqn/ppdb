@@ -128,20 +128,4 @@ class StudentStatsRepository
             ->registrationStatus('ditolak')
             ->count();
     }
-
-    public function maleStudent($request): int
-    {
-        return $this->student
-            ->whereHas('user.personalData', fn($query) => $query->where('gender', 'Laki-Laki'))
-            ->statsFilter($request)
-            ->count();
-    }
-
-    public function famaleStudent($request): int
-    {
-        return $this->student
-            ->whereHas('user.personalData', fn($query) => $query->where('gender', 'Perempuan'))
-            ->statsFilter($request)
-            ->count();
-    }
 }

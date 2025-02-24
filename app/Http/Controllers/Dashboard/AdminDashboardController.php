@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\FilterRequest;
 use App\Repositories\Dashboard\AdminDashboardRepository;
+use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentStatsRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -20,15 +21,18 @@ class AdminDashboardController extends Controller
 
     protected AdminDashboardRepository $adminDashboardRepository;
     protected StudentStatsRepository $studentStatsRepository;
+    protected StudentRegistrationRepository $studentRegistrationRepository;
 
     /**
      * @param AdminDashboardRepository $adminDashboardRepository
      * @param StudentStatsRepository $studentStatsRepository
+     * @param StudentRegistrationRepository $studentRegistrationRepository
      */
-    public function __construct(AdminDashboardRepository $adminDashboardRepository, StudentStatsRepository $studentStatsRepository)
+    public function __construct(AdminDashboardRepository $adminDashboardRepository, StudentStatsRepository $studentStatsRepository, StudentRegistrationRepository $studentRegistrationRepository)
     {
         $this->adminDashboardRepository = $adminDashboardRepository;
         $this->studentStatsRepository = $studentStatsRepository;
+        $this->studentRegistrationRepository = $studentRegistrationRepository;
     }
 
     public function index(): View
@@ -55,23 +59,14 @@ class AdminDashboardController extends Controller
         }
     }
 
-    public function totalStudentByGender(FilterRequest $request): JsonResponse
+    public function totalStudentByDataCompleteness(FilterRequest $request): JsonResponse
     {
         try {
             $totalStudent = $this->studentStatsRepository->totalStudent($request);
-            $maleStudent = $this->studentStatsRepository->maleStudent($request);
-            $femaleStudent = $this->studentStatsRepository->famaleStudent($request);
-
-            // Menghitung persentase
-            $malePercentage = $totalStudent > 0 ? ($maleStudent / $totalStudent) * 100 : 0;
-            $femalePercentage = $totalStudent > 0 ? ($femaleStudent / $totalStudent) * 100 : 0;
 
             return $this->apiResponse('Get data successfully.', [
                 'totalStudent' => $totalStudent,
-                'maleStudent' => $maleStudent,
-                'malePercentage' => $malePercentage,
-                'femaleStudent' => $femaleStudent,
-                'femalePercentage' => $femalePercentage,
+                'completedData' => $this->studentRegistrationRepository->countCompletedUsers($request),
             ], null, Response::HTTP_OK);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
