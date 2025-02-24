@@ -91,8 +91,8 @@
     </div>
     {{--TODO Close Student Stats--}}
 
-    {{--TODO Previous School Reference--}}
     <div class="row">
+        {{--TODO Previous School Reference--}}
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-datatable">
@@ -110,8 +110,21 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-1">Sales Country</h5>
+                    </div>
+                    <p class="mb-0 text-body">Total $42,580 Sales</p>
+                </div>
+                <div class="card-body pb-1 px-0">
+                    <div id="studentReceivedChart"></div>
+                </div>
+            </div>
+        </div>
+        {{--TODO Close Previous School Reference--}}
     </div>
-    {{--TODO Close Previous School Reference--}}
 @endsection
 
 @section('scripts')
@@ -120,4 +133,5 @@
     <script src="{{ asset('js/dashboard/admin/student-stats.js') }}"></script>
     <script src="{{ asset('js/dashboard/admin/previous-school-reference-datatable.js') }}"></script>
     <script src="{{ asset('js/dashboard/admin/total-student-by-completeness.js') }}"></script>
+    <script src="{{ asset('js/dashboard/admin/total-student-received.js') }}"></script>
 @endsection

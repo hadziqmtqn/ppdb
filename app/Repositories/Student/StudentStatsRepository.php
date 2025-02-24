@@ -151,12 +151,12 @@ class StudentStatsRepository
         // Combine the previous year and the active year into a collection
         $result = collect([$previousYear, $activeYear])->filter();
 
+        $colors = ['primary', 'success', 'secondary', 'info', 'danger'];
+
         // Process the result and return
-        return $result->map(function (SchoolYear $schoolYear) {
+        return $result->map(function (SchoolYear $schoolYear) use ($colors) {
             return collect([
-                'id' => $schoolYear->id,
-                'status' => $schoolYear->is_active,
-                'year' => $schoolYear->first_year . '/' . $schoolYear->last_year,
+                'year' => str_replace('20', '', $schoolYear->first_year) . '/' . str_replace('20', '', $schoolYear->last_year),
                 'educationalInstitutions' => $this->educationalInstitution->withCount([
                     'students' => fn($query) => $query->where([
                         'school_year_id' => $schoolYear->id,
@@ -164,10 +164,11 @@ class StudentStatsRepository
                     ])
                 ])
                     ->get()
-                    ->map(function (EducationalInstitution $educationalInstitution) {
+                    ->map(function (EducationalInstitution $educationalInstitution, $index) use ($colors) {
                         return collect([
                             'name' => $educationalInstitution->name,
                             'total' => $educationalInstitution->students_count,
+                            'color' => $colors[$index % count($colors)]
                         ]);
                     })
             ]);
