@@ -97,11 +97,13 @@
                             @endif
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        Silahkan klik tombol dibawah ini untuk menuju halaman tagihan registrasi
+                        {{ !$paymentRegistrationExists ?? 'Silahkan klik tombol dibawah ini untuk menuju halaman tagihan registrasi' }}
                     </div>
-                    <div class="card-footer">
-                        <a href="{{ route('current-bill.index', $user->username) }}" class="btn btn-secondary btn-sm"><i class="mdi mdi-credit-card-outline me-2"></i>Bayar Sekarang</a>
-                    </div>
+                    @if(!$paymentRegistrationExists)
+                        <div class="card-footer">
+                            <a href="{{ route('current-bill.index', $user->username) }}" class="btn btn-secondary btn-sm"><i class="mdi mdi-credit-card-outline me-2"></i>Bayar Sekarang</a>
+                        </div>
+                    @endif
                 </div>
             @endif
         </div>

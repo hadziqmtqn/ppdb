@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 use Xendit\XenditSdkException;
 
 class PaymentController extends Controller
@@ -37,6 +38,9 @@ class PaymentController extends Controller
         $this->paymentBillRepository = $paymentBillRepository;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(PaymentRequest $request, User $user): JsonResponse
     {
         Gate::authorize('store', $user);
@@ -51,6 +55,7 @@ class PaymentController extends Controller
             $payment = new Payment();
             $payment->user_id = $user->id;
             $payment->payment_method = $request->input('pay_method') == 'MANUAL_PAYMENT' ? $request->input('pay_method') : null;
+            $payment->status = 'PENDING';
             $payment->save();
 
             $totalNominal = [];

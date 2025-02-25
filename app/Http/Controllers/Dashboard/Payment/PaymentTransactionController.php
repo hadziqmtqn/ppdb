@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class PaymentTransactionController extends Controller
@@ -115,6 +116,9 @@ class PaymentTransactionController extends Controller
         return \view('dashboard.payment.payment-transaction.show', compact('title', 'payment', 'subTitle'));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function confirm(PaymentConfirmationRequest $request, Payment $payment)
     {
         Gate::authorize('store', $payment);
