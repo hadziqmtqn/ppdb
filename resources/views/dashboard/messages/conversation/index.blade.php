@@ -27,6 +27,6 @@
     <script src="{{ asset('js/message/conversation/datatable.js') }}"></script>
     <script src="{{ asset('js/educational-institution/select.js') }}"></script>
     <script src="{{ asset('js/message/conversation/select-students.js') }}"></script>
-    <script src="{{ asset('materialize/js/quill-message-editor.js') }}"></script>
+    <script src="{{ url('https://hadziqmtqn.github.io/materialize/custom-scripts/js/quill-message-editor.js') }}"></script>
     <script src="{{ asset('js/message/conversation/create.js') }}"></script>
 @endsection
