@@ -62,7 +62,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card mb-4">
                 <div class="list-group">
                     <div class="list-group-item active fw-bold">Data Registrasi</div>
@@ -106,6 +106,19 @@
                     @endif
                 </div>
             @endif
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 bg-gradient-{{ $registrationStatus['color'] }}">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <div class="col-md-12 col-lg-7 col-xl-12 col-xxl-7 text-center text-lg-start text-xl-center text-xxl-start order-1 order-lg-0 order-xl-1 order-xxl-0">
+                            <h4 class="card-title text-white text-nowrap">{{ ucfirst(str_replace('_', ' ', $registrationStatus['status'])) }}</h4>
+                            <p class="card-text text-white">{{ $registrationStatus['text'] }}</p>
+                        </div>
+                        <span class="col-md-12 col-lg-5 col-xl-12 col-xxl-5 text-center mx-auto mx-md-0 mb-2"><img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/illustrations/rocket.png') }}" class="w-px-75 m-2" alt="3dRocket"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

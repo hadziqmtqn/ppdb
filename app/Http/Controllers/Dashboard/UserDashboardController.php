@@ -43,7 +43,8 @@ class UserDashboardController extends Controller
         $schoolReportProgress = $this->schoolReportRepository->isComplete($user);
         $activeRegistrationFee = $this->registrationFeeRepository->getActiveRegistrationFee($user);
         $paymentRegistrationExists = $this->paymentTransactionRepository->getPaymentRegistrationExists($user);
+        $registrationStatus = $this->studentRegistrationRepository->registrationStatus($user->student);
 
-        return \view('dashboard.user-dashboard.index', compact('title', 'user', 'mainProgress', 'schoolReportProgress', 'activeRegistrationFee', 'paymentRegistrationExists'));
+        return \view('dashboard.user-dashboard.index', compact('title', 'user', 'mainProgress', 'schoolReportProgress', 'activeRegistrationFee', 'paymentRegistrationExists', 'registrationStatus'));
     }
 }

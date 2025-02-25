@@ -133,7 +133,7 @@ class StudentRegistrationRepository
         $statusMapping = [
             'belum_diterima' => [
                 'color' => 'warning',
-                'text' => Auth::user()->hasRole('user') ? 'Registrasi belum diterima, masih dalam tahap validasi.' : 'Registrasi belum diterima, harap data registrasi divalidasi terlebih dahulu.'
+                'text' => Auth::user()->hasRole('user') ? 'Registrasi siswa baru belum diterima, masih dalam tahap validasi.' : 'Registrasi belum diterima, harap data registrasi divalidasi terlebih dahulu.'
             ],
             'diterima' => [
                 'color' => 'primary',

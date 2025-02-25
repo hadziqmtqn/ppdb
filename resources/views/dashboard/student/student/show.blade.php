@@ -26,7 +26,7 @@
 
             <div class="card mb-4 bg-gradient-{{ $registrationStatus['color'] }}">
                 <div class="card-body">
-                    <div class="row justify-content-between mb-3">
+                    <div class="row justify-content-between">
                         <div class="col-md-12 col-lg-7 col-xl-12 col-xxl-7 text-center text-lg-start text-xl-center text-xxl-start order-1 order-lg-0 order-xl-1 order-xxl-0">
                             <h4 class="card-title text-white text-nowrap">{{ ucfirst(str_replace('_', ' ', $registrationStatus['status'])) }}</h4>
                             <p class="card-text text-white">{{ $registrationStatus['text'] }}</p>
