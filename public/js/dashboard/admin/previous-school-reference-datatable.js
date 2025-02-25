@@ -46,7 +46,7 @@ $(function () {
         buttons: [
             {
                 extend: 'collection',
-                className: 'btn btn-secondary dropdown-toggle me-w waves-effect waves-light',
+                className: 'btn btn-label-primary dropdown-toggle me-w waves-effect waves-light',
                 text: '<i class="mdi mdi-export-variant me-1"></i> <span class="d-none d-sm-inline-block">Export</span>',
                 buttons: [
                     {
