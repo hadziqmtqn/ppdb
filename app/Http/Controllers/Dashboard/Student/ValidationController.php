@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\ValidationRequest;
 use App\Models\User;
+use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Traits\ApiResponse;
 use Exception;
@@ -20,10 +21,12 @@ class ValidationController extends Controller implements HasMiddleware
     use ApiResponse;
 
     protected StudentRegistrationRepository $studentRegistrationRepository;
+    protected SchoolReportRepository $schoolReportRepository;
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
+        $this->schoolReportRepository = $schoolReportRepository;
     }
 
     public static function middleware(): array
@@ -39,9 +42,12 @@ class ValidationController extends Controller implements HasMiddleware
         Gate::authorize('store', $user);
 
         try {
-            $allCompetencies = $this->studentRegistrationRepository->allCompleted($user);
+            $user->load('student.educationalInstitution.registrationSetting');
 
-            if (!$allCompetencies) {
+            $allCompetencies = $this->studentRegistrationRepository->allCompleted($user);
+            $schoolReportIsComplete = $this->schoolReportRepository->isComplete($user);
+
+            if (!$allCompetencies || (optional(optional(optional($user->student)->educationalInstitution)->registrationSetting)->accepted_with_school_report && !$schoolReportIsComplete)) {
                 return $this->apiResponse('Data Registrasi belum lengkap!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 

@@ -118,6 +118,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(SchoolReport::class, 'user_id');
     }
 
+    public function payment() : HasOne
+    {
+        return $this->hasOne(Payment::class, 'user_id');
+    }
+
     // TODO Scope
     public function scopeFilterByUsername(Builder $query, $username): Builder
     {

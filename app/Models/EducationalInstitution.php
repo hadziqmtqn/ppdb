@@ -81,6 +81,11 @@ class EducationalInstitution extends Model implements HasMedia
         return $this->hasOne(RegistrationSetting::class, 'educational_institution_id');
     }
 
+    public function registrationFee(): HasOne
+    {
+        return $this->hasOne(RegistrationFee::class);
+    }
+
     // TODO Scope
     public function scopeActive(Builder $query): Builder
     {

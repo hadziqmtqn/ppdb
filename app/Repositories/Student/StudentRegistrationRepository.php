@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class StudentRegistrationRepository
 {
@@ -132,15 +133,15 @@ class StudentRegistrationRepository
         $statusMapping = [
             'belum_diterima' => [
                 'color' => 'warning',
-                'text' => auth()->user()->hasRole('user') ? 'Registrasi belum diterima, masih dalam tahap validasi.' : 'Registrasi belum diterima, harap data registrasi divalidasi terlebih dahulu.'
+                'text' => Auth::user()->hasRole('user') ? 'Registrasi belum diterima, masih dalam tahap validasi.' : 'Registrasi belum diterima, harap data registrasi divalidasi terlebih dahulu.'
             ],
             'diterima' => [
                 'color' => 'primary',
-                'text' => auth()->user()->hasRole('user') ? 'Selamat, registrasi Anda telah diterima.' : 'Registrasi siswa ' . optional($student->user)->name . ' telah diterima.'
+                'text' => Auth::user()->hasRole('user') ? 'Selamat, registrasi Anda telah diterima.' : 'Registrasi siswa ' . optional($student->user)->name . ' telah diterima.'
             ],
             'ditolak' => [
                 'color' => 'danger',
-                'text' => auth()->user()->hasRole('user') ? 'Maaf, registrasi Anda ditolak. Silahkan hubungi administrator untuk informasi lebih lanjut.' : 'Registrasi siswa ' . optional($student->user)->name . ' ditolak.'
+                'text' => Auth::user()->hasRole('user') ? 'Maaf, registrasi Anda ditolak. Silahkan hubungi administrator untuk informasi lebih lanjut.' : 'Registrasi siswa ' . optional($student->user)->name . ' ditolak.'
             ]
         ];
 

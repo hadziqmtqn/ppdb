@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -61,6 +62,11 @@ class Payment extends Model implements HasMedia
     public function paymentTransactions(): HasMany
     {
         return $this->hasMany(PaymentTransaction::class, 'payment_id');
+    }
+
+    public function paymentTransaction(): HasOne
+    {
+        return $this->hasOne(PaymentTransaction::class, 'payment_id');
     }
 
     public function bankAccount(): BelongsTo

@@ -118,7 +118,7 @@
                     </div>
                     <p class="mb-0 text-body">Total $42,580 Sales</p>
                 </div>
-                <div class="card-body pb-1 px-0">
+                <div class="card-body">
                     <div id="studentReceivedChart"></div>
                 </div>
             </div>

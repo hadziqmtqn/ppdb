@@ -17,6 +17,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -114,7 +115,7 @@ class StudentController extends Controller implements HasMiddleware
                         return '<div class="d-inline-flex" data-bs-toggle="tooltip" title="'. ($allCompeletd ? 'Lengkap' : 'Tidak Lengkap') .'"><span class="avatar avatar-sm"> <span class="avatar-initial rounded-circle bg-label-'. ($allCompeletd ? 'success' : 'danger') .'"><i class="mdi mdi-'. ($allCompeletd ? 'check' : 'alert-rhombus-outline') .'"></i></span></span></div>';
                     })
                     ->addColumn('action', function ($row) {
-                        $auth = auth()->user();
+                        $auth = Auth::user();
                         $btn = null;
 
                         if (!$row->deleted_at) {

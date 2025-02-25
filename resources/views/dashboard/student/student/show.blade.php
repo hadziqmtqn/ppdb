@@ -247,6 +247,16 @@
                                                 <td>{{ $detailSchoolReport['score'] }}</td>
                                             </tr>
                                         @endforeach
+                                        <tr>
+                                            <td class="fw-bold">File Rapor</td>
+                                            <td>
+                                                @if ($schoolReport['file'])
+                                                <a href="{{ $schoolReport['file'] }}" class="btn btn-xs btn-outline-secondary" target="_blank">Lihat</a>
+                                                @else
+                                                <span class="text-danger">Belum diupload</span>
+                                                @endif
+                                            </td>
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>

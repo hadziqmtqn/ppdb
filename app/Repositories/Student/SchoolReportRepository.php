@@ -90,7 +90,8 @@ class SchoolReportRepository
                             'lessonName' => optional($detailSchoolReport->lesson)->name,
                             'score' => $detailSchoolReport->score
                         ]);
-                    })
+                    }),
+                    'file' => $schoolReport->hasMedia('rapor_semester_' . $schoolReport->semester) ? $schoolReport->getFirstTemporaryUrl(Carbon::now()->addHour(), 'rapor_semester_' . $schoolReport->semester) : null
                 ]);
             })
         ]);

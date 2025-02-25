@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +63,7 @@ class FileUploadingController extends Controller
                     }
 
                     $student->addMediaFromRequest($file)
+                        ->usingFileName(Str::random(10) . '_' . $request->file($file)->getClientOriginalName())
                         ->toMediaCollection($file);
 
                     $student->refresh();
