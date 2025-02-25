@@ -1,12 +1,12 @@
 @extends('home.layouts.master')
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/front-page-landing.css') }}" />
-    <link rel="stylesheet" href="{{ asset('materialize/assets/vendor/css/pages/ui-carousel.css') }}" />
+    <link rel="stylesheet" href="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/css/pages/front-page-landing.css') }}" />
+    <link rel="stylesheet" href="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/css/pages/ui-carousel.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('content')
     <div data-bs-spy="scroll" class="scrollspy-example">
-        <section id="header" class="section-py border border-0 landing-cta p-lg-0 pb-0 position-relative">
+        <section id="header" class="section-py border-0 landing-cta p-lg-0 pb-0 position-relative">
             <img src="{{ $application['frontHeaderAssets'] }}" class="position-absolute bottom-0 end-0 scaleX-n1-rtl h-100 w-100 z-n1" alt="cta image" style="object-fit: cover">
             <div class="container" style="padding-top: 5rem; position: relative; z-index: 2">
                 <div class="row align-items-center gy-5 gy-lg-0" style="padding-bottom: 15rem; padding-top: 10rem">
@@ -28,7 +28,7 @@
         <section id="quotas" class="section-py landing-features" style="padding-top: 10rem; padding-bottom: 5rem">
             <div class="container">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
-                    <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2" />
+                    <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2" />
                     <span class="text-uppercase">Kuota Pendaftaran</span>
                 </h6>
                 <h3 class="text-center mb-3 mb-md-5">{{ $application['name'] }} <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
@@ -81,7 +81,7 @@
         <section id="registrationSchedule" class="section-py position-relative" style="padding-top: 5rem; padding-bottom: 3rem">
             <div class="container" style="padding-bottom: 6rem; padding-top: 2rem">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
-                    <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
+                    <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
                     <span class="text-uppercase">Jadwal Pendaftaran</span>
                 </h6>
                 <h3 class="text-center mb-3 mb-md-5">{{ $application['name'] }} <span class="fw-bold text-primary">TA. {{ $getSchoolYearActive['year'] }}</span></h3>
@@ -133,7 +133,7 @@
         <section id="registrationStep" class="section-py bg-body pb-0 position-relative" style="padding-top: 7rem">
             <div class="container">
                 <h6 class="text-center fw-semibold d-flex justify-content-center align-items-center mb-4">
-                    <img src="{{ asset('materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
+                    <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/front-pages/icons/section-tilte-icon.png') }}" alt="section title icon" class="me-2">
                     <span class="text-uppercase">Cara Daftar</span>
                 </h6>
                 <h3 class="text-center mb-0 pb-5">{{ count($registrationSteps) }} Langkah mudah pendaftaran <span class="fw-bold text-primary">Siswa Baru</span> di website ini</h3>
@@ -169,7 +169,7 @@
 
         <section class="section-py position-relative bg-label-primary" style="padding-top: 10rem; padding-bottom: 10rem">
             <div class="container">
-                <div class="text-center text-center">
+                <div class="text-center">
                     <h3 class="badge rounded-pill rounded-start-bottom bg-secondary" style="font-size: 14pt">MULAI SEKARANG</h3>
                     <h2 class="text-primary mb-1">Ayo daftar sekarang juga!</h2>
                     <p class="text-body mb-1">Kamu bisa mengikuti prosedur yang telah dijelaskan langkah dibawah ini.</p>
@@ -225,10 +225,10 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('materialize/assets/js/front-main.js') }}"></script>
-    <script src="{{ asset('materialize/assets/js/front-page-landing.js') }}"></script>
-    <script src="{{ asset('materialize/assets/js/ui-carousel.js') }}"></script>
-    <script src="{{ asset('materialize/assets/js/extended-ui-timeline.js') }}"></script>
+    <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/js/front-main.js') }}"></script>
+    <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/js/front-page-landing.js') }}"></script>
+    <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/js/ui-carousel.js') }}"></script>
+    <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/js/extended-ui-timeline.js') }}"></script>
 
     {{--faq--}}
     <script src="{{ asset('js/home/faqs.js') }}"></script>
