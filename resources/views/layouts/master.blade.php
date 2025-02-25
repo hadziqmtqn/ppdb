@@ -20,7 +20,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ $application['logo'] }}" />
 
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('layouts.head')
     @yield('styles')
 </head>
