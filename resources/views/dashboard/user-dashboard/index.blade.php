@@ -84,6 +84,26 @@
                     @endif
                 </div>
             </div>
+
+            @if($activeRegistrationFee)
+                <div class="card">
+                    <h5 class="card-header">Biaya Registrasi</h5>
+                    <div class="card-body">
+                        <div class="alert alert-{{ $paymentRegistrationExists ? 'primary' : 'danger' }} alert-dismissible" role="alert">
+                            @if($paymentRegistrationExists)
+                                Terima kasih, tagihan registrasi siswa baru telah dilunasi.
+                            @else
+                                Mohon maaf, tagihan registrasi siswa baru belum dilunasi.
+                            @endif
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        Silahkan klik tombol dibawah ini untuk menuju halaman tagihan registrasi
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('current-bill.index', $user->username) }}" class="btn btn-secondary btn-sm"><i class="mdi mdi-credit-card-outline me-2"></i>Bayar Sekarang</a>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

@@ -75,4 +75,9 @@ class RegistrationFee extends Model
     {
         return $query->where('is_active', true);
     }
+
+    public function scopeRegistrationStatus(Builder $query, $registrationStatus): Builder
+    {
+        return $query->where('registration_status', $registrationStatus);
+    }
 }

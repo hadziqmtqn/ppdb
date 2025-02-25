@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\AcceptanceRegistrationRequest;
-use App\Models\PaymentTransaction;
 use App\Models\User;
+use App\Repositories\RegistrationFeeRepository;
 use App\Repositories\SendMessage\AcceptanceRegistrationRepository;
+use App\Repositories\Student\Payment\PaymentTransactionRepository;
 use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -21,10 +22,14 @@ class AcceptanceRegistrationController extends Controller implements HasMiddlewa
     use ApiResponse;
 
     protected AcceptanceRegistrationRepository $acceptanceRegistrationRepository;
+    protected RegistrationFeeRepository $registrationFeeRepository;
+    protected PaymentTransactionRepository $paymentTransactionRepository;
 
-    public function __construct(AcceptanceRegistrationRepository $acceptanceRegistrationRepository)
+    public function __construct(AcceptanceRegistrationRepository $acceptanceRegistrationRepository, RegistrationFeeRepository $registrationFeeRepository, PaymentTransactionRepository $paymentTransactionRepository)
     {
         $this->acceptanceRegistrationRepository = $acceptanceRegistrationRepository;
+        $this->registrationFeeRepository = $registrationFeeRepository;
+        $this->paymentTransactionRepository = $paymentTransactionRepository;
     }
 
     public static function middleware(): array
@@ -43,34 +48,15 @@ class AcceptanceRegistrationController extends Controller implements HasMiddlewa
             $user->load('student');
             $student = $user->student;
 
-            if ($student) {
-                $user->load([
-                    'student.educationalInstitution.registrationFee' => function ($query) use ($student) {
-                        $query->where([
-                            'registration_status' => 'siswa_belum_diterima',
-                            'school_year_id' => $student->school_year_id,
-                            'is_active' => true
-                        ]);
-                    }
-                ]);
-            }
-            $paymentRegistrationTransactionExists = PaymentTransaction::whereHas('payment', fn($query) => $query->where('user_id', $user->id))
-                ->whereHas('registrationFee', function ($query) use ($student) {
-                    $query->where([
-                        'educational_institution_id' => $student->educational_institution_id,
-                        'school_year_id' => $student->school_year_id,
-                        'registration_status' => 'siswa_belum_diterima',
-                        'is_active' => true
-                    ]);
-                })
-                ->exists();
+            $registrationFeeActive = $this->registrationFeeRepository->getActiveRegistrationFee($user);
+            $paymentRegistrationTransactionExists = $this->paymentTransactionRepository->getPaymentRegistrationExists($user);
 
             // Check if registration validation is valid
             if ($student->registration_validation != 'valid') return $this->apiResponse('Data registrasi tidak valid', null, null, Response::HTTP_BAD_REQUEST);
 
             // 1. Check if educational institution has registration fee by registration status "siswa_belum_diterima" and school year id is same with student school year id and is active
             // 2. Check if payment transaction exists
-            if (optional(optional($user->student)->educationalInstitution)->registrationFee && !$paymentRegistrationTransactionExists) {
+            if ($registrationFeeActive && !$paymentRegistrationTransactionExists) {
                 return $this->apiResponse('Siswa belum membayar biaya registrasi!', null, null, Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Repositories\RegistrationFeeRepository;
+use App\Repositories\Student\Payment\PaymentTransactionRepository;
 use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use Illuminate\Support\Facades\Auth;
@@ -13,17 +15,23 @@ class UserDashboardController extends Controller
 {
     protected StudentRegistrationRepository $studentRegistrationRepository;
     protected SchoolReportRepository $schoolReportRepository;
+    protected RegistrationFeeRepository $registrationFeeRepository;
+    protected PaymentTransactionRepository $paymentTransactionRepository;
 
     /**
      * UserDashboardController constructor.
      * @param StudentRegistrationRepository $studentRegistrationRepository
      * @param SchoolReportRepository $schoolReportRepository
+     * @param RegistrationFeeRepository $registrationFeeRepository
+     * @param PaymentTransactionRepository $paymentTransactionRepository
      */
 
-    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository)
+    public function __construct(StudentRegistrationRepository $studentRegistrationRepository, SchoolReportRepository $schoolReportRepository, RegistrationFeeRepository $registrationFeeRepository, PaymentTransactionRepository $paymentTransactionRepository)
     {
         $this->studentRegistrationRepository = $studentRegistrationRepository;
         $this->schoolReportRepository = $schoolReportRepository;
+        $this->registrationFeeRepository = $registrationFeeRepository;
+        $this->paymentTransactionRepository = $paymentTransactionRepository;
     }
 
     public function index(): View
@@ -33,7 +41,9 @@ class UserDashboardController extends Controller
             ->findOrFail(Auth::id());
         $mainProgress = $this->studentRegistrationRepository->menus($user);
         $schoolReportProgress = $this->schoolReportRepository->isComplete($user);
+        $activeRegistrationFee = $this->registrationFeeRepository->getActiveRegistrationFee($user);
+        $paymentRegistrationExists = $this->paymentTransactionRepository->getPaymentRegistrationExists($user);
 
-        return \view('dashboard.user-dashboard.index', compact('title', 'user', 'mainProgress', 'schoolReportProgress'));
+        return \view('dashboard.user-dashboard.index', compact('title', 'user', 'mainProgress', 'schoolReportProgress', 'activeRegistrationFee', 'paymentRegistrationExists'));
     }
 }

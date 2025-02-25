@@ -25,6 +25,7 @@ use App\Repositories\Payment\BankAccountRepository;
 use App\Repositories\PermissionRepository;
 use App\Repositories\References\PreviousSchoolReferenceRepository;
 use App\Repositories\RegistrationCategoryRepository;
+use App\Repositories\RegistrationFeeRepository;
 use App\Repositories\RegistrationPathRepository;
 use App\Repositories\RegistrationScheduleRepository;
 use App\Repositories\RoleRepository;
@@ -37,6 +38,7 @@ use App\Repositories\SendMessage\PaymentCallbackRepository;
 use App\Repositories\SendMessage\RegistrationMessageRepository;
 use App\Repositories\SendMessage\SafetyChangesRepository;
 use App\Repositories\Student\Payment\CurrentBillRepository;
+use App\Repositories\Student\Payment\PaymentTransactionRepository;
 use App\Repositories\Student\SchoolReportRepository;
 use App\Repositories\Student\StudentRegistrationRepository;
 use App\Repositories\Student\StudentRepository;
@@ -80,6 +82,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(EducationalGroupRepository::class, EducationalGroupRepository::class);
         $this->app->singleton(SchoolReportRepository::class, SchoolReportRepository::class);
         $this->app->singleton(PreviousSchoolReferenceRepository::class, PreviousSchoolReferenceRepository::class);
+        $this->app->singleton(RegistrationFeeRepository::class, RegistrationFeeRepository::class);
+        $this->app->singleton(PaymentTransactionRepository::class, PaymentTransactionRepository::class);
 
         // TODO Dashboard Component
         $this->app->singleton(AdminDashboardRepository::class, AdminDashboardRepository::class);
