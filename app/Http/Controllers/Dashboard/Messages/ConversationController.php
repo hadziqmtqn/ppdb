@@ -128,7 +128,7 @@ class ConversationController extends Controller
         $title = 'Kirim Pesan';
         $subTitle = 'Detail Kirim Pesan';
         $conversation->load([
-            'user:id,name',
+            'user:id,name,username',
             'admin:id,name',
             'messages' => function ($query) {
                 $query->orderByDesc('created_at');
