@@ -8,7 +8,7 @@
                     <p class="pb-4">Fokuslah untuk mencapai tujuanmu, meskipun banyak hal yang menarik dalam perjalanannya. 🚀</p>
                     <a href="{{ route('student.index') }}" class="btn btn-sm btn-primary waves-effect waves-light">Lihat Data Siswa</a>
                 </div>
-                <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/illustrations/trophy.png') }}" class="position-absolute bottom-0 end-0 me-3" height="140" alt="view sales">
+                <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/illustrations/trophy.png') }}" class="position-absolute bottom-0 end-0 me-3" style="height: 140px" alt="view sales">
             </div>
         </div>
         {{--TODO Base Data--}}

@@ -21,7 +21,7 @@
     </ul>
     <div class="d-none d-md-block">
         <div class="mt-5 text-center">
-            <img src="{{ asset('materialize/assets/img/illustrations/faq-illustration.png') }}" class="img-fluid w-px-120" alt="FAQ Image" />
+            <img src="{{ url('https://hadziqmtqn.github.io/materialize/assets/img/illustrations/faq-illustration.png') }}" class="img-fluid w-px-120" alt="FAQ Image" />
         </div>
     </div>
 </div>
