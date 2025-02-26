@@ -32,10 +32,10 @@
                 <div class="mb-3 d-flex justify-content-between">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="remember-me" />
-                        <label class="form-check-label" for="remember-me"> Remember Me </label>
+                        <label class="form-check-label" for="remember-me"> Ingatkan Saya </label>
                     </div>
                     <a href="#" class="float-end mb-1">
-                        <span>Forgot Password?</span>
+                        <span>Lupa Kata Sandi?</span>
                     </a>
                 </div>
                 @include('layouts.session')
@@ -50,12 +50,12 @@
             </p>
 
             <div class="divider my-4">
-                <div class="divider-text">or</div>
+                <div class="divider-text">atau masuk dengan</div>
             </div>
 
             <div class="d-flex justify-content-center gap-2">
-                <a href="{{ route('oauth.redirect-to-provider', 'google') }}" class="btn btn-icon btn-lg rounded-pill btn-text-google-plus">
-                    <i class="tf-icons mdi mdi-24px mdi-google"></i>
+                <a href="{{ route('oauth.redirect-to-provider', 'google') }}" class="btn w-100 btn-google-plus">
+                    <i class="tf-icons mdi mdi-24px mdi-google me-1"></i> Google
                 </a>
             </div>
         </div>
