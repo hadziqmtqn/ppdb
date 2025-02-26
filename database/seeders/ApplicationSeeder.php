@@ -16,7 +16,7 @@ class ApplicationSeeder extends Seeder
         $application->website = 'https://ppdb.bkn.my.id';
         $application->main_website = 'https://bkn.my.id';
         $application->register_verification = true;
-        $application->notification_method = 'email';
+        $application->notification_method = 'whatsapp';
         $application->whatsapp_number = '085157088717';
         $application->save();
     }
