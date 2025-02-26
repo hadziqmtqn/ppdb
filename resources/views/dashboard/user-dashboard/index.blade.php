@@ -7,57 +7,7 @@
                 <div class="col-12 col-lg-7">
                     <p>Berikut ini progres Anda registrasi siswa baru.</p>
                 </div>
-                {{-- <div class="d-flex justify-content-between flex-wrap gap-3 me-5">
-                    <div class="d-flex align-items-center gap-3 me-4 me-sm-0">
-                        <div class="avatar avatar-md">
-                            <div class="avatar-initial bg-label-primary rounded">
-                                <i class="mdi mdi-laptop mdi-36px"></i>
-                            </div>
-                        </div>
-                        <div class="content-right">
-                            <p class="mb-0 fw-medium">Hours Spent</p>
-                            <span class="text-primary mb-0 display-6">34h</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="avatar avatar-md">
-                            <div class="avatar-initial bg-label-info rounded">
-                                <i class="mdi mdi-lightbulb-outline mdi-36px"></i>
-                            </div>
-                        </div>
-                        <div class="content-right">
-                            <p class="mb-0 fw-medium">Test Results</p>
-                            <span class="text-info mb-0 display-6">82%</span>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="avatar avatar-md">
-                            <div class="avatar-initial bg-label-warning rounded">
-                                <i class="mdi mdi-check-decagram-outline mdi-36px"></i>
-                            </div>
-                        </div>
-                        <div class="content-right">
-                            <p class="mb-0 fw-medium">Course Completed</p>
-                            <span class="text-warning mb-0 display-6">14</span>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
-            {{-- <div class="col-12 col-md-4 ps-md-3 ps-lg-5 pt-3 pt-md-0">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div>
-                            <h5 class="mb-2">Time Spendings</h5>
-                            <p class="mb-4">Weekly report</p>
-                        </div>
-                        <div class="time-spending-chart">
-                            <h3 class="mb-2">231<span class="text-body">h</span> 14<span class="text-body">m</span></h3>
-                            <span class="badge bg-label-success rounded-pill">+18.4%</span>
-                        </div>
-                    </div>
-                    <div id="leadsReportChart"></div>
-                </div>
-            </div> --}}
         </div>
     </div>
 
@@ -97,7 +47,7 @@
                             @endif
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        {{ !$paymentRegistrationExists ?? 'Silahkan klik tombol dibawah ini untuk menuju halaman tagihan registrasi' }}
+                        {{ !$paymentRegistrationExists ? 'Silahkan klik tombol dibawah ini untuk menuju halaman tagihan registrasi' : null }}
                     </div>
                     @if(!$paymentRegistrationExists)
                         <div class="card-footer">
