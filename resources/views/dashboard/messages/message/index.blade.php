@@ -10,7 +10,7 @@
         <div class="mb-2 mb-sm-0">
             <h4 class="mb-1">{{ $conversation->subject }}</h4>
             <p class="mb-0">
-                <i class="mdi mdi-account me-1"></i> {{ ucwords(strtolower(optional($conversation->user)->name)) }}
+                <i class="mdi mdi-account me-1"></i> <a href="{{ route('student.show', optional($conversation->user)->username) }}">{{ ucwords(strtolower(optional($conversation->user)->name)) }}</a>
                 <i class="mdi mdi-calendar-month me-1"></i> {{ Carbon\Carbon::parse($conversation->created_at)->isoFormat('DD MMM Y HH:mm') }}
             </p>
         </div>
