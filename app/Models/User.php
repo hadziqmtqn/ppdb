@@ -201,4 +201,9 @@ class User extends Authenticatable implements HasMedia
 
         return $query;
     }
+
+    public function scopeFilterByEmail(Builder $query, $email): Builder
+    {
+        return $query->where('email', $email);
+    }
 }
